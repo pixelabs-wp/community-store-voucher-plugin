@@ -45,6 +45,8 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-walk-order.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-community-member.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 
+require_once CSVP_PLUGIN_PATH . 'includes/class-community-store-voucher.php';
+
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
 require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
@@ -82,6 +84,7 @@ register_deactivation_hook(__FILE__, 'csvp_deactivate');
 function csvp_activate() {
     // Initialize database structure
     CSVP_Initialize_Database::create_tables();
+
     // Flush rewrite rules on activation
     flush_rewrite_rules();
 }
