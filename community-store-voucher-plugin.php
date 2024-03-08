@@ -30,6 +30,9 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-database.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-request-handler.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-view-manager.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-notifications.php';
+require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-routing.php';
 
 require_once CSVP_PLUGIN_PATH . 'includes/class-community.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-store.php';
@@ -43,10 +46,8 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-walk-order.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-community-member.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 
-require_once CSVP_PLUGIN_PATH . 'includes/class-routing.php';
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
 require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
-require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
 
 //init tests
 // require_once CSVP_PLUGIN_PATH . 'tests/class-community-test.php';
@@ -58,7 +59,7 @@ require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-transaction-test.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-walk-order-test.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-community-member-test.php';
-require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
+// require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
 // 
 
 

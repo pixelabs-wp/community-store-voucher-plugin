@@ -167,6 +167,7 @@ class CSVP_Initialize_Database {
             email_address varchar(255) NOT NULL,
             lesson varchar(255) NOT NULL,
             id_number varchar(20) NOT NULL,
+            wp_user_id varchar(20) NOT NULL,
             address varchar(255) NOT NULL,
             magnetic_card_number_association varchar(255) NOT NULL,
             card_balance decimal(10,2) NOT NULL,

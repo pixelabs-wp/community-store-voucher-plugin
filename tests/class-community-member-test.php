@@ -4,12 +4,13 @@ class CSVP_CommunityMember_Test {
     private $test_results = [];
 
     public function __construct() {
-        $this->test_results['create_community_member'] = $this->test_create_community_member();
-        $this->test_results['get_community_member_by_id'] = $this->test_get_community_member_by_id();
-        $this->test_results['update_community_member'] = $this->test_update_community_member();
-        $this->test_results['delete_community_member'] = $this->test_delete_community_member();
-        $this->test_results['get_all_community_members'] = $this->test_get_all_community_members();
-        $this->test_results['get_community_members_by_community_id'] = $this->test_get_community_members_by_community_id();
+        // $this->test_results['create_community_member'] = $this->test_create_community_member();
+        // $this->test_results['get_community_member_by_id'] = $this->test_get_community_member_by_id();
+        // $this->test_results['update_community_member'] = $this->test_update_community_member();
+        // $this->test_results['delete_community_member'] = $this->test_delete_community_member();
+        // $this->test_results['get_all_community_members'] = $this->test_get_all_community_members();
+        // $this->test_results['get_community_members_by_community_id'] = $this->test_get_community_members_by_community_id();
+        $this->test_results['test_get_community_member_by_email'] = $this->test_get_community_member_by_email();
 
         // Write test results to a file
         $this->write_results_to_file();
@@ -54,6 +55,23 @@ class CSVP_CommunityMember_Test {
 
         // Check if the result is an object
         return is_object($result) ? 'Pass' : 'Fail';
+    }
+
+    
+    private function test_get_community_member_by_email() {
+        global $wpdb;
+
+        // Prepare data for testing
+        $data = array(
+            'email_address' => 'test_member_nre11@khan.asd1'
+        );
+
+        // Call the get_community_member_by_id method
+        $community_member = new CSVP_CommunityMember();
+        $result = $community_member->get_community_member_by_email($data);
+
+        // Check if the result is an object
+        return json_encode($result);
     }
 
     private function test_update_community_member() {

@@ -2,13 +2,67 @@
 class CSVP_Community {
     // Properties
     private $table_name;
+    private $community_member;
+    public $community_id;
 
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community';
+        $this->community_member = new CSVP_CommunityMember();
+        $this->community_id = get_current_user_id();
     }
 
+    public static function render_dashboard(){
+        CSVP_View_Manager::load_view('dashboard');
+    }
+
+    public function render_manage_guys(){
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy"){
+
+            $payload = $_POST;
+            if(!$this->community_member->get_community_member_by_email($payload)){
+                $payload["is_active"] = true;
+                $payload["community_id"] = $this->community_id;
+                $payload["community_id"] = $this->community_id;
+                $payload["card_balance"] = 0;
+                $response = $this->community_member->create_community_member($payload);
+                if($response["status"] !== false){
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+                }
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, 'Guy with this email already exists');
+            }
+        }
+
+        $members_data = $this->community_member->get_community_members_by_community_id(array('community_id'=>$this->community_id));
+        $pageData["members"] = $members_data;
+
+        CSVP_View_Manager::load_view('manage-guys', $pageData);
+
+    }
+
+    public static function render_messages(){
+        CSVP_View_Manager::load_view('messages');
+    }
+
+    public static function render_transaction_history(){
+        CSVP_View_Manager::load_view('transaction-history');
+    }
+
+    public static function render_store_management(){
+        CSVP_View_Manager::load_view('store-management');
+    }
+
+    public static function render_order_management(){
+        CSVP_View_Manager::load_view('order-management');
+    }
+
+    public static function render_coupon_management(){
+        CSVP_View_Manager::load_view('coupon-management');
+    }
     /**
      * Function to create a new community in the database.
      *
@@ -50,7 +104,6 @@ class CSVP_Community {
             return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
         }
     }
-
 
     /**
      * Function to retrieve a community by its ID from the database.
@@ -107,7 +160,6 @@ class CSVP_Community {
             return new WP_Error('not_found', __('No communities found.', 'csvp'), array('status' => 404));
         }
     }
-
 
     /**
      * Function to update a community in the database based on its ID.

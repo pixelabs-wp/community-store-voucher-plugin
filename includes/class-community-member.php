@@ -10,36 +10,75 @@ class CSVP_CommunityMember {
         $this->table_name = $wpdb->prefix . 'csvp_community_member';
     }
 
+    //Method to render transaction history
+    public static function render_transaction_history(){
+        CSVP_View_Manager::load_view('transaction-history');
+    }
+
+    public static function render_loading_history(){
+        CSVP_View_Manager::load_view('loading-history');
+    }
+
+    public static function render_load_card(){
+        CSVP_View_Manager::load_view('load-card');
+    }
+
+    public static function render_coupons(){
+        CSVP_View_Manager::load_view('coupons');
+    }
+    
+    public static function render_shops(){
+        CSVP_View_Manager::load_view('shops');
+    }
+
     // Method to create a community member
     public function create_community_member($data) {
         global $wpdb;
 
-        // Insert data into the database
-        $wpdb->insert(
-            $this->table_name,
-            array(
-                'is_active' => $data['is_active'],
-                'community_id' => $data['community_id'],
-                'full_name' => $data['full_name'],
-                'phone_number' => $data['phone_number'],
-                'email_address' => $data['email_address'],
-                'lesson' => $data['lesson'],
-                'id_number' => $data['id_number'],
-                'address' => $data['address'],
-                'magnetic_card_number_association' => $data['magnetic_card_number_association'],
-                'card_balance' => $data['card_balance']
-            )
-        );
+        // Create WordPress user
+        $user_id = wp_create_user($data['email_address'], wp_generate_password(), $data['email_address']);
 
-        // Check if the insertion was successful
-        if ($wpdb->insert_id) {
-            // Return the ID of the newly inserted community member
-            return $wpdb->insert_id;
+        if (!is_wp_error($user_id)) {
+            // Insert data into the database
+            $wpdb->insert(
+                $this->table_name,
+                array(
+                    'is_active' => $data['is_active'],
+                    'community_id' => $data['community_id'],
+                    'full_name' => $data['full_name'],
+                    'phone_number' => $data['phone_number'],
+                    'email_address' => $data['email_address'],
+                    'lesson' => $data['lesson'],
+                    'id_number' => $data['id_number'],
+                    'address' => $data['address'],
+                    'magnetic_card_number_association' => $data['magnetic_card_number_association'],
+                    'card_balance' => $data['card_balance'],
+                    'wp_user_id' => $user_id // Pass WordPress user ID
+                )
+            );
+
+            // Check if the insertion was successful
+            if ($wpdb->insert_id) {
+                // Return the ID of the newly inserted community member
+                return array("status"=>true, "response"=>"Guy created successfully: ".$data["full_name"]);
+
+            } else {
+                $error_message = $wpdb->last_error;
+                // Delete user if insertion failed
+                wp_delete_user($user_id);
+                return array("status"=>false, "response"=>$error_message);
+            }
         } else {
-            // Return false if insertion failed
-            return false;
+            if (is_wp_error($user_id)) {
+                // Error occurred during user creation
+                $error_message = $user_id->get_error_message();
+                return array("status"=>false, "response"=>$error_message);
+            } else {
+                return array("status"=>false, "response"=>"Something Went Wrong");
+            }
         }
     }
+
 
     // Method to get a community member by ID
     public function get_community_member_by_id($data) {
@@ -51,6 +90,31 @@ class CSVP_CommunityMember {
         $query = $wpdb->prepare(
             "SELECT * FROM $this->table_name WHERE id = %d",
             $community_member_id
+        );
+
+        // Execute the query
+        $community_member = $wpdb->get_row($query);
+
+        // Check if a community member was found
+        if ($community_member) {
+            // Return community member data as an object
+            return $community_member;
+        } else {
+            // Return false if community member not found
+            return false;
+        }
+    }
+
+        // Method to get a community member by ID
+    public function get_community_member_by_email($data) {
+        global $wpdb;
+
+        $email_address = $data['email_address'];
+        
+        // Prepare SQL query to retrieve community member by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE email_address = %s",
+            $email_address
         );
 
         // Execute the query

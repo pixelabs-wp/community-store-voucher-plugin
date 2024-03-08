@@ -9,6 +9,29 @@ class CSVP_Store {
         $this->table_name = $wpdb->prefix . 'csvp_store';
     }
 
+    public static function render_community_management(){
+        CSVP_View_Manager::load_view('community-management');
+    }
+
+    public static function render_coupon_management(){
+        CSVP_View_Manager::load_view('coupon-management');
+    }
+
+    public static function render_order_management(){
+        CSVP_View_Manager::load_view('order-management');
+    }
+    
+    public static function render_order_request(){
+        CSVP_View_Manager::load_view('order-requests');
+    }
+
+    public static function render_return_management(){
+        CSVP_View_Manager::load_view('return-management');
+    }
+
+    public static function render_transaction_history(){
+        CSVP_View_Manager::load_view('transaction-history');
+    }
     /**
      * Function to create a new store in the database.
      *

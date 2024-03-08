@@ -10,13 +10,24 @@ class CSVP_Assets_Loader {
     // Enqueue styles for the front-end
     public static function enqueue_styles() {
         // Enqueue stylesheets
-        wp_enqueue_style('csvp-tabler-styles', CSVP_PLUGIN_URL . 'assets/dist/css/tabler.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-flags', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-flags.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-payments', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-payments.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-vendors', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-vendors.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-helper', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_script('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/js/demo-theme.min.js?1684106062', array('jquery'), CSVP_PLUGIN_VERSION, true);
+        wp_enqueue_style('csvp-tabler-styles', CSVP_PLUGIN_URL . 'assets/dist/css/tabler.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-flags', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-flags.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-payments', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-payments.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-vendors', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-vendors.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-helper', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-toastr', 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-inter', 'https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap', array(), CSVP_PLUGIN_VERSION);
+
+        wp_enqueue_script('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/js/demo-theme.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-apexcharts', CSVP_PLUGIN_URL . 'assets/dist/libs/apexcharts/dist/apexcharts.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-jsvectormap', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/js/jsvectormap.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-world', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/maps/world.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-world-merc', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/maps/world-merc.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-tabler', CSVP_PLUGIN_URL . 'assets/dist/js/tabler.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-demo', CSVP_PLUGIN_URL . 'assets/dist/js/demo.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-toastr', 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js', array('jquery'), CSVP_PLUGIN_VERSION.'1');
+        wp_enqueue_script('csvp-default', CSVP_PLUGIN_URL . 'assets/default.js', array('jquery'), CSVP_PLUGIN_VERSION.'1');
     }
 
     // Enqueue styles for the admin area
@@ -33,7 +44,7 @@ class CSVP_Assets_Loader {
         }
 
         // Enqueue scripts
-        // wp_enqueue_script('csvp-admin-scripts', CSVP_PLUGIN_URL . 'assets/js/admin-scripts.js', array('jquery'), CSVP_PLUGIN_VERSION, true);
+        // wp_enqueue_script('csvp-admin-scripts', CSVP_PLUGIN_URL . 'assets/js/admin-scripts.js', array(), CSVP_PLUGIN_VERSION, true);
 
         // Localize script data
         wp_localize_script('csvp-admin-scripts', 'csvp_admin_vars', array(
