@@ -1,0 +1,8 @@
+Test: create_walk_order_test | Result: Pass
+Test: get_walk_order_by_id_test | Result: Pass
+Test: update_walk_order_test | Result: Pass
+Test: delete_walk_order_test | Result: Pass
+Test: get_all_walk_orders_test | Result: Pass
+Test: get_walk_orders_by_community_id_test | Result: Pass
+Test: get_walk_orders_by_store_id_test | Result: Pass
+

@@ -186,5 +186,20 @@ class CSVP_Initialize_Database {
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_balance );
+
+        $message_table = $wpdb->prefix . 'csvp_community_message';
+        $message_table_sql = "CREATE TABLE $message_table (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            is_active tinyint(1) NOT NULL DEFAULT 1,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            community_member_id bigint(20) NOT NULL,
+            community_id bigint(20) NOT NULL,
+            full_name varchar(255) NOT NULL,
+            phone_no varchar(20) NOT NULL,
+            content text NOT NULL,
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+        dbDelta($message_table_sql);
     }
 }

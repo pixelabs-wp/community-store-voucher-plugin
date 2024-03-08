@@ -1,0 +1,57 @@
+### Class Structure:
+
+Transaction Class
+
+create_transaction
+get_transaction_by_id
+update_transaction
+delete_transaction
+get_all_transactions
+get_transactions_by_community_id
+get_transactions_by_store_id
+Order Class
+
+create_order
+get_order_by_id
+update_order
+delete_order
+get_all_orders
+get_orders_by_community_id
+get_orders_by_store_id
+Voucher Class
+
+create_voucher
+get_voucher_by_id
+update_voucher
+delete_voucher
+get_all_vouchers_by_store_id
+Voucher Transaction Class
+
+create_voucher_transaction
+get_voucher_transaction_by_id
+update_voucher_transaction
+delete_voucher_transaction
+get_all_voucher_transactions
+get_voucher_transactions_by_member_id
+get_voucher_transactions_by_voucher_id
+Walk Order Class
+
+create_walk_order
+get_walk_order_by_id
+update_walk_order
+delete_walk_order
+get_all_walk_orders
+get_walk_orders_by_community_id
+get_walk_orders_by_store_id
+Community Member Class
+
+create_community_member
+get_community_member_by_id
+update_community_member
+delete_community_member
+get_all_community_members
+get_community_members_by_community_id
+Balance (Added to Community Member Class)
+
+update_balance
+get_balance_by_community_member_id

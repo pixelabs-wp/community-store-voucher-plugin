@@ -38,6 +38,10 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-joining-request.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-transaction.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-order.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-voucher.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-voucher-transaction.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-walk-order.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-community-member.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 
 require_once CSVP_PLUGIN_PATH . 'includes/class-routing.php';
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
@@ -51,6 +55,10 @@ require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-joining-request-test.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-order-test.php';
 // require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-test.php';
+// require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-transaction-test.php';
+// require_once CSVP_PLUGIN_PATH . 'tests/class-walk-order-test.php';
+// require_once CSVP_PLUGIN_PATH . 'tests/class-community-member-test.php';
+require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
 // 
 
 
@@ -63,11 +71,11 @@ function csvp_init_plugin() {
     $router = new CSVP_Router();
     $router->register_routes();
 }
+add_action('plugins_loaded', 'csvp_init_plugin');
 
 register_activation_hook(__FILE__, 'csvp_activate');
 register_deactivation_hook(__FILE__, 'csvp_deactivate');
 
-add_action('plugins_loaded', 'csvp_init_plugin');
 
 // Activate the plugin
 function csvp_activate() {
@@ -83,47 +91,3 @@ function csvp_deactivate() {
     flush_rewrite_rules();
 }
 
-// Add custom rewrite rules
-function csvp_add_rewrite_rules() {
-    // Add custom rewrite rules here
-}
-add_action('init', 'csvp_add_rewrite_rules');
-
-// Add query vars
-function csvp_add_query_vars($vars) {
-    // Add custom query vars here
-    return $vars;
-}
-add_filter('query_vars', 'csvp_add_query_vars');
-
-// Handle custom actions
-function csvp_custom_actions() {
-    // Handle custom actions here
-}
-add_action('parse_request', 'csvp_custom_actions');
-
-
-// Joining Request:
-
-// create_joining_request()
-// get_joining_request_by_id($request_id)
-// update_joining_request($request_id, $data)
-// delete_joining_request($request_id)
-// get_all_joining_requests()
-// Transaction:
-
-
-// Order:
-
-
-// Voucher:
-
-// Voucher Transaction:
-
-
-// Walk Order:
-
-
-// Community Member:
-
-// Balance:

@@ -1,0 +1,7 @@
+Test: create_community_message | Result: Pass
+Test: get_community_message_by_id | Result: Pass
+Test: update_community_message | Result: Pass
+Test: delete_community_message | Result: Pass
+Test: get_all_community_messages | Result: Pass
+Test: get_community_messages_by_member_id | Result: Pass
+Test: get_community_messages_by_community_id | Result: Pass
