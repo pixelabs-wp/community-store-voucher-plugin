@@ -10,11 +10,13 @@ class CSVP_Assets_Loader {
     // Enqueue styles for the front-end
     public static function enqueue_styles() {
         // Enqueue stylesheets
-        wp_enqueue_style('csvp-tabler-styles', CSVP_PLUGIN_URL . 'dist/css/tabler.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-flags', CSVP_PLUGIN_URL . 'dist/css/tabler-flags.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-payments', CSVP_PLUGIN_URL . 'dist/css/tabler-payments.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-tabler-vendors', CSVP_PLUGIN_URL . 'dist/css/tabler-vendors.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_style('csvp-core', CSVP_PLUGIN_URL . 'dist/css/demo.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-styles', CSVP_PLUGIN_URL . 'assets/dist/css/tabler.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-flags', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-flags.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-payments', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-payments.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-tabler-vendors', CSVP_PLUGIN_URL . 'assets/dist/css/tabler-vendors.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_style('csvp-helper', CSVP_PLUGIN_URL . 'assets/dist/css/demo.min.css?1684106062', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-core', CSVP_PLUGIN_URL . 'assets/dist/js/demo-theme.min.js?1684106062', array('jquery'), CSVP_PLUGIN_VERSION, true);
     }
 
     // Enqueue styles for the admin area

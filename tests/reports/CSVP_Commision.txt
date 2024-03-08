@@ -1,0 +1,5 @@
+Test: create_commission_test | Result: Pass
+Test: get_commission_by_id_test | Result: Pass
+Test: get_all_commissions_test | Result: Pass
+Test: get_commissions_by_type_test | Result: Pass
+Test: get_commissions_by_entity_id_test | Result: Pass

@@ -4,18 +4,14 @@
 class CSVP_Router {
     // Array to store registered routes
     private $routes = array();
-
+    
     // Register routes
     public function register_routes() {
         // Define routes here
         $this->routes = apply_filters('csvp_routes', array(
-            'admin_page' => array(
-                'path' => 'admin-page',
-                'callback' => array($this, 'render_admin_page'),
-            ),
-            'public_page' => array(
-                'path' => 'public-page',
-                'callback' => array($this, 'render_public_page'),
+            'transaction_history' => array(
+                'path' => 'transaction-history',
+                'callback' => array($this, 'render_transaction_history'),
             ),
         ));
 
@@ -45,7 +41,7 @@ class CSVP_Router {
     }
 
     // Callback function to render public page
-    public function render_public_page() {
-        echo "sad";
+    public function render_transaction_history() {
+        CSVP_View_Manager::load_view('transaction-history');
     }
 }

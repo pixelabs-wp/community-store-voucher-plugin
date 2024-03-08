@@ -1,0 +1,124 @@
+  :root,
+  body {
+
+      font-family: "Noto Sans Hebrew", sans-serif;
+  }
+
+  .bg {
+      background-color: #EFEFEF !important;
+  }
+
+  .side-nav-item {
+      /* border: 1px solid #ccc; */
+      border-radius: 10px;
+      background-color: white;
+      text-align: right;
+  }
+
+  .side-navbar-nav {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin: 0px;
+  }
+
+  .side-navbar {}
+
+  .side-nav-link {
+      justify-content: flex-end !important;
+      padding: 0% !important;
+      gap: 10px;
+
+  }
+
+  .side-nav-link-icon {
+      display: flex !important;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      height: 50px !important;
+      width: 58px !important;
+      margin: 0px;
+      border-radius: 0 10px 10px 0;
+
+  }
+
+  .side-nav-link-title {
+      font-weight: 300;
+      font-size: 20px;
+      line-height: 25px;
+  }
+
+  #chart-tasks-overview .apexcharts-bar-series rect {
+      fill: linear-gradient(180deg, rgba(188, 155, 99, 0.75) 0%, #01051D 100%);
+  }
+
+  .br {
+      border-radius: 20px;
+  }
+
+  .bld {
+      font-size: 16px;
+      font-weight: 900;
+  }
+
+
+
+  @media (min-width: 992px) {
+      .md-w {
+          width: 80%;
+      }
+
+      .mq-t {
+          top: 96px !important;
+          width: 20% !important;
+          background-color: #EFEFEF !important;
+      }
+
+
+  }
+
+  @media (max-width: 991px) {
+      .mq-t {
+          background-color: inherit;
+          border: none !important;
+          /* width: 40px; */
+          z-index: 10;
+      }
+
+      .md-w {
+          top: -60px !important;
+          position: relative;
+      }
+
+
+      .community-member-header-bottombar {
+          flex-direction: column;
+          align-items: flex-end !important;
+      }
+  }
+
+  .logout-button {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 27px;
+      letter-spacing: 0em;
+      text-align: left;
+  }
+
+  .user-welcome {
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 27px;
+      letter-spacing: 0em;
+      text-align: right;
+      margin: 0;
+  }
+
+
+  .offcanvas.show:not(.hiding),
+  .offcanvas.showing {
+      padding-top: 140px;
+      background-color: #efefef;
+  }
