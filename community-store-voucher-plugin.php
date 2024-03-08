@@ -45,7 +45,6 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-walk-order.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-community-member.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 
-require_once CSVP_PLUGIN_PATH . 'includes/class-community-store-voucher.php';
 
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
 require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
@@ -70,7 +69,7 @@ $database = new CSVP_Initialize_Database();
 // Initialize the plugin
 function csvp_init_plugin() {
     global $database;
-
+    $roleManager = new CSVP_User_Roles();
     $router = new CSVP_Router();
     $router->register_routes();
 }
