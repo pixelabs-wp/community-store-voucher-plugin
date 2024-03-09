@@ -14,7 +14,7 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap');
 
         :root,
-        body {
+        body, h1, h2,h3, h4, h5, h6, p ,span {
 
             font-family: "Noto Sans Hebrew", sans-serif;
         }
@@ -364,7 +364,7 @@
             <header class="navbar-expand-sm  w-100 border border-dark">
                 <div class="" id="navbar-menu">
                     <div class="navbar bg">
-                        <div class="header-lower-bar container-xl bg ms-lg-0 ms-6">
+                        <div class="d-flex flex-row w-100 justify-content-between align-items-center px-4">
                             <button class="bg-white border-0 rounded py-2 px-4">
                                 <svg width="34" height="39" viewBox="0 0 34 39" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -376,7 +376,7 @@
                             </button>
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
-                                   <p class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p> 
+                                   <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p> 
                                 </div>
                             </div>
                         </div>

@@ -1,4 +1,4 @@
-<?php include CSVP_PLUGIN_PATH."views/community-manager/header.php" ?>
+<?php include CSVP_PLUGIN_PATH . "views/community-manager/header.php" ?>
 
 <style>
   .card-x {
@@ -226,10 +226,99 @@
 
 
   }
+
+
+
+
+  #filter-guys-popup-svg,
+  #filter-stores-popup-svg,
+  #date-range-popup-svg,
+  #csv-upload-popup-svg {
+    cursor: pointer;
+  }
+
+  .filter-card {
+    z-index: 2;
+  }
+  
+
+
+  
+  .guy-loading-history-data tbody {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .guy-loading-history-data {
+        width: 100%;
+    }
+
+    .guy-loading-history-data tr {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        gap: 20px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: rgba(239, 239, 239, 1);
+    }
+
+
+    .card-wrapper {
+        gap: 10px;
+        display: flex;
+        overflow: auto;
+        flex-wrap: wrap;
+    }
+
+    .card-wrapper .card {
+        width: 32.5%;
+        direction: rtl;
+        border-radius: 20px;
+    }
+
+    .card-wrapper .card .card-body h3 {
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    .card-wrapper .card .img-responsive {
+        border-radius: 14px 14px 0 0;
+    }
+
+    .card-wrapper .card .card-body {
+        border-radius: 0 0 14px 14px;
+
+    }
+
+    .card-wrapper .card .card-body button {
+        font-size: 25px;
+        font-weight: 600;
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+
+    @media screen and (max-width: 900px) {
+        .card-wrapper .card {
+            width: 48%;
+        }
+    }
+
+    @media screen and (max-width: 580px) {
+        .card-wrapper .card {
+            width: 100%;
+        }
+    }
+
+
 </style>
 
 
-
+<!-- edit guy modal -->
 <div class="modal fade" id="edit-guy-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
@@ -239,38 +328,111 @@
         <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">+ הוספת בחור חדש </h1>
       </div>
       <div class="modal-body">
-      <form action="" method="post">
-        <div class="container-fluid">
+        <form action="" method="post">
+          <div class="container-fluid">
+            <div class="container mt-5 d-flex flex-column gap-5">
+
+              <div class="row">
+
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">כתובת מייל </label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">מספר טלפון</label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">שם פרטי ומשפחה</label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">כתובת </label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">מספר תעודת זהות </label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+                <div class="mb-3 col-xl-4">
+                  <label class="form-label">שיעור</label>
+                  <input type="text" class="form-control" name="example-text-input">
+                </div>
+              </div>
+              <div class="row">
+                <label class="form-label">שיוך מספר כרטיס מגנטי</label>
+
+                <div class="wrapped-input mb-3 row align-items-center">
+                  <div class="col-auto">
+                    <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
+                  </div>
+                  <div class="col">
+                    <input type="text" class="form-control" style="border: none;" name="example-text-input">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row d-flex align-items-center">
+                <div class="mb-3 col-xl-6">
+                  <a href="#" class=" w-100 btn btn-dark">← מחיקת הבחור מהמערכת </a>
+
+                </div>
+                <div class="mb-3 col-xl-6">
+                  <a href="#" class=" w-100 btn btn-danger">← לעדכון פרטי הבחור לחץ כאן</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!-- add guy modal -->
+
+<div class="modal fade" id="add-guy-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content pb-4">
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="bg-dark pt-5 pb-5">
+        <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">+ הוספת בחור חדש </h1>
+      </div>
+      <div class="container-fluid " style="overflow: auto;">
+        <form action="" method="post">
           <div class="container mt-5 d-flex flex-column gap-5">
-
             <div class="row">
-
               <div class="mb-3 col-xl-4">
                 <label class="form-label">כתובת מייל </label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="email" class="form-control" name="email_address" required>
               </div>
               <div class="mb-3 col-xl-4">
                 <label class="form-label">מספר טלפון</label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="number" class="form-control" name="phone_number">
               </div>
               <div class="mb-3 col-xl-4">
                 <label class="form-label">שם פרטי ומשפחה</label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="text" class="form-control" name="full_name" required>
               </div>
             </div>
-
             <div class="row">
               <div class="mb-3 col-xl-4">
                 <label class="form-label">כתובת </label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="text" class="form-control" name="address">
               </div>
               <div class="mb-3 col-xl-4">
                 <label class="form-label">מספר תעודת זהות </label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="text" class="form-control" name="id_number">
               </div>
               <div class="mb-3 col-xl-4">
                 <label class="form-label">שיעור</label>
-                <input type="text" class="form-control" name="example-text-input">
+                <input type="text" class="form-control" name="lesson">
               </div>
             </div>
             <div class="row">
@@ -281,92 +443,158 @@
                   <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" style="border: none;" name="example-text-input">
+                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association">
                 </div>
               </div>
             </div>
+            <input type="hidden" name="csvp_request" value="add_guy">
+            <input type="submit" class="btn btn-dark " value="← להוספת הבחור למערכת לחץ כאן">
 
-            <div class="row d-flex align-items-center">
-              <div class="mb-3 col-xl-6">
-                <a href="#" class=" w-100 btn btn-dark">← מחיקת הבחור מהמערכת </a>
-
-              </div>
-              <div class="mb-3 col-xl-6">
-                <a href="#" class=" w-100 btn btn-danger">← לעדכון פרטי הבחור לחץ כאן</a>
-              </div>
-            </div>
           </div>
-        </div>
-</form>
       </div>
+      </form>
     </div>
   </div>
 
 </div>
 
 
-<div class="modal fade" id="add-guy-form" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content pb-4">
-      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      <div class="bg-dark pt-5 pb-5">
-        <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">+ הוספת בחור חדש </h1>
-      </div>
-      <div class="container-fluid " style="overflow: auto;">
-      <form action="" method="post">
-        <div class="container mt-5 d-flex flex-column gap-5">
-          <div class="row">
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">כתובת מייל </label>
-              <input type="email" class="form-control" name="email_address" required>
-            </div>
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">מספר טלפון</label>
-              <input type="number" class="form-control" name="phone_number">
-            </div>
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">שם פרטי ומשפחה</label>
-              <input type="text" class="form-control" name="full_name" required>
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">כתובת </label>
-              <input type="text" class="form-control" name="address">
-            </div>
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">מספר תעודת זהות </label>
-              <input type="text" class="form-control" name="id_number">
-            </div>
-            <div class="mb-3 col-xl-4">
-              <label class="form-label">שיעור</label>
-              <input type="text" class="form-control" name="lesson">
-            </div>
-          </div>
-          <div class="row">
-            <label class="form-label">שיוך מספר כרטיס מגנטי</label>
+<!-- Guy Details modal Starts here -->
 
-            <div class="wrapped-input mb-3 row align-items-center">
-              <div class="col-auto">
-                <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association">
-              </div>
-            </div>
-          </div>
-          <input type="hidden" name="csvp_request" value="add_guy">
-          <input type="submit" class="btn btn-dark " value="← להוספת הבחור למערכת לחץ כאן">
+<div class="modal fade" id="community-manager-guy-full-detail" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+        <div class="modal-content " style="overflow: auto;">
 
+            <div class="main-container">
+                <div class="guys-full-details-header w-100 d-flex flex-row bg-dark justify-content-between align-items-center p-4"
+                    style="direction: rtl;">
+                    <h2 class="text-white m-0"
+                        style="font-family: Noto Sans Hebrew; font-size: 36px; font-weight: 900;">משה וענונו
+                    </h2>
+                    <button class="btn bg-white rounded "
+                        style="font-family: Noto Sans Hebrew; font-size: 24px; font-weight: 800;">חזרה לתפריט
+                        הראשי</button>
+                </div>
+                <div class="guys-full-details-body d-flex flex-row justify-content-center row" style="direction: rtl;">
+
+                    <div class="col-lg-4 p-4 bg-gray rounded-3 my-5 mx-2" style="background: rgba(228, 228, 228, 1);">
+                        <h2><strong>פרטי הבחור:</strong></h2>
+                        <h2><strong>שם הבחור:</strong> משה וענונו</h2>
+                        <h2><strong>מס’ טלפון:</strong> 0546268012</h2>
+                        <h2><strong>כתובת מייל:</strong> elikako.m@gmail.com</h2>
+                        <h2><strong>מס’ תעודת זהות:</strong> 2042856524</h2>
+                        <h2><strong>מס’ כרטיס מגנטי:</strong> 154626652</h2>
+                    </div>
+
+                    <div class="col-lg-7 p-4 bg-white rounded-3 my-5 mx-2"
+                        style="box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); direction: rtl;">
+                        <h1>הסטוריית טעינות</h1>
+                        <div style="  height: 200px; overflow: auto;">
+                            <table class="guy-loading-history-data">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                                        <td><strong>סכום: </strong>250 ₪</td>
+                                        <td><strong>תאריך: </strong>24/07/2023</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                                        <td><strong>סכום: </strong>250 ₪</td>
+                                        <td><strong>תאריך: </strong>24/07/2023</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                                        <td><strong>סכום: </strong>250 ₪</td>
+                                        <td><strong>תאריך: </strong>24/07/2023</td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+ 
+                    <h2 style="font-size: 25px; padding-right: 40px; padding-top: 50px; font-weight: 800;"
+                        class="col-12 card-wrapper">שוברים להטענה</h2>
+
+                    <div class="col-12 p-5 card-wrapper">
+
+                        <div class="card">
+                            <!-- Photo -->
+                            <div class="img-responsive img-responsive-21x9 card-img-top"
+                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                            </div>
+                            <div class="card-body bg-white text-center">
+                                <h3 class="card-title">חליפה 70% צמר </h3>
+                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                                <button class="btn bg-black text-white">הטענת השובר</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <!-- Photo -->
+                            <div class="img-responsive img-responsive-21x9 card-img-top"
+                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                            </div>
+                            <div class="card-body bg-white text-center">
+                                <h3 class="card-title">חליפה 70% צמר </h3>
+                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                                <button class="btn bg-black text-white">הטענת השובר</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <!-- Photo -->
+                            <div class="img-responsive img-responsive-21x9 card-img-top"
+                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                            </div>
+                            <div class="card-body bg-white text-center">
+                                <h3 class="card-title">חליפה 70% צמר </h3>
+                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                                <button class="btn bg-black text-white">הטענת השובר</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <!-- Photo -->
+                            <div class="img-responsive img-responsive-21x9 card-img-top"
+                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                            </div>
+                            <div class="card-body bg-white text-center">
+                                <h3 class="card-title">חליפה 70% צמר </h3>
+                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                                <button class="btn bg-black text-white">הטענת השובר</button>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <!-- Photo -->
+                            <div class="img-responsive img-responsive-21x9 card-img-top"
+                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                            </div>
+                            <div class="card-body bg-white text-center">
+                                <h3 class="card-title">חליפה 70% צמר </h3>
+                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                                <button class="btn bg-black text-white">הטענת השובר</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </form>
     </div>
-  </div>
-
 </div>
 
+<!-- Guy Details modal Ends here -->
 
+
+
+
+
+
+<!-- page content -->
 
 <div class="container p-0">
 
@@ -399,14 +627,29 @@
     </div>
 
 
+
+
+    <!-- Filter Bar -->
     <div
       class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+
+
+      <!-- CSV Upload Filter  -->
       <div class="col-sm-5 col-lg-3 m-0">
-        <div class="card card-sm">
-          <div class="card-body-rounded p-1 m-1">
+        <div class="card card-sm p-relative" style="position: relative;">
+
+          <div class="filter-popup" id="csv-upload-popup" style="z-index: -1;">
+            <div class="mb-3" style="direction: rtl;">
+              <div class="form-label">Custom File Input</div>
+              <input type="file" class="form-control" />
+              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+            </div>
+          </div>
+
+          <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
-                <span
+                <span id="csv-upload-popup-svg"
                   class="bg-black text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
                   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -422,12 +665,37 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-5 col-lg-3 m-0 overflow-x">
-        <div class="card card-sm">
-          <div class="card-body-rounded p-1 m-1">
+
+
+      <!-- Date Range Filter   -->
+      <div class="col-sm-5 col-lg-3 m-0">
+        <div class="card card-sm p-relative" style="position: relative;">
+          <div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
+            <div class="mb-3">
+              <label class="form-label">Datepicker</label>
+
+              <div class="input-icon mb-2">
+                <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="2020-06-20" />
+                <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
+                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                    <path d="M16 3v4" />
+                    <path d="M8 3v4" />
+                    <path d="M4 11h16" />
+                    <path d="M11 15h1" />
+                    <path d="M12 15v3" />
+                  </svg>
+                </span>
+              </div>
+              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+            </div>
+          </div>
+          <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
-                <span
+                <span id="date-range-popup-svg"
                   class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
                   <svg width="42" height="40" viewBox="0 0 42 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -437,20 +705,40 @@
                 </span>
               </div>
               <div class="col">
-                <div class="font-weight-medium ts-text">
-                  סינון לפי מספר כרטיס
-                </div>
+                <div class="font-weight-medium ts-text">טווח תאריכים</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      <!-- Store Filter  -->
       <div class="col-sm-5 col-lg-3 m-0">
-        <div class="card card-sm">
-          <div class="card-body-rounded p-1 m-1">
+        <div class="card card-sm p-relative" style="position: relative;">
+
+          <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
+            <div class="" style="direction: rtl;">
+              <label class="form-label">סינון הזמנות</label>
+              <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value=""
+                multiple>
+                <option value="HTML">HTML</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="CSS">CSS</option>
+                <option value="jQuery">jQuery</option>
+                <option value="Bootstrap">Bootstrap</option>
+                <option value="Ruby">Ruby</option>
+                <option value="Python">Python</option>
+              </select>
+              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+            </div>
+
+          </div>
+
+          <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
-                <span
+                <span id="filter-stores-popup-svg"
                   class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
                   <svg width="42" height="40" viewBox="0 0 42 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -460,19 +748,38 @@
                 </span>
               </div>
               <div class="col">
-                <div class="font-weight-medium ts-text">סינון שיעורים</div>
+                <div class="font-weight-medium ts-text">סינון הזמנות</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+
+      <!-- Guy Filter -->
       <div class="col-sm-5 col-lg-3 m-0">
-        <div class="card card-sm">
-          <div class="card-body-rounded p-1 m-1">
+        <div class="card card-sm p-relative" style="position: relative;">
+          <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
+            <div class="" style="direction: rtl;">
+              <label class="form-label">סינון תת”ים</label>
+              <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
+                <option value="HTML">HTML</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="CSS">CSS</option>
+                <option value="jQuery">jQuery</option>
+                <option value="Bootstrap">Bootstrap</option>
+                <option value="Ruby">Ruby</option>
+                <option value="Python">Python</option>
+              </select>
+              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+            </div>
+
+          </div>
+          <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
-                <span
-                  class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
+                <span class="bg-white text-white avatar"
+                  id="filter-guys-popup-svg"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
                   <svg width="42" height="40" viewBox="0 0 42 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                       d="M1.75 7.62506H1.94525C2.24537 8.80423 2.92983 9.8498 3.89048 10.5966C4.85114 11.3434 6.03323 11.7488 7.25 11.7488C8.46677 11.7488 9.64886 11.3434 10.6095 10.5966C11.5702 9.8498 12.2546 8.80423 12.5547 7.62506H40.25C40.6147 7.62506 40.9644 7.48019 41.2223 7.22233C41.4801 6.96447 41.625 6.61473 41.625 6.25006C41.625 5.88538 41.4801 5.53565 41.2223 5.27779C40.9644 5.01992 40.6147 4.87506 40.25 4.87506H12.5547C12.2546 3.69588 11.5702 2.65031 10.6095 1.90353C9.64886 1.15676 8.46677 0.751343 7.25 0.751343C6.03323 0.751343 4.85114 1.15676 3.89048 1.90353C2.92983 2.65031 2.24537 3.69588 1.94525 4.87506H1.75C1.38533 4.87506 1.03559 5.01992 0.777728 5.27779C0.519866 5.53565 0.375 5.88538 0.375 6.25006C0.375 6.61473 0.519866 6.96447 0.777728 7.22233C1.03559 7.48019 1.38533 7.62506 1.75 7.62506ZM7.25 3.50006C7.7939 3.50006 8.32558 3.66134 8.77782 3.96352C9.23005 4.26569 9.58253 4.69518 9.79067 5.19768C9.99881 5.70017 10.0533 6.25311 9.94716 6.78655C9.84105 7.32 9.57914 7.81001 9.19454 8.1946C8.80995 8.5792 8.31995 8.84111 7.7865 8.94722C7.25305 9.05333 6.70012 8.99887 6.19762 8.79073C5.69512 8.58258 5.26563 8.23011 4.96346 7.77787C4.66128 7.32564 4.5 6.79396 4.5 6.25006C4.5 5.52071 4.78973 4.82124 5.30546 4.30551C5.82118 3.78979 6.52065 3.50006 7.25 3.50006ZM40.25 18.6251H40.0547C39.7546 17.4459 39.0702 16.4003 38.1095 15.6535C37.1489 14.9068 35.9668 14.5013 34.75 14.5013C33.5332 14.5013 32.3511 14.9068 31.3905 15.6535C30.4298 16.4003 29.7454 17.4459 29.4452 18.6251H1.75C1.38533 18.6251 1.03559 18.7699 0.777728 19.0278C0.519866 19.2856 0.375 19.6354 0.375 20.0001C0.375 20.3647 0.519866 20.7145 0.777728 20.9723C1.03559 21.2302 1.38533 21.3751 1.75 21.3751H29.4452C29.7454 22.5542 30.4298 23.5998 31.3905 24.3466C32.3511 25.0934 33.5332 25.4988 34.75 25.4988C35.9668 25.4988 37.1489 25.0934 38.1095 24.3466C39.0702 23.5998 39.7546 22.5542 40.0547 21.3751H40.25C40.6147 21.3751 40.9644 21.2302 41.2223 20.9723C41.4801 20.7145 41.625 20.3647 41.625 20.0001C41.625 19.6354 41.4801 19.2856 41.2223 19.0278C40.9644 18.7699 40.6147 18.6251 40.25 18.6251ZM34.75 22.7501C34.2061 22.7501 33.6744 22.5888 33.2222 22.2866C32.7699 21.9844 32.4175 21.5549 32.2093 21.0524C32.0012 20.5499 31.9467 19.997 32.0528 19.4636C32.1589 18.9301 32.4209 18.4401 32.8055 18.0555C33.1901 17.6709 33.6801 17.409 34.2135 17.3029C34.7469 17.1968 35.2999 17.2512 35.8024 17.4594C36.3049 17.6675 36.7344 18.02 37.0365 18.4722C37.3387 18.9245 37.5 19.4562 37.5 20.0001C37.5 20.7294 37.2103 21.4289 36.6945 21.9446C36.1788 22.4603 35.4793 22.7501 34.75 22.7501ZM40.25 32.3751H26.3048C26.0046 31.1959 25.3202 30.1503 24.3595 29.4035C23.3989 28.6568 22.2168 28.2513 21 28.2513C19.7832 28.2513 18.6011 28.6568 17.6405 29.4035C16.6798 30.1503 15.9954 31.1959 15.6953 32.3751H1.75C1.38533 32.3751 1.03559 32.5199 0.777728 32.7778C0.519866 33.0356 0.375 33.3854 0.375 33.7501C0.375 34.1147 0.519866 34.4645 0.777728 34.7223C1.03559 34.9802 1.38533 35.1251 1.75 35.1251H15.6953C15.9954 36.3042 16.6798 37.3498 17.6405 38.0966C18.6011 38.8434 19.7832 39.2488 21 39.2488C22.2168 39.2488 23.3989 38.8434 24.3595 38.0966C25.3202 37.3498 26.0046 36.3042 26.3048 35.1251H40.25C40.6147 35.1251 40.9644 34.9802 41.2223 34.7223C41.4801 34.4645 41.625 34.1147 41.625 33.7501C41.625 33.3854 41.4801 33.0356 41.2223 32.7778C40.9644 32.5199 40.6147 32.3751 40.25 32.3751ZM21 36.5001C20.4561 36.5001 19.9244 36.3388 19.4722 36.0366C19.0199 35.7344 18.6675 35.3049 18.4593 34.8024C18.2512 34.2999 18.1967 33.747 18.3028 33.2136C18.4089 32.6801 18.6709 32.1901 19.0555 31.8055C19.4401 31.4209 19.9301 31.159 20.4635 31.0529C20.997 30.9468 21.5499 31.0012 22.0524 31.2094C22.5549 31.4175 22.9844 31.77 23.2865 32.2222C23.5887 32.6745 23.75 33.2062 23.75 33.7501C23.75 34.4794 23.4603 35.1789 22.9445 35.6946C22.4288 36.2103 21.7293 36.5001 21 36.5001Z"
@@ -480,93 +787,267 @@
                   </svg>
                 </span>
               </div>
-              <div class="col">
-                <div class="font-weight-medium ts-text">סינון בחורים</div>
+              <div class="col" style="z-index:1">
+                <div class="font-weight-medium ts-text">סינון תת”ים</div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="card-x mt-3">
       <div class="resposive-table managing-guys-table" style="overflow-x: auto">
         <table class="table table-vcenter card-table">
 
           <tbody class="d-flex flex-column ts-text">
 
-          <?php foreach ($pageData["members"] as $key => $member) {
-            ?>
-             <tr>
-              <td class="ts-date">
-                <div class="card card-sm bg-black ts-round">
-                  <div class="card-body p-1 m-1">
-                    <div class="row align-items-center">
-                      <div class="col-auto">
+            <?php foreach ($pageData["members"] as $key => $member) {
+              ?>
+              <tr>
+                <td class="ts-date">
+                  <div class="card card-sm bg-black ts-round" style="direction: rtl;" data-bs-toggle="modal" data-bs-target="#community-manager-guy-full-detail">
+                    <div class="card-body p-1 m-1">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
 
-                      </div>
-                      <div class="col">
-                        <div class="font-weight-medium ts-text ts-text-color">
-                          ← לפרטים המלאים
+                        </div>
+                        <div class="col">
+                          <div class="font-weight-medium ts-text ts-text-color" style="direction: rtl;">
+                             לפרטים המלאים
+                             ←</div>
                         </div>
                       </div>
                     </div>
-                  </div>
-              </td>
-              <td class="text-muted ts-price data-vochers">מס’ שוברים פעילים: <span>5</span></td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset data: phone">מס’ טלפון: <span><?php echo $member["phone_number"]; ?></span></a>
-              </td>
-              <td class="text-muted ts-store-name data-lesson">שיעור: <span><?php echo $member["lesson"]; ?></span></td>
-              <td class="ts-guy-name">שם הבחור: </span><?php echo $member["full_name"]; ?><span></td>
-              <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40"
-                  viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <g clip-path="url(#clip0_0_2848)">
-                    <path
-                      d="M5.83334 39.9997H30.8333C32.3828 39.9953 33.8673 39.3763 34.9609 38.2786C36.0545 37.1809 36.668 35.6942 36.6667 34.1447V21.583C36.6667 21.141 36.4911 20.7171 36.1785 20.4045C35.866 20.0919 35.442 19.9163 35 19.9163C34.558 19.9163 34.1341 20.0919 33.8215 20.4045C33.5089 20.7171 33.3333 21.141 33.3333 21.583V34.1447C33.3356 34.8104 33.0736 35.4498 32.6049 35.9226C32.1362 36.3953 31.499 36.6628 30.8333 36.6663H5.83334C5.16762 36.6628 4.53051 36.3953 4.06181 35.9226C3.59311 35.4498 3.33112 34.8104 3.33334 34.1447V9.18801C3.33112 8.52229 3.59311 7.88289 4.06181 7.41013C4.53051 6.93737 5.16762 6.66987 5.83334 6.66634H18.3333C18.7754 6.66634 19.1993 6.49075 19.5118 6.17819C19.8244 5.86562 20 5.4417 20 4.99967C20 4.55765 19.8244 4.13372 19.5118 3.82116C19.1993 3.5086 18.7754 3.33301 18.3333 3.33301H5.83334C4.28384 3.33742 2.79939 3.95639 1.70576 5.05408C0.612136 6.15177 -0.00132849 7.63851 2.16018e-06 9.18801V34.1447C-0.00132849 35.6942 0.612136 37.1809 1.70576 38.2786C2.79939 39.3763 4.28384 39.9953 5.83334 39.9997Z"
-                      fill="#01051D" />
-                    <path
-                      d="M15.7583 17.5733L14.4434 23.5967C14.3838 23.8699 14.394 24.1537 14.4729 24.4219C14.5519 24.6902 14.697 24.9342 14.895 25.1317C15.0957 25.3241 15.3399 25.4654 15.6068 25.5434C15.8738 25.6215 16.1556 25.634 16.4284 25.58L22.4384 24.2617C22.7504 24.1931 23.0362 24.0364 23.2617 23.81L38.4517 8.62C38.9161 8.15569 39.2844 7.60446 39.5358 6.99778C39.7871 6.39109 39.9165 5.74084 39.9165 5.08416C39.9165 4.42748 39.7871 3.77723 39.5358 3.17055C39.2844 2.56387 38.9161 2.01263 38.4517 1.54833C37.4997 0.638557 36.2335 0.130859 34.9167 0.130859C33.5999 0.130859 32.3337 0.638557 31.3817 1.54833L16.215 16.7533C15.9874 16.9773 15.8289 17.2619 15.7583 17.5733ZM33.7384 3.90666C34.0554 3.6029 34.4776 3.43332 34.9167 3.43332C35.3558 3.43332 35.7779 3.6029 36.095 3.90666C36.4033 4.22105 36.5761 4.64382 36.5761 5.08416C36.5761 5.52451 36.4033 5.94728 36.095 6.26166L34.9167 7.44L32.56 5.08333L33.7384 3.90666ZM18.905 18.7633L30.195 7.445L32.5284 9.79L21.2334 21.1117L18.2417 21.7683L18.905 18.7633Z"
-                      fill="#01051D" />
-                  </g>
-                  <defs>
-                    <clipPath id="clip0_0_2848">
-                      <rect width="40" height="40" fill="white" />
-                    </clipPath>
-                  </defs>
-                </svg> </td>
-            </tr>
-      
+                </td>
+                <td class="text-muted ts-price data-vochers">מס’ שוברים פעילים: <span>5</span></td>
+                <td class="text-muted ts-product">
+                  <a href="#" class="text-reset data: phone">מס’ טלפון: <span>
+                      <?php echo $member["phone_number"]; ?>
+                    </span></a>
+                </td>
+                <td class="text-muted ts-store-name data-lesson">שיעור: <span>
+                    <?php echo $member["lesson"]; ?>
+                  </span></td>
+                <td class="ts-guy-name">שם הבחור: </span>
+                  <?php echo $member["full_name"]; ?><span>
+                </td>
+                <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40"
+                    viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_0_2848)">
+                      <path
+                        d="M5.83334 39.9997H30.8333C32.3828 39.9953 33.8673 39.3763 34.9609 38.2786C36.0545 37.1809 36.668 35.6942 36.6667 34.1447V21.583C36.6667 21.141 36.4911 20.7171 36.1785 20.4045C35.866 20.0919 35.442 19.9163 35 19.9163C34.558 19.9163 34.1341 20.0919 33.8215 20.4045C33.5089 20.7171 33.3333 21.141 33.3333 21.583V34.1447C33.3356 34.8104 33.0736 35.4498 32.6049 35.9226C32.1362 36.3953 31.499 36.6628 30.8333 36.6663H5.83334C5.16762 36.6628 4.53051 36.3953 4.06181 35.9226C3.59311 35.4498 3.33112 34.8104 3.33334 34.1447V9.18801C3.33112 8.52229 3.59311 7.88289 4.06181 7.41013C4.53051 6.93737 5.16762 6.66987 5.83334 6.66634H18.3333C18.7754 6.66634 19.1993 6.49075 19.5118 6.17819C19.8244 5.86562 20 5.4417 20 4.99967C20 4.55765 19.8244 4.13372 19.5118 3.82116C19.1993 3.5086 18.7754 3.33301 18.3333 3.33301H5.83334C4.28384 3.33742 2.79939 3.95639 1.70576 5.05408C0.612136 6.15177 -0.00132849 7.63851 2.16018e-06 9.18801V34.1447C-0.00132849 35.6942 0.612136 37.1809 1.70576 38.2786C2.79939 39.3763 4.28384 39.9953 5.83334 39.9997Z"
+                        fill="#01051D" />
+                      <path
+                        d="M15.7583 17.5733L14.4434 23.5967C14.3838 23.8699 14.394 24.1537 14.4729 24.4219C14.5519 24.6902 14.697 24.9342 14.895 25.1317C15.0957 25.3241 15.3399 25.4654 15.6068 25.5434C15.8738 25.6215 16.1556 25.634 16.4284 25.58L22.4384 24.2617C22.7504 24.1931 23.0362 24.0364 23.2617 23.81L38.4517 8.62C38.9161 8.15569 39.2844 7.60446 39.5358 6.99778C39.7871 6.39109 39.9165 5.74084 39.9165 5.08416C39.9165 4.42748 39.7871 3.77723 39.5358 3.17055C39.2844 2.56387 38.9161 2.01263 38.4517 1.54833C37.4997 0.638557 36.2335 0.130859 34.9167 0.130859C33.5999 0.130859 32.3337 0.638557 31.3817 1.54833L16.215 16.7533C15.9874 16.9773 15.8289 17.2619 15.7583 17.5733ZM33.7384 3.90666C34.0554 3.6029 34.4776 3.43332 34.9167 3.43332C35.3558 3.43332 35.7779 3.6029 36.095 3.90666C36.4033 4.22105 36.5761 4.64382 36.5761 5.08416C36.5761 5.52451 36.4033 5.94728 36.095 6.26166L34.9167 7.44L32.56 5.08333L33.7384 3.90666ZM18.905 18.7633L30.195 7.445L32.5284 9.79L21.2334 21.1117L18.2417 21.7683L18.905 18.7633Z"
+                        fill="#01051D" />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_0_2848">
+                        <rect width="40" height="40" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg> </td>
+              </tr>
 
-      
-            <?php
-          } ?>
-           
- 
-   
-      </tbody>
-      </table>
+
+
+              <?php
+            } ?>
+
+
+
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="col-12">
-    <div class="container p-0">
-      <div class="card-x">
-        <div class="card-body my-3 bg-black rounded-3 p-2">
-          <ul class="pagination p-1">
-            <li class="page-item page-prev disabled">
-              <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                  סה”כ שוברים: 87
-                </div>
-              </a>
-            </li>
+    <div class="col-12">
+      <div class="container p-0">
+        <div class="card-x">
+          <div class="card-body my-3 bg-black rounded-3 p-2">
+            <ul class="pagination p-1">
+              <li class="page-item page-prev disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                  <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
+                    סה”כ שוברים: 87
+                  </div>
+                </a>
+              </li>
 
-            <li class="page-item page-next">
-              <a class="page-link" href="#">
-                <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                  סה”כ בחורים: 450
-                </div>
-              </a>
-            </li>
-          </ul>
+              <li class="page-item page-next">
+                <a class="page-link" href="#">
+                  <div class="page-item-title text-white mx-4" style="font-size: 20px">
+                    סה”כ בחורים: 450
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
-</div></div></div></body>
+      </div>
+    </div>
+    </body>
+
+
+
+
+
+
+
+
+
+
+    <script>
+      // @formatter:off
+      document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('guys-select-tags'), {
+          copyClassesToDropdown: false,
+          dropdownParent: 'body',
+          controlInput: '<input>',
+          render: {
+            item: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+            option: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+          },
+        }));
+      });
+      // @formatter:on
+
+
+
+      // @formatter:off
+      document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+          copyClassesToDropdown: false,
+          dropdownParent: 'body',
+          controlInput: '<input>',
+          render: {
+            item: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+            option: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+          },
+        }));
+      });
+      // @formatter:on
+
+
+
+      // @formatter:off
+      document.addEventListener("DOMContentLoaded", function () {
+        var el;
+        window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+          copyClassesToDropdown: false,
+          dropdownParent: 'body',
+          controlInput: '<input>',
+          render: {
+            item: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+            option: function (data, escape) {
+              if (data.customProperties) {
+                return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+              }
+              return '<div>' + escape(data.text) + '</div>';
+            },
+          },
+        }));
+      });
+      // @formatter:on
+
+    </script>
+
+
+
+
+    <script>
+
+      // Wait for the document to be ready
+      jQuery(document).ready(function () {
+        // Attach click event to the SVG element
+        jQuery("#filter-guys-popup-svg").click(function () {
+          jQuery("#filter-guys-popup").css("z-index", function (index, value) {
+            return value == 3 ? -1 : 3;
+          });
+
+          // Toggle slide-down or slide-up animation
+        });
+      });
+
+
+      // Wait for the document to be ready
+      jQuery(document).ready(function () {
+        // Attach click event to the SVG element
+        jQuery("#filter-stores-popup-svg").click(function () {
+          jQuery("#filter-stores-popup").css("z-index", function (index, value) {
+            return value == 3 ? -1 : 3;
+          });
+
+          // Toggle slide-down or slide-up animation
+        });
+      });
+
+
+      // Wait for the document to be ready
+      jQuery(document).ready(function () {
+        // Attach click event to the SVG element
+        jQuery("#date-range-popup-svg").click(function () {
+          jQuery("#date-range-popup").css("z-index", function (index, value) {
+            return value == 3 ? -1 : 3;
+          });
+
+          // Toggle slide-down or slide-up animation
+        });
+      });
+
+      // Wait for the document to be ready
+      jQuery(document).ready(function () {
+        // Attach click event to the SVG element
+        jQuery("#csv-upload-popup-svg").click(function () {
+          jQuery("#csv-upload-popup").css("z-index", function (index, value) {
+            return value == 3 ? -1 : 3;
+          });
+
+          // Toggle slide-down or slide-up animation
+        });
+      });
+
+
+
+      // @formatter:off
+      document.addEventListener("DOMContentLoaded", function () {
+        window.Litepicker && (new Litepicker({
+          element: document.getElementById('datepicker-icon'),
+          buttonText: {
+            previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+            nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+          },
+        }));
+      });
+      // @formatter:on
+
+    </script>
