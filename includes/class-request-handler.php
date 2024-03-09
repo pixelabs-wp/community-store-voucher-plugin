@@ -6,11 +6,11 @@ class CSVP_Ajax_Handler{
     }
 
     public function process_request() {
-        // Check if the request is valid
-        if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'csvp_request' ) {
-            $this->send_error_response( 'Invalid request.', 400 );
+        // Check if the request is valid and has a valid nonce
+        if (!isset($_POST['action']) || $_POST['action'] !== 'csvp_ajax' || !isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'csvp_ajax_nonce')) {
+            $this->send_error_response('Invalid request.', 400);
         }
-
+        
         // Check if csvp_request and csvp_handler are specified
         if ( ! isset( $_POST['csvp_request'] ) || ! isset( $_POST['csvp_handler'] ) ) {
             $this->send_error_response( 'Class name or handler function not specified.', 400 );
