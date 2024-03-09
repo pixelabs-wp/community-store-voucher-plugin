@@ -1,6 +1,6 @@
 <?php
 
-class CSVP_WalkOrder {
+class CSVP_WalkOrder{
     // Properties
     private $table_name;
 

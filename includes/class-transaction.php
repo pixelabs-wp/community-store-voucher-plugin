@@ -1,5 +1,5 @@
 <?php
-class CSVPC_Transaction {
+class CSVP_Transaction{
     // Properties
     private $table_name;
 

@@ -65,6 +65,10 @@ class CSVP_Router {
                 'callback' => array('CSVP_Community', 'render_coupon_management'),
             ),
             // Store Manager Routes
+            'store_default_route' => array(
+                'path' => 'store',
+                'callback' => array('CSVP_Store', 'render_transaction_history'),
+            ),
             'store_community_management' => array(
                 'path' => 'store/manage-communities',
                 'callback' => array('CSVP_Store', 'render_community_management'),

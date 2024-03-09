@@ -1,16 +1,16 @@
 <?php
-class CSVP_Community {
+class CSVP_Community{
     // Properties
     private $table_name;
-    private $community_member;
     public $community_id;
+    public $community_member;
 
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community';
-        $this->community_member = new CSVP_CommunityMember();
         $this->community_id = get_current_user_id();
+        $this->community_member = new CSVP_CommunityMember();
     }
 
     public static function render_dashboard(){
@@ -18,6 +18,7 @@ class CSVP_Community {
     }
 
     public function render_manage_guys(){
+        //Sample Post Request
         if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy"){
 
             $payload = $_POST;
@@ -37,6 +38,7 @@ class CSVP_Community {
             }
         }
 
+        // Load Data
         $members_data = $this->community_member->get_community_members_by_community_id(array('community_id'=>$this->community_id));
         $pageData["members"] = $members_data;
 
@@ -63,6 +65,7 @@ class CSVP_Community {
     public static function render_coupon_management(){
         CSVP_View_Manager::load_view('coupon-management');
     }
+    
     /**
      * Function to create a new community in the database.
      *

@@ -69,6 +69,7 @@ class CSVP_Initialize_Database {
             store_id bigint(20) NOT NULL,
             requested_by varchar(255) NOT NULL, 
             request_status varchar(255) NOT NULL,
+            credit_limit varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_joining_request );
@@ -105,6 +106,21 @@ class CSVP_Initialize_Database {
         ) $charset_collate;";
         dbDelta( $sql_order );
 
+        $order_data = $wpdb->prefix . 'csvp_order_data';
+        $order_data_sql = "CREATE TABLE $order_data (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            is_active tinyint(1) NOT NULL DEFAULT 1,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            order_id bigint(20) NOT NULL,
+            product_name varchar(255) NOT NULL,
+            cost_per_item varchar(255) NOT NULL,
+            total_items varchar(255) NOT NULL,
+            total_cost varchar(255) NOT NULL,
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+        dbDelta($order_data_sql);
+
         // Voucher table
         $voucher_table = $wpdb->prefix . 'csvp_voucher';
         $sql_voucher = "CREATE TABLE $voucher_table (
@@ -113,6 +129,7 @@ class CSVP_Initialize_Database {
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             store_id bigint(20) NOT NULL,
+            community_id bigint(20) NOT NULL,
             product_name varchar(255) NOT NULL,
             voucher_price decimal(10,2) NOT NULL,
             normal_price decimal(10,2) NOT NULL,
@@ -120,6 +137,8 @@ class CSVP_Initialize_Database {
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_voucher );
+
+ 
 
         // Voucher transaction table
         $voucher_transaction_table = $wpdb->prefix . 'csvp_voucher_transaction';
