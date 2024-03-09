@@ -10,7 +10,7 @@ class CSVP_Ajax_Handler{
         if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'csvp_ajax' ) {
             $this->send_error_response( 'Invalid request.', 400 );
         }
-
+        
         // Check if csvp_request and csvp_handler are specified
         if ( ! isset( $_POST['csvp_request'] ) || ! isset( $_POST['csvp_handler'] ) ) {
             $this->send_error_response( 'Class name or handler function not specified.', 400 );
