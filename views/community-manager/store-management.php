@@ -143,8 +143,7 @@
         </div>
     </div> -->
 
-<div
-    class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+<div class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
     <div class="col-sm-5 col-lg-4 m-0">
         <div class="card card-sm">
             <div class="card-body-rounded p-1 m-1">

@@ -127,6 +127,19 @@
 		}
 
 	}
+
+	
+	
+	#filter-guys-popup-svg,
+	#filter-stores-popup-svg,
+	#date-range-popup-svg,
+	#csv-upload-popup-svg {
+		cursor: pointer;
+	}
+
+	.filter-card {
+		z-index: 2;
+	}
 </style>
 <!-- <div class="container">
 		<div class="bg-dark p-3 rounded-3">
@@ -175,14 +188,28 @@
 	</div> -->
 
 <div class="container">
+
+	<!-- Filter Bar -->
 	<div
-		class="row  row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+		class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+
+
+		<!-- CSV Upload Filter  -->
 		<div class="col-sm-5 col-lg-3 m-0">
-			<div class="card card-sm">
-				<div class="card-body-rounded p-1 m-1">
+			<div class="card card-sm p-relative" style="position: relative;">
+
+				<div class="filter-popup" id="csv-upload-popup" style="z-index: -1;">
+					<div class="mb-3" style="direction: rtl;">
+						<div class="form-label">Custom File Input</div>
+						<input type="file" class="form-control" />
+						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+					</div>
+				</div>
+
+				<div class="card-body-rounded p-1 m-1 filter-card">
 					<div class="row align-items-center">
 						<div class="col-auto">
-							<span
+							<span id="csv-upload-popup-svg"
 								class="bg-black text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
 								<svg width="44" height="44" viewBox="0 0 44 44" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -199,12 +226,41 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Date Range Filter   -->
 		<div class="col-sm-5 col-lg-3 m-0">
-			<div class="card card-sm">
-				<div class="card-body-rounded p-1 m-1">
+			<div class="card card-sm p-relative" style="position: relative;">
+				<div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
+					<div class="mb-3">
+						<label class="form-label">Datepicker</label>
+
+						<div class="input-icon mb-2">
+							<input class="form-control " placeholder="Select a date" id="datepicker-icon"
+								value="2020-06-20" />
+							<span
+								class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+									viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+									stroke-linecap="round" stroke-linejoin="round">
+									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+									<path
+										d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+									<path d="M16 3v4" />
+									<path d="M8 3v4" />
+									<path d="M4 11h16" />
+									<path d="M11 15h1" />
+									<path d="M12 15v3" />
+								</svg>
+							</span>
+						</div>
+						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+					</div>
+				</div>
+				<div class="card-body-rounded p-1 m-1 filter-card">
 					<div class="row align-items-center">
 						<div class="col-auto">
-							<span
+							<span id="date-range-popup-svg"
 								class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
 								<svg width="42" height="40" viewBox="0 0 42 40" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -221,12 +277,34 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Store Filter  -->
 		<div class="col-sm-5 col-lg-3 m-0">
-			<div class="card card-sm">
-				<div class="card-body-rounded p-1 m-1">
+			<div class="card card-sm p-relative" style="position: relative;">
+
+				<div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
+					<div class="" style="direction: rtl;">
+						<label class="form-label">סינון הזמנות</label>
+						<select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags"
+							value="" multiple>
+							<option value="HTML">HTML</option>
+							<option value="JavaScript">JavaScript</option>
+							<option value="CSS">CSS</option>
+							<option value="jQuery">jQuery</option>
+							<option value="Bootstrap">Bootstrap</option>
+							<option value="Ruby">Ruby</option>
+							<option value="Python">Python</option>
+						</select>
+						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+					</div>
+
+				</div>
+
+				<div class="card-body-rounded p-1 m-1 filter-card">
 					<div class="row align-items-center">
 						<div class="col-auto">
-							<span
+							<span id="filter-stores-popup-svg"
 								class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
 								<svg width="42" height="40" viewBox="0 0 42 40" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
@@ -243,13 +321,33 @@
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Guy Filter -->
 		<div class="col-sm-5 col-lg-3 m-0">
-			<div class="card card-sm">
-				<div class="card-body-rounded p-1 m-1">
+			<div class="card card-sm p-relative" style="position: relative;">
+				<div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
+					<div class="" style="direction: rtl;">
+						<label class="form-label">סינון תת”ים</label>
+						<select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value=""
+							multiple>
+							<option value="HTML">HTML</option>
+							<option value="JavaScript">JavaScript</option>
+							<option value="CSS">CSS</option>
+							<option value="jQuery">jQuery</option>
+							<option value="Bootstrap">Bootstrap</option>
+							<option value="Ruby">Ruby</option>
+							<option value="Python">Python</option>
+						</select>
+						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+					</div>
+
+				</div>
+				<div class="card-body-rounded p-1 m-1 filter-card">
 					<div class="row align-items-center">
 						<div class="col-auto">
-							<span
-								class="bg-white text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
+							<span class="bg-white text-white avatar"
+								id="filter-guys-popup-svg"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
 								<svg width="42" height="40" viewBox="0 0 42 40" fill="none"
 									xmlns="http://www.w3.org/2000/svg">
 									<path
@@ -258,8 +356,8 @@
 								</svg>
 							</span>
 						</div>
-						<div class="col">
-							<div class="font-weight-medium ts-text">סינון חנויות</div>
+						<div class="col" style="z-index:1">
+							<div class="font-weight-medium ts-text">סינון תת”ים</div>
 						</div>
 					</div>
 				</div>
@@ -634,3 +732,161 @@
 
 </div>
 </div></body>
+
+
+
+
+<script>
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    var el;
+    window.TomSelect && (new TomSelect(el = document.getElementById('guys-select-tags'), {
+      copyClassesToDropdown: false,
+      dropdownParent: 'body',
+      controlInput: '<input>',
+      render: {
+        item: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+        option: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+      },
+    }));
+  });
+  // @formatter:on
+
+
+
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    var el;
+    window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+      copyClassesToDropdown: false,
+      dropdownParent: 'body',
+      controlInput: '<input>',
+      render: {
+        item: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+        option: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+      },
+    }));
+  });
+  // @formatter:on
+
+
+
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    var el;
+    window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+      copyClassesToDropdown: false,
+      dropdownParent: 'body',
+      controlInput: '<input>',
+      render: {
+        item: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+        option: function (data, escape) {
+          if (data.customProperties) {
+            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+          }
+          return '<div>' + escape(data.text) + '</div>';
+        },
+      },
+    }));
+  });
+  // @formatter:on
+
+</script>
+
+
+
+
+<script>
+
+  // Wait for the document to be ready
+  jQuery(document).ready(function () {
+    // Attach click event to the SVG element
+    jQuery("#filter-guys-popup-svg").click(function () {
+      jQuery("#filter-guys-popup").css("z-index", function (index, value) {
+        return value == 3 ? -1 : 3;
+      });
+
+      // Toggle slide-down or slide-up animation
+    });
+  });
+
+
+  // Wait for the document to be ready
+  jQuery(document).ready(function () {
+    // Attach click event to the SVG element
+    jQuery("#filter-stores-popup-svg").click(function () {
+      jQuery("#filter-stores-popup").css("z-index", function (index, value) {
+        return value == 3 ? -1 : 3;
+      });
+
+      // Toggle slide-down or slide-up animation
+    });
+  });
+
+
+  // Wait for the document to be ready
+  jQuery(document).ready(function () {
+    // Attach click event to the SVG element
+    jQuery("#date-range-popup-svg").click(function () {
+      jQuery("#date-range-popup").css("z-index", function (index, value) {
+        return value == 3 ? -1 : 3;
+      });
+
+      // Toggle slide-down or slide-up animation
+    });
+  });
+
+   // Wait for the document to be ready
+   jQuery(document).ready(function () {
+    // Attach click event to the SVG element
+    jQuery("#csv-upload-popup-svg").click(function () {
+      jQuery("#csv-upload-popup").css("z-index", function (index, value) {
+        return value == 3 ? -1 : 3;
+      });
+
+      // Toggle slide-down or slide-up animation
+    });
+  });
+
+
+
+  // @formatter:off
+  document.addEventListener("DOMContentLoaded", function () {
+    window.Litepicker && (new Litepicker({
+      element: document.getElementById('datepicker-icon'),
+      buttonText: {
+        previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+        nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+      },
+    }));
+  });
+  // @formatter:on
+
+</script>

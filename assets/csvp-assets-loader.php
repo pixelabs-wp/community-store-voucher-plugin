@@ -24,10 +24,13 @@ class CSVP_Assets_Loader {
         wp_enqueue_script('csvp-jsvectormap', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/js/jsvectormap.min.js', array(), CSVP_PLUGIN_VERSION);
         wp_enqueue_script('csvp-world', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/maps/world.js', array(), CSVP_PLUGIN_VERSION);
         wp_enqueue_script('csvp-world-merc', CSVP_PLUGIN_URL . 'assets/dist/libs/jsvectormap/dist/maps/world-merc.js', array(), CSVP_PLUGIN_VERSION);
-        wp_enqueue_script('csvp-tabler', CSVP_PLUGIN_URL . 'assets/dist/js/tabler.min.js', array(), CSVP_PLUGIN_VERSION);
+        wp_enqueue_script('csvp-tabler', CSVP_PLUGIN_URL . 'assets/dist/js/tabler.min.js?1684106062', array(), CSVP_PLUGIN_VERSION);
         wp_enqueue_script('csvp-demo', CSVP_PLUGIN_URL . 'assets/dist/js/demo.min.js', array(), CSVP_PLUGIN_VERSION);
         wp_enqueue_script('csvp-toastr', 'https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js', array('jquery'), CSVP_PLUGIN_VERSION.'1');
         wp_enqueue_script('csvp-default', CSVP_PLUGIN_URL . 'assets/default.js', array('jquery'), CSVP_PLUGIN_VERSION.'1');
+        wp_enqueue_script('csvp-tomselect', CSVP_PLUGIN_URL . 'assets/dist/libs/tom-select/dist/js/tom-select.base.min.js?1695847769', array(), CSVP_PLUGIN_VERSION.'1');
+        wp_enqueue_script('csvp-picker', CSVP_PLUGIN_URL . 'assets/dist/libs/litepicker/dist/litepicker.js?1695847769', array(), CSVP_PLUGIN_VERSION.'1');
+
     }
 
     // Enqueue styles for the admin area

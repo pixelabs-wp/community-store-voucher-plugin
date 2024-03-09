@@ -205,12 +205,12 @@
                     aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-inline-flex">
+                <!-- <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-inline-flex">
                     שם הת”ת: תורת אליהו
 
-                </h1>
+                </h1> -->
 
-                <div class="offcanvas offcanvas-start" id="sidebar-menu">
+                <div class="offcanvas offcanvas-start mt-5" id="sidebar-menu">
                     <ul class="side-navbar-nav navbar-nav pt-lg-3">
                         <li class="side-nav-item nav-item">
                             <a class="side-nav-link nav-link" href="/store/transaction-history">
@@ -322,7 +322,7 @@
                                                                                         letter-spacing: 0em;
                                                                                         text-align: center;
                                                                                         ">
-                            שליחת הודעה לראש ת”ת
+                            שליחת הודעה למנהל המערכת
 
                             </button>
                             <p class="m-0" style="font-size: 20px;
@@ -330,7 +330,7 @@
                                                     line-height: 27px;
                                                     letter-spacing: 0em;
                                                     text-align: center;
-                                                    ">ת”ת תומכי תורה</p>
+                                                    ">שם החנות: בגיר</p>
                             </div>
                            
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">

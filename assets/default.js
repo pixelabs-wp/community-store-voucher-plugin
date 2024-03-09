@@ -17,3 +17,5 @@
             "hideMethod": "fadeOut"
         };
     });
+
+ 
