@@ -24,6 +24,7 @@ class CSVP_Order{
         $order_status = $data['order_status'];
         $order_total = $data['order_total'];
         $order_date = isset($data['order_date']) ? $data['order_date'] : current_time('mysql');
+        
 
         // Insert data into the database
         $wpdb->insert(
@@ -39,6 +40,8 @@ class CSVP_Order{
 
         // Check if the insertion was successful
         if ($wpdb->insert_id) {
+
+            $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
             // Return the ID of the newly inserted order
             return $wpdb->insert_id;
         } else {
@@ -67,8 +70,9 @@ class CSVP_Order{
 
         // Check if an order was found
         if ($order) {
+            $order_data = $this->get_order_data_by_id($order_id."_store");
             // Return order data as an object
-            return $order;
+            return array($order, "order_data" => $order_data);
         } else {
             // Return false if order not found
             return false;
@@ -119,6 +123,8 @@ class CSVP_Order{
         // Prepare SQL query to delete order by ID
         $query = $wpdb->prepare("DELETE FROM $this->table_name WHERE id = %d", $order_id);
 
+        $this->delete_order_data($order_id."_store");
+
         // Execute the query and return true on success, false on failure
         return $wpdb->query($query) !== false;
     }
@@ -136,6 +142,11 @@ class CSVP_Order{
 
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"]));
+            $results[$key]["order_data"] = $order_data;
+        }
 
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : null;
@@ -161,6 +172,11 @@ class CSVP_Order{
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
 
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"]));
+            $results[$key]["order_data"] = $order_data;
+        }
+
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : null;
     }
@@ -182,10 +198,68 @@ class CSVP_Order{
             $store_id
         );
 
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"]));
+            $results[$key]["order_data"] = $order_data;
+        }
+
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
 
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : null;
     }
+
+    // Function to retrieve order data by ID
+    function get_order_data_by_id($order_id)
+    {
+        global $wpdb;
+        $order_data_table = $wpdb->prefix . 'csvp_order_data';
+        $sql = $wpdb->prepare("SELECT * FROM $order_data_table WHERE order_id = %s", $order_id);
+        return $wpdb->get_results($sql, ARRAY_A);
+    }
+
+    // Function to add order data
+    function add_order_data($product_names, $cost_per_items, $total_items, $total_costs, $order_id)
+    {
+        global $wpdb;
+        $order_data_table = $wpdb->prefix . 'csvp_order_data';
+
+        // Prepare data for insertion
+        $data = [];
+        foreach ($product_names as $key => $product_name) {
+            $data[] = array(
+                'order_id' => $order_id,
+                'product_name' => $product_name,
+                'cost_per_item' => $cost_per_items[$key],
+                'total_items' => $total_items[$key],
+                'total_cost' => $total_costs[$key]
+            );
+        }
+
+        // Insert data into the database
+        foreach ($data as $row) {
+            $wpdb->insert($order_data_table, $row);
+        }
+    }
+
+    // Function to update order data (assuming you have an ID for each row)
+    function update_order_data($data)
+    {
+        global $wpdb;
+        $order_data_table = $wpdb->prefix . 'csvp_order_data';
+
+        foreach ($data as $row) {
+            $wpdb->update($order_data_table, $row, array('id' => $row['id']));
+        }
+    }
+
+    // Function to delete order data by ID
+    function delete_order_data($order_id)
+    {
+        global $wpdb;
+        $order_data_table = $wpdb->prefix . 'csvp_order_data';
+        $wpdb->delete($order_data_table, array('order_id' => $order_id));
+    }
+
 }

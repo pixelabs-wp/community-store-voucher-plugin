@@ -4,6 +4,7 @@ class CSVP_Community{
     private $table_name;
     public $community_id;
     public $community_member;
+    public $voucher;
 
     // Constructor
     public function __construct() {
@@ -11,10 +12,13 @@ class CSVP_Community{
         $this->table_name = $wpdb->prefix . 'csvp_community';
         $this->community_id = get_current_user_id();
         $this->community_member = new CSVP_CommunityMember();
+        $this->voucher = new CSVP_VoucherTransaction();
     }
 
-    public static function render_dashboard(){
-        CSVP_View_Manager::load_view('dashboard');
+    public function render_dashboard(){
+        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->community_id,"count"=>true));
+        echo $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->community_id, "status" => VOUCHER_STATUS_USED));
+        CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
     public function render_manage_guys(){

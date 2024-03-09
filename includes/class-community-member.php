@@ -188,15 +188,19 @@ class CSVP_CommunityMember {
         global $wpdb;
 
         $community_id = $data['community_id'];
+        $count = isset($data["count"]) ? true : false;
         
         // Prepare SQL query to select community members by community ID
         $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_id = %d", $community_id);
 
         // Execute the query and fetch the results
         $community_members = $wpdb->get_results($query, ARRAY_A);
-
-        // Return the results if any, otherwise return null
-        return !empty($community_members) ? $community_members : null;
+        if($count){
+            return $wpdb->num_rows;
+        } else {
+            // Return the results if any, otherwise return null
+            return !empty($community_members) ? $community_members : null;
+        }
     }
     /**
      * Get balance by member ID.
