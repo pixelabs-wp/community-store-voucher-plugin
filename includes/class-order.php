@@ -1,5 +1,5 @@
 <?php
-class CSVP_Order extends CSVP_Base{
+class CSVP_Order{
     // Properties
     private $table_name;
 

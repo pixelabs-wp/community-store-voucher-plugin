@@ -1,14 +1,16 @@
 <?php
-class CSVP_Community extends CSVP_Base{
+class CSVP_Community{
     // Properties
     private $table_name;
     public $community_id;
+    public $community_member;
 
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community';
-        $this->community_id = $this->user_id;
+        $this->community_id = get_current_user_id();
+        $this->community_member = new CSVP_CommunityMember();
     }
 
     public static function render_dashboard(){

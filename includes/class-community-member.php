@@ -1,6 +1,6 @@
 <?php
 
-class CSVP_CommunityMember extends CSVP_Base {
+class CSVP_CommunityMember {
     // Properties
     private $table_name;
 

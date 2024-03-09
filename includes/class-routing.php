@@ -1,7 +1,7 @@
 <?php
 
 // CSVP Router class for handling plugin routing
-class CSVP_Router extends CSVP_Base{
+class CSVP_Router {
     // Array to store registered routes
     private $routes = array();
     

@@ -1,6 +1,6 @@
 <?php
 
-class CSVP_VoucherTransaction extends CSVP_Base{
+class CSVP_VoucherTransaction{
     // Properties
     private $table_name;
 
