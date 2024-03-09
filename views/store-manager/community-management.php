@@ -1024,15 +1024,14 @@
 			<div class="add-new-benefit-form">
 				<form action="" method="POST" style="display: flex; flex-direction: column; gap: 10px;">
 					<h3>הוספת הטבה חדשה </h3>
-					<input class="form-control" type="text" name="" id="" placeholder="שם המוצר">
-					<input class="form-control" type="text" name="" id="" placeholder="מחיר מבצע">
-					<input class="form-control" type="text" name="" id="" placeholder="מחיר רגיל">
-					<input class="form-control" type="text" name="" id="" placeholder="העלאת תמונת מוצר">
-
+					<input class="form-control" type="text" name="product_name" id="" placeholder="שם המוצר">
+					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע">
+					<input class="form-control" type="number" name="normal_price" id="" placeholder="מחיר רגיל">
+					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר">
 					<div class="add-new-benefit-buttons">
 						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 						<button type="submit" class="btn btn-danger w-25">ביטול</button>
-
+						<input type="hidden" name="csvp_request" value="add_new_benifit">
 					</div>
 				</form>
 			</div>

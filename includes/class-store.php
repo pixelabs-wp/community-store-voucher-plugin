@@ -1,35 +1,59 @@
 <?php
-class CSVP_Store {
+class CSVP_Store
+{
     // Properties
     private $table_name;
-
+    public $store_manager_id;
+    private $voucher;
     // Constructor
-    public function __construct() {
+    public function __construct()
+    {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
+        $this->voucher = new CSVP_Voucher();
+        echo $this->store_manager_id = get_current_user_id();
     }
 
-    public static function render_community_management(){
+    public function render_community_management()
+    {
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_new_benifit") {
+            $payload = $_POST;
+                $payload["is_active"] = true;
+                $payload["store_id"] = $this->store_manager_id;
+
+                $response = $this->voucher->create_voucher($payload);
+                if ($response["status"] !== false) {
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+                }
+        }
+
         CSVP_View_Manager::load_view('community-management');
     }
 
-    public static function render_coupon_management(){
+    public static function render_coupon_management()
+    {
         CSVP_View_Manager::load_view('coupon-management');
     }
 
-    public static function render_order_management(){
+    public static function render_order_management()
+    {
         CSVP_View_Manager::load_view('order-management');
     }
-    
-    public static function render_order_request(){
+
+    public static function render_order_request()
+    {
         CSVP_View_Manager::load_view('order-requests');
     }
 
-    public static function render_return_management(){
+    public static function render_return_management()
+    {
         CSVP_View_Manager::load_view('return-management');
     }
 
-    public static function render_transaction_history(){
+    public static function render_transaction_history()
+    {
         CSVP_View_Manager::load_view('transaction-history');
     }
     /**
@@ -38,7 +62,8 @@ class CSVP_Store {
      * @param array $data An associative array containing store data.
      * @return int|false The ID of the newly inserted store if successful, or false on failure.
      */
-    public function create_store($data) {
+    public function create_store($data)
+    {
         global $wpdb;
 
         // Extract data from the input array
@@ -80,7 +105,8 @@ class CSVP_Store {
      * @param int $store_id The ID of the store to retrieve.
      * @return object|false Store data as an object if found, or false if not found.
      */
-    public function get_store_by_id($store_id) {
+    public function get_store_by_id($store_id)
+    {
         global $wpdb;
 
         // Prepare SQL query to retrieve store data by ID
@@ -108,7 +134,8 @@ class CSVP_Store {
      * @param string $store_name The name of the store to search for.
      * @return array Array of store objects matching the search criteria.
      */
-    public function get_stores_by_name($store_name) {
+    public function get_stores_by_name($store_name)
+    {
         global $wpdb;
 
         // Prepare SQL query to retrieve stores by name using LIKE operator
@@ -136,7 +163,8 @@ class CSVP_Store {
      * @param array $data Associative array containing the updated store data.
      * @return bool True on success, false on failure.
      */
-    public function update_store($data) {
+    public function update_store($data)
+    {
         global $wpdb;
 
         // Extract store ID from the data array
@@ -173,7 +201,8 @@ class CSVP_Store {
      * @param int $store_id ID of the store to delete.
      * @return bool True on success, false on failure.
      */
-    public function delete_store($store_id) {
+    public function delete_store($store_id)
+    {
         global $wpdb;
 
         // Prepare SQL query to delete store by ID
@@ -194,7 +223,8 @@ class CSVP_Store {
      *
      * @return array|null Array of stores on success, null on failure.
      */
-    public function get_all_stores() {
+    public function get_all_stores()
+    {
         global $wpdb;
 
         // Prepare SQL query to select all stores
