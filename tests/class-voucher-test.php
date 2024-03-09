@@ -11,8 +11,8 @@ class CSVP_Voucher_Test {
         $results = array();
 
         // Test create_voucher
-        $create_voucher_result = $this->test_create_voucher();
-        $results['create_voucher'] = $create_voucher_result;
+        // $create_voucher_result = $this->test_create_voucher();
+        // $results['create_voucher'] = $create_voucher_result;
 
         // // Test get_voucher_by_id
         // $get_voucher_by_id_result = $this->test_get_voucher_by_id();

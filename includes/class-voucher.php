@@ -18,6 +18,7 @@ class CSVP_Voucher{
         $normal_price = $data['normal_price'];
         $store_id = $data['store_id'];
         $community_id = $data['community_id'];
+        $wp_user = get_current_user_id();
 
         if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
 
@@ -53,7 +54,8 @@ class CSVP_Voucher{
                             'normal_price' => $normal_price,
                             'product_image' => $file_path,
                             'store_id' => $store_id,
-                            'community_id' => $community_id
+                            'community_id' => $community_id,
+                            'wp_user'=>  $wp_user
                         ) // Data to be inserted
                     );
 

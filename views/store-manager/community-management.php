@@ -1132,7 +1132,7 @@
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
 		newRow.innerHTML = `
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" placeholder="סך הכל"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="" placeholder="סך הכל"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="cost-input" placeholder="עלות לפריט"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="amount-input" placeholder="כמות"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="name-input" placeholder="שם המוצר"></th>`;
@@ -1173,9 +1173,9 @@
 		// Extract data from data attributes of the button
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
-		var community_id = button.data('id');
 		jQuery('#benifit_community_id').val(id);
 		jQuery('#credit_limit_community_id').val(id);
+		jQuery('#order_request_community_id').val(id);
        	jQuery.ajax({
             url: "<?php echo admin_url('admin-ajax.php'); ?>",
             type: 'POST',
@@ -1183,7 +1183,9 @@
 				action: 'csvp_ajax', // Action hook
 				csvp_request: 'CSVP_Community', // Action hook
                 csvp_handler: 'get_community_data_for_store_popup', // Action hook
-                community_id: id // Pass community ID
+                data:	{
+					community_id: id
+				}
             },
             success: function(response) {
                 // Handle success response

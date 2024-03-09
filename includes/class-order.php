@@ -21,7 +21,7 @@ class CSVP_Order{
         // Extract data from the input array
         $community_id = $data['community_id'];
         $store_id = $data['store_id'];
-        $order_status = $data['order_status'];
+        $order_status = isset($data['order_status']) ? $data['order_status'] : ORDER_STATUS_PENDING;
         $order_total = $data['order_total'];
         $order_date = isset($data['order_date']) ? $data['order_date'] : current_time('mysql');
         
