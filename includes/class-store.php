@@ -1,17 +1,15 @@
 <?php
-class CSVP_Store
+class CSVP_Store extends CSVP_Base
 {
     // Properties
     private $table_name;
     public $store_manager_id;
-    private $voucher;
     // Constructor
     public function __construct()
     {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
-        $this->voucher = new CSVP_Voucher();
-        echo $this->store_manager_id = get_current_user_id();
+        echo $this->store_manager_id = $this->user_id;
     }
 
     public function render_community_management()

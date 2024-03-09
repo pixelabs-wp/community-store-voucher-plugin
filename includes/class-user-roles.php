@@ -1,5 +1,5 @@
 <?php
-class CSVP_User_Roles {
+class CSVP_User_Roles extends CSVP_Base{
     // Define user roles
     const ROLE_SYSTEM_ADMIN = 'system_administrator';
     const ROLE_COMMUNITY_MANAGER = 'community_manager';

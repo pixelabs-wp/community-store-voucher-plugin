@@ -1,5 +1,5 @@
 <?php
-class CSVP_View_Manager {
+class CSVP_View_Manager extends CSVP_Base{
     // Constructor
     public function __construct() {}
 

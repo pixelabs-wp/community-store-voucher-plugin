@@ -1,5 +1,5 @@
 <?php
-class CSVP_JoiningRequest {
+class CSVP_JoiningRequest extends CSVP_Base{
     // Properties
     private $table_name;
 
