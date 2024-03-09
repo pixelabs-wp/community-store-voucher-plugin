@@ -1,5 +1,5 @@
 <?php
-class CSVP_Ajax_Handler extends CSVP_Base{
+class CSVP_Ajax_Handler{
     public function __construct() {
         add_action( 'wp_ajax_csvp_request', array( $this, 'process_request' ) );
         add_action( 'wp_ajax_nopriv_csvp_request', array( $this, 'process_request' ) );
