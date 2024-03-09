@@ -4,6 +4,7 @@ class CSVP_Community{
     private $table_name;
     public $community_id;
     public $community_member;
+    public $voucher;
 
     // Constructor
     public function __construct() {
@@ -11,10 +12,13 @@ class CSVP_Community{
         $this->table_name = $wpdb->prefix . 'csvp_community';
         $this->community_id = get_current_user_id();
         $this->community_member = new CSVP_CommunityMember();
+        $this->voucher = new CSVP_VoucherTransaction();
     }
 
-    public static function render_dashboard(){
-        CSVP_View_Manager::load_view('dashboard');
+    public function render_dashboard(){
+        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->community_id,"count"=>true));
+        echo $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->community_id, "status" => VOUCHER_STATUS_USED));
+        CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
     public function render_manage_guys(){
@@ -142,7 +146,7 @@ class CSVP_Community{
      * @param string $community_name The name of the community to search for.
      * @return array|WP_Error Array of community objects matching the search criteria, or WP_Error on failure.
      */
-    public function get_communities_by_name($community_name) {
+    public function get_communities_by_name($community_name = "") {
         global $wpdb;
 
         // Prepare SQL query to retrieve communities by name using LIKE operator
@@ -161,6 +165,70 @@ class CSVP_Community{
         } else {
             // Send error response
             return new WP_Error('not_found', __('No communities found.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_all_communities_for_store() {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+        $query = $wpdb->prepare("
+            SELECT 
+                c.id AS community_id,
+                c.community_name,
+                COUNT(DISTINCT cm.id) AS active_members_count,
+                SUM(o.order_total) AS total_order_amount
+            FROM 
+                {$wpdb->prefix}csvp_community c
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+            GROUP BY 
+                c.id, c.community_name
+        ");
+        
+        $communities = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($communities) {
+            // Return array of community objects
+            return $communities;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_community_data_for_store_popup() {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+        $query = $wpdb->prepare("
+            SELECT 
+                c.id AS community_id,
+                c.community_name,
+                COUNT(DISTINCT cm.id) AS active_members_count,
+                SUM(o.order_total) AS total_order_amount
+            FROM 
+                {$wpdb->prefix}csvp_community c
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+            GROUP BY 
+                c.id, c.community_name
+        ");
+        
+        $communities = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($communities) {
+            // Return array of community objects
+            return $communities;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));
         }
     }
 

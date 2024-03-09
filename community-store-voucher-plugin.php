@@ -27,6 +27,7 @@ define('CSVP_VIEWS', CSVP_PLUGIN_PATH."views");
 
 // Include necessary files
 
+require_once CSVP_PLUGIN_PATH . 'includes/class-community-store-voucher.php';
 
 require_once CSVP_PLUGIN_PATH . 'includes/class-database.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-request-handler.php';
@@ -52,21 +53,28 @@ require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
 
 
-//init tests
-// require_once CSVP_PLUGIN_PATH . 'tests/class-community-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-store-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-commision-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-joining-request-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-order-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-transaction-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-walk-order-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-community-member-test.php';
-// require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
-// 
+add_action( 'init', 'run_tests' );
+
+function run_tests() {
+    //init tests
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-community-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-store-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-commision-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-joining-request-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-order-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-voucher-transaction-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-walk-order-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-community-member-test.php';
+    // require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
+    // 
+}
+
+
 
 
 $database = new CSVP_Initialize_Database();
+$request = new CSVP_Ajax_Handler();
 
 // Initialize the plugin
 function csvp_init_plugin() {

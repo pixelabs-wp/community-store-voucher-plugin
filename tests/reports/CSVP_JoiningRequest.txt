@@ -1,4 +1,1 @@
 Test: create_joining_request | Result: Pass
-Test: get_joining_requests_by_requested_by | Result: Pass
-Test: update_joining_request | Result: 1
-Test: delete_joining_request | Result: Pass

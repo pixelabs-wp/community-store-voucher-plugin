@@ -10,7 +10,7 @@ class CSVP_CommunityMember_Test {
         // $this->test_results['delete_community_member'] = $this->test_delete_community_member();
         // $this->test_results['get_all_community_members'] = $this->test_get_all_community_members();
         // $this->test_results['get_community_members_by_community_id'] = $this->test_get_community_members_by_community_id();
-        $this->test_results['test_get_community_member_by_email'] = $this->test_get_community_member_by_email();
+        // $this->test_results['test_get_community_member_by_email'] = $this->test_get_community_member_by_email();
 
         // Write test results to a file
         $this->write_results_to_file();

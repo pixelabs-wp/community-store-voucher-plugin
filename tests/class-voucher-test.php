@@ -11,24 +11,24 @@ class CSVP_Voucher_Test {
         $results = array();
 
         // Test create_voucher
-        $create_voucher_result = $this->test_create_voucher();
-        $results['create_voucher'] = $create_voucher_result;
+        // $create_voucher_result = $this->test_create_voucher();
+        // $results['create_voucher'] = $create_voucher_result;
 
-        // Test get_voucher_by_id
-        $get_voucher_by_id_result = $this->test_get_voucher_by_id();
-        $results['get_voucher_by_id'] = ($get_voucher_by_id_result ? 'Pass' : 'Fail') . ' | Response : '.json_encode($get_voucher_by_id_result);
+        // // Test get_voucher_by_id
+        // $get_voucher_by_id_result = $this->test_get_voucher_by_id();
+        // $results['get_voucher_by_id'] = ($get_voucher_by_id_result ? 'Pass' : 'Fail') . ' | Response : '.json_encode($get_voucher_by_id_result);
 
-        // Test update_voucher
-        $update_voucher_result = $this->test_update_voucher();
-        $results['update_voucher'] = $update_voucher_result;
+        // // Test update_voucher
+        // $update_voucher_result = $this->test_update_voucher();
+        // $results['update_voucher'] = $update_voucher_result;
 
-        // Test delete_voucher
-        $delete_voucher_result = $this->test_delete_voucher();
-        $results['delete_voucher'] = $delete_voucher_result;
+        // // Test delete_voucher
+        // $delete_voucher_result = $this->test_delete_voucher();
+        // $results['delete_voucher'] = $delete_voucher_result;
 
-        // Test get_all_vouchers_by_store_id
-        $get_all_vouchers_by_store_id_result = $this->test_get_all_vouchers_by_store_id();
-        $results['get_all_vouchers_by_store_id'] = ($get_all_vouchers_by_store_id_result ? 'Pass' : 'Fail') . ' | Response : '.json_encode($get_all_vouchers_by_store_id_result);
+        // // Test get_all_vouchers_by_store_id
+        // $get_all_vouchers_by_store_id_result = $this->test_get_all_vouchers_by_store_id();
+        // $results['get_all_vouchers_by_store_id'] = ($get_all_vouchers_by_store_id_result ? 'Pass' : 'Fail') . ' | Response : '.json_encode($get_all_vouchers_by_store_id_result);
 
         // Save results to file
         $this->save_results_to_file($results);

@@ -1,6 +1,1 @@
-Test: create_community_member | Result: Pass
-Test: get_community_member_by_id | Result: Pass
-Test: update_community_member | Result: Pass
-Test: delete_community_member | Result: Pass
-Test: get_all_community_members | Result: Pass
 Test: get_community_members_by_community_id | Result: Pass

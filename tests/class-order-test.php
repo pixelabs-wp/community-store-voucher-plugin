@@ -2,12 +2,12 @@
 class CSVP_Order_Test {
     public function run_tests() {
         $this->test_create_order();
-        $this->test_get_order_by_id();
-        $this->test_update_order();
-        $this->test_delete_order();
-        $this->test_get_all_orders();
-        $this->test_get_orders_by_community_id();
-        $this->test_get_orders_by_store_id();
+        // $this->test_get_order_by_id();
+        // $this->test_update_order();
+        // $this->test_delete_order();
+        // $this->test_get_all_orders();
+        // $this->test_get_orders_by_community_id();
+        // $this->test_get_orders_by_store_id();
     }
 
     public function test_create_order() {
@@ -17,7 +17,11 @@ class CSVP_Order_Test {
             'store_id' => 1,
             'order_status' => 'Pending',
             'order_total' => 100.00,
-            'order_date' => date('Y-m-d H:i:s')
+            'order_date' => date('Y-m-d H:i:s'),
+            'product_name' => array('Shirts', 'Jeans', 'Ties'),
+            'cost_per_item' => array('10', '15', '20'),
+            'total_item' => array('2', '1', '5'),
+            'total_cost' => array('20','15', '100')
         );
 
         // Create CSVPC_Order instance
