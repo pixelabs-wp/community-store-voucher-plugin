@@ -11,7 +11,7 @@ class CSVP_Store
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
         $this->voucher = new CSVP_Voucher();
-        echo $this->store_manager_id = get_current_user_id();
+        $this->store_manager_id = get_current_user_id();
     }
 
     public function render_community_management()
@@ -28,7 +28,6 @@ class CSVP_Store
                     CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
                 }
         }
-
         CSVP_View_Manager::load_view('community-management');
     }
 

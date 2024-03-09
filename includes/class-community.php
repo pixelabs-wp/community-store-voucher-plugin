@@ -142,7 +142,7 @@ class CSVP_Community {
      * @param string $community_name The name of the community to search for.
      * @return array|WP_Error Array of community objects matching the search criteria, or WP_Error on failure.
      */
-    public function get_communities_by_name($community_name) {
+    public function get_communities_by_name($community_name = "") {
         global $wpdb;
 
         // Prepare SQL query to retrieve communities by name using LIKE operator

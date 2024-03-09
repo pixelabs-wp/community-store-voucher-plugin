@@ -1280,214 +1280,30 @@
 	</div>
 </div>
 
-
-
-
-
-
-
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
 
-	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
-		data-bs-target="#community-details">
+	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details">
 		<!-- Photo -->
 		<div class="card-body d-flex p-0">
-
 			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
 				<div class="store-management-information rounded-3">
 					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
 						<table>
-
 							<tr class="d-flex flex-column gap-2 text-center">
-
 								<td><strong>שם החנות: </strong>בגיר</td>
 								<td><strong>כמות הזמנות: </strong>15</td>
 								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
 
 							</tr>
-
 						</table>
 					</div>
-
 				</div>
 				<a class="btn btn-dark">← להסדרים וחובות</a>
-
-
 			</div>
-
 			<div class="w-35"
 				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 			</div>
-
 		</div>
-
-	</div>
-
-	<div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-		data-bs-target="#community-details">
-		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-
-							<tr class="d-flex flex-column gap-2 text-center">
-
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
-
-							</tr>
-
-						</table>
-					</div>
-
-				</div>
-				<a href="" class="btn btn-dark">← להסדרים וחובות</a>
-			</div>
-
-			<div class="w-35"
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-
-		</div>
-
-	</div>
-
-
-	<div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-		data-bs-target="#community-details">
-		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-
-							<tr class="d-flex flex-column gap-2 text-center">
-
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
-
-							</tr>
-
-						</table>
-					</div>
-
-				</div>
-				<a href="" class="btn btn-dark">← להסדרים וחובות</a>
-			</div>
-
-			<div class="w-35 "
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-
-		</div>
-
-	</div>
-
-
-	<div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-		data-bs-target="#community-details">
-		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-
-							<tr class="d-flex flex-column gap-2 text-center">
-
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
-
-							</tr>
-
-						</table>
-					</div>
-
-				</div>
-				<a href="" class="btn btn-dark">← להסדרים וחובות</a>
-			</div>
-
-			<div class="w-35 "
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-
-		</div>
-
-	</div>
-
-	<div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-		data-bs-target="#community-details">
-		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-
-							<tr class="d-flex flex-column gap-2 text-center">
-
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
-
-							</tr>
-
-						</table>
-					</div>
-
-				</div>
-				<a href="" class="btn btn-dark">← להסדרים וחובות</a>
-			</div>
-
-			<div class="w-35 "
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-
-		</div>
-
-	</div>
-
-	<div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-		data-bs-target="#community-details">
-		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-
-							<tr class="d-flex flex-column gap-2 text-center">
-
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
-
-							</tr>
-
-						</table>
-					</div>
-
-				</div>
-				<a href="" class="btn btn-dark">← להסדרים וחובות</a>
-			</div>
-
-			<div class="w-35 "
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-
-		</div>
-
 	</div>
 </div>
 
