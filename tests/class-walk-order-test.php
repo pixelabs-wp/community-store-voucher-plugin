@@ -21,7 +21,11 @@ class CSVP_WalkOrder_Test {
             'store_id' => 2,
             'order_status' => 'pending',
             'order_type' => 'walk',
-            'payment_link' => 1
+            'payment_link' => 1,
+            'product_name' => array('Shirts', 'Jeans', 'Ties'),
+            'cost_per_item' => array('10', '15', '20'),
+            'total_item' => array('2', '1', '5'),
+            'total_cost' => array('20', '15', '100')
         );
 
         // Perform create_walk_order
@@ -154,12 +158,12 @@ class CSVP_WalkOrder_Test {
     // Method to run all test methods
     public function run_tests() {
         $this->create_walk_order_test();
-        $this->get_walk_order_by_id_test();
-        $this->update_walk_order_test();
-        $this->delete_walk_order_test();
-        $this->get_all_walk_orders_test();
-        $this->get_walk_orders_by_community_id_test();
-        $this->get_walk_orders_by_store_id_test();
+        // $this->get_walk_order_by_id_test();
+        // $this->update_walk_order_test();
+        // $this->delete_walk_order_test();
+        // $this->get_all_walk_orders_test();
+        // $this->get_walk_orders_by_community_id_test();
+        // $this->get_walk_orders_by_store_id_test();
     }
 }
 

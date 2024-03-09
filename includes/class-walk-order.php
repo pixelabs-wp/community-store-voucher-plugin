@@ -3,11 +3,14 @@
 class CSVP_WalkOrder{
     // Properties
     private $table_name;
+    private $order;
 
     // Constructor
     public function __construct() {
         global $wpdb;
-        $this->table_name = $wpdb->prefix . 'csvp_walk_order';
+        $this->
+        table_name = $wpdb->prefix . 'csvp_walk_order';
+        $this->order = new CSVP_Order();
     }
 
     // Method to create a walk order
@@ -35,6 +38,7 @@ class CSVP_WalkOrder{
 
         // Check if the insertion was successful
         if ($wpdb->insert_id) {
+            $this->order->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_walk");
             // Return the ID of the newly inserted walk order
             return $wpdb->insert_id;
         } else {
