@@ -1,5 +1,5 @@
 <?php
-class CSVP_Commission {
+class CSVP_Commission extends CSVP_Base{
     // Properties
     private $table_name;
 

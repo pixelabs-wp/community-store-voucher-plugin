@@ -26,6 +26,8 @@ define('CSVP_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CSVP_VIEWS', CSVP_PLUGIN_PATH."views");
 
 // Include necessary files
+require_once CSVP_PLUGIN_PATH . 'includes/class-base.php';
+
 require_once CSVP_PLUGIN_PATH . 'includes/class-database.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-request-handler.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-view-manager.php';
@@ -49,6 +51,7 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
 require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
+
 
 //init tests
 // require_once CSVP_PLUGIN_PATH . 'tests/class-community-test.php';

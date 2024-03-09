@@ -1284,26 +1284,28 @@
 
 	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details">
 		<!-- Photo -->
-		<div class="card-body d-flex p-0">
-			<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-				<div class="store-management-information rounded-3">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-						<table>
-							<tr class="d-flex flex-column gap-2 text-center">
-								<td><strong>שם החנות: </strong>בגיר</td>
-								<td><strong>כמות הזמנות: </strong>15</td>
-								<td><strong>סך הזמנות: </strong> 45,454 ₪</td>
+		<?php foreach( $pageData["communities"] as $community){ ?>
+			<div class="card-body d-flex p-0">
+				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+					<div class="store-management-information rounded-3">
+						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+							<table>
+								<tr class="d-flex flex-column gap-2 text-center">
+									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
 
-							</tr>
-						</table>
+								</tr>
+							</table>
+						</div>
 					</div>
+					<a class="btn btn-dark">← להסדרים וחובות</a>
 				</div>
-				<a class="btn btn-dark">← להסדרים וחובות</a>
+				<div class="w-35"
+					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+				</div>
 			</div>
-			<div class="w-35"
-				style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
-			</div>
-		</div>
+		<?php } ?>
 	</div>
 </div>
 

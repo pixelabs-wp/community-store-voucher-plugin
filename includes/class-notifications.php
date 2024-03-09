@@ -1,6 +1,6 @@
 <?php
 
-class CSVP_Notification {
+class CSVP_Notification extends CSVP_Base{
     // Store notification types
     const SUCCESS = 'success';
     const INFO = 'info';
