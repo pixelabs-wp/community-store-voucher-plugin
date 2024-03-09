@@ -14,7 +14,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap');
 
         :root,
-        body, h1, h2,h3, h4, h5, h6, p ,span {
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span {
 
             font-family: "Noto Sans Hebrew", sans-serif;
         }
@@ -89,12 +97,13 @@
                 width: 20% !important;
                 background-color: #EFEFEF !important;
             }
-            .user-welcome{
+
+            .user-welcome {
                 font-size: 16px;
             }
 
-            
-      
+
+
 
         }
 
@@ -112,8 +121,8 @@
             }
 
             .header-lower-bar {
-            direction: rtl;
-        }
+                direction: rtl;
+            }
         }
 
         .logout-button {
@@ -124,7 +133,7 @@
             text-align: left;
         }
 
-        .user-welcome{
+        .user-welcome {
             font-size: 20px;
             font-weight: 500;
             line-height: 27px;
@@ -132,16 +141,91 @@
             text-align: right;
             margin: 0;
         }
-        .offcanvas.show:not(.hiding), .offcanvas.showing{
+
+        .offcanvas.show:not(.hiding),
+        .offcanvas.showing {
             padding-top: 140px;
             background-color: #efefef;
         }
-
     </style>
 </head>
 
 <body>
 
+                <!-- Notification Modal -->
+
+    <div class="modal fade" id="notifications-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+            <div class="modal-content p-4">
+
+                <div class="col-12">
+                    <div class="card" style=" direction: rtl;">
+                        <div class="card-header">
+                            <h3 class="card-title">Recent Notification</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <div class="row g-3 align-items-center">
+                                        <a href="#" class="col-auto">
+                                            <span class="avatar"
+                                                style="background-image: url(./static/avatars/000m.jpg)">
+                                                <span class="badge bg-red"></span></span>
+                                        </a>
+                                        <div class="col text-truncate">
+                                            <a href="#" class="text-reset d-block text-truncate">Paweł Kuna</a>
+                                            <div class="text-secondary text-truncate mt-n1">2 days ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row g-3 align-items-center">
+                                        <a href="#" class="col-auto">
+                                            <span class="avatar">
+                                                <span class="badge bg-x"></span>JL</span>
+                                        </a>
+                                        <div class="col text-truncate">
+                                            <a href="#" class="text-reset d-block text-truncate">Jeffie Lewzey</a>
+                                            <div class="text-secondary text-truncate mt-n1">3 days ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row g-3 align-items-center">
+                                        <a href="#" class="col-auto">
+                                            <span class="avatar"
+                                                style="background-image: url(./static/avatars/002m.jpg)"></span>
+                                        </a>
+                                        <div class="col text-truncate">
+                                            <a href="#" class="text-reset d-block text-truncate">Mallory Hulme</a>
+                                            <div class="text-secondary text-truncate mt-n1">today</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="row g-3 align-items-center">
+                                        <a href="#" class="col-auto">
+                                            <span class="avatar"
+                                                style="background-image: url(./static/avatars/003m.jpg)">
+                                                <span class="badge bg-green"></span></span>
+                                        </a>
+                                        <div class="col text-truncate">
+                                            <a href="#" class="text-reset d-block text-truncate">Dunn Slane</a>
+                                            <div class="text-secondary text-truncate mt-n1">6 days ago</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                <!-- Notification Modal End -->
 
     <div class="page">
         <!------------------ topbar--------------------------- -->
@@ -190,7 +274,7 @@
         <aside
             class="navbar side-navbar navbar-vertical navbar-right navbar-expand-lg border border-lg-dark overflow-hidden mq-t">
             <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-menu"
+                <button class="navbar-toggler" style="z-index: 10000000000;" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-menu"
                     aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -364,8 +448,8 @@
             <header class="navbar-expand-sm  w-100 border border-dark">
                 <div class="" id="navbar-menu">
                     <div class="navbar bg">
-                        <div class="d-flex flex-row w-100 justify-content-between align-items-center px-4">
-                            <button class="bg-white border-0 rounded py-2 px-4">
+                        <div class="d-flex flex-row w-100 justify-content-between align-items-center px-4" >
+                            <button data-bs-toggle="modal" data-bs-target="#notifications-modal" style="z-index: 10;" class="bg-white ms-4 border-0 rounded py-2 px-4">
                                 <svg width="34" height="39" viewBox="0 0 34 39" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -376,7 +460,7 @@
                             </button>
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
-                                   <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p> 
+                                    <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p>
                                 </div>
                             </div>
                         </div>
@@ -385,5 +469,4 @@
             </header>
             <!-- Page body -->
             <div class="page-body">
-                <?php require_once CSVP_PLUGIN_PATH.'views/notifications.php'; ?>
-              
+                <?php require_once CSVP_PLUGIN_PATH . 'views/notifications.php'; ?>

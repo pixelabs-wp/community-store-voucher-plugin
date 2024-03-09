@@ -249,7 +249,7 @@
 		border-radius: 5px;
 		cursor: pointer;
 		white-space: nowrap;
-
+		font-size: 16px;
 	}
 
 	.tran h3 {
@@ -326,7 +326,7 @@
 		.tran {
 			margin: 7px;
 			width: 100%;
-			height: 100px;
+			height: 160px;
 			background-color: #ffffff;
 			padding: 20px;
 			border-radius: 10px;
@@ -350,7 +350,7 @@
 		}
 
 		.titl {
-			font-size: 12px;
+			font-size: 16px;
 		}
 	}
 
@@ -368,7 +368,7 @@
 
 		.titl {
 			margin-top: 4px;
-			font-size: 10px;
+			font-size: 16px;
 		}
 
 		.buttonss {
@@ -392,7 +392,7 @@
 
 		.titl {
 			margin-top: 4px;
-			font-size: 10px;
+			font-size: 14px;
 		}
 
 		.buttonss {
@@ -443,7 +443,7 @@
 
 		.titl {
 			margin-top: 4px;
-			font-size: 10px;
+			font-size: 14px;
 		}
 
 		.buttonss {
@@ -683,6 +683,10 @@
 			padding: 20px;
 			border-radius: 30px;
 		}
+	}
+
+	.titl{
+		direction: rtl;
 	}
 
 

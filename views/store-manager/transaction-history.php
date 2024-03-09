@@ -99,18 +99,10 @@
       class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
-      <!-- CSV Upload Filter  -->
-      <div class="col-sm-5 col-lg-3 m-0">
-        <div class="card card-sm p-relative" style="position: relative;">
-
-          <div class="filter-popup" id="csv-upload-popup" style="z-index: -1;">
-            <div class="mb-3" style="direction: rtl;">
-              <div class="form-label">Custom File Input</div>
-              <input type="file" class="form-control" />
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-            </div>
-          </div>
-
+		
+      <!-- CSV Download Filter  -->
+      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
+        <div class="card card-sm p-relative">
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
@@ -130,7 +122,6 @@
           </div>
         </div>
       </div>
-
 
       <!-- Date Range Filter   -->
       <div class="col-sm-5 col-lg-3 m-0">
@@ -184,7 +175,7 @@
 
           <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון חנויות</label>
+              <label class="form-label">סינון תת”ים</label>
               <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value=""
                 multiple>
                 <option value="HTML">HTML</option>
@@ -213,7 +204,7 @@
                 </span>
               </div>
               <div class="col">
-                <div class="font-weight-medium ts-text">סינון חנויות</div>
+                <div class="font-weight-medium ts-text">סינון תת”ים</div>
               </div>
             </div>
           </div>
@@ -226,7 +217,7 @@
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון בחורים</label>
+              <label class="form-label">סינון לקוחות</label>
               <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
                 <option value="HTML">HTML</option>
                 <option value="JavaScript">JavaScript</option>
@@ -253,7 +244,7 @@
                 </span>
               </div>
               <div class="col" style="z-index:1">
-                <div class="font-weight-medium ts-text">סינון בחורים</div>
+                <div class="font-weight-medium ts-text">סינון לקוחות</div>
               </div>
             </div>
           </div>
