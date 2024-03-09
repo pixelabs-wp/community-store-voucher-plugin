@@ -3,13 +3,19 @@ class CSVP_Store
 {
     // Properties
     private $table_name;
+    public $voucher;
+    public $community;
     public $store_manager_id;
+    public $joining_request;
     // Constructor
     public function __construct()
     {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
-        echo $this->store_manager_id = $this->user_id;
+        $this->store_manager_id = get_current_user_id();
+        $this->voucher = new CSVP_Voucher(); 
+        $this->community = new CSVP_Community(); 
+        $this->joining_request = new CSVP_JoiningRequest();
     }
 
     public function render_community_management()
@@ -25,6 +31,20 @@ class CSVP_Store
                 } else {
                     CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
                 }
+        }
+
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "set_credit_limit")
+        {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["store_id"] = $this->store_manager_id;
+
+            $response = $this->joining_request->set_credit_limit_by_store_manager($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
         }
 
         $communities = $this->community->get_all_communities_for_store();

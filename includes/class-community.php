@@ -196,6 +196,38 @@ class CSVP_Community{
         }
     }
 
+    public function get_community_data_for_store_popup() {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+        $query = $wpdb->prepare("
+            SELECT 
+                c.id AS community_id,
+                c.community_name,
+                COUNT(DISTINCT cm.id) AS active_members_count,
+                SUM(o.order_total) AS total_order_amount
+            FROM 
+                {$wpdb->prefix}csvp_community c
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+            LEFT JOIN 
+                {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+            GROUP BY 
+                c.id, c.community_name
+        ");
+        
+        $communities = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($communities) {
+            // Return array of community objects
+            return $communities;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));
+        }
+    }
+
     /**
      * Function to update a community in the database based on its ID.
      *

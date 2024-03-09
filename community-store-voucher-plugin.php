@@ -67,6 +67,7 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
 
 
 $database = new CSVP_Initialize_Database();
+$request = new CSVP_Ajax_Handler();
 
 // Initialize the plugin
 function csvp_init_plugin() {

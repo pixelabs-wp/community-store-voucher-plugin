@@ -14,14 +14,12 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap');
 
 
-
         :root,
-        body {
+        body, h1, h2,h3, h4, h5, h6, p ,span {
 
             font-family: "Noto Sans Hebrew", sans-serif;
-
         }
-
+        
         .bg {
             background-color: #EFEFEF !important;
 
