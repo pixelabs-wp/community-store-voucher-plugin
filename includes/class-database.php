@@ -107,7 +107,7 @@ class CSVP_Initialize_Database {
         dbDelta( $sql_order );
 
         $order_data = $wpdb->prefix . 'csvp_order_data';
-        $message_table_sql = "CREATE TABLE $order_data (
+        $order_data_sql = "CREATE TABLE $order_data (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -116,10 +116,10 @@ class CSVP_Initialize_Database {
             product_name varchar(255) NOT NULL,
             cost_per_item varchar(255) NOT NULL,
             total_items varchar(255) NOT NULL,
-            total_cpst varchar(255) NOT NULL,
+            total_cost varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta($message_table_sql);
+        dbDelta($order_data_sql);
 
         // Voucher table
         $voucher_table = $wpdb->prefix . 'csvp_voucher';
