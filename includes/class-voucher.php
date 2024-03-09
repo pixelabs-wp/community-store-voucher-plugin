@@ -34,10 +34,11 @@ class CSVP_Voucher {
         // Check if the insertion was successful
         if ($wpdb->insert_id) {
             // Return the ID of the newly inserted voucher
-            return $wpdb->insert_id;
+            // return $wpdb->insert_id; 
+            return array("status"=>true, "response"=>"Voucher created successfully for Product: ".$data["product_name"]);
         } else {
             // Return false if insertion failed
-            return false;
+            return array("status"=>false, "response"=>"Something Went Wrong");
         }
     }
 
