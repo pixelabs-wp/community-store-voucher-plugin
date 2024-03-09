@@ -1237,11 +1237,11 @@
 	class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 	<div class="col-sm-5 col-lg-4 m-0">
 		<div class="card card-sm">
-			<div class="card-body-rounded p-1 m-1">
+			<div class="card-body-rounded p-2">
 				<div class="row align-items-center">
 					<div class="col-auto">
 						<span><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-							<svg width="44" height="44" viewBox="0 0 44 44" fill="none"
+							<svg width="26" height="25" viewBox="0 0 44 44" fill="none"
 								xmlns="http://www.w3.org/2000/svg">
 								<path
 									d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z"
@@ -1251,7 +1251,7 @@
 						</span>
 					</div>
 					<div class="col">
-						<input type="text" id="store-search" placeholder="חיפוש חנות ">
+						<input type="text" id="store-search" class="px-2" placeholder="חיפוש חנות ">
 					</div>
 				</div>
 			</div>

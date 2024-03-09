@@ -24,6 +24,7 @@ class CSVP_JoiningRequest {
         $request_status = $data['request_status'];
         $requested_by = $data['requested_by'];
 
+
         // Insert data into the database
         $result = $wpdb->insert(
             $this->table_name,
@@ -31,7 +32,8 @@ class CSVP_JoiningRequest {
                 'community_id' => $community_id,
                 'store_id' => $store_id,
                 'request_status' => $request_status,
-                'requested_by' => $requested_by
+                'requested_by' => $requested_by,
+                'credit_limit' => '10000'
             )
         );
 

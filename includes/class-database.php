@@ -69,6 +69,7 @@ class CSVP_Initialize_Database {
             store_id bigint(20) NOT NULL,
             requested_by varchar(255) NOT NULL, 
             request_status varchar(255) NOT NULL,
+            credit_limit varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_joining_request );
@@ -113,6 +114,7 @@ class CSVP_Initialize_Database {
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             store_id bigint(20) NOT NULL,
+            community_id bigint(20) NOT NULL,
             product_name varchar(255) NOT NULL,
             voucher_price decimal(10,2) NOT NULL,
             normal_price decimal(10,2) NOT NULL,
