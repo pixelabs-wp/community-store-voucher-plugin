@@ -168,25 +168,27 @@ class CSVP_Community{
         }
     }
 
-    public function get_all_communities_for_store() {
+    public function get_all_joined_communities_for_store() {
         global $wpdb;
-
+        $store_id = get_current_user_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
         $query = $wpdb->prepare("
-            SELECT 
-                c.id AS community_id,
-                c.community_name,
-                COUNT(DISTINCT cm.id) AS active_members_count,
-                SUM(o.order_total) AS total_order_amount
-            FROM 
-                {$wpdb->prefix}csvp_community c
-            LEFT JOIN 
-                {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
-            LEFT JOIN 
-                {$wpdb->prefix}csvp_order o ON c.id = o.community_id
-            GROUP BY 
-                c.id, c.community_name
-        ");
+        SELECT 
+            c.id AS community_id,
+            c.community_name,
+            COUNT(DISTINCT cm.id) AS active_members_count,
+            SUM(o.order_total) AS total_order_amount
+        FROM 
+            {$wpdb->prefix}csvp_community c
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+        INNER JOIN 
+            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %d
+        GROUP BY 
+            c.id, c.community_name;
+        ", JOINING_REQUEST_STATUS_PENDING);
         
         $communities = $wpdb->get_results($query);
 
@@ -196,13 +198,46 @@ class CSVP_Community{
             return $communities;
         } else {
             // Send error response
-            return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));
+            return new WP_Error('not_found', __('No Joined communities.', 'csvp'), array('status' => 404));
         }
     }
 
-    public function get_community_data_for_store_popup() {
+    public function get_all_requested_communities_for_store() {
         global $wpdb;
+        $store_id = get_current_user_id();
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+        $query = $wpdb->prepare("
+        SELECT 
+            c.id AS community_id,
+            c.community_name,
+            COUNT(DISTINCT cm.id) AS active_members_count,
+            SUM(o.order_total) AS total_order_amount
+        FROM 
+            {$wpdb->prefix}csvp_community c
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+        INNER JOIN 
+            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %d
+        GROUP BY 
+            c.id, c.community_name;
+        ", JOINING_REQUEST_STATUS_PENDING);
+        $communities = $wpdb->get_results($query);
 
+        // Check if communities were found
+        if ($communities) {
+            // Return array of community objects
+            return $communities;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Pending Request communities.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_all_not_requested_communities_for_store() {
+        global $wpdb;
+        $store_id = get_current_user_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
         $query = $wpdb->prepare("
             SELECT 
@@ -216,16 +251,54 @@ class CSVP_Community{
                 {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
             LEFT JOIN 
                 {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+            WHERE 
+                c.id NOT IN (
+                    SELECT jr.community_id
+                    FROM {$wpdb->prefix}csvp_joining_request jr
+                    WHERE jr.store_id = %d
+                )
             GROUP BY 
-                c.id, c.community_name
-        ");
+                c.id, c.community_name;
+        ", $store_id);
         
         $communities = $wpdb->get_results($query);
-
+    
         // Check if communities were found
         if ($communities) {
             // Return array of community objects
             return $communities;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No New communities.', 'csvp'), array('status' => 404));
+        }
+    }
+    
+    
+
+
+    public function get_community_data_for_store_popup($data) {
+        global $wpdb;
+
+        $community_id = $data['community_id'];
+        $store_id = get_current_user_id();
+
+        $query = $wpdb->prepare(
+            "SELECT c.*, jr.credit_limit 
+            FROM $this->table_name c 
+            LEFT JOIN {$wpdb->prefix}csvp_joining_request jr 
+            ON c.id = jr.community_id 
+            WHERE c.id = %d",
+            $community_id
+        );
+        
+
+        // Execute the query
+        $community_data = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($community_data) {
+            // Return array of community objects
+            return $community_data;
         } else {
             // Send error response
             return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));

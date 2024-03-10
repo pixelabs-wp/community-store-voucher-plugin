@@ -706,16 +706,16 @@
 				<div class="credit-container">
 					<div class="balance">
 						<h4>תקרת אשראי</h4>
-						<span> ₪ 10,000 </span>
+						<span> ₪ <span id="credit_limit"></span> </span>
 						<h4>יתרת אשראי</h4>
 						<span> ₪ 2,500 </span>
 					</div>
 				</div>
 				<div class="d-flex  align-items-center gap-3 header-data-wrapper">
 					<div class="address d-flex flex-column align-items-end gap-3">
-						<h1>ת”ת אור התורה </h1>
+						<h1 id="name_of_community">ת”ת אור התורה </h1>
 						<div>
-							<h2 class="address-title"> אליהו מנהל ת”ת: 054-6268012 כתובת: רבי עקיבא 84 בני ברק</h2>
+							<h2 class="address-title"> אליהו מנהל ת”ת: <span id="community_manager_no">054-6268012</span> <span id="community_manager_address"> רבי עקיבא 84 בני ברק</span> :כתובת</h2>
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
@@ -732,7 +732,8 @@
 					<div class="svggroup">
 						<div class="svvg">
 						</div>
-						<svg width="207" height="194" viewBox="0 0 207 194" fill="none"
+						<img src="" id="community_logo" alt="" width="207" height="194">
+						<!-- <svg width="207" height="194" viewBox="0 0 207 194" fill="none"
 							xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 							<rect width="207" height="194" rx="10" fill="url(#pattern0)" />
 							<defs>
@@ -743,7 +744,7 @@
 								<image id="image0_0_1351" width="225" height="225"
 									xlink:href="data:image/png;base64,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" />
 							</defs>
-						</svg>
+						</svg> -->
 					</div>
 				</div>
 			</div>
@@ -877,74 +878,75 @@
 	<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<div class="background-box">
-				<div class="text-center mt-2">
-					<h1 class="fs-3">בקשת הזמנה</h1>
-				</div>
-				<div class="bg-[#FFFFFF] mt-4 " style=" overflow: auto;  ">
-					<table class="table table-bordered table-hover">
-						<thead class="table-hover">
-							<tr>
-								<th scope="col text-center">סך הכל</th>
-								<th scope="col text-center">עלות לפריט</th>
-								<th scope="col text-center">כמות</th>
-								<th scope="col text-center">שם המוצר</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th scope="row">7,500 ₪</th>
-								<th> ₪ 499</th>
-								<th>15</th>
-								<th>חליפות</th>
-							</tr>
-							<tr>
-								<th scope="row">0 ₪</th>
-								<th>84.9</th>
-								<th>0</th>
-								<th>חולצות</th>
-							</tr>
-							<tr>
-								<th scope="row">4,650 ₪ </th>
-								<th>99 ₪</th>
-								<th>47</th>
-								<th>חפתים</th>
-							</tr>
-							<tr>
-								<th scope="row">0 ₪</th>
-								<th>99 ₪</th>
-								<th>10</th>
-								<th>גרביים</th>
-							</tr>
-						</tbody>
-
-					</table>
-				</div>
-				<div class="flex">
-					<div class="mb-3">
-						<input class="custom-file-input" type="file" id="formFileMultiple" multiple>
+				<form action="" method="POST" enctype="multipart/form-data">
+					<div class="text-center mt-2">
+						<h1 class="fs-3">בקשת הזמנה</h1>
 					</div>
-					<div class="mb-3">
-						<label class="labell">הוספת שורה</label>
-						<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
-							xmlns="http://www.w3.org/2000/svg">
-							<rect width="42" height="42" rx="10" fill="#01051D" />
-							<path
-								d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
-								fill="white" />
-						</svg>
+					<div class="bg-[#FFFFFF] mt-4 " style=" overflow: auto;  ">
+						<table class="table table-bordered table-hover">
+							<thead class="table-hover">
+								<tr>
+									<th scope="col text-center">סך הכל</th>
+									<th scope="col text-center">עלות לפריט</th>
+									<th scope="col text-center">כמות</th>
+									<th scope="col text-center">שם המוצר</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- <tr>
+									<th scope="row">7,500 ₪</th>
+									<th> ₪ 499</th>
+									<th>15</th>
+									<th>חליפות</th>
+								</tr>
+								<tr>
+									<th scope="row">0 ₪</th>
+									<th>84.9</th>
+									<th>0</th>
+									<th>חולצות</th>
+								</tr>
+								<tr>
+									<th scope="row">4,650 ₪ </th>
+									<th>99 ₪</th>
+									<th>47</th>
+									<th>חפתים</th>
+								</tr>
+								<tr>
+									<th scope="row">0 ₪</th>
+									<th>99 ₪</th>
+									<th>10</th>
+									<th>גרביים</th>
+								</tr> -->
+							</tbody>
+
+						</table>
 					</div>
-				</div>
-				<div class="styled-element">
-					<span>סה”כ שווי החזרה: ₪12,150</span>
-					<span>סה”כ פריטים: 32 פריטים</span>
-				</div>
-				<div class="btngroup">
-					<button class="button button-primary">אישור</button>
-					<button class="button button-secondary">ביטול</button>
-				</div>
-
-
-
+					<div class="flex">
+						<div class="mb-3">
+							<input class="custom-file-input" type="file" name="order_info_file" id="formFileMultiple">
+						</div>
+						<div class="mb-3">
+							<label class="labell">הוספת שורה</label>
+							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
+								<rect width="42" height="42" rx="10" fill="#01051D" />
+								<path
+									d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
+									fill="white" />
+							</svg>
+						</div>
+					</div>
+					<div class="styled-element">
+						<span>סה”כ שווי החזרה: ₪12,150</span>
+						<span>סה”כ פריטים: 32 פריטים</span>
+					</div>
+					<div class="btngroup">
+						<input type="hidden" id="order_request_community_id" name="community_id" value="">
+						<input type="hidden" name="csvp_request" value="add_order_request">
+						<button class="button button-primary">אישור</button>
+						<button class="button button-secondary">ביטול</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -1038,9 +1040,12 @@
 			<h3>האם למחוק את השובר?</h3>
 
 			<div class="add-new-benefit-buttons mt-4">
+				<form method="POST" action="">
+				<input type="hidden" name="id" id="voucher_id" >
+				<input type="hidden" name="csvp_request" value="delete_voucher">
 				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				<button type="submit" class="btn btn-danger w-25">ביטול</button>
-
+				</form>
 			</div>
 
 		</div>
@@ -1098,7 +1103,11 @@
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
-	<?php foreach( $pageData["communities"] as $community){ ?>
+	<?php 
+	
+	if (isset($pageData["joined_communities"])) 
+	{
+	foreach( $pageData["joined_communities"] as $community){ ?>
 	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
 		<!-- Photo -->
 			<div class="card-body d-flex p-0">
@@ -1115,14 +1124,78 @@
 							</table>
 						</div>
 					</div>
-					<a class="btn btn-dark">← להסדרים וחובות</a>
+					<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 				</div>
 				<div class="w-35"
 					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 				</div>
 			</div>
 	</div>
-	<?php } ?>
+	<?php }
+	} ?>
+	<?php
+	if (isset($pageData["requested_communities"])) 
+	{
+		 foreach( $pageData["requested_communities"] as $community){ ?>
+	<div class="store-management-card card col-xl-4 rounded-3 p-0 "  >
+		<!-- Photo -->
+			<div class="card-body d-flex p-0">
+				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+					<div class="store-management-information rounded-3">
+						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+							<table>
+								<tr class="d-flex flex-column gap-2 text-center">
+									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+					<label class="text-secondary "><b>בקשה בהמתנה</b></label>
+				</div>
+				<div class="w-35"
+					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+				</div>
+			</div>
+	</div>
+	<?php }
+	} ?>
+	<?php
+	if ($pageData["not_requested_communities"]) 
+	{
+		 foreach( $pageData["not_requested_communities"] as $community){ ?>
+	<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
+		<!-- Photo -->
+			<div class="card-body d-flex p-0">
+				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+					<div class="store-management-information rounded-3">
+						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+							<table>
+								<tr class="d-flex flex-column gap-2 text-center">
+									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+					<form method="POST" action="">
+						<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community->community_id; ?>">
+						<input type="hidden" name="csvp_request" value="joining_request">
+						<button class="btn btn-dark">לצירוף הת”ת ←</button>
+					</form>
+					
+				</div>
+				<div class="w-35"
+					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+				</div>
+			</div>
+	</div>
+	<?php }
+	} ?>
 </div>
 
 </div>
@@ -1136,20 +1209,20 @@
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
 		newRow.innerHTML = `
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="" placeholder="סך הכל"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="cost-input" placeholder="עלות לפריט"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="amount-input" placeholder="כמות"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="name-input" placeholder="שם המוצר"></th>`;
+		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="name-input" name="total_cost[]" placeholder="שם המוצר"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="amount-input" name="total_item[]" placeholder="כמות"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="סך הכל"></th>`;
 	}
 	
-	function addSection(imageSrc, title, price, discountPrice) {
+	function addSection(id, imageSrc, title, price, discountPrice) {
 		var imageUrl = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + imageSrc;
     var section = `
         <div class="d-flex gap-3">
             <div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
                 <div class="cards">
                     <div class="card-text">
-                        <svg class="first-svg" width="61" height="57" viewBox="0 0 61 57" fill="none"
+                        <svg class="first-svg" width="61" height="57" viewBox="0 0 61 57" fill="none" data-bs-toggle="modal" data-bs-target="#store-manager-voucher-delete" data-id="${id}"
                             xmlns="http://www.w3.org/2000/svg">
                             <rect width="61" height="57" fill="#9D0000" />
                             <path
@@ -1167,6 +1240,7 @@
                 </div>
             </div>
         </div>
+
     `;
     var parentElement = document.getElementById("parentElementId");
     parentElement.innerHTML += section; // Use innerHTML to append HTML content
@@ -1193,11 +1267,16 @@
             },
             success: function(response) {
                 // Handle success response
-                // console.log(response);
+                console.log(response[0]["community_logo"]);
+				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
+				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
+				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
+				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
+				document.getElementById('community_logo').src  = response[0]["community_logo"];
             },
             error: function(xhr, status, error) {
                 // Handle error response
-                // console.error(xhr.responseText);
+                console.error(xhr.responseText);
             }
         });
 
@@ -1220,7 +1299,7 @@
 					var parentElement = document.getElementById("parentElementId");
    				 parentElement.innerHTML = "";
 					response.forEach(function(item) {
-                addSection(item.product_image, item.product_name, item.normal_price, item.voucher_price);
+                addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
             });
 				}
 				else{
@@ -1238,7 +1317,10 @@
         });
 	});
 
-	
-
+	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function(event) {
+		var button = jQuery(event.relatedTarget);
+		var id = button.data('id');
+		jQuery('#voucher_id').val(id);
+	});
 
 </script>

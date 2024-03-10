@@ -40,10 +40,11 @@ class CSVP_JoiningRequest{
         // Check if the insertion was successful
         if ($result) {
             // Return the ID of the newly inserted joining request
-            return $wpdb->insert_id;
+            // return $wpdb->insert_id;
+            return array("status"=>true, "response"=>"Join Request Sent");
         } else {
-            // Return false if insertion failed
-            return false;
+        // Failed to move uploaded file
+        return array("status" => false, "response" => "Something Went Wrong");
         }
     }
 

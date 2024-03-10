@@ -131,13 +131,36 @@ class CSVP_Voucher{
     public function delete_voucher($data) {
         global $wpdb;
 
-        $voucher_id = $data['voucher_id'];
+        $voucher_id = $data['id'];
+        //Prepare SQL query to select product image and product name by ID
+        $query = $wpdb->prepare("SELECT product_image, product_name FROM $this->table_name WHERE id = %d", $voucher_id);
 
+        // Execute the query to fetch the product image and product name
+        $voucher_data = $wpdb->get_row($query, ARRAY_A);
+
+        // Check if voucher data is retrieved
+        if (!$voucher_data) {
+            return array("status" => false, "response" => "Voucher not found");
+        }
+
+        
+    
         // Prepare SQL query to delete voucher by ID
         $query = $wpdb->prepare("DELETE FROM $this->table_name WHERE id = %d", $voucher_id);
 
         // Execute the query and return true on success, false on failure
-        return $wpdb->query($query) !== false;
+        if( $wpdb->query($query) ){
+           
+            $upload_dir = wp_upload_dir();
+            $image_path = $upload_dir['basedir'] . '/' . $voucher_data['product_image'];
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
+                return array("status"=>true, "response"=>"Voucher ". $voucher_data['product_name'] . " deleted successfully");
+            } else {
+            // Failed to move uploaded file
+            return array("status" => false, "response" => "Something Went Wrong");
+            }
     }
 
 
