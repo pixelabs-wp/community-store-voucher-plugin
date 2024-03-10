@@ -79,10 +79,55 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request")
+        {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["request_status"] = JOINING_REQUEST_STATUS_PENDING;
+            // Get user data
+            $user_data = get_userdata($this->store_manager_id);
+            // Check if user data exists
+            if ($user_data) {
+                // Get user role
+                $user_role = isset($user_data->roles[0]) ? $user_data->roles[0] : '';
+            }
+
+            $payload["requested_by"] = $user_role;
+            $response = $this->joining_request->create_joining_request($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
         
 
-        $communities = $this->community->get_all_communities_for_store();
-        $pageData["communities"] = $communities;
+        $joined_communities = $this->community->get_all_joined_communities_for_store();
+        $response["joined_communities"] = $joined_communities;
+        if (is_wp_error($response["joined_communities"])) 
+        {
+            CSVP_Notification::add(CSVP_Notification::ERROR, $response["joined_communities"]->get_error_message());
+        }
+        else
+        {
+            $pageData["joined_communities"] = $joined_communities;
+        }
+
+        $requested_communities = $this->community->get_all_requested_communities_for_store();
+        $response["requested_communities"] = $requested_communities;
+        if (!is_wp_error($response["requested_communities"])) 
+        {
+            $pageData["requested_communities"] = $requested_communities;
+        }
+        
+        $not_requested_communities = $this->community->get_all_not_requested_communities_for_store();
+        $response["not_requested_communities"] = $not_requested_communities;
+        if (!is_wp_error($response["not_requested_communities"])) 
+        {
+            $pageData["not_requested_communities"] = $not_requested_communities;
+        }
+        
         CSVP_View_Manager::load_view('community-management', $pageData);
     }
 

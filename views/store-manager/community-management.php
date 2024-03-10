@@ -706,7 +706,7 @@
 				<div class="credit-container">
 					<div class="balance">
 						<h4>תקרת אשראי</h4>
-						<span> ₪ 10,000 </span>
+						<span> ₪ <span id="credit_limit"></span> </span>
 						<h4>יתרת אשראי</h4>
 						<span> ₪ 2,500 </span>
 					</div>
@@ -1103,7 +1103,11 @@
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
-	<?php foreach( $pageData["communities"] as $community){ ?>
+	<?php 
+	
+	if (isset($pageData["joined_communities"])) 
+	{
+	foreach( $pageData["joined_communities"] as $community){ ?>
 	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
 		<!-- Photo -->
 			<div class="card-body d-flex p-0">
@@ -1120,14 +1124,78 @@
 							</table>
 						</div>
 					</div>
-					<a class="btn btn-dark">← להסדרים וחובות</a>
+					<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 				</div>
 				<div class="w-35"
 					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 				</div>
 			</div>
 	</div>
-	<?php } ?>
+	<?php }
+	} ?>
+	<?php
+	if (isset($pageData["requested_communities"])) 
+	{
+		 foreach( $pageData["requested_communities"] as $community){ ?>
+	<div class="store-management-card card col-xl-4 rounded-3 p-0 "  >
+		<!-- Photo -->
+			<div class="card-body d-flex p-0">
+				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+					<div class="store-management-information rounded-3">
+						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+							<table>
+								<tr class="d-flex flex-column gap-2 text-center">
+									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+					<label class="text-secondary "><b>בקשה בהמתנה</b></label>
+				</div>
+				<div class="w-35"
+					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+				</div>
+			</div>
+	</div>
+	<?php }
+	} ?>
+	<?php
+	if ($pageData["not_requested_communities"]) 
+	{
+		 foreach( $pageData["not_requested_communities"] as $community){ ?>
+	<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
+		<!-- Photo -->
+			<div class="card-body d-flex p-0">
+				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+					<div class="store-management-information rounded-3">
+						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+							<table>
+								<tr class="d-flex flex-column gap-2 text-center">
+									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+
+								</tr>
+							</table>
+						</div>
+					</div>
+					<form method="POST" action="">
+						<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community->community_id; ?>">
+						<input type="hidden" name="csvp_request" value="joining_request">
+						<button class="btn btn-dark">לצירוף הת”ת ←</button>
+					</form>
+					
+				</div>
+				<div class="w-35"
+					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+				</div>
+			</div>
+	</div>
+	<?php }
+	} ?>
 </div>
 
 </div>
@@ -1200,6 +1268,7 @@
             success: function(response) {
                 // Handle success response
                 console.log(response[0]["community_logo"]);
+				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
 				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
 				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
