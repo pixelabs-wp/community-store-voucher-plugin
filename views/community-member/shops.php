@@ -98,6 +98,24 @@
 		font-weight: 600;
 	}
 
+
+	@media screen and (max-width: 1275px) {
+		.order-management-cards {
+			width: 47%;
+		}
+
+	}
+
+
+
+	@media screen and (max-width: 767px) {
+		.order-management-cards {
+			width: 100%;
+		}
+
+	}
+
+
 	@media screen and (max-width: 480px) {
 		.order-management-cards {
 			width: 100%;

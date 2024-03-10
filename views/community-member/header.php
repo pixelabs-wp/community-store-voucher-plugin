@@ -14,11 +14,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@100..900&display=swap');
 
         :root,
-        body {
+        body, h1, h2,h3, h4, h5, h6, p ,span {
 
             font-family: "Noto Sans Hebrew", sans-serif;
-        }
-
+        }
         .bg {
             background-color: #EFEFEF !important;
 
@@ -189,16 +188,13 @@
 
         <!-- Sidebar -->
         <aside
-            class="navbar side-navbar navbar-vertical navbar-right navbar-expand-lg border border-lg-dark overflow-hidden mq-t">
+            class="navbar side-navbar navbar-vertical navbar-right navbar-expand-lg border pt-5 border-lg-dark overflow-hidden mq-t">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar-menu"
                     aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-inline-flex">
-                    שם הת”ת: תורת אליהו
-
-                </h1>
+                
 
                 <div class="offcanvas offcanvas-start" id="sidebar-menu">
                     <ul class="side-navbar-nav navbar-nav pt-lg-3">

@@ -55,6 +55,22 @@
         text-align: right;
     }
 
+
+    @media screen and (max-width: 1310px) {
+        .store-management-card {
+        width: 43%;
+    }
+
+    }
+
+
+    @media screen and (max-width: 1200px) {
+        .store-management-card {
+        width: 100%;
+    }
+
+
+}
     @media screen and (max-width: 480px) {
         .card {
             width: 100%;
@@ -145,7 +161,7 @@
                             </span>
                         </div>
                         <div class="col">
-                            <div class="font-weight-medium ts-text"> ..חיפוש מוצרים</div>
+                            <div class="font-weight-medium ts-text" > <input style="direction: rtl;" class="border-0 w-100" placeholder="חיפוש מוצרים.." type="text"></div>
                         </div>
                     </div>
                 </div>
