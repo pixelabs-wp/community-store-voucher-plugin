@@ -240,7 +240,7 @@
         border-radius: 5px;
         cursor: pointer;
         white-space: nowrap;
-
+        font-size: 16px;
     }
 
     .tran h3 {
@@ -312,7 +312,7 @@
         .tran {
             margin: 7px;
             width: 100%;
-            height: 100px;
+            height: 160px;
             background-color: #ffffff;
             padding: 20px;
             border-radius: 10px;
@@ -346,10 +346,6 @@
 
         .address {
             display: flow-root;
-        }
-
-        svg {
-            width: 98%;
         }
 
         .buttonss {
@@ -420,7 +416,7 @@
         }
 
         .titl {
-            font-size: 12px;
+            font-size: 16px;
         }
     }
 
@@ -431,7 +427,7 @@
         }
 
         .titl {
-            font-size: 12px;
+            font-size: 16px;
         }
     }
 
@@ -449,7 +445,7 @@
 
         .titl {
             margin-top: 4px;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         .buttonss {
@@ -473,7 +469,7 @@
 
         .titl {
             margin-top: 4px;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         .buttonss {
@@ -524,7 +520,7 @@
 
         .titl {
             margin-top: 4px;
-            font-size: 10px;
+            font-size: 14px;
         }
 
         .buttonss {
@@ -752,11 +748,6 @@
             font-size: 10px;
         }
 
-        svg {
-            width: 40%;
-            height: 35%;
-
-        }
 
         .input-field,
         .labell {
@@ -1231,8 +1222,9 @@
             <div>
                 <div class="d-flex flex-column align-items-end cont">
                     <h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
-                    <div class="d-flex gap-4">
-                        <div class="d-flex gap-3">
+                    <div class="d-flex gap-4 flex-wrap" style="direction: rtl;
+">
+                        <div class="d-flex  gap-3">
                             <div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
                                 <div class="cards">
                                     <p class="card-text"><img

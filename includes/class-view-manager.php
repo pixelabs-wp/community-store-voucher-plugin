@@ -14,7 +14,7 @@ class CSVP_View_Manager{
         } elseif (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MEMBER)) {
             self::load_community_member_view($view_type, $data);
         } else {
-            echo "Bad Request";
+            echo "Bad Request" . $view_type;
         }
     }
 

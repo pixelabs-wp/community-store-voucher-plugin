@@ -634,18 +634,9 @@
       class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
-      <!-- CSV Upload Filter  -->
-      <div class="col-sm-5 col-lg-3 m-0">
-        <div class="card card-sm p-relative" style="position: relative;">
-
-          <div class="filter-popup" id="csv-upload-popup" style="z-index: -1;">
-            <div class="mb-3" style="direction: rtl;">
-              <div class="form-label">Custom File Input</div>
-              <input type="file" class="form-control" />
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-            </div>
-          </div>
-
+      <!-- CSV Download Filter  -->
+      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
+        <div class="card card-sm p-relative">
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
               <div class="col-auto">
@@ -667,27 +658,15 @@
       </div>
 
 
-      <!-- Date Range Filter   -->
+      <!-- Search by card Filter   -->
       <div class="col-sm-5 col-lg-3 m-0">
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
             <div class="mb-3">
-              <label class="form-label">Datepicker</label>
+              <label class="form-label">סינון לפי מספר כרטיס</label>
 
               <div class="input-icon mb-2">
-                <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="2020-06-20" />
-                <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24"
-                    stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                    <path d="M16 3v4" />
-                    <path d="M8 3v4" />
-                    <path d="M4 11h16" />
-                    <path d="M11 15h1" />
-                    <path d="M12 15v3" />
-                  </svg>
-                </span>
+                <input class="form-control " type="number" placeholder="Search Card"/>
               </div>
               <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
             </div>
@@ -705,7 +684,7 @@
                 </span>
               </div>
               <div class="col">
-                <div class="font-weight-medium ts-text">טווח תאריכים</div>
+                <div class="font-weight-medium ts-text">סינון לפי מספר כרטיס</div>
               </div>
             </div>
           </div>
@@ -719,7 +698,7 @@
 
           <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון הזמנות</label>
+              <label class="form-label">סינון שיעורים </label>
               <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value=""
                 multiple>
                 <option value="HTML">HTML</option>
@@ -748,7 +727,7 @@
                 </span>
               </div>
               <div class="col">
-                <div class="font-weight-medium ts-text">סינון הזמנות</div>
+                <div class="font-weight-medium ts-text">סינון שיעורים</div>
               </div>
             </div>
           </div>
@@ -761,7 +740,7 @@
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון תת”ים</label>
+              <label class="form-label">סינון בחורים</label>
               <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
                 <option value="HTML">HTML</option>
                 <option value="JavaScript">JavaScript</option>
@@ -788,7 +767,7 @@
                 </span>
               </div>
               <div class="col" style="z-index:1">
-                <div class="font-weight-medium ts-text">סינון תת”ים</div>
+                <div class="font-weight-medium ts-text">סינון בחורים</div>
               </div>
             </div>
           </div>
