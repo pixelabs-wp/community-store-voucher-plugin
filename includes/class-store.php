@@ -7,6 +7,7 @@ class CSVP_Store
     public $community;
     public $store_manager_id;
     public $joining_request;
+    public $order;
     // Constructor
     public function __construct()
     {
@@ -16,6 +17,7 @@ class CSVP_Store
         $this->voucher = new CSVP_Voucher(); 
         $this->community = new CSVP_Community(); 
         $this->joining_request = new CSVP_JoiningRequest();
+        $this->order = new CSVP_Order();
     }
 
     public function render_community_management()
@@ -46,6 +48,38 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
+
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request")
+        {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["store_id"] = $this->store_manager_id;
+            $totalcost = 0;
+            foreach($payload["total_cost"] as $value)
+            {
+                $totalcost = $totalcost + $value;
+            }
+            $payload["order_total"] =  $totalcost;
+            $response = $this->order->create_order($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_voucher")
+        {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["store_id"] = $this->store_manager_id;
+            $response = $this->voucher->delete_voucher($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+        
 
         $communities = $this->community->get_all_communities_for_store();
         $pageData["communities"] = $communities;

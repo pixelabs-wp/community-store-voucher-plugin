@@ -26,27 +26,78 @@ class CSVP_Order{
         $order_date = isset($data['order_date']) ? $data['order_date'] : current_time('mysql');
         
 
-        // Insert data into the database
-        $wpdb->insert(
-            $this->table_name, // Table name
-            array(
-                'community_id' => $community_id,
-                'store_id' => $store_id,
-                'order_status' => $order_status,
-                'order_total' => $order_total,
-                'order_date' => $order_date
-            ) // Data to be inserted
-        );
+        if (isset($_FILES['order_info_file']) && $_FILES['order_info_file']['error'] == UPLOAD_ERR_OK) {
 
-        // Check if the insertion was successful
-        if ($wpdb->insert_id) {
+            // Handle file upload
+           $upload_dir = wp_upload_dir(); // Get the upload directory
+           $file_name = basename($_FILES['order_info_file']['name']);
 
-            $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
-            // Return the ID of the newly inserted order
-            return $wpdb->insert_id;
-        } else {
-            // Return false if insertion failed
-            return false;
+           // Get the file extension
+           $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+           // Generate a unique identifier (timestamp or random string)
+           $unique_identifier = uniqid(); // Using a timestamp-based unique identifier
+
+           // Construct the file name with the extension
+           $file_name = 'order_info_' . $store_id . '_' . $unique_identifier . '.' . $file_extension;
+
+   
+               // Check if the upload directory is writable
+           $moved = move_uploaded_file($_FILES['order_info_file']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+           
+           if ($moved) {
+
+               $file_path = $upload_dir['subdir'] . '/' . $file_name;
+
+                // Insert data into the database
+                $wpdb->insert(
+                    $this->table_name, // Table name
+                    array(
+                        'community_id' => $community_id,
+                        'store_id' => $store_id,
+                        'order_status' => $order_status,
+                        'order_total' => $order_total,
+                        'order_date' => $order_date,
+                        'order_info_file'=> $file_path
+                    ) // Data to be inserted
+                );
+
+                // Check if the insertion was successful
+                if ($wpdb->insert_id) {
+
+                    $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
+                    // Return the ID of the newly inserted order
+                    return array("status" => true, "response" => "Voucher created successfully for Product: " . implode(", ", $data["product_name"]));
+                } else {
+                    // Failed to move uploaded file
+                    return array("status" => false, "response" => "Something Went Wrong");
+                    }
+                }
+            }
+        else{
+             // Insert data into the database
+             $wpdb->insert(
+                $this->table_name, // Table name
+                array(
+                    'community_id' => $community_id,
+                    'store_id' => $store_id,
+                    'order_status' => $order_status,
+                    'order_total' => $order_total,
+                    'order_date' => $order_date,
+                    'order_info_file'=> ""
+                ) // Data to be inserted
+            );
+
+            // Check if the insertion was successful
+            if ($wpdb->insert_id) {
+
+                $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
+                // Return the ID of the newly inserted order
+                return array("status" => true, "response" => "Voucher created successfully for Product: " . implode(", ", $data["product_name"]));
+            } else {
+                // Failed to move uploaded file
+                return array("status" => false, "response" => "Something Went Wrong");
+                }
         }
     }
 
