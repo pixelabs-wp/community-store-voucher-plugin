@@ -36,6 +36,11 @@ class CSVP_Router {
                 'callback' => array('CSVP_CommunityMember', 'render_transaction_history'),
             ),
             //Community Manager Routes
+            'community_default' => array(
+                'path' => 'community',
+                'callback' => array('CSVP_Community', 'render_dashboard'
+                ),
+            ),
             'community_dashboard' => array(
                 'path' => 'community/dashboard',
                 'callback' => array('CSVP_Community', 'render_dashboard'),
@@ -93,9 +98,9 @@ class CSVP_Router {
                 'path' => 'store/transaction-history',
                 'callback' => array('CSVP_Store', 'render_transaction_history'),
             ),
-            'store_creating_transactions' => array(
-                'path' => 'store/creating-transactions',
-                'callback' => array('CSVP_Store', 'render_creating_transactions'),
+            'store_walk_order' => array(
+                'path' => 'store/walk-order',
+                'callback' => array('CSVP_Store', 'render_walk_order'),
             ),
         ));
 

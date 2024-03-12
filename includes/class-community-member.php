@@ -37,7 +37,8 @@ class CSVP_CommunityMember {
 
         // Create WordPress user
         $user_id = wp_create_user($data['email_address'], wp_generate_password(), $data['email_address']);
-
+        $user_id_role = new WP_User($user_id);
+        $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER);
         if (!is_wp_error($user_id)) {
             // Insert data into the database
             $wpdb->insert(
