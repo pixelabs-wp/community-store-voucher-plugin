@@ -24,7 +24,7 @@ class CSVP_Order{
         $order_status = isset($data['order_status']) ? $data['order_status'] : ORDER_STATUS_PENDING;
         $order_total = $data['order_total'];
         $order_date = isset($data['order_date']) ? $data['order_date'] : current_time('mysql');
-        
+        $loggined_id = get_current_user_id();
 
         if (isset($_FILES['order_info_file']) && $_FILES['order_info_file']['error'] == UPLOAD_ERR_OK) {
 
@@ -53,6 +53,7 @@ class CSVP_Order{
                 $wpdb->insert(
                     $this->table_name, // Table name
                     array(
+                        'wp_user' => $loggined_id,
                         'community_id' => $community_id,
                         'store_id' => $store_id,
                         'order_status' => $order_status,
@@ -79,6 +80,7 @@ class CSVP_Order{
              $wpdb->insert(
                 $this->table_name, // Table name
                 array(
+                    'wp_user' => $loggined_id,
                     'community_id' => $community_id,
                     'store_id' => $store_id,
                     'order_status' => $order_status,
