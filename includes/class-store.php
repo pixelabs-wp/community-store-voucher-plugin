@@ -178,29 +178,37 @@ class CSVP_Store
         $store_mail_address = $data['store_mail_address'];
         $wp_user_id = $data['wp_user_id'];
         $fee_amount_per_transaction = $data['fee_amount_per_transaction'];
+        if (!$this->get_store_by_email(array('email_address' => $store_mail_address))) {
+            // Create WordPress user
+            $user_id = wp_create_user($store_mail_address, wp_generate_password(), $store_mail_address);
+            $user_id_role = new WP_User($user_id);
+            $user_id_role->set_role(CSVP_User_Roles::ROLE_STORE_MANAGER);
 
-        // Insert data into the database
-        $wpdb->insert(
-            $this->table_name, // Table name
-            array(
-                'store_name' => $store_name,
-                'store_phone' => $store_phone,
-                'store_address' => $store_address,
-                'store_logo' => $store_logo,
-                'store_mail_address' => $store_mail_address,
-                'wp_user_id' => $wp_user_id,
-                'fee_amount_per_transaction' => $fee_amount_per_transaction
-            ) // Data to be inserted
-        );
+            // Insert data into the database
+            $wpdb->insert(
+                $this->table_name, // Table name
+                array(
+                    'store_name' => $store_name,
+                    'store_phone' => $store_phone,
+                    'store_address' => $store_address,
+                    'store_logo' => $store_logo,
+                    'store_mail_address' => $store_mail_address,
+                    'wp_user_id' => get_current_user_id(),
+                    'fee_amount_per_transaction' => $fee_amount_per_transaction,
+                    'wp_user_id'=> $user_id
+                ) // Data to be inserted
+            );
 
-        // Check if the insertion was successful
-        if ($wpdb->insert_id) {
-            // Return the ID of the newly inserted store
-            return $wpdb->insert_id;
-        } else {
-            // Send error response
-            return false;
+            // Check if the insertion was successful
+            if ($wpdb->insert_id) {
+                // Return the ID of the newly inserted store
+                return $wpdb->insert_id;
+            } else {
+                // Send error response
+                return false;
+            }
         }
+
     }
 
     /**
@@ -255,6 +263,36 @@ class CSVP_Store
         if ($stores) {
             // Return array of store objects
             return $stores;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+
+    /**
+     * Function to retrieve a community by its ID from the database.
+     *
+     * @param int $community_id The ID of the community to retrieve.
+     * @return object|WP_Error Community data as an object if found, or WP_Error if not found.
+     */
+    public function get_store_by_email($data)
+    {
+        global $wpdb;
+
+        $community_email = $data["email_address"];
+        // Prepare SQL query to retrieve community data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE store_mail_address = %d",
+            $community_email
+        );
+
+        // Execute the query
+        $community = $wpdb->get_row($query);
+
+        // Check if a community was found
+        if ($community) {
+            // Return community data as an object
+            return $community;
         } else {
             // Send error response
             return false;

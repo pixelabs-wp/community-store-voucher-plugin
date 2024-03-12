@@ -18,12 +18,12 @@ function save_test_report($test_results) {
 function test_create_community($community) {
     // Test data
     $data = array(
-        'community_name' => 'Test Community',
+        'community_name' => 'Test Community New',
         'community_manager_name' => 'Manager Name',
         'community_manager_phone' => '1234567890',
         'community_logo' => 'logo.jpg',
         'community_mail_address' => 'test@example.com',
-        'wp_user_id' => 1,
+        'wp_user_id' => get_current_user_id(),
         'payment_link' => 'payment_link'
     );
 
@@ -140,7 +140,7 @@ function test_get_all_communities($community) {
 
 // Run tests and save results to a file
 $test_results = '';
-// $test_results .= test_create_community($community) . PHP_EOL;
+$test_results .= test_create_community($community) . PHP_EOL;
 // $test_results .= test_get_community_by_id($community) . PHP_EOL;
 // $test_results .= test_get_communities_by_name($community) . PHP_EOL;
 // $test_results .= test_update_community($community) . PHP_EOL;
