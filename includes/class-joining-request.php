@@ -2,7 +2,6 @@
 class CSVP_JoiningRequest{
     // Properties
     private $table_name;
-
     // Constructor
     public function __construct() {
         global $wpdb;
@@ -105,14 +104,33 @@ class CSVP_JoiningRequest{
      *
      * @return array Array of joining request objects.
      */
-    public function get_all_joining_requests() {
+    public function get_all_joining_requests($data)
+    {
         global $wpdb;
 
-        // Retrieve all joining requests
-        $results = $wpdb->get_results("SELECT * FROM $this->table_name");
+        $where_conditions = array();
+        if (isset($data["community_id"])) {
+            $where_conditions[] = "community_id = '". $data["community_id"]."'";
+        }
+        if (isset($data["store_id"])) {
+            $where_conditions[] = "store_id = '". $data['store_id']."'";
+        }
+        if (isset($data["status"])) {
+            $where_conditions[] = "request_status = '".$data['status']."'";
+        }
 
+        $where_clause = !empty($where_conditions) ? "WHERE " . implode(" AND ", $where_conditions) : "";
+
+        // Prepare and execute the query
+        $query = "SELECT * FROM $this->table_name $where_clause";
+        $results = $wpdb->get_results($query);
+
+        foreach ($results as $key => $request) {
+            $results["community_data"] = $this->community->get_community_member_by_id($request["community_id"]);
+        }
         return $results;
     }
+
 
     /**
      * Retrieve joining requests by the user who made the request.
@@ -127,6 +145,28 @@ class CSVP_JoiningRequest{
         $query = $wpdb->prepare(
             "SELECT * FROM $this->table_name WHERE requested_by LIKE %s",
             '%' . $wpdb->esc_like($requested_by) . '%'
+        );
+
+        // Retrieve matching joining requests
+        $results = $wpdb->get_results($query);
+
+        return $results;
+    }
+
+    /**
+     * Retrieve joining requests by the user who made the request.
+     *
+     * @param string $requested_by The name of the user who made the request.
+     * @return array Array of joining request objects.
+     */
+    public function get_joining_requests_by_community_id($community_id)
+    {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve joining requests by requested_by using LIKE operator
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE community_id = %s",
+            $community_id
         );
 
         // Retrieve matching joining requests

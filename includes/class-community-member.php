@@ -3,11 +3,14 @@
 class CSVP_CommunityMember {
     // Properties
     private $table_name;
-
+    private $joining_request;
+    public $community_member_user;
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community_member';
+        $this->joining_request = new CSVP_JoiningRequest();
+        $this->community_member_user = $this->get_community_member_by_user_id(array('wp_user_id'=> get_current_user_id()));
     }
 
     //Method to render transaction history
@@ -27,8 +30,13 @@ class CSVP_CommunityMember {
         CSVP_View_Manager::load_view('coupons');
     }
     
-    public static function render_shops(){
-        CSVP_View_Manager::load_view('shops');
+    public function render_shops(){
+        $shops = $this->joining_request->get_all_joining_requests(array(
+                "community_id" => $this->community_member_user->community_id,
+                "status"=> JOINING_REQUEST_STATUS_APPROVED
+        ));
+        $pageData["shops"] = $shops;
+        CSVP_View_Manager::load_view('shops', $pageData);
     }
 
     // Method to create a community member
@@ -105,6 +113,65 @@ class CSVP_CommunityMember {
             return false;
         }
     }
+
+    // Method to get a community member by ID
+    public function get_community_member_by_user_id($data)
+    {
+        global $wpdb;
+
+        $wp_user_id = $data['wp_user_id'];
+
+        // Prepare SQL query to retrieve community member by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE wp_user_id = %d",
+            $wp_user_id
+        );
+
+        // Execute the query
+        $community_member = $wpdb->get_row($query);
+
+        // Check if a community member was found
+        if ($community_member) {
+            // Return community member data as an object
+            return $community_member;
+        } else {
+            // Return false if community member not found
+            return false;
+        }
+    }
+
+
+    // // Method to get a community member by ID
+    // public function get_current_user()
+    // {
+    //     global $wpdb;
+
+    //     $community_member_id = get_current_user_id();
+
+
+    //     $member_data = get_community_member_by_user_id(array('user_id' => $community_member_id)) ? get_community_member_by_user_id(array('user_id' => $community_member_id)) : null;
+    //     $member_data = get_community_member_by_user_id(array('user_id'=> $community_member_id)) ? get_community_member_by_user_id(array('user_id' => $community_member_id)) : null;
+        
+        
+
+    //     // Prepare SQL query to retrieve community member by ID
+    //     $query = $wpdb->prepare(
+    //         "SELECT * FROM $this->table_name WHERE id = %d",
+    //         $community_member_id
+    //     );
+
+    //     // Execute the query
+    //     $community_member = $wpdb->get_row($query);
+
+    //     // Check if a community member was found
+    //     if ($community_member) {
+    //         // Return community member data as an object
+    //         return $community_member;
+    //     } else {
+    //         // Return false if community member not found
+    //         return false;
+    //     }
+    // }
 
         // Method to get a community member by ID
     public function get_community_member_by_email($data) {

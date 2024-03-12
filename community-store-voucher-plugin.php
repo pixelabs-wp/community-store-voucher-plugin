@@ -67,7 +67,6 @@ function run_tests() {
     // require_once CSVP_PLUGIN_PATH . 'tests/class-walk-order-test.php';
     // require_once CSVP_PLUGIN_PATH . 'tests/class-community-member-test.php';
     // require_once CSVP_PLUGIN_PATH . 'tests/class-messages-test.php';
-    // 
 }
 
 

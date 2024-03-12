@@ -85,31 +85,41 @@ class CSVP_Community{
         $community_manager_phone = $data['community_manager_phone'];
         $community_logo = $data['community_logo'];
         $community_mail_address = $data['community_mail_address'];
-        $wp_user_id = $data['wp_user_id'];
         $payment_link = $data['payment_link'];
+        if(!$this->get_community_by_email(array('email_address'=> $community_mail_address))){
+            // Create WordPress user
+            $user_id = wp_create_user($community_mail_address, wp_generate_password(), $community_mail_address);
+            $user_id_role = new WP_User($user_id);
+            $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
 
-        // Insert data into the database
-        $insert_result = $wpdb->insert(
-            $this->table_name, // Table name
-            array(
-                'community_name' => $community_name,
-                'community_manager_name' => $community_manager_name,
-                'community_manager_phone' => $community_manager_phone,
-                'community_logo' => $community_logo,
-                'community_mail_address' => $community_mail_address,
-                'wp_user_id' => $wp_user_id,
-                'payment_link' => $payment_link
-            ) // Data to be inserted
-        );
+            // Insert data into the database
+            $insert_result = $wpdb->insert(
+                $this->table_name, // Table name
+                array(
+                    'community_name' => $community_name,
+                    'community_manager_name' => $community_manager_name,
+                    'community_manager_phone' => $community_manager_phone,
+                    'community_logo' => $community_logo,
+                    'community_mail_address' => $community_mail_address,
+                    'wp_user_id' => $user_id,
+                    'payment_link' => $payment_link,
+                    'wp_user'=> 1
+                ) // Data to be inserted
+            );
 
-        // Check if the insertion was successful
-        if ($insert_result) {
-            // Return the ID of the newly inserted community
-            return $wpdb->insert_id;
+            // Check if the insertion was successful
+            if ($insert_result) {
+                // Return the ID of the newly inserted community
+                return $wpdb->insert_id;
+            } else {
+                // Send error response
+                return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
+            }
         } else {
             // Send error response
-            return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
+            return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
         }
+        
     }
 
     /**
@@ -139,6 +149,38 @@ class CSVP_Community{
             return new WP_Error('not_found', __('Community not found.', 'csvp'), array('status' => 404));
         }
     }
+
+
+    /**
+     * Function to retrieve a community by its ID from the database.
+     *
+     * @param int $community_id The ID of the community to retrieve.
+     * @return object|WP_Error Community data as an object if found, or WP_Error if not found.
+     */
+    public function get_community_by_email($data)
+    {
+        global $wpdb;
+    
+        $community_email = $data["email_address"];
+        // Prepare SQL query to retrieve community data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE community_mail_address = %d",
+            $community_email
+        );
+
+        // Execute the query
+        $community = $wpdb->get_row($query);
+
+        // Check if a community was found
+        if ($community) {
+            // Return community data as an object
+            return $community;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+
 
     /**
      * Function to retrieve communities by their name (partial or full match) from the database.

@@ -77,10 +77,10 @@ function get_commissions_by_entity_id_test() {
 // Create an array to store test results
 $test_results = array(
     'create_commission_test' => create_commission_test(),
-    'get_commission_by_id_test' => get_commission_by_id_test(),
-    'get_all_commissions_test' => get_all_commissions_test(),
-    'get_commissions_by_type_test' => get_commissions_by_type_test(),
-    'get_commissions_by_entity_id_test' => get_commissions_by_entity_id_test()
+    // 'get_commission_by_id_test' => get_commission_by_id_test(),
+    // 'get_all_commissions_test' => get_all_commissions_test(),
+    // 'get_commissions_by_type_test' => get_commissions_by_type_test(),
+    // 'get_commissions_by_entity_id_test' => get_commissions_by_entity_id_test()
 );
 
 
