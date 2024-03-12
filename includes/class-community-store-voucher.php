@@ -22,4 +22,6 @@ define('JOINING_REQUEST_STATUS_REJECTED', 'Rejected');
 define('ORDER_STATUS_PENDING', 'Pending');
 define('ORDER_STATUS_PROCESSING', 'Processing');
 define('ORDER_STATUS_COMPLETED', 'Completed');
+define('ORDER_STATUS_RETURNED', 'Returned');
+define('ORDER_STATUS_PAID', 'Paid');
 define('ORDER_STATUS_CANCELLED', 'Cancelled');

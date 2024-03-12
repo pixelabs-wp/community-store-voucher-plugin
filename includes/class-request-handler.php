@@ -1,14 +1,14 @@
 <?php
 class CSVP_Ajax_Handler{
     public function __construct() {
-        add_action( 'wp_ajax_csvp_request', array( $this, 'process_request' ) );
-        add_action( 'wp_ajax_nopriv_csvp_request', array( $this, 'process_request' ) );
+        add_action( 'wp_ajax_csvp_ajax', array( $this, 'process_request' ) );
+        add_action( 'wp_ajax_nopriv_csvp_ajax', array( $this, 'process_request' ) );
     }
 
     public function process_request() {
-        // Check if the request is valid and has a valid nonce
-        if (!isset($_POST['action']) || $_POST['action'] !== 'csvp_ajax' || !isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'csvp_ajax_nonce')) {
-            $this->send_error_response('Invalid request.', 400);
+        // Check if the request is valid
+        if ( ! isset( $_POST['action'] ) || $_POST['action'] !== 'csvp_ajax' ) {
+            $this->send_error_response( 'Invalid request.', 400 );
         }
         
         // Check if csvp_request and csvp_handler are specified
@@ -17,8 +17,8 @@ class CSVP_Ajax_Handler{
         }
 
         // Get the class name and handler function name
-        $class_name = $_POST['csvp_request'];
-        $handler_function = $_POST['csvp_handler'];
+         $class_name = $_POST['csvp_request'];
+         $handler_function = $_POST['csvp_handler'];
 
         // Check if the class exists
         if ( ! class_exists( $class_name ) ) {
@@ -35,9 +35,10 @@ class CSVP_Ajax_Handler{
 
         // Get the data from the request
         $data = isset( $_POST['data'] ) ? $_POST['data'] : array();
-
+        
         // Call the handler function of the class and pass the data
-        $class_instance->$handler_function( $data );
+        $response = $class_instance->$handler_function( $data );
+        wp_send_json($response);
     }
 
     public static function send_error_response( $message, $status ) {

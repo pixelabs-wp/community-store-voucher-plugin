@@ -109,6 +109,7 @@ class CSVP_Initialize_Database {
             order_status varchar(255) NOT NULL,
             order_total decimal(10,2) NOT NULL,
             order_date datetime NOT NULL,
+            order_info_file varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_order );

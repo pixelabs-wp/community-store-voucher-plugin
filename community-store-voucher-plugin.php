@@ -74,6 +74,7 @@ function run_tests() {
 
 
 $database = new CSVP_Initialize_Database();
+$request = new CSVP_Ajax_Handler();
 
 // Initialize the plugin
 function csvp_init_plugin() {

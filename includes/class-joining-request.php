@@ -40,10 +40,11 @@ class CSVP_JoiningRequest{
         // Check if the insertion was successful
         if ($result) {
             // Return the ID of the newly inserted joining request
-            return $wpdb->insert_id;
+            // return $wpdb->insert_id;
+            return array("status"=>true, "response"=>"Join Request Sent");
         } else {
-            // Return false if insertion failed
-            return false;
+        // Failed to move uploaded file
+        return array("status" => false, "response" => "Something Went Wrong");
         }
     }
 
@@ -133,5 +134,44 @@ class CSVP_JoiningRequest{
 
         return $results;
     }
+
+    public function set_credit_limit_by_store_manager($data) {
+        global $wpdb;
+
+        $credit_limit = $data['credit_limit'];
+        $store_id = $data['store_id'];
+        $community_id = $data['community_id'];
+
+        $query = $wpdb->prepare(
+            "UPDATE {$wpdb->prefix}csvp_joining_request 
+            SET credit_limit = %d
+            WHERE store_id = %d
+            AND community_id = %d",
+            $credit_limit,
+            $store_id,
+            $community_id
+        );
+        
+        // Execute the query
+        $result = $wpdb->query($query);
+        
+        // Check if the query was successful
+        if ($result !== false) {
+            // Check if any rows were affected (i.e., if the update actually happened)
+            if ($result > 0) {
+                // Update successful
+                return array("status" => true, "response" => "Credit limit updated successfully.");
+            } else {
+                // No rows were affected, likely because no matching records were found
+                return array("status" => false, "response" => "No matching records found for the provided store ID and community ID.");
+            }
+        } else {
+            // Query execution failed
+            return array("status" => false, "response" => "Failed to execute the update query.");
+        }
+    
+    }
+
+
 }
 ?>

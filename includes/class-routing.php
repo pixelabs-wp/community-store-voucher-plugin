@@ -93,6 +93,10 @@ class CSVP_Router {
                 'path' => 'store/transaction-history',
                 'callback' => array('CSVP_Store', 'render_transaction_history'),
             ),
+            'store_creating_transactions' => array(
+                'path' => 'store/creating-transactions',
+                'callback' => array('CSVP_Store', 'render_creating_transactions'),
+            ),
         ));
 
        
