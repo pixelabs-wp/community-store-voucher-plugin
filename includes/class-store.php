@@ -136,14 +136,86 @@ class CSVP_Store
         CSVP_View_Manager::load_view('coupon-management');
     }
 
-    public static function render_order_management()
+    public function render_order_management()
     {
+        $user_id = get_current_user_id();
+        if ($user_id) {
+            $data = array(
+                'store_id' => $user_id, // Replace 123 with the actual store ID
+                'suffix' => '_store' // Replace '_xyz' with the actual suffix value
+            );
+        
+            $order_requests = $this->order->get_orders_by_store_id($data);
+        
+            if (!is_wp_error($order_requests)) {
+                $pageData["store_order_requests"] = $order_requests;
+                CSVP_View_Manager::load_view('order-requests', $pageData);
+            } else {
+                // Handle error
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        } else {
+            // Handle error
+            CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
+        }
+        
+        
         CSVP_View_Manager::load_view('order-management');
     }
 
-    public static function render_order_request()
+    public function render_order_request()
     {
-        CSVP_View_Manager::load_view('order-requests');
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request")
+        {
+            $payload = $_POST;
+            $payload["order_status"] = JOINING_REQUEST_STATUS_APPROVED;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Approved");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+
+        }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "cancel_order_request")
+        {
+            $payload = $_POST;
+            $payload["order_status"] = JOINING_REQUEST_STATUS_REJECTED;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Rejected");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
+        
+        $user_id = get_current_user_id();
+        if ($user_id) {
+            $data = array(
+                'store_id' => $user_id, // Replace 123 with the actual store ID
+                'suffix' => '_store' // Replace '_xyz' with the actual suffix value
+            );
+        
+            $order_requests = $this->order->get_orders_by_store_id($data);
+        
+            if (!is_wp_error($order_requests)) {
+                $pageData["store_order_requests"] = $order_requests;
+                CSVP_View_Manager::load_view('order-requests', $pageData);
+            } else {
+                // Handle error
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        } else {
+            // Handle error
+            CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
+        }
+        
     }
 
     public static function render_return_management()

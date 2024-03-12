@@ -893,30 +893,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- <tr>
-									<th scope="row">7,500 ₪</th>
-									<th> ₪ 499</th>
-									<th>15</th>
-									<th>חליפות</th>
-								</tr>
-								<tr>
-									<th scope="row">0 ₪</th>
-									<th>84.9</th>
-									<th>0</th>
-									<th>חולצות</th>
-								</tr>
-								<tr>
-									<th scope="row">4,650 ₪ </th>
-									<th>99 ₪</th>
-									<th>47</th>
-									<th>חפתים</th>
-								</tr>
-								<tr>
-									<th scope="row">0 ₪</th>
-									<th>99 ₪</th>
-									<th>10</th>
-									<th>גרביים</th>
-								</tr> -->
+								
 							</tbody>
 
 						</table>
