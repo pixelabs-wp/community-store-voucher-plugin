@@ -240,81 +240,79 @@
   .filter-card {
     z-index: 2;
   }
-  
 
 
-  
+
+
   .guy-loading-history-data tbody {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 
-    .guy-loading-history-data {
-        width: 100%;
-    }
+  .guy-loading-history-data {
+    width: 100%;
+  }
 
-    .guy-loading-history-data tr {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        flex-direction: row;
-        gap: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        background-color: rgba(239, 239, 239, 1);
-    }
+  .guy-loading-history-data tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(239, 239, 239, 1);
+  }
 
 
-    .card-wrapper {
-        gap: 10px;
-        display: flex;
-        overflow: auto;
-        flex-wrap: wrap;
-    }
+  .card-wrapper {
+    gap: 10px;
+    display: flex;
+    overflow: auto;
+    flex-wrap: wrap;
+  }
 
+  .card-wrapper .card {
+    width: 32.5%;
+    direction: rtl;
+    border-radius: 20px;
+  }
+
+  .card-wrapper .card .card-body h3 {
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .card-wrapper .card .img-responsive {
+    border-radius: 14px 14px 0 0;
+  }
+
+  .card-wrapper .card .card-body {
+    border-radius: 0 0 14px 14px;
+
+  }
+
+  .card-wrapper .card .card-body button {
+    font-size: 25px;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+
+  @media screen and (max-width: 900px) {
     .card-wrapper .card {
-        width: 32.5%;
-        direction: rtl;
-        border-radius: 20px;
+      width: 48%;
     }
+  }
 
-    .card-wrapper .card .card-body h3 {
-        font-size: 20px;
-        font-weight: 400;
+  @media screen and (max-width: 580px) {
+    .card-wrapper .card {
+      width: 100%;
     }
-
-    .card-wrapper .card .img-responsive {
-        border-radius: 14px 14px 0 0;
-    }
-
-    .card-wrapper .card .card-body {
-        border-radius: 0 0 14px 14px;
-
-    }
-
-    .card-wrapper .card .card-body button {
-        font-size: 25px;
-        font-weight: 600;
-        border-radius: 10px;
-        padding: 20px;
-    }
-
-
-    @media screen and (max-width: 900px) {
-        .card-wrapper .card {
-            width: 48%;
-        }
-    }
-
-    @media screen and (max-width: 580px) {
-        .card-wrapper .card {
-            width: 100%;
-        }
-    }
-
-
+  }
 </style>
 
 
@@ -462,129 +460,130 @@
 <!-- Guy Details modal Starts here -->
 
 <div class="modal fade" id="community-manager-guy-full-detail" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
-        <div class="modal-content " style="overflow: auto;">
+  aria-hidden="true">
+  <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+    <div class="modal-content " style="overflow: auto;">
 
-            <div class="main-container">
-                <div class="guys-full-details-header w-100 d-flex flex-row bg-dark justify-content-between align-items-center p-4"
-                    style="direction: rtl;">
-                    <h2 class="text-white m-0"
-                        style="font-family: Noto Sans Hebrew; font-size: 36px; font-weight: 900;">משה וענונו
-                    </h2>
-                    <button class="btn bg-white rounded "
-                        style="font-family: Noto Sans Hebrew; font-size: 24px; font-weight: 800;">חזרה לתפריט
-                        הראשי</button>
-                </div>
-                <div class="guys-full-details-body d-flex flex-row justify-content-center row" style="direction: rtl;">
-
-                    <div class="col-lg-4 p-4 bg-gray rounded-3 my-5 mx-2" style="background: rgba(228, 228, 228, 1);">
-                        <h2><strong>פרטי הבחור:</strong></h2>
-                        <h2><strong>שם הבחור:</strong> משה וענונו</h2>
-                        <h2><strong>מס’ טלפון:</strong> 0546268012</h2>
-                        <h2><strong>כתובת מייל:</strong> elikako.m@gmail.com</h2>
-                        <h2><strong>מס’ תעודת זהות:</strong> 2042856524</h2>
-                        <h2><strong>מס’ כרטיס מגנטי:</strong> 154626652</h2>
-                    </div>
-
-                    <div class="col-lg-7 p-4 bg-white rounded-3 my-5 mx-2"
-                        style="box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); direction: rtl;">
-                        <h1>הסטוריית טעינות</h1>
-                        <div style="  height: 200px; overflow: auto;">
-                            <table class="guy-loading-history-data">
-                                <tbody>
-                                    <tr>
-                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                                        <td><strong>סכום: </strong>250 ₪</td>
-                                        <td><strong>תאריך: </strong>24/07/2023</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                                        <td><strong>סכום: </strong>250 ₪</td>
-                                        <td><strong>תאריך: </strong>24/07/2023</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                                        <td><strong>סכום: </strong>250 ₪</td>
-                                        <td><strong>תאריך: </strong>24/07/2023</td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
- 
-                    <h2 style="font-size: 25px; padding-right: 40px; padding-top: 50px; font-weight: 800;"
-                        class="col-12 card-wrapper">שוברים להטענה</h2>
-
-                    <div class="col-12 p-5 card-wrapper">
-
-                        <div class="card">
-                            <!-- Photo -->
-                            <div class="img-responsive img-responsive-21x9 card-img-top"
-                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
-                            </div>
-                            <div class="card-body bg-white text-center">
-                                <h3 class="card-title">חליפה 70% צמר </h3>
-                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
-                                <button class="btn bg-black text-white">הטענת השובר</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <!-- Photo -->
-                            <div class="img-responsive img-responsive-21x9 card-img-top"
-                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
-                            </div>
-                            <div class="card-body bg-white text-center">
-                                <h3 class="card-title">חליפה 70% צמר </h3>
-                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
-                                <button class="btn bg-black text-white">הטענת השובר</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <!-- Photo -->
-                            <div class="img-responsive img-responsive-21x9 card-img-top"
-                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
-                            </div>
-                            <div class="card-body bg-white text-center">
-                                <h3 class="card-title">חליפה 70% צמר </h3>
-                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
-                                <button class="btn bg-black text-white">הטענת השובר</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <!-- Photo -->
-                            <div class="img-responsive img-responsive-21x9 card-img-top"
-                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
-                            </div>
-                            <div class="card-body bg-white text-center">
-                                <h3 class="card-title">חליפה 70% צמר </h3>
-                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
-                                <button class="btn bg-black text-white">הטענת השובר</button>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <!-- Photo -->
-                            <div class="img-responsive img-responsive-21x9 card-img-top"
-                                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
-                            </div>
-                            <div class="card-body bg-white text-center">
-                                <h3 class="card-title">חליפה 70% צמר </h3>
-                                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
-                                <button class="btn bg-black text-white">הטענת השובר</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="main-container">
+        <div
+          class="guys-full-details-header w-100 d-flex flex-row bg-dark justify-content-between align-items-center p-4"
+          style="direction: rtl;">
+          <h2 class="text-white m-0" style="font-family: Noto Sans Hebrew; font-size: 36px; font-weight: 900;">משה
+            וענונו
+          </h2>
+          <button class="btn bg-white rounded "
+            style="font-family: Noto Sans Hebrew; font-size: 24px; font-weight: 800;">חזרה לתפריט
+            הראשי</button>
         </div>
+        <div class="guys-full-details-body d-flex flex-row justify-content-center row" style="direction: rtl;">
+
+          <div class="col-lg-4 p-4 bg-gray rounded-3 my-5 mx-2" style="background: rgba(228, 228, 228, 1);">
+            <h2><strong>פרטי הבחור:</strong></h2>
+            <h2><strong>שם הבחור:</strong> משה וענונו</h2>
+            <h2><strong>מס’ טלפון:</strong> 0546268012</h2>
+            <h2><strong>כתובת מייל:</strong> elikako.m@gmail.com</h2>
+            <h2><strong>מס’ תעודת זהות:</strong> 2042856524</h2>
+            <h2><strong>מס’ כרטיס מגנטי:</strong> 154626652</h2>
+          </div>
+
+          <div class="col-lg-7 p-4 bg-white rounded-3 my-5 mx-2"
+            style="box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); direction: rtl;">
+            <h1>הסטוריית טעינות</h1>
+            <div style="  height: 200px; overflow: auto;">
+              <table class="guy-loading-history-data">
+                <tbody>
+                  <tr>
+                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                    <td><strong>סכום: </strong>250 ₪</td>
+                    <td><strong>תאריך: </strong>24/07/2023</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                    <td><strong>סכום: </strong>250 ₪</td>
+                    <td><strong>תאריך: </strong>24/07/2023</td>
+                  </tr>
+
+                  <tr>
+                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
+                    <td><strong>סכום: </strong>250 ₪</td>
+                    <td><strong>תאריך: </strong>24/07/2023</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+
+          <h2 style="font-size: 25px; padding-right: 40px; padding-top: 50px; font-weight: 800;"
+            class="col-12 card-wrapper">שוברים להטענה</h2>
+
+          <div class="col-12 p-5 card-wrapper">
+
+            <div class="card">
+              <!-- Photo -->
+              <div class="img-responsive img-responsive-21x9 card-img-top"
+                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+              </div>
+              <div class="card-body bg-white text-center">
+                <h3 class="card-title">חליפה 70% צמר </h3>
+                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                <button class="btn bg-black text-white">הטענת השובר</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <!-- Photo -->
+              <div class="img-responsive img-responsive-21x9 card-img-top"
+                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+              </div>
+              <div class="card-body bg-white text-center">
+                <h3 class="card-title">חליפה 70% צמר </h3>
+                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                <button class="btn bg-black text-white">הטענת השובר</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <!-- Photo -->
+              <div class="img-responsive img-responsive-21x9 card-img-top"
+                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+              </div>
+              <div class="card-body bg-white text-center">
+                <h3 class="card-title">חליפה 70% צמר </h3>
+                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                <button class="btn bg-black text-white">הטענת השובר</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <!-- Photo -->
+              <div class="img-responsive img-responsive-21x9 card-img-top"
+                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+              </div>
+              <div class="card-body bg-white text-center">
+                <h3 class="card-title">חליפה 70% צמר </h3>
+                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                <button class="btn bg-black text-white">הטענת השובר</button>
+              </div>
+            </div>
+
+            <div class="card">
+              <!-- Photo -->
+              <div class="img-responsive img-responsive-21x9 card-img-top"
+                style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+              </div>
+              <div class="card-body bg-white text-center">
+                <h3 class="card-title">חליפה 70% צמר </h3>
+                <h3 class="text-secondary"> 680₪ במקום 990₪</h3>
+                <button class="btn bg-black text-white">הטענת השובר</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Guy Details modal Ends here -->
@@ -666,7 +665,7 @@
               <label class="form-label">סינון לפי מספר כרטיס</label>
 
               <div class="input-icon mb-2">
-                <input class="form-control " type="number" placeholder="Search Card"/>
+                <input class="form-control " type="number" placeholder="Search Card" />
               </div>
               <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
             </div>
@@ -785,7 +784,8 @@
               ?>
               <tr>
                 <td class="ts-date">
-                  <div class="card card-sm bg-black ts-round" style="direction: rtl;" data-bs-toggle="modal" data-bs-target="#community-manager-guy-full-detail">
+                  <div class="card card-sm bg-black ts-round" style="direction: rtl;" data-bs-toggle="modal"
+                    data-bs-target="#community-manager-guy-full-detail">
                     <div class="card-body p-1 m-1">
                       <div class="row align-items-center">
                         <div class="col-auto">
@@ -793,8 +793,8 @@
                         </div>
                         <div class="col">
                           <div class="font-weight-medium ts-text ts-text-color" style="direction: rtl;">
-                             לפרטים המלאים
-                             ←</div>
+                            לפרטים המלאים
+                            ←</div>
                         </div>
                       </div>
                     </div>

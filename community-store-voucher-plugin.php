@@ -36,6 +36,7 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-notifications.php';
 require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-routing.php';
 
+require_once CSVP_PLUGIN_PATH . 'includes/class-admin.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-community.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-store.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-commision.php';
