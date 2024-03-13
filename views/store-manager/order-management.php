@@ -367,8 +367,7 @@
                 <div class="d-flex justify-content-between">
                    <?php if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING)
                     { ?>
-                        <span class="btn btn-red" data-bs-toggle="modal"
-                            data-bs-target="#store-manager-transaction-success" onclick="populateModal('<?php echo $order['id']; ?>')">לא שולם</span>
+                        <span class="btn btn-red" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('<?php echo $order['id']; ?>')">לא שולם</span>
                     <?php } 
 					else if ($order['order_status'] == ORDER_STATUS_PAID)
                     { ?>

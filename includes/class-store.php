@@ -101,13 +101,27 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PAID;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
         
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
         $response["joined_communities"] = $joined_communities;
         if (is_wp_error($response["joined_communities"])) 
         {
-            CSVP_Notification::add(CSVP_Notification::ERROR, $response["joined_communities"]->get_error_message());
         }
         else
         {

@@ -779,9 +779,9 @@
 				</div>
 			</div>
 			<!-- 2st one -->
-			<div class="d-flex flex-column align-items-end cont">
+			<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
 				<h3 class="title">הסטוריית הזמנות </h3>
-				<div class="d-flex justify-content-between tran">
+				<!-- <div class="d-flex justify-content-between tran">
 					<div><button class="buttons" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success">שולם</button></div>
 					<div class="d-flex gap-3">
 						<div><button class="buttonss" style="background-color: #9D0000; ">לפרטי ההזמנה</button></div>
@@ -809,7 +809,7 @@
 						<h3 class="titl">סכום: 5,400 ₪ </h3>
 						<h3 class="titl">הזמנה: 51426</h3>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<!-- 3st one -->
 			<div>
@@ -990,6 +990,14 @@
 
 <!-- Transaction Successful Notification modal Starts here -->
 
+<script>
+    function populateModal(orderid) {
+	document.getElementById('aprrove_payment_order_id').value = orderid;
+	document.getElementById('cancel_payment_order_id').value = orderid;
+}
+
+</script>
+
 <div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
 	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
@@ -997,7 +1005,11 @@
 			<h3>האם העסקה שולמה בהצלחה?</h3>
 
 			<div class="add-new-benefit-buttons mt-4">
+			<form action="" method="POST" class="d-inline">
+			 	<input type="hidden" id="aprrove_payment_order_id" name="order_id" value="">
+			 	<input type="hidden" name="csvp_request" value="aprrove_payment">
 				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+			</form>
 				<button type="submit" class="btn btn-danger w-25">ביטול</button>
 
 			</div>
@@ -1223,6 +1235,86 @@
     parentElement.innerHTML += section; // Use innerHTML to append HTML content
 }
 
+function addOrderHistory(item) {
+	if(item.order_status == '<?php echo ORDER_STATUS_PAID; ?>')
+	{
+		var date = new Date(item.created_at);
+		var day = date.getDate();
+		var month = date.getMonth() + 1; 
+		var year = date.getFullYear();
+		var formattedDay = (day < 10) ? '0' + day : day;
+		var formattedMonth = (month < 10) ? '0' + month : month;
+		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+
+		var section = `
+			<div class="d-flex justify-content-between tran">
+				<div>
+					<button class="buttons" >שולם</button>
+				</div>
+				<div class="d-flex gap-3">
+					<div><button class="buttonss" style="background-color: #9D0000; ">לפרטי ההזמנה</button></div>
+					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
+					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
+					<h3 class="titl">הזמנה: ${item.id}</h3>
+				</div>
+			</div>`;
+	}	
+	else if(item.order_status == '<?php echo ORDER_STATUS_COMPLETED; ?>')
+	{
+		var date = new Date(item.created_at);
+		var day = date.getDate();
+		var month = date.getMonth() + 1; 
+		var year = date.getFullYear();
+		var formattedDay = (day < 10) ? '0' + day : day;
+		var formattedMonth = (month < 10) ? '0' + month : month;
+		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+		
+		var section = `
+		<div class="d-flex justify-content-between tran">
+			<div>
+				<button class="buttons" style="background-color: #BC9B63;">+ שליחת דרישת תשלום</button>
+			</div>
+			<div class="d-flex gap-3">
+				<div>
+					<button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button>
+				</div>
+				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
+				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
+				<h3 class="titl">הזמנה: ${item.id}</h3>
+			</div>
+		</div>`;
+	}
+	else if(item.order_status == '<?php echo ORDER_STATUS_PROCESSING; ?>')
+	{
+		var date = new Date(item.created_at);
+		var day = date.getDate();
+		var month = date.getMonth() + 1; 
+		var year = date.getFullYear();
+		var formattedDay = (day < 10) ? '0' + day : day;
+		var formattedMonth = (month < 10) ? '0' + month : month;
+		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+
+		var section = `
+		<div class="d-flex justify-content-between tran">
+			<div>
+				<button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">ממתין לתשלום</button>
+			</div>
+			<div class="d-flex gap-3">
+				<div>
+					<button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button>
+				</div>
+				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
+				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
+				<h3 class="titl">הזמנה: ${item.id}</h3>
+			</div>
+		</div>`;
+	}
+
+    var parentOrderHistory = document.getElementById("parentOrderHistory");
+    parentOrderHistory.insertAdjacentHTML('beforeend', section); // Append content to the end of parentOrderHistory
+}
+
+
 	// When modal is about to be shown
 	jQuery('#community-details').on('show.bs.modal', function(event) {
 		// Extract data from data attributes of the button
@@ -1244,7 +1336,6 @@
             },
             success: function(response) {
                 // Handle success response
-                console.log(response[0]["community_logo"]);
 				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
 				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
@@ -1269,7 +1360,6 @@
 				}
             },
             success: function(response) {
-				console.log(id);
                 // Handle success response
                 if(response)
 				{
@@ -1287,7 +1377,43 @@
             },
             error: function(xhr, status, error) {
                 // Handle error response
-				console.log(id);
+                console.error(xhr.responseText);
+				console.error("Unexpected response format:", xhr.responseText);
+            }
+        });
+		jQuery.ajax({
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Order', // Action hook
+                csvp_handler: 'get_orders_by_community_id', // Action hook
+                data:	{
+					community_id: id
+				}
+            },
+            success: function(response) {
+				console.log(response);
+                // Handle success response
+                if(response)
+				{
+					var parentOrderHistory = document.getElementById("parentOrderHistory");
+   				 parentOrderHistory.innerHTML = "";
+					response.forEach(function(item) {
+						
+							addOrderHistory(item);
+						
+                // addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
+			});
+				}
+				else{
+					var parentElement = document.getElementById("parentElementId");
+   				 parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
+				}
+				
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
                 console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
             }
