@@ -226,6 +226,19 @@
             border: none;
             /* Set the desired border color when focused */
         }
+
+        
+    .datagrid-title{
+        font-size: 20px;
+        color: black;
+        font-weight: 600;
+    }
+
+    .datagrid-content{
+        font-size: 18px;
+        color: gray;
+        font-weight: 400;
+    }
     </style>
 </head>
 
@@ -401,6 +414,9 @@
 
     </div>
 
+
+
+ 
 
 
 
@@ -640,7 +656,7 @@
                         <li class="side-nav-item nav-item">
                             <a class="side-nav-link nav-link" href="/admin/messages">
                                 <span class="nav-link-title side-nav-link-title">
-                                הודעות</span>
+                                    הודעות</span>
                                 <span
                                     class="nav-link-icon side-nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                                     <svg width="44" height="37" viewBox="0 0 44 37" fill="none"

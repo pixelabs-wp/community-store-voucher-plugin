@@ -119,8 +119,35 @@
     .btn-paid {
         background-color: rgba(1, 5, 29, 1);
         color: white;
+        cursor: context-menu;
+    }
+
+    .btn-paid:hover,
+    .btn-paid:focus {
+        background-color: #01051d;
+        outline: none;
+        color: white;
+        cursor: context-menu;
     }
 </style>
+
+<div class="modal fade" id="mark-as-paid-confirmation" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content p-4">
+
+            <h2 class="text-center">Do you want to mark it as paid?</h2>
+            <div class="d-flex justify-content-center align-items-center gap-3">
+                <button class="w-25 btn text-white bg-dark">Yes</button>
+                <button class="w-25 btn btn-outline">No</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
 <div class="container p-0">
 
     <div class="container col-12 mt-5">
@@ -250,7 +277,8 @@
                     <tbody class="d-flex flex-column ts-text">
 
                         <tr>
-                            <td class="ts-date"><button class="btn btn-markaspaid">סמן כשולם←</button></td>
+                            <td class="ts-date text-center"><button class="btn btn-markaspaid" data-bs-toggle="modal"
+                                    data-bs-target="#mark-as-paid-confirmation">סמן כשולם←</button></td>
                             <td class="text-muted ts-price">סכום התשלום: 675 ₪</td>
                             <td class="text-muted ts-product">
                                 <a href="#" class="text-reset">מספר טעינות: 450</a>
@@ -260,7 +288,7 @@
                         </tr>
 
                         <tr>
-                            <td class="ts-date"><button class="btn btn-paid">סמן כשולם←</button></td>
+                            <td class="ts-date text-center"><button class="btn btn-paid">שולם</button></td>
                             <td class="text-muted ts-price">סכום התשלום: 675 ₪</td>
                             <td class="text-muted ts-product">
                                 <a href="#" class="text-reset">מספר טעינות: 450</a>
@@ -281,14 +309,14 @@
                             <li class="page-item page-prev disabled">
                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                     <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                                    סה”כ טעינות במערכת: 87                                    </div>
+                                        סה”כ טעינות במערכת: 87 </div>
                                 </a>
                             </li>
 
                             <li class="page-item page-next">
                                 <a class="page-link" href="#">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                    סה”כ ישיבות: 450                                    </div>
+                                        סה”כ ישיבות: 450 </div>
                                 </a>
                             </li>
                         </ul>
