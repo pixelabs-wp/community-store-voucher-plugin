@@ -115,6 +115,21 @@ class CSVP_Store
             {
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
+        } 
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PROCESSING;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Payment Request Sent");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
         }
         
 
@@ -168,6 +183,22 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
         }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PROCESSING;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Payment Request Sent");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
+
         $user_id = get_current_user_id();
         if ($user_id) {
             $data = array(

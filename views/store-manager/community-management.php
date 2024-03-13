@@ -992,9 +992,16 @@
 
 <script>
     function populateModal(orderid) {
-	document.getElementById('aprrove_payment_order_id').value = orderid;
-	document.getElementById('cancel_payment_order_id').value = orderid;
+	document.getElementById('aprove_payment_order_id').value = orderid;
 }
+
+</script>
+
+<script>
+   function closeModal() {
+   jQuery('#store-manager-transaction-success').modal('hide'); // Close the modal
+}
+
 
 </script>
 
@@ -1003,15 +1010,22 @@
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
+			<form action="" method="POST">
+				<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+				<input type="hidden" name="csvp_request" value="request_payment">
+				<button class="btn btn-secondary">שלח בקשת תשלום</button>
+			</form>
 
 			<div class="add-new-benefit-buttons mt-4">
 			<form action="" method="POST" class="d-inline">
-			 	<input type="hidden" id="aprrove_payment_order_id" name="order_id" value="">
+			 	<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
 			 	<input type="hidden" name="csvp_request" value="aprrove_payment">
 				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 			</form>
-				<button type="submit" class="btn btn-danger w-25">ביטול</button>
-
+				<button type="submit" class="btn btn-danger w-25" onclick="closeModal()">ביטול</button>
+			<div>
+				
+			</div>
 			</div>
 
 		</div>
@@ -1235,6 +1249,8 @@
     parentElement.innerHTML += section; // Use innerHTML to append HTML content
 }
 
+var parentOrderHistory = document.getElementById("parentOrderHistory");
+
 function addOrderHistory(item) {
 	if(item.order_status == '<?php echo ORDER_STATUS_PAID; ?>')
 	{
@@ -1272,7 +1288,7 @@ function addOrderHistory(item) {
 		var section = `
 		<div class="d-flex justify-content-between tran">
 			<div>
-				<button class="buttons" style="background-color: #BC9B63;">+ שליחת דרישת תשלום</button>
+				<button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">+ שליחת דרישת תשלום</button>
 			</div>
 			<div class="d-flex gap-3">
 				<div>
@@ -1310,8 +1326,9 @@ function addOrderHistory(item) {
 		</div>`;
 	}
 
-    var parentOrderHistory = document.getElementById("parentOrderHistory");
-    parentOrderHistory.insertAdjacentHTML('beforeend', section); // Append content to the end of parentOrderHistory
+   
+    parentOrderHistory.insertAdjacentHTML('beforeend', section);
+	 // Append content to the end of parentOrderHistory
 }
 
 
@@ -1399,6 +1416,7 @@ function addOrderHistory(item) {
 				{
 					var parentOrderHistory = document.getElementById("parentOrderHistory");
    				 parentOrderHistory.innerHTML = "";
+					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
 					response.forEach(function(item) {
 						
 							addOrderHistory(item);

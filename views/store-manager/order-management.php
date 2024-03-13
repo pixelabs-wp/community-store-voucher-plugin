@@ -399,8 +399,7 @@
 </div>
 <script>
     function populateModal(orderid) {
-	document.getElementById('aprrove_payment_order_id').value = orderid;
-	document.getElementById('cancel_payment_order_id').value = orderid;
+	document.getElementById('aprove_payment_order_id').value = orderid;
 }
 
 </script>
@@ -410,10 +409,14 @@
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
-
+			<form action="" method="POST">
+				<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+				<input type="hidden" name="csvp_request" value="request_payment">
+				<button class="btn btn-secondary">שלח בקשת תשלום</button>
+			</form>
 			<div class="add-new-benefit-buttons mt-4">
 			<form action="" method="POST" class="d-inline">
-			 	<input type="hidden" id="aprrove_payment_order_id" name="order_id" value="">
+			 	<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
 			 	<input type="hidden" name="csvp_request" value="aprrove_payment">
 				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 			</form>
