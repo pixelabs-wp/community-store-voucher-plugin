@@ -102,6 +102,31 @@ class CSVP_Router {
                 'path' => 'store/walk-order',
                 'callback' => array('CSVP_Store', 'render_walk_order'),
             ),
+            // Admin Routes
+            'admin_default' => array(
+                'path' => 'admin',
+                'callback' => array('CSVP_Admin', 'render_community_management'),
+            ),
+            'admin_community' => array(
+                'path' => 'admin/manage-communities',
+                'callback' => array('CSVP_Admin', 'render_community_management'),
+            ),
+            'admin_store' => array(
+                'path' => 'admin/manage-stores',
+                'callback' => array('CSVP_Admin', 'render_store_management'),
+            ),
+            'admin_store_commisions' => array(
+                'path' => 'admin/store-commisions',
+                'callback' => array('CSVP_Admin', 'render_store_commisions'),
+            ),
+            'admin_community_commisions' => array(
+                'path' => 'admin/community-commisions',
+                'callback' => array('CSVP_Admin', 'render_community_commisions'),
+            ),
+            'admin_messages' => array(
+                'path' => 'admin/messages',
+                'callback' => array('CSVP_Admin', 'render_messages'),
+            ),
         ));
 
        

@@ -20,7 +20,7 @@ class CSVP_View_Manager{
 
     // Load admin view
     private static function load_admin_view($view_type, $data) {
-        self::load_view_file("admin/$view_type", $data);
+        self::load_view_file("system-admin/$view_type", $data);
     }
 
     // Load community manager view
