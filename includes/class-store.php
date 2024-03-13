@@ -101,13 +101,27 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PAID;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
         
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
         $response["joined_communities"] = $joined_communities;
         if (is_wp_error($response["joined_communities"])) 
         {
-            CSVP_Notification::add(CSVP_Notification::ERROR, $response["joined_communities"]->get_error_message());
         }
         else
         {
@@ -136,14 +150,100 @@ class CSVP_Store
         CSVP_View_Manager::load_view('coupon-management');
     }
 
-    public static function render_order_management()
+    public function render_order_management()
     {
-        CSVP_View_Manager::load_view('order-management');
+
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PAID;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
+        $user_id = get_current_user_id();
+        if ($user_id) {
+            $data = array(
+                'store_id' => $user_id, // Replace 123 with the actual store ID
+                'suffix' => '_store' // Replace '_xyz' with the actual suffix value
+            );
+        
+            $order_requests = $this->order->get_orders_by_store_id($data);
+        
+            if (!is_wp_error($order_requests)) {
+                $pageData["accepted_store_orders"] = $order_requests;
+                CSVP_View_Manager::load_view('order-management', $pageData);
+            } else {
+                // Handle error
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        } else {
+            // Handle error
+            CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
+        }
+        
     }
 
-    public static function render_order_request()
+    public function render_order_request()
     {
-        CSVP_View_Manager::load_view('order-requests');
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request")
+        {
+            $payload = $_POST;
+            $payload["order_status"] = ORDER_STATUS_COMPLETED;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Approved");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+
+        }
+        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "cancel_order_request")
+        {
+            $payload = $_POST;
+            $payload["order_status"] = ORDER_STATUS_CANCELLED;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Rejected");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
+        
+        $user_id = get_current_user_id();
+        if ($user_id) {
+            $data = array(
+                'store_id' => $user_id, // Replace 123 with the actual store ID
+                'suffix' => '_store' // Replace '_xyz' with the actual suffix value
+            );
+        
+            $order_requests = $this->order->get_orders_by_store_id($data);
+        
+            if (!is_wp_error($order_requests)) {
+                $pageData["store_order_requests"] = $order_requests;
+                CSVP_View_Manager::load_view('order-requests', $pageData);
+            } else {
+                // Handle error
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        } else {
+            // Handle error
+            CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
+        }
+        
     }
 
     public static function render_return_management()
