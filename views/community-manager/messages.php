@@ -134,15 +134,6 @@
   <div class="container col-12">
     <div class="row row-cards justify-content-sm-end gap-sm-3 gap-3 gap-lg-0 bg-black px-2 py-2 m-0 ts-round">
       
-
-
-    
-      
-      
-      
-
-
-      
       <!-- Date Range Filter   -->
       <div class="col-sm-5 col-lg-3 m-0">
         <div class="card card-sm p-relative" style="position: relative;">
@@ -192,7 +183,7 @@
 
 
 
-      <!-- Guy Filter -->
+      <!-- Store Filter -->
       <div class="col-sm-5 col-lg-3 m-0">
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
@@ -387,10 +378,6 @@
         }));
       });
       // @formatter:on
-
-
-
-
 
     </script>
 

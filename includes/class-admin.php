@@ -19,14 +19,14 @@ class CSVP_Admin
         CSVP_View_Manager::load_view('store-commision');
     }
 
+    public function render_messages()
+    {
+        CSVP_View_Manager::load_view('messages');
+    }
+
     public function render_community_commisions()
     {
         CSVP_View_Manager::load_view('community-commision');
     }
 
-    public function render_messages()
-    {
-        CSVP_View_Manager::load_view('messages');
-    }
-  
 }
