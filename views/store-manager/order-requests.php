@@ -342,15 +342,15 @@
 
             <div class="card-body px-3">
                 <div class="d-flex justify-content-between">
-                    <?php if($order['order_status'] == JOINING_REQUEST_STATUS_PENDING) {?> 
+                    <?php if($order['order_status'] == ORDER_STATUS_PENDING) {?> 
                         <button type="button" class="btn btn-red" data-bs-toggle="modal"
                             data-bs-target="#store-manager-accept-new-order" onclick="populateModal('<?php echo $order['id']; ?>' , <?php echo htmlentities(json_encode($order['order_data'])); ?>)">ביצוע הזמנה</button>
                     <?php }
-                    else if ($order['order_status'] == JOINING_REQUEST_STATUS_APPROVED)
+                    else if ($order['order_status'] == ORDER_STATUS_COMPLETED)
                     { ?>
                         <span class="btn btn-brown">סופק</span>
                     <?php } 
-					else if ($order['order_status'] == JOINING_REQUEST_STATUS_REJECTED)
+					else if ($order['order_status'] == ORDER_STATUS_CANCELLED)
                     { ?>
                         <span class="btn btn-muted">מבוטל</span>
                     <?php } ?>

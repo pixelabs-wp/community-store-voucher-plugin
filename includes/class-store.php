@@ -138,6 +138,22 @@ class CSVP_Store
 
     public function render_order_management()
     {
+
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
+        {
+            $payload = $_POST;
+            $payload["store_id"] = $this->store_manager_id;
+            $payload["order_status"] = ORDER_STATUS_PAID;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+        }
         $user_id = get_current_user_id();
         if ($user_id) {
             $data = array(
@@ -148,8 +164,8 @@ class CSVP_Store
             $order_requests = $this->order->get_orders_by_store_id($data);
         
             if (!is_wp_error($order_requests)) {
-                $pageData["store_order_requests"] = $order_requests;
-                CSVP_View_Manager::load_view('order-requests', $pageData);
+                $pageData["accepted_store_orders"] = $order_requests;
+                CSVP_View_Manager::load_view('order-management', $pageData);
             } else {
                 // Handle error
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
@@ -159,8 +175,6 @@ class CSVP_Store
             CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
         }
         
-        
-        CSVP_View_Manager::load_view('order-management');
     }
 
     public function render_order_request()
@@ -168,7 +182,7 @@ class CSVP_Store
         if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request")
         {
             $payload = $_POST;
-            $payload["order_status"] = JOINING_REQUEST_STATUS_APPROVED;
+            $payload["order_status"] = ORDER_STATUS_COMPLETED;
             $response = $this->order->update_order_status($payload);
             if ($response) 
             {
@@ -183,7 +197,7 @@ class CSVP_Store
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "cancel_order_request")
         {
             $payload = $_POST;
-            $payload["order_status"] = JOINING_REQUEST_STATUS_REJECTED;
+            $payload["order_status"] = ORDER_STATUS_CANCELLED;
             $response = $this->order->update_order_status($payload);
             if ($response) 
             {
