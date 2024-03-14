@@ -276,11 +276,12 @@ class CSVP_Store
         $store_address = $data['store_address'];
         $store_logo = $data['store_logo'];
         $store_mail_address = $data['store_mail_address'];
-        $wp_user_id = $data['wp_user_id'];
+        $store_cashier_phone = $data["store_cashier_phone"];
+        $password = $data["store_cashier_phone"];
         $fee_amount_per_transaction = $data['fee_amount_per_transaction'];
         if (!$this->get_store_by_email(array('email_address' => $store_mail_address))) {
             // Create WordPress user
-            $user_id = wp_create_user($store_mail_address, wp_generate_password(), $store_mail_address);
+            $user_id = wp_create_user($store_mail_address, $password, $store_mail_address);
             $user_id_role = new WP_User($user_id);
             $user_id_role->set_role(CSVP_User_Roles::ROLE_STORE_MANAGER);
 
@@ -293,9 +294,10 @@ class CSVP_Store
                     'store_address' => $store_address,
                     'store_logo' => $store_logo,
                     'store_mail_address' => $store_mail_address,
-                    'wp_user_id' => get_current_user_id(),
+                    'wp_user' => get_current_user_id(),
                     'fee_amount_per_transaction' => $fee_amount_per_transaction,
-                    'wp_user_id'=> $user_id
+                    'wp_user_id'=> $user_id,
+                    'store_cashier_phone' => $store_cashier_phone
                 ) // Data to be inserted
             );
 
@@ -305,8 +307,10 @@ class CSVP_Store
                 return $wpdb->insert_id;
             } else {
                 // Send error response
-                return false;
+                return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
             }
+        } else {
+            return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
         }
 
     }
@@ -381,11 +385,8 @@ class CSVP_Store
 
         $community_email = $data["email_address"];
         // Prepare SQL query to retrieve community data by ID
-        $query = $wpdb->prepare(
-            "SELECT * FROM $this->table_name WHERE store_mail_address = %d",
-            $community_email
-        );
-
+        $query = "SELECT * FROM $this->table_name WHERE store_mail_address = '$community_email'";
+            
         // Execute the query
         $community = $wpdb->get_row($query);
 
@@ -465,23 +466,29 @@ class CSVP_Store
      *
      * @return array|null Array of stores on success, null on failure.
      */
-    public function get_all_stores()
+    public function get_all_stores($data = array())
     {
         global $wpdb;
 
+        $count = isset($data["count"]) ? true : false;
+        
         // Prepare SQL query to select all stores
         $query = "SELECT * FROM $this->table_name";
 
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
 
-        // Check if any stores were found
-        if ($results) {
-            // Return the results
-            return $results;
+        if ($count) {
+            return $wpdb->num_rows;
         } else {
-            // Send error response
-            return null;
+            // Check if communities were found
+            if ($results) {
+                // Return the results
+                return $results;
+            } else {
+                // Send error response
+                return new WP_Error('not_found', __('No stores found.', 'csvp'), array('status' => 404));
+            }
         }
     }
 }

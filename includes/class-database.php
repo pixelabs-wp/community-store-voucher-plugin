@@ -20,6 +20,7 @@ class CSVP_Initialize_Database {
             community_manager_phone varchar(20) NOT NULL,
             community_logo varchar(255) NOT NULL,
             community_mail_address varchar(255) NOT NULL,
+            community_address varchar(255) NOT NULL,
             wp_user_id bigint(20) NOT NULL,
             payment_link varchar(255) NOT NULL,
             PRIMARY KEY (id)
@@ -36,6 +37,7 @@ class CSVP_Initialize_Database {
             wp_user varchar(255) NOT NULL DEFAULT 1,
             store_name varchar(255) NOT NULL,
             store_phone varchar(20) NOT NULL,
+            store_cashier_phone varchar(255) NOT NULL,
             store_address varchar(255) NOT NULL,
             store_logo varchar(255) NOT NULL,
             store_mail_address varchar(255) NOT NULL,

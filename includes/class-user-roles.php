@@ -1,7 +1,7 @@
 <?php
 class CSVP_User_Roles{
     // Define user roles
-    const ROLE_SYSTEM_ADMIN = 'system_administrator';
+    const ROLE_SYSTEM_ADMIN = 'administrator';
     const ROLE_COMMUNITY_MANAGER = 'community_manager';
     const ROLE_STORE_MANAGER = 'store_manager';
     const ROLE_COMMUNITY_MEMBER = 'community_member';

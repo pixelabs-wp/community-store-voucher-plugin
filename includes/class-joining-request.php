@@ -2,10 +2,12 @@
 class CSVP_JoiningRequest{
     // Properties
     private $table_name;
+    private $community;
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_joining_request';
+        $this->community = new CSVP_Community();
     }
 
     /**

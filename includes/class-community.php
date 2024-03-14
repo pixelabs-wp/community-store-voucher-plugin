@@ -83,12 +83,16 @@ class CSVP_Community{
         $community_name = $data['community_name'];
         $community_manager_name = $data['community_manager_name'];
         $community_manager_phone = $data['community_manager_phone'];
-        $community_logo = $data['community_logo'];
+        $community_logo = isset($data['community_logo']) ? $data['community_logo'] : "";
         $community_mail_address = $data['community_mail_address'];
         $payment_link = $data['payment_link'];
+        $community_address = $data['community_address'];
+        $username = $data['username'];
+        $password = $data['password'];
+
         if(!$this->get_community_by_email(array('email_address'=> $community_mail_address))){
             // Create WordPress user
-            $user_id = wp_create_user($community_mail_address, wp_generate_password(), $community_mail_address);
+            $user_id = wp_create_user($username, $password, $community_mail_address);
             $user_id_role = new WP_User($user_id);
             $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
 
@@ -101,9 +105,10 @@ class CSVP_Community{
                     'community_manager_phone' => $community_manager_phone,
                     'community_logo' => $community_logo,
                     'community_mail_address' => $community_mail_address,
+                    'community_address' => $community_address,
                     'wp_user_id' => $user_id,
                     'payment_link' => $payment_link,
-                    'wp_user'=> 1
+                    'wp_user'=> get_current_user_id()
                 ) // Data to be inserted
             );
 
@@ -116,6 +121,7 @@ class CSVP_Community{
                 return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
             }
         } else {
+            $user = $this->get_community_by_email(array('email_address'=> $community_mail_address));
             // Send error response
             return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
         }
@@ -160,14 +166,11 @@ class CSVP_Community{
     public function get_community_by_email($data)
     {
         global $wpdb;
-    
+
         $community_email = $data["email_address"];
         // Prepare SQL query to retrieve community data by ID
-        $query = $wpdb->prepare(
-            "SELECT * FROM $this->table_name WHERE community_mail_address = %d",
-            $community_email
-        );
-
+        $query = "SELECT * FROM $this->table_name WHERE community_mail_address = '$community_email'";
+            
         // Execute the query
         $community = $wpdb->get_row($query);
 
@@ -421,8 +424,10 @@ class CSVP_Community{
      *
      * @return array|WP_Error Array of communities on success, WP_Error on failure.
      */
-    public function get_all_communities() {
+    public function get_all_communities($data = array()) {
         global $wpdb;
+
+        $count = isset($data["count"]) ? true : false;
 
         // Prepare SQL query to select all communities
         $query = "SELECT * FROM $this->table_name";
@@ -430,14 +435,20 @@ class CSVP_Community{
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
 
-        // Check if communities were found
-        if ($results) {
-            // Return the results
-            return $results;
+        if ($count) {
+            return $wpdb->num_rows;
         } else {
-            // Send error response
-            return new WP_Error('not_found', __('No communities found.', 'csvp'), array('status' => 404));
+            // Check if communities were found
+            if ($results) {
+                // Return the results
+                return $results;
+            } else {
+                // Send error response
+                return new WP_Error('not_found', __('No communities found.', 'csvp'), array('status' => 404));
+            }
         }
+
+       
     }
 
 }
