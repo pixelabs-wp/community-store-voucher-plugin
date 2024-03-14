@@ -7,7 +7,7 @@ class CSVP_JoiningRequest{
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_joining_request';
-        $this->community = new CSVP_Community();
+        // $this->community = new CSVP_Community();
     }
 
     /**

@@ -1,4 +1,4 @@
-<?php include CSVP_PLUGIN_PATH . "views/system-admin/header.php" ?>
+<?php include CSVP_PLUGIN_PATH . "views/system-admin/header.php"; ?>
 
 
 
@@ -57,7 +57,65 @@
             width: 100%;
         }
     }
+
+
+    .datagrid-title{
+        font-size: 20px;
+        color: black;
+        font-weight: 600;
+    }
+
+    .datagrid-content{
+        font-size: 18px;
+        color: gray;
+        font-weight: 400;
+    }
 </style>
+
+
+
+   <!-- store-full-details modal starts here -->
+
+   <div class="modal fade" id="store-full-details-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content p-4">
+
+                <div class="datagrid" style="direction: rtl;">
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">שם החנות:</div>
+                        <div class="datagrid-content">אקסוס</div>
+                    </div>
+                    
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">כתובת החנות:</div>
+                        <div class="datagrid-content"> רבי עקיבא 84 בני ברק</div>
+                    </div>
+                    
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">מספר טלפון:</div>
+                        <div class="datagrid-content">054-6268012</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">ישיבות בהסדר:</div>
+                        <div class="datagrid-content">450</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">טלפון איש קופות</div>
+                        <div class="datagrid-content">054-6268012</div>
+                    </div>
+
+                    <div class="datagrid-item">
+                        <div class="datagrid-title">כתובת מייל</div>
+                        <div class="datagrid-content">google@gmail.com</div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -217,19 +275,18 @@
                                     </table>
                                 </div>
 
-                            </div>
-                            <a href="" class="btn btn-dark">← לפרטים המלאים</a>
                         </div>
+                        <a href="" class="btn btn-dark">← לפרטים המלאים</a>
+                    </div>
 
 
 
                     </div>
 
-                </div>
-            <?php
-            } ?>
+            </div>
 
-
+  
+<?php } ?>
         </div>
 
 

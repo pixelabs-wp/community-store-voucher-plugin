@@ -230,7 +230,7 @@ class CSVP_Order{
         global $wpdb;
 
         $community_id = $data['community_id'];
-
+        $suffix = $data['suffix'];
         // Prepare SQL query to select orders by community ID
         $query = $wpdb->prepare(
             "SELECT * FROM $this->table_name WHERE community_id = %d",
@@ -241,7 +241,7 @@ class CSVP_Order{
         $results = $wpdb->get_results($query, ARRAY_A);
 
         foreach ($results as $key => $order) {
-            $order_data = $this->get_order_data_by_id(($order["id"]));
+            $order_data = $this->get_order_data_by_id(($order["id"]. $suffix));
             $results[$key]["order_data"] = $order_data;
         }
 
