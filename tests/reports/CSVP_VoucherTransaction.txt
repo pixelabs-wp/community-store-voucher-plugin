@@ -1,1 +1,1 @@
-Test: create_voucher_transaction | Result: Pass | Response: 2
+Test: create_voucher_transaction | Result: Pass | Response: 8

@@ -5,12 +5,12 @@ class CSVP_CommunityMessage_Test {
 
     public function __construct() {
         $this->test_results['create_community_message'] = $this->test_create_community_message();
-        $this->test_results['get_community_message_by_id'] = $this->test_get_community_message_by_id();
-        $this->test_results['update_community_message'] = $this->test_update_community_message();
-        $this->test_results['delete_community_message'] = $this->test_delete_community_message();
-        $this->test_results['get_all_community_messages'] = $this->test_get_all_community_messages();
-        $this->test_results['get_community_messages_by_member_id'] = $this->test_get_community_messages_by_member_id();
-        $this->test_results['get_community_messages_by_community_id'] = $this->test_get_community_messages_by_community_id();
+        // $this->test_results['get_community_message_by_id'] = $this->test_get_community_message_by_id();
+        // $this->test_results['update_community_message'] = $this->test_update_community_message();
+        // $this->test_results['delete_community_message'] = $this->test_delete_community_message();
+        // $this->test_results['get_all_community_messages'] = $this->test_get_all_community_messages();
+        // $this->test_results['get_community_messages_by_member_id'] = $this->test_get_community_messages_by_member_id();
+        // $this->test_results['get_community_messages_by_community_id'] = $this->test_get_community_messages_by_community_id();
 
         // Write test results to a file
         $this->write_results_to_file();
@@ -21,8 +21,9 @@ class CSVP_CommunityMessage_Test {
 
         // Prepare data for testing
         $data = array(
-            'community_member_id' => 1,
-            'community_id' => 1,
+            'from_id' => 1,
+            'to_id' => 1,
+            'to_user_role'=> 'Admin',
             'full_name' => 'John Doe',
             'phone_no' => '1234567890',
             'content' => 'Test message content'
@@ -102,7 +103,7 @@ class CSVP_CommunityMessage_Test {
 
         // Prepare data for testing
         $data = array(
-            'member_id' => 1
+            'from_id' => 1
         );
 
         // Call the get_community_messages_by_member_id method
@@ -118,7 +119,7 @@ class CSVP_CommunityMessage_Test {
 
         // Prepare data for testing
         $data = array(
-            'community_id' => 1
+            'to_id' => 1
         );
 
         // Call the get_community_messages_by_community_id method

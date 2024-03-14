@@ -1454,8 +1454,14 @@ table.addEventListener('change', (event) => {
 				</div>
 				<div class="d-flex gap-3">
 					<div>
-					<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
-					</div>
+					<button class="buttonss" 
+        style="background-color: #9D0000;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#order_details" 
+        onclick="populateOrderDetailModalFunction(this)"
+        data-order-details='${JSON.stringify(item)}'>
+    לפרטי ההזמנה
+</button>					</div>
 					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 					<h3 class="titl">הזמנה: ${item.id}</h3>
@@ -1477,8 +1483,14 @@ table.addEventListener('change', (event) => {
 			</div>
 			<div class="d-flex gap-3">
 				<div>
-				<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
-				</div>
+				<button class="buttonss" 
+        style="background-color: #9D0000;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#order_details" 
+        onclick="populateOrderDetailModalFunction(this)"
+        data-order-details='${JSON.stringify(item)}'>
+    לפרטי ההזמנה
+</button>				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 				<h3 class="titl">הזמנה: ${item.id}</h3>
@@ -1515,6 +1527,9 @@ table.addEventListener('change', (event) => {
 				<h3 class="titl">הזמנה: ${item.id}</h3>
 			</div>
 		</div>`;
+		}
+		else{
+			section  =``;
 		}
 
 
@@ -1608,8 +1623,6 @@ table.addEventListener('change', (event) => {
 					console.log(response);
 					response.forEach(function (item) {
 						addOrderHistory(item);
-						console.log(item);
-
 					});
 				} else {
 					var parentElement = document.getElementById("parentElementId");

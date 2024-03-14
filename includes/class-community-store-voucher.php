@@ -27,6 +27,9 @@ define('ORDER_STATUS_PAID', 'Paid');
 define('ORDER_STATUS_CANCELLED', 'Cancelled');
 
 
+define('MESSAGE_STATUS_UNSEEN', 'Unseen');
+define('MESSAGE_STATUS_SEEN', 'Seen');
+
 
 add_action('init', 'redirect_user');
 
