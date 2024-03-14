@@ -1218,9 +1218,9 @@
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
 		newRow.innerHTML = `
-		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="name-input" name="total_cost[]" placeholder="שם המוצר"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="amount-input" name="total_item[]" placeholder="כמות"></th>
+		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-cost" class="name-input" name="total_cost[]" placeholder="שם המוצר"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="cost-per-item" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-item" class="amount-input" name="total_item[]" placeholder="כמות"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="סך הכל"></th>`;
 	}
 

@@ -102,6 +102,10 @@ class CSVP_Router {
                 'path' => 'store/walk-order',
                 'callback' => array('CSVP_Store', 'render_walk_order'),
             ),
+            'store_creating_transactions' => array(
+                'path' => 'store/creating-transactions',
+                'callback' => array('CSVP_Store', 'render_creating_transactions'),
+            ),
             // Admin Routes
             'admin_default' => array(
                 'path' => 'admin',

@@ -307,6 +307,12 @@ class CSVP_Store
     {
         CSVP_View_Manager::load_view('walk-order');
     }
+
+
+    public static function render_creating_transactions()
+    {
+        CSVP_View_Manager::load_view('creating-transactions');
+    }
     /**
      * Function to create a new store in the database.
      *
