@@ -1018,13 +1018,6 @@ table.addEventListener('change', (event) => {
 
 	updateCost();
 
-
-
-
-
-	cost - input
-
-
 </script>
 
 
@@ -1124,6 +1117,7 @@ table.addEventListener('change', (event) => {
 <script>
 	function populateModal(orderid) {
 		document.getElementById('aprove_payment_order_id').value = orderid;
+		document.getElementById('aprove_payment_order_id_2').value = orderid;
 	}
 </script>
 
@@ -1146,7 +1140,7 @@ table.addEventListener('change', (event) => {
 
 			<div class="add-new-benefit-buttons mt-4">
 				<form action="" method="POST" class="d-inline">
-					<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+					<input type="hidden" id="aprove_payment_order_id_2" name="order_id" value="">
 					<input type="hidden" name="csvp_request" value="aprrove_payment">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				</form>

@@ -24,9 +24,11 @@ class CSVP_Store_Test {
             'store_address' => '123 Test Street',
             'store_logo' => 'test_logo.jpg',
             'store_mail_address' => 'test@store.com',
+            'store_cashier_phone' => 'asdasd',
             'wp_user_id' => 1,
             'fee_amount_per_transaction' => 10.00
         );
+
 
         $result = $this->store_instance->create_store($test_data);
 

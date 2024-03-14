@@ -166,7 +166,8 @@ class CSVP_Order{
         global $wpdb;
         $order_id = $data['order_id'];
         $order_status = $data['order_status'];
-
+        $store_id = $data['store_id'];
+        $message = $data['message'];
         $query = $wpdb->prepare(
             "UPDATE $this->table_name
             SET order_status = %s
@@ -174,8 +175,74 @@ class CSVP_Order{
             $order_status,
             $order_id
         );
-         return $wpdb->query($query) !== false;
+         // Check if the insertion was successful
+         if ($wpdb->query($query)) {
+
+            if($order_status == ORDER_STATUS_PAID)
+            {
+                $store = $this->get_store_data_by_id($store_id); // line 118
+                $user_data = get_userdata($store_id);
+                $user_roles = $user_data->roles;
+                $this->create_order_commission($store_id , $user_roles[0], $store->fee_amount_per_transaction);
+                // Return the ID of the newly inserted order
+                return array("status" => true, "response" => $message);
+            }
+
+            return array("status" => true, "response" => $message);
+            
+        } else {
+            // Failed to move uploaded file
+            return array("status" => false, "response" => "Something Went Wrong");
+            }
     }
+
+    public function get_store_data_by_id($store_id)
+    {
+        global $wpdb;
+        $store_data_table = $wpdb->prefix . 'csvp_store';
+        // Prepare SQL query to retrieve store data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $store_data_table WHERE id = %d",
+            $store_id
+        );
+
+        // Execute the query
+        $store = $wpdb->get_row($query);
+
+        // Check if a store was found
+        if ($store) {
+            // Return store data as an object
+            return $store;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+    
+    public function create_order_commission($store_id , $user_roles, $fee_amount_per_transaction) {
+        global $wpdb;
+        $commision_data_table = $wpdb->prefix . 'csvp_commission';
+        // Insert data into the database
+        $wpdb->insert(
+            $commision_data_table, // Table name
+            array(
+                'entity_id' => $store_id,
+                'entity_type' => $user_roles,
+                'commission_type' => COMMISSION_TYPE_ORDER,
+                'commission_value' => $fee_amount_per_transaction,
+                'commission_status' => COMMISSION_STATUS_PENDING
+            ) // Data to be inserted
+        );
+        // Check if the insertion was successful
+        if ($wpdb->insert_id) {
+            // Return the ID of the newly inserted commission
+            return $wpdb->insert_id;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+
 
     /**
      * Function to delete an order from the database based on its ID.

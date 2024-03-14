@@ -9,6 +9,7 @@ class CSVP_Store
     public $joining_request;
     public $order;
     public $voucherTransaction;
+    public $message;
     // Constructor
     public function __construct()
     {
@@ -20,6 +21,7 @@ class CSVP_Store
         $this->joining_request = new CSVP_JoiningRequest();
         $this->order = new CSVP_Order();
         $this->voucherTransaction = new CSVP_VoucherTransaction();
+        $this->message = new CSVP_CommunityMessage();
     }
 
     public function render_community_management()
@@ -108,14 +110,12 @@ class CSVP_Store
             $payload = $_POST;
             $payload["store_id"] = $this->store_manager_id;
             $payload["order_status"] = ORDER_STATUS_PAID;
+            $payload["message"] = "Order Set As Paid";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         } 
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
@@ -123,21 +123,19 @@ class CSVP_Store
             $payload = $_POST;
             $payload["store_id"] = $this->store_manager_id;
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
+            $payload["message"] = "Payment Request Sent";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Payment Request Sent");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
         $pageData = [];
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
-        $response["joined_communities"] = $joined_communities;
-        if (is_wp_error($response["joined_communities"])) 
+        $check_1["joined_communities"] = $joined_communities;
+        if (is_wp_error($check_1["joined_communities"])) 
         {
         }
         else
@@ -146,15 +144,15 @@ class CSVP_Store
         }
 
         $requested_communities = $this->community->get_all_requested_communities_for_store();
-        $response["requested_communities"] = $requested_communities;
-        if (!is_wp_error($response["requested_communities"])) 
+        $check_2["requested_communities"] = $requested_communities;
+        if (!is_wp_error($check_2["requested_communities"])) 
         {
             $pageData["requested_communities"] = $requested_communities;
         }
         
         $not_requested_communities = $this->community->get_all_not_requested_communities_for_store();
-        $response["not_requested_communities"] = $not_requested_communities;
-        if (!is_wp_error($response["not_requested_communities"])) 
+        $check_3["not_requested_communities"] = $not_requested_communities;
+        if (!is_wp_error($check_3["not_requested_communities"])) 
         {
             $pageData["not_requested_communities"] = $not_requested_communities;
         }
@@ -175,14 +173,12 @@ class CSVP_Store
             $payload = $_POST;
             $payload["store_id"] = $this->store_manager_id;
             $payload["order_status"] = ORDER_STATUS_PAID;
+            $payload["message"] = "Order Set As Paid";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Set As Paid");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
@@ -190,14 +186,12 @@ class CSVP_Store
             $payload = $_POST;
             $payload["store_id"] = $this->store_manager_id;
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
+            $payload["message"] = "Payment Request Sent";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Payment Request Sent");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
 
@@ -230,14 +224,12 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_COMPLETED;
+            $payload["message"] = "Order Approved";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Approved");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
 
         }
@@ -245,14 +237,12 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_CANCELLED;
+            $payload["message"] = "Order Rejected";
             $response = $this->order->update_order_status($payload);
-            if ($response) 
-            {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Order Rejected");
-            }
-            else
-            {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
         
@@ -298,9 +288,10 @@ class CSVP_Store
                 $admin_id = 0;
             }
             $payload = $_POST;
-            $payload["from"] = get_current_user_id();
-            $payload["to"] = $admin_id;
-            $response = $this->order->update_order_status($payload);
+            $payload["from_id"] = get_current_user_id();
+            $payload["to_id"] = $admin_id;
+            $payload["to_user_role"] = 'Admin';
+            $response = $this->message->create_community_message($payload);
             if ($response) 
             {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");

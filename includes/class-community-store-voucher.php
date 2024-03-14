@@ -10,6 +10,8 @@ define('COMMISSION_STATUS_PENDING', 'Pending');
 define('COMMISSION_STATUS_APPROVED', 'Approved');
 define('COMMISSION_STATUS_REJECTED', 'Rejected');
 define('COMMISSION_STATUS_PAID', 'Paid');
+define('COMMISSION_TYPE_ORDER', 'Order');
+define('COMMISSION_TYPE_VOUCHER', 'Voucher');
 
 define('MESSAGE_STATUS_UNREAD', 'Unread');
 define('MESSAGE_STATUS_READ', 'Read');
