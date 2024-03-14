@@ -8,6 +8,7 @@ class CSVP_Store
     public $store_manager_id;
     public $joining_request;
     public $order;
+    public $voucherTransaction;
     // Constructor
     public function __construct()
     {
@@ -18,6 +19,7 @@ class CSVP_Store
         $this->community = new CSVP_Community(); 
         $this->joining_request = new CSVP_JoiningRequest();
         $this->order = new CSVP_Order();
+        $this->voucherTransaction = new CSVP_VoucherTransaction();
     }
 
     public function render_community_management()
@@ -131,7 +133,7 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
         }
-        
+        $pageData = [];
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
         $response["joined_communities"] = $joined_communities;
@@ -282,14 +284,60 @@ class CSVP_Store
         CSVP_View_Manager::load_view('return-management');
     }
 
-    public static function render_transaction_history()
+    public  function render_transaction_history()
     {
-        CSVP_View_Manager::load_view('transaction-history');
+
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin")
+        {
+            $admin = get_user_by('role', 'administrator');
+            if ($admin) {
+                $admin_id = $admin->ID;
+            }
+            else
+            {
+                $admin_id = 0;
+            }
+            $payload = $_POST;
+            $payload["from"] = get_current_user_id();
+            $payload["to"] = $admin_id;
+            $response = $this->order->update_order_status($payload);
+            if ($response) 
+            {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
+            }
+            else
+            {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+            }
+
+        }
+
+        $pageData = [];
+        $data = [];
+        $data['status'] = VOUCHER_STATUS_USED;
+        $data['store_id'] = get_current_user_id();
+        $voucher_transactions = $this->voucherTransaction->get_all_voucher_transactions_by_store_id($data);
+        $response["voucher_transactions"] = $voucher_transactions;
+        if (is_wp_error($response["voucher_transactions"])) 
+        {
+        }
+        else
+        {
+            $pageData["voucher_transactions"] = $voucher_transactions;
+        }
+
+        CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
     public static function render_walk_order()
     {
         CSVP_View_Manager::load_view('walk-order');
+    }
+
+
+    public static function render_creating_transactions()
+    {
+        CSVP_View_Manager::load_view('creating-transactions');
     }
     /**
      * Function to create a new store in the database.
@@ -360,6 +408,35 @@ class CSVP_Store
         $query = $wpdb->prepare(
             "SELECT * FROM $this->table_name WHERE id = %d",
             $store_id
+        );
+
+        // Execute the query
+        $store = $wpdb->get_row($query);
+
+        // Check if a store was found
+        if ($store) {
+            // Return store data as an object
+            return $store;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+
+    /**
+     * Function to retrieve a store by its ID from the database.
+     *
+     * @param int $store_id The ID of the store to retrieve.
+     * @return object|false Store data as an object if found, or false if not found.
+     */
+    public function get_store_by_user_id($user_id)
+    {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve store data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE wp_user_id = %d",
+            $user_id
         );
 
         // Execute the query
@@ -522,4 +599,19 @@ class CSVP_Store
             }
         }
     }
+
+    public function get_store_id($user_id = false)
+    {
+        if(!$user_id){
+            if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_STORE_MANAGER)) {
+                $store_data = $this->get_store_by_user_id(get_current_user_id());
+                return $store_data->id;
+            } else { return false; }
+        } else {
+            $store_data = $this->get_store_by_user_id($user_id);
+            return $store_data->id;
+        }
+       
+    }
+
 }

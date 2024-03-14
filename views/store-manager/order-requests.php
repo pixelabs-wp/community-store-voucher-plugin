@@ -335,7 +335,9 @@
 	</div>
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
-    <?php foreach ($pageData["store_order_requests"] as $order) { ?>
+    <?php
+	if (isset($pageData["store_order_requests"])) {
+	foreach ($pageData["store_order_requests"] as $order) { ?>
         <div class="card order-management-cards col-xl-4 rounded-3">
             <!-- Photo -->
             <div class="" style=""><img src="media/inviting-logo-2.png" style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
@@ -376,7 +378,7 @@
                 <p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: <?php echo $total_cost; ?> ₪</p>
             </div>
         </div>
-    <?php } ?>
+    <?php } } ?>
 </div>
 
 <script>

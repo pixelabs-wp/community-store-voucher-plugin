@@ -272,10 +272,10 @@ class CSVP_Community{
         LEFT JOIN 
             {$wpdb->prefix}csvp_order o ON c.id = o.community_id
         INNER JOIN 
-            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %d
+            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
         GROUP BY 
             c.id, c.community_name;
-        ", JOINING_REQUEST_STATUS_PENDING);
+        ", JOINING_REQUEST_STATUS_APPROVED);
         
         $communities = $wpdb->get_results($query);
 
@@ -306,7 +306,7 @@ class CSVP_Community{
         LEFT JOIN 
             {$wpdb->prefix}csvp_order o ON c.id = o.community_id
         INNER JOIN 
-            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %d
+            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
         GROUP BY 
             c.id, c.community_name;
         ", JOINING_REQUEST_STATUS_PENDING);

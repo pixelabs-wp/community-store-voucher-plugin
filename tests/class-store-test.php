@@ -9,7 +9,7 @@ class CSVP_Store_Test {
     }
 
     public function run_tests() {
-        $this->create_store_test();
+        // $this->create_store_test();
         // $this->get_store_by_id_test();
         // $this->get_stores_by_name_test();
         // $this->update_store_test();

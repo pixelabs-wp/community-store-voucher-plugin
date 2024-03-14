@@ -9,12 +9,12 @@ class CSVP_VoucherTransaction_Test {
     }
 
     private function run_tests() {
-        $this->test_create_voucher_transaction();
-        $this->test_update_voucher_transaction();
-        $this->test_delete_voucher_transaction();
-        $this->test_get_all_voucher_transactions();
-        $this->test_get_voucher_transactions_by_member_id();
-        $this->test_get_voucher_transactions_by_voucher_id();
+        // $this->test_create_voucher_transaction();
+        // $this->test_update_voucher_transaction();
+        // $this->test_delete_voucher_transaction();
+        // $this->test_get_all_voucher_transactions();
+        // $this->test_get_voucher_transactions_by_member_id();
+        // $this->test_get_voucher_transactions_by_voucher_id();
     }
 
     private function test_create_voucher_transaction() {

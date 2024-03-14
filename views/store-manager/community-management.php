@@ -715,13 +715,18 @@
 					<div class="address d-flex flex-column align-items-end gap-3">
 						<h1 id="name_of_community">ת”ת אור התורה </h1>
 						<div>
-							<h2 class="address-title"> אליהו מנהל ת”ת: <span id="community_manager_no">054-6268012</span> <span id="community_manager_address"> רבי עקיבא 84 בני ברק</span> :כתובת</h2>
+							<h2 class="address-title"> אליהו מנהל ת”ת: <span
+									id="community_manager_no">054-6268012</span> <span id="community_manager_address">
+									רבי עקיבא 84 בני ברק</span> :כתובת</h2>
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
-							<button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
-							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit" class="btn btn-custom">+ הוספת הטבה חדשה </button>
-							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
+							<button type="button" class="btn btn-custom" data-bs-toggle="modal"
+								data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
+							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit"
+								class="btn btn-custom">+ הוספת הטבה חדשה </button>
+							<button type="button" data-bs-toggle="modal"
+								data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
 								אשראי</button>
 						</div>
 					</div>
@@ -749,7 +754,8 @@
 			<div class="d-flex flex-column align-items-end cont">
 				<h3 class="title">הסטוריית עסקאות</h3>
 				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #01051D; " data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success">שולם</button></div>
+					<div><button class="buttons" style="background-color: #01051D; " data-bs-toggle="modal"
+							data-bs-target="#store-manager-transaction-success">שולם</button></div>
 					<div class="d-flex gap-3 titl">
 						<h3 class="titl">סה”כ: ₪ 6,500 </h3>
 						<h3 class="titl">כמות עסקאות: 15 </h3>
@@ -830,7 +836,8 @@
 <!-- Add New Benefit modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
@@ -844,7 +851,8 @@
 				}
 			</style>
 			<div class="add-new-benefit-form">
-				<form action="" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+				<form action="" method="POST" enctype="multipart/form-data"
+					style="display: flex; flex-direction: column; gap: 10px;">
 					<h3>הוספת הטבה חדשה </h3>
 					<input class="form-control" type="text" name="product_name" id="" placeholder="שם המוצר">
 					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע">
@@ -869,7 +877,8 @@
 <!-- Add New Order modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<div class="background-box">
@@ -899,15 +908,18 @@
 						</div>
 						<div class="mb-3">
 							<label class="labell">הוספת שורה</label>
-							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
 								<rect width="42" height="42" rx="10" fill="#01051D" />
-								<path d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z" fill="white" />
+								<path
+									d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
+									fill="white" />
 							</svg>
 						</div>
 					</div>
 					<div class="styled-element">
-						<span>סה”כ שווי החזרה: ₪12,150</span>
-						<span>סה”כ פריטים: 32 פריטים</span>
+						<span>סה”כ שווי החזרה: ₪ <span class="total-cost"></span></span>
+						<span>סה”כ פריטים: <span class="total-added-items"></span> פריטים</span>
 					</div>
 					<div class="btngroup">
 						<input type="hidden" id="order_request_community_id" name="community_id" value="">
@@ -920,6 +932,101 @@
 		</div>
 	</div>
 </div>
+
+<script>
+
+
+// Select the entire table element
+const table = document.querySelector('table');
+
+// Event delegation for better performance
+table.addEventListener('change', (event) => {
+  const target = event.target;
+
+  // Check if the changed element is either amount-input or cost-input
+  if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+    const currentRow = target.closest('tr'); // Find the current table row
+
+    // Get references to all relevant inputs in the row
+    const amountInput = currentRow.querySelector('.amount-input');
+    const costInput = currentRow.querySelector('.cost-input');
+    const totalInput = currentRow.querySelector('.name-input'); // Assuming "name-input" is for total cost
+
+    // Handle potential invalid input gracefully (e.g., non-numeric values)
+    const amount = parseFloat(amountInput.value) || 0;
+    const cost = parseFloat(costInput.value) || 0;
+
+    // Calculate the total cost
+    const totalCost = amount * cost;
+
+    // Update the total cost input with the calculated value
+    totalInput.value = totalCost;
+  }
+});
+
+
+
+
+	function updateTotalItems() {
+
+		const totalItemInputs = document.querySelectorAll('.amount-input');
+
+		let total = 0;
+
+		for (const input of totalItemInputs) {
+			const value = parseFloat(input.value) || 0;
+			total += value;
+		}
+
+		const totalSpan = document.querySelector('.total-added-items');
+		totalSpan.textContent = total;
+	}
+
+	document.querySelector('table').addEventListener('change', (event) => {
+
+		updateTotalItems();
+
+	});
+
+	updateTotalItems();
+
+
+
+
+
+
+	function updateCost() {
+
+		const totalItemInputs = document.querySelectorAll('.cost-input');
+
+		let total = 0;
+
+		for (const input of totalItemInputs) {
+			const value = parseFloat(input.value) || 0;
+			total += value;
+		}
+
+		const totalSpan = document.querySelector('.total-cost');
+		totalSpan.textContent = total;
+	}
+
+	document.querySelector('table').addEventListener('change', (event) => {
+
+		updateCost();
+
+	});
+
+	updateCost();
+
+
+
+
+
+	cost - input
+
+
+</script>
+
 
 <!--  Add new Order modal ends here -->
 
@@ -958,7 +1065,8 @@
 
 <!-- Credit limit update modal Starts here -->
 
-<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>עדכון תקרת אשראי</h3>
@@ -993,7 +1101,8 @@
 			<form action="" method="POST">
 
 				<div class="credit-limit-input-wrapper bg-black p-5 rounded">
-					<input type="number" class="form-control" id="decibel" name="credit_limit" placeholder="אנא הזן את הסכום" />
+					<input type="number" class="form-control" id="decibel" name="credit_limit"
+						placeholder="אנא הזן את הסכום" />
 				</div>
 
 				<div class="add-new-benefit-buttons mt-4">
@@ -1024,7 +1133,8 @@
 	}
 </script>
 
-<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
@@ -1054,7 +1164,8 @@
 
 <!-- Voucher Delete Notification modal Starts here -->
 
-<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם למחוק את השובר?</h3>
@@ -1074,15 +1185,19 @@
 
 <!--   Voucher Delete Notification modal ends here -->
 
-<div class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+<div
+	class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 	<div class="col-sm-5 col-lg-4 m-0">
 		<div class="card card-sm">
 			<div class="card-body-rounded p-2">
 				<div class="row align-items-center">
 					<div class="col-auto">
 						<span><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-							<svg width="26" height="25" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z" fill="#01051D" />
+							<svg width="26" height="25" viewBox="0 0 44 44" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z"
+									fill="#01051D" />
 							</svg>
 
 						</span>
@@ -1123,7 +1238,8 @@
 
 	if (isset($pageData["joined_communities"])) {
 		foreach ($pageData["joined_communities"] as $community) { ?>
-			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
+			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
+				data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
 					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
@@ -1131,9 +1247,15 @@
 							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
-										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+										<td><strong>שם החנות: </strong>
+											<?php echo $community->community_name; ?>
+										</td>
+										<td><strong>כמות הזמנות: </strong>
+											<?php echo $community->active_members_count; ?>
+										</td>
+										<td><strong>סך הזמנות: </strong>
+											<?php echo $community->active_members_count; ?> ₪
+										</td>
 
 									</tr>
 								</table>
@@ -1141,11 +1263,12 @@
 						</div>
 						<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 	<?php
 	if (isset($pageData["requested_communities"])) {
@@ -1158,9 +1281,15 @@
 							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
-										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+										<td><strong>שם החנות: </strong>
+											<?php echo $community->community_name; ?>
+										</td>
+										<td><strong>כמות הזמנות: </strong>
+											<?php echo $community->active_members_count; ?>
+										</td>
+										<td><strong>סך הזמנות: </strong>
+											<?php echo $community->active_members_count; ?> ₪
+										</td>
 
 									</tr>
 								</table>
@@ -1168,14 +1297,15 @@
 						</div>
 						<label class="text-secondary "><b>בקשה בהמתנה</b></label>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 	<?php
-	if ($pageData["not_requested_communities"]) {
+	if (isset($pageData["not_requested_communities"])) {
 		foreach ($pageData["not_requested_communities"] as $community) { ?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
@@ -1185,25 +1315,33 @@
 							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
-										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+										<td><strong>שם החנות: </strong>
+											<?php echo $community->community_name; ?>
+										</td>
+										<td><strong>כמות הזמנות: </strong>
+											<?php echo $community->active_members_count; ?>
+										</td>
+										<td><strong>סך הזמנות: </strong>
+											<?php echo $community->active_members_count; ?> ₪
+										</td>
 									</tr>
 								</table>
 							</div>
 						</div>
 						<form method="POST" action="">
-							<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community->community_id; ?>">
+							<input type="hidden" id="benifit_community_id" name="community_id"
+								value="<?php echo $community->community_id; ?>">
 							<input type="hidden" name="csvp_request" value="joining_request">
 							<button class="btn btn-dark">לצירוף הת”ת ←</button>
 						</form>
 
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 </div>
 
@@ -1218,39 +1356,39 @@
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
 		newRow.innerHTML = `
-		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="name-input" name="total_cost[]" placeholder="שם המוצר"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="amount-input" name="total_item[]" placeholder="כמות"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="סך הכל"></th>`;
+		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-cost" class="name-input" name="total_cost[]" placeholder="סך הכל" ></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="cost-per-item" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-item" class="amount-input" name="total_item[]" placeholder="כמות"></th>
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="שם המוצר"></th>`;
 	}
 
 	function addSection(id, imageSrc, title, price, discountPrice) {
 		var imageUrl = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + imageSrc;
 		var section = `
-        <div class="d-flex gap-3">
-            <div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
-                <div class="cards">
-                    <div class="card-text">
-                        <svg class="first-svg" width="61" height="57" viewBox="0 0 61 57" fill="none" data-bs-toggle="modal" data-bs-target="#store-manager-voucher-delete" data-id="${id}"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <rect width="61" height="57" fill="#9D0000" />
-                            <path
-                                d="M42 42H35.9502L30.1396 32.5493L24.3291 42H18.6553L26.9438 29.1143L19.1851 17.0146H25.0298L30.4131 26.0039L35.6938 17.0146H41.4019L33.5576 29.4048L42 42Z"
-                                fill="white" />
-                        </svg>
-                        <img class="second-img" src="${imageUrl}" width="286px" height="220px">
-                    </div>
-                </div>
-                <div class="card-footer text-center bg-transparent ">
-                    ${title}
-                    <div class="text-center bg-transparent ">${discountPrice}₪  במקום  <del>${price}</del>₪</div>
-                    <a href="" class="btn" style="color: white; background-color: #01051D;">עריכת
-                        השובר</a>
-                </div>
-            </div>
-        </div>
+		<div class="d-flex gap-3">
+			<div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
+				<div class="cards">
+					<div class="card-text">
+						<svg class="first-svg" width="61" height="57" viewBox="0 0 61 57" fill="none" data-bs-toggle="modal" data-bs-target="#store-manager-voucher-delete" data-id="${id}"
+							xmlns="http://www.w3.org/2000/svg">
+							<rect width="61" height="57" fill="#9D0000" />
+							<path
+								d="M42 42H35.9502L30.1396 32.5493L24.3291 42H18.6553L26.9438 29.1143L19.1851 17.0146H25.0298L30.4131 26.0039L35.6938 17.0146H41.4019L33.5576 29.4048L42 42Z"
+								fill="white" />
+						</svg>
+						<img class="second-img" src="${imageUrl}" width="286px" height="220px">
+					</div>
+				</div>
+				<div class="card-footer text-center bg-transparent ">
+					${title}
+					<div class="text-center bg-transparent ">${discountPrice}₪  במקום  <del>${price}</del>₪</div>
+					<a href="" class="btn" style="color: white; background-color: #01051D;">עריכת
+						השובר</a>
+				</div>
+			</div>
+		</div>
 
-    `;
+	`;
 		var parentElement = document.getElementById("parentElementId");
 		parentElement.innerHTML += section; // Use innerHTML to append HTML content
 	}
@@ -1275,7 +1413,7 @@
 		var section = `
 		`;
 		var total_items = 0;
-		orderData.forEach(function(item) {
+		orderData.forEach(function (item) {
 			section = section + `
 		<tr>
 		<td>${item.total_cost}</td>
@@ -1316,8 +1454,14 @@
 				</div>
 				<div class="d-flex gap-3">
 					<div>
-					<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
-					</div>
+					<button class="buttonss" 
+        style="background-color: #9D0000;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#order_details" 
+        onclick="populateOrderDetailModalFunction(this)"
+        data-order-details='${JSON.stringify(item)}'>
+    לפרטי ההזמנה
+</button>					</div>
 					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 					<h3 class="titl">הזמנה: ${item.id}</h3>
@@ -1339,8 +1483,14 @@
 			</div>
 			<div class="d-flex gap-3">
 				<div>
-				<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
-				</div>
+				<button class="buttonss" 
+        style="background-color: #9D0000;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#order_details" 
+        onclick="populateOrderDetailModalFunction(this)"
+        data-order-details='${JSON.stringify(item)}'>
+    לפרטי ההזמנה
+</button>				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 				<h3 class="titl">הזמנה: ${item.id}</h3>
@@ -1364,12 +1514,12 @@
 			<div class="d-flex gap-3">
 				<div>
 				<button class="buttonss" 
-        style="background-color: #9D0000;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#order_details" 
-        onclick="populateOrderDetailModalFunction(this)"
-        data-order-details='${JSON.stringify(item)}'>
-    לפרטי ההזמנה
+		style="background-color: #9D0000;" 
+		data-bs-toggle="modal" 
+		data-bs-target="#order_details" 
+		onclick="populateOrderDetailModalFunction(this)"
+		data-order-details='${JSON.stringify(item)}'>
+	לפרטי ההזמנה
 </button>
 				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
@@ -1377,6 +1527,9 @@
 				<h3 class="titl">הזמנה: ${item.id}</h3>
 			</div>
 		</div>`;
+		}
+		else{
+			section  =``;
 		}
 
 
@@ -1386,7 +1539,7 @@
 
 
 	// When modal is about to be shown
-	jQuery('#community-details').on('show.bs.modal', function(event) {
+	jQuery('#community-details').on('show.bs.modal', function (event) {
 		// Extract data from data attributes of the button
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
@@ -1404,7 +1557,7 @@
 					community_id: id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
@@ -1412,7 +1565,7 @@
 				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
 				document.getElementById('community_logo').src = response[0]["community_logo"];
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 			}
@@ -1429,12 +1582,12 @@
 					community_id: id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					var parentElement = document.getElementById("parentElementId");
 					parentElement.innerHTML = "";
-					response.forEach(function(item) {
+					response.forEach(function (item) {
 						addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
 					});
 				} else {
@@ -1443,7 +1596,7 @@
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
@@ -1461,17 +1614,15 @@
 					suffix: '_store'
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					var parentOrderHistory = document.getElementById("parentOrderHistory");
 					parentOrderHistory.innerHTML = "";
 					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
 					console.log(response);
-					response.forEach(function(item) {
+					response.forEach(function (item) {
 						addOrderHistory(item);
-						console.log(item);
-
 					});
 				} else {
 					var parentElement = document.getElementById("parentElementId");
@@ -1479,7 +1630,7 @@
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
@@ -1487,9 +1638,26 @@
 		});
 	});
 
-	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function(event) {
+	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function (event) {
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
 		jQuery('#voucher_id').val(id);
 	});
+
+
+	// jQuery(document).ready(function () {
+	// 	jQuery('#total-item, #cost-per-item').change(function () {
+	// 		var totalItemValue = parseFloat(jQuery('#total-item').val());
+	// 		var costPerItemValue = parseFloat(jQuery('#cost-per-item').val());
+	// 		var totalCost = totalItemValue * costPerItemValue;
+
+	// 		// Check if the result is a valid number
+	// 		if (!isNaN(totalCost)) {
+	// 			jQuery('#total-cost').val(totalCost.toFixed(2)); // Displaying result with 2 decimal places
+	// 		} else {
+	// 			jQuery('#total-cost').val(''); // Clearing the input if calculation is not possible
+	// 		}
+	// 	});
+	// });
+
 </script>

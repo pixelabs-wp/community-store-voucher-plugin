@@ -46,6 +46,12 @@
     font-weight: 600;
   }
 
+  .ts-text-normal {
+    text-align: right;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
   .store-manager-transaction-history-table tr {
     display: flex;
     flex-direction: row-reverse;
@@ -99,7 +105,7 @@
       class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
-		
+
       <!-- CSV Download Filter  -->
       <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
         <div class="card card-sm p-relative">
@@ -251,49 +257,34 @@
         </div>
       </div>
     </div>
-
-
     <!-- Page Content -->
     <div class="card-x mt-3 store-manager-transaction-history-table">
       <div style="overflow-x: auto; direction: rtl;">
         <table class="table table-vcenter card-table">
           <tbody class="d-flex flex-column ts-text">
+          <?php 
+           $order_count = 0;
+           $order_total = 0;
+          if (isset($pageData["voucher_transactions"])) {
+            
+	          foreach ($pageData["voucher_transactions"] as $voucher_transaction) { 
+              $date = new DateTime($voucher_transaction['created_at']);
+              // Format the date according to the desired format
+              $formattedDate = $date->format('d/m/Y');
+              $order_count = $order_count + 1;
+              $order_total = $order_total + $voucher_transaction['transaction_amount'];
+              ?>
             <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
+              <td class="ts-date">תאריך: <?php echo $formattedDate; ?></td>
+              <td class="text-muted ts-price"><?php echo $voucher_transaction['transaction_amount']; ?> ₪</td>
               <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
+              מוצר: <?php echo $voucher_transaction["voucher_data"]->product_name; ?>
               </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
+              <td class="text-muted ts-store-name">שם הת”ת: <span class="ts-text-normal"><?php echo $voucher_transaction["community_data"]->community_name;?></span> </td>
+              <td class="ts-guy-name ">שם הלקוח:<span class="ts-text-normal"><?php echo $voucher_transaction["member_data"]->full_name;?></span></td>
             </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
+            <?php } }?>
+
           </tbody>
         </table>
       </div>
@@ -306,7 +297,7 @@
               <li class="page-item page-prev disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                   <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                    סה”כ הזמנות: 45
+                    סה”כ הזמנות: <?php echo $order_count; ?>
                   </div>
                 </a>
               </li>
@@ -314,7 +305,7 @@
               <li class="page-item page-next">
                 <a class="page-link" href="#">
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                    סה”כ שווי הזמנות: 3,400₪
+                    סה”כ שווי הזמנות: <?php echo $order_total; ?>₪
                   </div>
                 </a>
               </li>

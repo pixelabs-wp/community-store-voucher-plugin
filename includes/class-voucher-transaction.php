@@ -97,6 +97,104 @@ class CSVP_VoucherTransaction{
         return !empty($voucher_transactions) ? $voucher_transactions : null;
     }
 
+    public function get_all_voucher_transactions_by_store_id($data) {
+        global $wpdb;
+        $status = isset($data['status']) ? $data['status'] : false;
+        $logged_in_store_id = $data['store_id'];
+
+            // Prepare SQL query to select voucher transactions by member ID
+            $query = $wpdb->prepare("SELECT vt.*
+            FROM wp_csvp_voucher_transaction vt
+            INNER JOIN wp_csvp_voucher v ON vt.voucher_id = v.id
+            WHERE v.store_id  = %d AND vt.status = %s",  $logged_in_store_id, $status);
+    
+        // Execute the query and fetch the results
+        $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($voucher_transactions as $key => $vouchers) {
+            $voucher_data = $this->get_voucher_data_by_id(($vouchers["voucher_id"]));
+            $voucher_transactions[$key]["voucher_data"] = $voucher_data;
+
+            $community = $this->get_community_data_by_id($voucher_data->community_id); // line 118
+            $voucher_transactions[$key]["community_data"] = $community;
+
+            $member = $this->get_member_data_by_id($vouchers["community_member_id"]); // line 118
+            $voucher_transactions[$key]["member_data"] = $member;
+        }
+
+        // Return the results if any, otherwise return null
+        return !empty($voucher_transactions) ? $voucher_transactions : null;
+    }
+
+    public function get_voucher_data_by_id($voucher_id) {
+        global $wpdb;
+
+        $voucher_data_table = $wpdb->prefix . 'csvp_voucher';
+        // Prepare SQL query to retrieve voucher data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $voucher_data_table WHERE id = %d",
+            $voucher_id
+        );
+
+        // Execute the query
+        $voucher = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($voucher) {
+            // Return voucher data as an object
+            return $voucher;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
+    
+    public function get_community_data_by_id($community_id) {
+        global $wpdb;
+      
+        $community_data_table = $wpdb->prefix . 'csvp_community';
+        // Prepare SQL query to retrieve community data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $community_data_table WHERE id = %d",
+            $community_id
+        );
+
+        // Execute the query
+        $community = $wpdb->get_row($query);
+
+        // Check if a community was found
+        if ($community) {
+            // Return community data as an object
+            return $community;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('Community not found.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_member_data_by_id($community_member_id) {
+        global $wpdb;
+        
+        $community_member_data_table = $wpdb->prefix . 'csvp_community_member';
+        // Prepare SQL query to retrieve community member by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $community_member_data_table WHERE id = %d",
+            $community_member_id
+        );
+
+        // Execute the query
+        $community_member = $wpdb->get_row($query);
+
+        // Check if a community member was found
+        if ($community_member) {
+            // Return community member data as an object
+            return $community_member;
+        } else {
+            // Return false if community member not found
+            return false;
+        }
+    }
+
     public function get_all_voucher_transactions_by_community_id($data)
         {
             global $wpdb;

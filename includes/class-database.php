@@ -223,7 +223,8 @@ class CSVP_Initialize_Database {
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta( $sql_balance );
-
+        
+        $val = MESSAGE_STATUS_UNSEEN;
         $message_table = $wpdb->prefix . 'csvp_community_message';
         $message_table_sql = "CREATE TABLE $message_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
@@ -231,12 +232,13 @@ class CSVP_Initialize_Database {
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
             updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             wp_user varchar(255) NOT NULL DEFAULT 1,
-            community_member_id bigint(20) NOT NULL,
-            community_id bigint(20) NOT NULL,
+            from_id bigint(20) NOT NULL,
+            to_id bigint(20) NOT NULL,
+            to_user_role varchar(255) NOT NULL,
             full_name varchar(255) NOT NULL,
             phone_no varchar(20) NOT NULL,
             content text NOT NULL,
-            message_status varchar(255) NOT NULL DEFAULT 1,
+            message_status varchar(255) NOT NULL DEFAULT '$val',
             PRIMARY KEY (id)
         ) $charset_collate;";
         dbDelta($message_table_sql);
