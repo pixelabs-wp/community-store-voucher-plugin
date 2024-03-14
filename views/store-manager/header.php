@@ -158,12 +158,186 @@
             padding-top: 140px;
             background-color: #efefef;
         }
+
+
+                /* Send Message form styling starts here */
+
+
+                #store-manager-send-message .send-message-form-wrapper {
+            background-color: #01051D;
+            text-align: center;
+            color: white;
+            font-size: 35px;
+            font-weight: 700;
+            height: 533px;
+            width: 90%;
+            border-radius: 10px;
+            margin: auto;
+        }
+
+        #store-manager-send-message form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            background-color: white;
+            width: 50%;
+            border-radius: 10px;
+            margin: 10px auto;
+            padding: 20px;
+        }
+
+        @media only screen and (max-width:991px) {
+            #store-manager-send-message .send-message-form-wrapper {
+                background-color: #01051D;
+                text-align: center;
+                color: white;
+                font-size: 35px;
+                font-weight: 700;
+                height: 633px;
+                width: 100%;
+                border-radius: 10px;
+                margin: auto;
+            }
+
+            #store-manager-send-message form {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 20px;
+                background-color: white;
+                width: 80%;
+                border-radius: 10px;
+                margin: 10px auto;
+                padding: 20px;
+            }
+
+            #store-manager-send-message button {
+                width: 70% !important;
+                height: 45px;
+                margin: auto;
+                border-radius: 10px;
+                font-size: 16px;
+                background-color:
+                    #01051D;
+                color: white;
+                border: none;
+            }
+
+            #store-manager-send-message .top-heading {
+                width: 70% !important;
+                margin: auto !important;
+            }
+
+            #store-manager-send-message .send-message-form-wrapper {
+                background-color: #01051D;
+                text-align: center;
+                color: white;
+                font-size: 30px;
+                font-weight: 600;
+                padding-top: 50px;
+                height: 633px;
+                width: 100%;
+                border-radius: 10px;
+                margin: auto;
+            }
+
+            #store-manager-send-message form {
+                margin-top: 60px;
+            }
+        }
+
+        #store-manager-send-message input {
+            text-decoration: none;
+            direction: rtl;
+            border: none;
+            font-size: 20px;
+            border-bottom: 2px solid black;
+            outline: none;
+            padding-top: 20px;
+        }
+
+        #store-manager-send-message textarea {
+            text-decoration: none;
+            direction: rtl;
+            border: none;
+            border-bottom: 2px solid black;
+            outline: none;
+            font-size: 20px;
+            padding-top: 20px;
+        }
+
+        #store-manager-send-message button {
+            width: 70%;
+            height: 40px;
+            font-size: 16px;
+            border-radius: 10px;
+            background-color:
+                #01051D;
+            color: white;
+            border: none;
+        }
+
+        #store-manager-send-message .top-heading {
+            width: 30%;
+            margin: auto;
+        }
+
+        @media only screen and (max-width:764px) {
+            #store-manager-send-message .top-heading {
+                width: 90% !important;
+                margin: auto !important;
+            }
+
+            #store-manager-send-message .send-message-form-wrapper {
+                background-color: #01051D;
+                text-align: center;
+                color: white;
+                font-size: 20px;
+                font-weight: 600;
+                padding-top: 50px;
+                height: 633px;
+                width: 100%;
+                border-radius: 10px;
+                margin: auto;
+            }
+
+            #store-manager-send-message form {
+                margin-top: 60px;
+            }
+        }
+
+
     </style>
 </head>
 
 <body>
 
 
+
+    <!-- Send Message modal Starts here -->
+
+    <div class="modal fade" id="store-manager-send-message" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+            <div class="modal-content p-4" style="direction: rtl">
+
+                <div class="send-message-form-wrapper">
+                    <h1 class="top-heading"> שליחת הודעה למנהל המערכת</h1>
+                    <div>
+                        <form action="">
+                            <input type="text" placeholder="שם פרטי ומשפחה">
+                            <input type="text" placeholder="מספר טלפון לחזרה">
+                            <textarea name="" id="" cols="30" rows="3" placeholder="תוכן ההודעה..."></textarea>
+                            <button>שליחת ההודעה ←</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!--  Send Message modal ends here -->
+
+    
 
 
     <div class="page">
@@ -330,13 +504,7 @@
                     <div class="navbar bg">
                         <div class="store-manager-header-bottombar d-flex w-100 align-items-center justify-content-between px-5 py-3">
                             <div class="d-flex gap-5 align-items-center justify-content-center">
-                                <button class="bg-white border-0 rounded py-2 px-4" style="font-family: Noto Sans Hebrew;
-                                                                                        font-size: 20px;
-                                                                                        font-weight: 300;
-                                                                                        line-height: 27px;
-                                                                                        letter-spacing: 0em;
-                                                                                        text-align: center;
-                                                                                        ">
+                                <button data-bs-toggle="modal" data-bs-target="#store-manager-send-message" class="bg-white border-0 rounded py-2 px-4" style=" font-size: 20px;  font-weight: 300;">
                                     שליחת הודעה למנהל המערכת
 
                                 </button>
