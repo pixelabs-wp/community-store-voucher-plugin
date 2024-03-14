@@ -685,7 +685,7 @@
 		}
 	}
 
-	.titl{
+	.titl {
 		direction: rtl;
 	}
 
@@ -719,12 +719,9 @@
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
-							<button type="button" class="btn btn-custom" data-bs-toggle="modal"
-								data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
-							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit"
-								class="btn btn-custom" >+ הוספת הטבה חדשה </button>
-							<button type="button" data-bs-toggle="modal"
-								data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
+							<button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
+							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit" class="btn btn-custom">+ הוספת הטבה חדשה </button>
+							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
 								אשראי</button>
 						</div>
 					</div>
@@ -833,8 +830,7 @@
 <!-- Add New Benefit modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
@@ -873,8 +869,7 @@
 <!-- Add New Order modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<div class="background-box">
@@ -893,7 +888,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								
+
 							</tbody>
 
 						</table>
@@ -904,12 +899,9 @@
 						</div>
 						<div class="mb-3">
 							<label class="labell">הוספת שורה</label>
-							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
+							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
 								<rect width="42" height="42" rx="10" fill="#01051D" />
-								<path
-									d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
-									fill="white" />
+								<path d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z" fill="white" />
 							</svg>
 						</div>
 					</div>
@@ -932,11 +924,41 @@
 <!--  Add new Order modal ends here -->
 
 
+<div class="modal fade" id="order_details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+		<div class="modal-content p-4">
+			<div class="background-box">
+				<div class="text-center mt-2">
+					<h1 class="fs-3">מידע על ההזמנה</h1>
+				</div>
+				<div class="bg-[#FFFFFF] mt-4 " style=" overflow: auto;  ">
+					<table class="table table-bordered table-hover">
+						<thead class="table-hover">
+							<tr>
+								<th scope="col text-center">סך הכל</th>
+								<th scope="col text-center">עלות לפריט</th>
+								<th scope="col text-center">כמות</th>
+								<th scope="col text-center">שם המוצר</th>
+							</tr>
+						</thead>
+						<tbody id="order_details_rows">
+
+						</tbody>
+					</table>
+				</div>
+				<div id="info_box">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 
 <!-- Credit limit update modal Starts here -->
 
-<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>עדכון תקרת אשראי</h3>
@@ -991,22 +1013,18 @@
 <!-- Transaction Successful Notification modal Starts here -->
 
 <script>
-    function populateModal(orderid) {
-	document.getElementById('aprove_payment_order_id').value = orderid;
-}
-
+	function populateModal(orderid) {
+		document.getElementById('aprove_payment_order_id').value = orderid;
+	}
 </script>
 
 <script>
-   function closeModal() {
-   jQuery('#store-manager-transaction-success').modal('hide'); // Close the modal
-}
-
-
+	function closeModal() {
+		jQuery('#store-manager-transaction-success').modal('hide'); // Close the modal
+	}
 </script>
 
-<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
@@ -1017,15 +1035,15 @@
 			</form>
 
 			<div class="add-new-benefit-buttons mt-4">
-			<form action="" method="POST" class="d-inline">
-			 	<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
-			 	<input type="hidden" name="csvp_request" value="aprrove_payment">
-				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-			</form>
+				<form action="" method="POST" class="d-inline">
+					<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+					<input type="hidden" name="csvp_request" value="aprrove_payment">
+					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+				</form>
 				<button type="submit" class="btn btn-danger w-25" onclick="closeModal()">ביטול</button>
-			<div>
-				
-			</div>
+				<div>
+
+				</div>
 			</div>
 
 		</div>
@@ -1036,18 +1054,17 @@
 
 <!-- Voucher Delete Notification modal Starts here -->
 
-<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
+<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם למחוק את השובר?</h3>
 
 			<div class="add-new-benefit-buttons mt-4">
 				<form method="POST" action="">
-				<input type="hidden" name="id" id="voucher_id" >
-				<input type="hidden" name="csvp_request" value="delete_voucher">
-				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-				<button type="submit" class="btn btn-danger w-25">ביטול</button>
+					<input type="hidden" name="id" id="voucher_id">
+					<input type="hidden" name="csvp_request" value="delete_voucher">
+					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+					<button type="submit" class="btn btn-danger w-25">ביטול</button>
 				</form>
 			</div>
 
@@ -1057,19 +1074,15 @@
 
 <!--   Voucher Delete Notification modal ends here -->
 
-<div
-	class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+<div class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 	<div class="col-sm-5 col-lg-4 m-0">
 		<div class="card card-sm">
 			<div class="card-body-rounded p-2">
 				<div class="row align-items-center">
 					<div class="col-auto">
 						<span><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-							<svg width="26" height="25" viewBox="0 0 44 44" fill="none"
-								xmlns="http://www.w3.org/2000/svg">
-								<path
-									d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z"
-									fill="#01051D" />
+							<svg width="26" height="25" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<path d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z" fill="#01051D" />
 							</svg>
 
 						</span>
@@ -1106,97 +1119,90 @@
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
-	<?php 
-	
-	if (isset($pageData["joined_communities"])) 
-	{
-	foreach( $pageData["joined_communities"] as $community){ ?>
-	<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
-		<!-- Photo -->
-			<div class="card-body d-flex p-0">
-				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-					<div class="store-management-information rounded-3">
-						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-							<table>
-								<tr class="d-flex flex-column gap-2 text-center">
-									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+	<?php
 
-								</tr>
-							</table>
+	if (isset($pageData["joined_communities"])) {
+		foreach ($pageData["joined_communities"] as $community) { ?>
+			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
+				<!-- Photo -->
+				<div class="card-body d-flex p-0">
+					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+						<div class="store-management-information rounded-3">
+							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+								<table>
+									<tr class="d-flex flex-column gap-2 text-center">
+										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+
+									</tr>
+								</table>
+							</div>
 						</div>
+						<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 					</div>
-					<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
-				</div>
-				<div class="w-35"
-					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					</div>
 				</div>
 			</div>
-	</div>
 	<?php }
 	} ?>
 	<?php
-	if (isset($pageData["requested_communities"])) 
-	{
-		 foreach( $pageData["requested_communities"] as $community){ ?>
-	<div class="store-management-card card col-xl-4 rounded-3 p-0 "  >
-		<!-- Photo -->
-			<div class="card-body d-flex p-0">
-				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-					<div class="store-management-information rounded-3">
-						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-							<table>
-								<tr class="d-flex flex-column gap-2 text-center">
-									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+	if (isset($pageData["requested_communities"])) {
+		foreach ($pageData["requested_communities"] as $community) { ?>
+			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
+				<!-- Photo -->
+				<div class="card-body d-flex p-0">
+					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+						<div class="store-management-information rounded-3">
+							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+								<table>
+									<tr class="d-flex flex-column gap-2 text-center">
+										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
 
-								</tr>
-							</table>
+									</tr>
+								</table>
+							</div>
 						</div>
+						<label class="text-secondary "><b>בקשה בהמתנה</b></label>
 					</div>
-					<label class="text-secondary "><b>בקשה בהמתנה</b></label>
-				</div>
-				<div class="w-35"
-					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					</div>
 				</div>
 			</div>
-	</div>
 	<?php }
 	} ?>
 	<?php
-	if ($pageData["not_requested_communities"]) 
-	{
-		 foreach( $pageData["not_requested_communities"] as $community){ ?>
-	<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
-		<!-- Photo -->
-			<div class="card-body d-flex p-0">
-				<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
-					<div class="store-management-information rounded-3">
-						<div class="row-1 p-2 d-flex align-items-center justify-content-end">
-							<table>
-								<tr class="d-flex flex-column gap-2 text-center">
-									<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
-									<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
-									<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
-
-								</tr>
-							</table>
+	if ($pageData["not_requested_communities"]) {
+		foreach ($pageData["not_requested_communities"] as $community) { ?>
+			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
+				<!-- Photo -->
+				<div class="card-body d-flex p-0">
+					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
+						<div class="store-management-information rounded-3">
+							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
+								<table>
+									<tr class="d-flex flex-column gap-2 text-center">
+										<td><strong>שם החנות: </strong><?php echo $community->community_name; ?></td>
+										<td><strong>כמות הזמנות: </strong><?php echo $community->active_members_count; ?></td>
+										<td><strong>סך הזמנות: </strong><?php echo $community->active_members_count; ?> ₪</td>
+									</tr>
+								</table>
+							</div>
 						</div>
+						<form method="POST" action="">
+							<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community->community_id; ?>">
+							<input type="hidden" name="csvp_request" value="joining_request">
+							<button class="btn btn-dark">לצירוף הת”ת ←</button>
+						</form>
+
 					</div>
-					<form method="POST" action="">
-						<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community->community_id; ?>">
-						<input type="hidden" name="csvp_request" value="joining_request">
-						<button class="btn btn-dark">לצירוף הת”ת ←</button>
-					</form>
-					
-				</div>
-				<div class="w-35"
-					style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					</div>
 				</div>
 			</div>
-	</div>
 	<?php }
 	} ?>
 </div>
@@ -1217,10 +1223,10 @@
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" class="amount-input" name="total_item[]" placeholder="כמות"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="סך הכל"></th>`;
 	}
-	
+
 	function addSection(id, imageSrc, title, price, discountPrice) {
 		var imageUrl = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + imageSrc;
-    var section = `
+		var section = `
         <div class="d-flex gap-3">
             <div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
                 <div class="cards">
@@ -1245,91 +1251,138 @@
         </div>
 
     `;
-    var parentElement = document.getElementById("parentElementId");
-    parentElement.innerHTML += section; // Use innerHTML to append HTML content
-}
+		var parentElement = document.getElementById("parentElementId");
+		parentElement.innerHTML += section; // Use innerHTML to append HTML content
+	}
 
-var parentOrderHistory = document.getElementById("parentOrderHistory");
 
-function addOrderHistory(item) {
-	if(item.order_status == '<?php echo ORDER_STATUS_PAID; ?>')
-	{
-		var date = new Date(item.created_at);
-		var day = date.getDate();
-		var month = date.getMonth() + 1; 
-		var year = date.getFullYear();
-		var formattedDay = (day < 10) ? '0' + day : day;
-		var formattedMonth = (month < 10) ? '0' + month : month;
-		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+	function populateOrderDetailModalFunction(button) {
+		var orderDetails = JSON.parse(button.getAttribute('data-order-details'));
+
+		var id = orderDetails.id;
+		var isActive = orderDetails.is_active;
+		var createdAt = orderDetails.created_at;
+		var updatedAt = orderDetails.updated_at;
+		var wpUser = orderDetails.wp_user;
+		var communityId = orderDetails.community_id;
+		var storeId = orderDetails.store_id;
+		var orderStatus = orderDetails.order_status;
+		var orderTotal = orderDetails.order_total;
+		var orderDate = orderDetails.order_date;
+		var orderInfoFile = orderDetails.order_info_file;
+		var orderData = orderDetails.order_data;
 
 		var section = `
+		`;
+		var total_items = 0;
+		orderData.forEach(function(item) {
+			section = section + `
+		<tr>
+		<td>${item.total_cost}</td>
+		<td>${item.cost_per_item}</td>
+		<td>${item.total_items}</td>
+		<td>${item.product_name}</td>
+		</tr>`
+			total_items = total_items + parseInt(item.total_items);
+		});
+
+		var parentTableElement = document.getElementById("order_details_rows");
+		parentTableElement.innerHTML = "";
+		parentTableElement.innerHTML += section;
+		var section_under = `<div class="styled-element">
+						<span>סה”כ שווי החזרה: ₪${orderTotal}</span>
+						<span>סה”כ פריטים: ${total_items} פריטים</span>
+					</div>`;
+		document.getElementById('info_box').innerHTML = "";
+		document.getElementById('info_box').insertAdjacentHTML('beforeend', section_under);
+	}
+
+	var parentOrderHistory = document.getElementById("parentOrderHistory");
+
+	function addOrderHistory(item) {
+		if (item.order_status == '<?php echo ORDER_STATUS_PAID; ?>') {
+			var date = new Date(item.created_at);
+			var day = date.getDate();
+			var month = date.getMonth() + 1;
+			var year = date.getFullYear();
+			var formattedDay = (day < 10) ? '0' + day : day;
+			var formattedMonth = (month < 10) ? '0' + month : month;
+			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+
+			var section = `
 			<div class="d-flex justify-content-between tran">
 				<div>
 					<button class="buttons" >שולם</button>
 				</div>
 				<div class="d-flex gap-3">
-					<div><button class="buttonss" style="background-color: #9D0000; ">לפרטי ההזמנה</button></div>
+					<div>
+					<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
+					</div>
 					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 					<h3 class="titl">הזמנה: ${item.id}</h3>
 				</div>
 			</div>`;
-	}	
-	else if(item.order_status == '<?php echo ORDER_STATUS_COMPLETED; ?>')
-	{
-		var date = new Date(item.created_at);
-		var day = date.getDate();
-		var month = date.getMonth() + 1; 
-		var year = date.getFullYear();
-		var formattedDay = (day < 10) ? '0' + day : day;
-		var formattedMonth = (month < 10) ? '0' + month : month;
-		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
-		
-		var section = `
+		} else if (item.order_status == '<?php echo ORDER_STATUS_COMPLETED; ?>') {
+			var date = new Date(item.created_at);
+			var day = date.getDate();
+			var month = date.getMonth() + 1;
+			var year = date.getFullYear();
+			var formattedDay = (day < 10) ? '0' + day : day;
+			var formattedMonth = (month < 10) ? '0' + month : month;
+			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+
+			var section = `
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">+ שליחת דרישת תשלום</button>
 			</div>
 			<div class="d-flex gap-3">
 				<div>
-					<button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button>
+				<button class="buttonss" style="background-color: #9D0000;" data-bs-toggle="modal" data-bs-target="#order_details" onclick="populateOrderDetailModalFunction("${JSON.stringify(item)}")">לפרטי ההזמנה</button>
 				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 				<h3 class="titl">הזמנה: ${item.id}</h3>
 			</div>
 		</div>`;
-	}
-	else if(item.order_status == '<?php echo ORDER_STATUS_PROCESSING; ?>')
-	{
-		var date = new Date(item.created_at);
-		var day = date.getDate();
-		var month = date.getMonth() + 1; 
-		var year = date.getFullYear();
-		var formattedDay = (day < 10) ? '0' + day : day;
-		var formattedMonth = (month < 10) ? '0' + month : month;
-		var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+		} else if (item.order_status == '<?php echo ORDER_STATUS_PROCESSING; ?>') {
+			var date = new Date(item.created_at);
+			var day = date.getDate();
+			var month = date.getMonth() + 1;
+			var year = date.getFullYear();
+			var formattedDay = (day < 10) ? '0' + day : day;
+			var formattedMonth = (month < 10) ? '0' + month : month;
+			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
+			console.log(item);
 
-		var section = `
+			var section = `
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">ממתין לתשלום</button>
 			</div>
 			<div class="d-flex gap-3">
 				<div>
-					<button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button>
+				<button class="buttonss" 
+        style="background-color: #9D0000;" 
+        data-bs-toggle="modal" 
+        data-bs-target="#order_details" 
+        onclick="populateOrderDetailModalFunction(this)"
+        data-order-details='${JSON.stringify(item)}'>
+    לפרטי ההזמנה
+</button>
 				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
 				<h3 class="titl">הזמנה: ${item.id}</h3>
 			</div>
 		</div>`;
-	}
+		}
 
-   
-    parentOrderHistory.insertAdjacentHTML('beforeend', section);
-	 // Append content to the end of parentOrderHistory
-}
+
+		parentOrderHistory.insertAdjacentHTML('beforeend', section);
+		// Append content to the end of parentOrderHistory
+	}
 
 
 	// When modal is about to be shown
@@ -1340,102 +1393,98 @@ function addOrderHistory(item) {
 		jQuery('#benifit_community_id').val(id);
 		jQuery('#credit_limit_community_id').val(id);
 		jQuery('#order_request_community_id').val(id);
-       	jQuery.ajax({
-            url: "<?php echo admin_url('admin-ajax.php'); ?>",
-            type: 'POST',
-            data: {
+		jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
 				action: 'csvp_ajax', // Action hook
 				csvp_request: 'CSVP_Community', // Action hook
-                csvp_handler: 'get_community_data_for_store_popup', // Action hook
-                data:	{
+				csvp_handler: 'get_community_data_for_store_popup', // Action hook
+				data: {
 					community_id: id
 				}
-            },
-            success: function(response) {
-                // Handle success response
+			},
+			success: function(response) {
+				// Handle success response
 				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
 				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
 				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
-				document.getElementById('community_logo').src  = response[0]["community_logo"];
-            },
-            error: function(xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
-            }
-        });
+				document.getElementById('community_logo').src = response[0]["community_logo"];
+			},
+			error: function(xhr, status, error) {
+				// Handle error response
+				console.error(xhr.responseText);
+			}
+		});
 
 		jQuery.ajax({
-            url: "<?php echo admin_url('admin-ajax.php'); ?>",
-            type: 'POST',
-            data: {
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
 				action: 'csvp_ajax', // Action hook
 				csvp_request: 'CSVP_Voucher', // Action hook
-                csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
-                data:	{
+				csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
+				data: {
 					community_id: id
 				}
-            },
-            success: function(response) {
-                // Handle success response
-                if(response)
-				{
+			},
+			success: function(response) {
+				// Handle success response
+				if (response) {
 					var parentElement = document.getElementById("parentElementId");
-   				 parentElement.innerHTML = "";
+					parentElement.innerHTML = "";
 					response.forEach(function(item) {
-                addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
-            });
-				}
-				else{
+						addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
+					});
+				} else {
 					var parentElement = document.getElementById("parentElementId");
-   				 parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
+					parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
 				}
-				
-            },
-            error: function(xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
+
+			},
+			error: function(xhr, status, error) {
+				// Handle error response
+				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
-            }
-        });
+			}
+		});
 		jQuery.ajax({
-            url: "<?php echo admin_url('admin-ajax.php'); ?>",
-            type: 'POST',
-            data: {
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
 				action: 'csvp_ajax', // Action hook
 				csvp_request: 'CSVP_Order', // Action hook
-                csvp_handler: 'get_orders_by_community_id', // Action hook
-                data:	{
-					community_id: id
+				csvp_handler: 'get_orders_by_community_id', // Action hook
+				data: {
+					community_id: id,
+					suffix: '_store'
 				}
-            },
-            success: function(response) {
-				console.log(response);
-                // Handle success response
-                if(response)
-				{
+			},
+			success: function(response) {
+				// Handle success response
+				if (response) {
 					var parentOrderHistory = document.getElementById("parentOrderHistory");
-   				 parentOrderHistory.innerHTML = "";
+					parentOrderHistory.innerHTML = "";
 					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
+					console.log(response);
 					response.forEach(function(item) {
-						
-							addOrderHistory(item);
-						
-                // addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
-			});
-				}
-				else{
+						addOrderHistory(item);
+						console.log(item);
+
+					});
+				} else {
 					var parentElement = document.getElementById("parentElementId");
-   				 parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
+					parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
 				}
-				
-            },
-            error: function(xhr, status, error) {
-                // Handle error response
-                console.error(xhr.responseText);
+
+			},
+			error: function(xhr, status, error) {
+				// Handle error response
+				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
-            }
-        });
+			}
+		});
 	});
 
 	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function(event) {
@@ -1443,5 +1492,4 @@ function addOrderHistory(item) {
 		var id = button.data('id');
 		jQuery('#voucher_id').val(id);
 	});
-
 </script>
