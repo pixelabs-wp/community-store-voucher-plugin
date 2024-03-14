@@ -10,14 +10,15 @@ class CSVP_Community{
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community';
-        $this->community_id = get_current_user_id();
         $this->community_member = new CSVP_CommunityMember();
         $this->voucher = new CSVP_VoucherTransaction();
+     
+        
     }
 
     public function render_dashboard(){
-        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->community_id,"count"=>true));
-        echo $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->community_id, "status" => VOUCHER_STATUS_USED));
+        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->get_current_community_id(),"count"=>true));
+        echo $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED));
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
@@ -28,8 +29,7 @@ class CSVP_Community{
             $payload = $_POST;
             if(!$this->community_member->get_community_member_by_email($payload)){
                 $payload["is_active"] = true;
-                $payload["community_id"] = $this->community_id;
-                $payload["community_id"] = $this->community_id;
+                $payload["community_id"] = $this->get_current_community_id();
                 $payload["card_balance"] = 0;
                 $response = $this->community_member->create_community_member($payload);
                 if($response["status"] !== false){
@@ -43,11 +43,10 @@ class CSVP_Community{
         }
 
         // Load Data
-        $members_data = $this->community_member->get_community_members_by_community_id(array('community_id'=>$this->community_id));
+        $members_data = $this->community_member->get_community_members_by_community_id(array('community_id'=>$this->get_current_community_id()));
         $pageData["members"] = $members_data;
 
         CSVP_View_Manager::load_view('manage-guys', $pageData);
-
     }
 
     public static function render_messages(){
@@ -86,6 +85,7 @@ class CSVP_Community{
         $community_logo = isset($data['community_logo']) ? $data['community_logo'] : "";
         $community_mail_address = $data['community_mail_address'];
         $payment_link = $data['payment_link'];
+        $api_valid = $data['api_valid'];
         $community_address = $data['community_address'];
         $username = $data['username'];
         $password = $data['password'];
@@ -108,6 +108,7 @@ class CSVP_Community{
                     'community_address' => $community_address,
                     'wp_user_id' => $user_id,
                     'payment_link' => $payment_link,
+                    'api_valid' => $api_valid,
                     'wp_user'=> get_current_user_id()
                 ) // Data to be inserted
             );
@@ -156,6 +157,47 @@ class CSVP_Community{
         }
     }
 
+    /**
+     * Function to retrieve a community by its ID from the database.
+     *
+     * @param int $community_id The ID of the community to retrieve.
+     * @return object|WP_Error Community data as an object if found, or WP_Error if not found.
+     */
+    public function get_community_by_user_id($user_id)
+    {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve community data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE wp_user_id = %d",
+            $user_id
+        );
+
+        // Execute the query
+        $community = $wpdb->get_row($query);
+
+        // Check if a community was found
+        if ($community) {
+            // Return community data as an object
+            return $community;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('Community not found.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_current_community_id(){
+
+        if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MANAGER)) {
+            $community_data = $this->get_community_by_user_id(get_current_user_id());
+            return $community_data->id;
+        } else if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MEMBER)) {
+            $member_data = $this->community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()));
+            return $member_data->community_id;
+        }
+
+
+    }
 
     /**
      * Function to retrieve a community by its ID from the database.

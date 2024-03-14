@@ -5,10 +5,13 @@ class CSVP_CommunityMember {
     private $table_name;
     private $joining_request;
     public $community_member_user;
+    public $community_id;
+    public $balance_table;
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_community_member';
+        $this->balance_table = $wpdb->prefix . 'csvp_balance';
         $this->joining_request = new CSVP_JoiningRequest();
         $this->community_member_user = $this->get_community_member_by_user_id(array('wp_user_id'=> get_current_user_id()));
     }
@@ -18,15 +21,22 @@ class CSVP_CommunityMember {
         CSVP_View_Manager::load_view('transaction-history');
     }
 
-    public static function render_loading_history(){
-        CSVP_View_Manager::load_view('loading-history');
+    public function render_loading_history(){
+
+        $pageData["transactions"] = $this->get_all_balances(array("member_id" => $this->community_member_user->id));
+
+        CSVP_View_Manager::load_view('loading-history', $pageData);
     }
 
-    public static function render_load_card(){
-        CSVP_View_Manager::load_view('load-card');
+    public function render_load_card(){
+        global $community;
+        $pageData["community"] = $community->get_community_by_id($community->get_current_community_id());
+        $pageData["member"] = $this->community_member_user;
+        $pageData["transactions"] = $this->get_all_balances(array("member_id"=> $this->community_member_user->id));
+        CSVP_View_Manager::load_view('load-card', $pageData);
     }
 
-    public static function render_coupons(){
+    public function render_coupons(){
         CSVP_View_Manager::load_view('coupons');
     }
     
@@ -280,7 +290,7 @@ class CSVP_CommunityMember {
         global $wpdb;
 
         $query = $wpdb->prepare(
-            "SELECT balance_amount FROM $this->balance_table WHERE community_member_id = %d",
+            "SELECT balance_amount, SUM(balance_amount) as total_balance FROM $this->balance_table WHERE community_member_id = %d GROUP BY community_member_id",
             $member_id
         );
 
@@ -296,9 +306,9 @@ class CSVP_CommunityMember {
      * @param float $new_balance The new balance amount.
      * @return bool True if update successful, false otherwise.
      */
-    public function update_balance($member_id, $new_balance) {
+    public function update_balance($data) {
         global $wpdb;
-
+        [$member_id, $new_balance] = $data;
         $result = $wpdb->update(
             $this->balance_table,
             array('balance_amount' => $new_balance),
@@ -309,18 +319,48 @@ class CSVP_CommunityMember {
     }
 
     /**
+     * Update balance for a member.
+     *
+     * @param int $member_id The ID of the community member.
+     * @param float $new_balance The new balance amount.
+     * @return bool True if update successful, false otherwise.
+     */
+    public function add_balance($data)
+    {
+        global $wpdb;
+        $member_id = $data['member_id'];
+        $new_balance = $data['new_balance'];
+        $current_balance = $this->get_balance_by_member_id($member_id);
+        $current_balance = $current_balance + $new_balance;
+        $result = $wpdb->insert(
+            $this->balance_table,
+            array('balance_amount' => $new_balance, 
+            'community_member_id' => $member_id)
+        );
+
+        return $result !== false;
+    }
+
+    /**
      * Get all balances.
      *
      * @return array|false Array of balance amounts if found, false otherwise.
      */
-    public function get_all_balances() {
+    public function get_all_balances($data) {
         global $wpdb;
 
-        $query = "SELECT balance_amount FROM $this->balance_table";
+        $member_id = $data["member_id"] ? $data["member_id"] : false;
 
-        $balances = $wpdb->get_col($query);
+        if($member_id){
+            $query = "SELECT * FROM $this->balance_table WHERE community_member_id = '$member_id'";
+        } else {
+            $query = "SELECT * FROM $this->balance_table";
+        }
+        
 
-        return $balances !== null ? array_map('floatval', $balances) : false;
+        $balances = $wpdb->get_results($query);
+
+        return $balances !== null ? $balances : false;
     }
 }
 

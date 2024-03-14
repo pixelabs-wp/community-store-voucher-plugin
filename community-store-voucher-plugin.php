@@ -35,6 +35,7 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-view-manager.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-notifications.php';
 require_once CSVP_PLUGIN_PATH . 'assets/csvp-assets-loader.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-routing.php';
+require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
 
 require_once CSVP_PLUGIN_PATH . 'includes/class-admin.php';
 require_once CSVP_PLUGIN_PATH . 'includes/class-community.php';
@@ -51,8 +52,22 @@ require_once CSVP_PLUGIN_PATH . 'includes/class-messages.php';
 
 require_once CSVP_PLUGIN_PATH . 'admin/admin-page.php';
 require_once CSVP_PLUGIN_PATH . 'public/shortcode.php';
-require_once CSVP_PLUGIN_PATH . 'includes/class-user-roles.php';
 
+
+
+$community = new CSVP_Community();
+$admin = new CSVP_Admin();
+$store = new CSVP_Store();
+$commision = new CSVP_Commission();
+$joining_request = new CSVP_JoiningRequest();
+$transaction = new CSVP_Transaction();
+$community = new CSVP_Community();
+$order = new CSVP_Order();
+$voucher = new CSVP_Voucher();
+$voucher_transaction = new CSVP_VoucherTransaction();
+$walk_order = new CSVP_WalkOrder();
+$community_member = new CSVP_CommunityMember();
+$messages = new CSVP_CommunityMessage();
 
 add_action( 'init', 'run_tests' );
 

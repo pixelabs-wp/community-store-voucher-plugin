@@ -325,6 +325,87 @@
         </div>
     </div>
 
+
+    <div class="modal fade modal-dialog-scrollable" id="community-member-load-card" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+            <div class="modal-content p-4" style="direction: rtl">
+
+                <style>
+                    .TextBox {
+                        -webkit-appearance: none;
+                        font-family: 'Assistant', sans-serif;
+                        font-size: large;
+                        color: black;
+                        width: 100%;
+                        text-align: left;
+                        padding: 6px;
+                        border: 1px solid rgba(0, 0, 0, .125);
+                        border-radius: 2px;
+                        box-sizing: content-box;
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        margin-top: 2px;
+                        outline: none;
+                    }
+                </style>
+                <script>
+                    //שימו לב!! שיטת הפוסטמסג' לא עובדת בשרת מקומי (localhost). חובה להעלות את הקוד שלכם לדומיין שלכם.
+
+
+                    window.onerror = function(msg, url, line, col, error) {
+                        alert("שגיאת תוכנה. פנה לתמיכה טכנית. שגיאה: " + msg)
+                    }
+
+                    //זהירות! את השורת קוד הזו יש להפעיל רק פעם אחת בעת פתיחת הדף
+
+                    ///////////////////////////////
+
+                    function PostNedarim(Data) {
+                        var iframeWin = document.getElementById('NedarimFrame').contentWindow;
+                        iframeWin.postMessage(Data, "*");
+                    };
+
+                    
+
+
+                </script>
+
+
+
+
+                <div style="width:80%;max-width:500px;border:2px solid cadetblue;padding:20px;margin-right:auto;margin-left:auto">
+                    <div style="text-align:center">
+                        <h3 id="g"></h3>
+            
+                    </div>
+
+                    
+
+                
+                    <iframe id="NedarimFrame" style="width:100%;-webkit-box-sizing:border-box;height:0px;" scrolling="no" src="about:blank"></iframe>
+                    <div style="text-align:center;padding:10px 0px;font-family:Assistant,Arial;color:#808080" id="WaitNedarimFrame"><img src="waitnew.gif" style="width:50px;" /><br />Connecting to PCI Server...</div>
+
+                    <div id="OkDiv" style="font-weight:bold;color:#47ba18;padding:5px;display:none;text-align:center">Transaction Done - העסקה בוצעה בהצלחה</div>
+
+                    <div id="PayBtDiv" style="margin:20px 0px 15px 0px;text-align:center">
+                        <input type="button" id="PayBt" style="cursor:pointer;color:white;background-color:#17a2b8;text-align:center" value="ביצוע תשלום" class="TextBox" onclick="PayBtClick()" />
+                        <div id="ErrorDiv" style="font-weight:bold;color:firebrick;padding:5px"></div>
+                    </div>
+                    <div style="text-align:center;padding:10px 0px;font-family:Assistant,Arial;color:#808080;display:none" id="WaitPay"><img src="waitnew.gif" style="width:50px;" /><br />מבצע חיוב, נא להמתין...</div>
+
+                    <div id="Result" style="text-align:center" dir="ltr"></div>
+
+
+                </div>
+             
+
+                    
+
+
+            </div>
+        </div>
+    </div>
+
     <!--  Send Message modal ends here -->
 
     <div class="page">

@@ -1,4 +1,4 @@
-<?php include CSVP_PLUGIN_PATH."views/community-member/header.php" ?>
+<?php include CSVP_PLUGIN_PATH . "views/community-member/header.php" ?>
 <div class="container containers py-5">
     <style>
         .containers {
@@ -34,12 +34,12 @@
         }
 
         .box-detailss {
-    margin-top: 30px;
-    display: flex;
-    position: relative;
-    justify-content: space-between;
-    width: 62%;
-}
+            margin-top: 30px;
+            display: flex;
+            position: relative;
+            justify-content: space-between;
+            width: 62%;
+        }
 
         .left-span {
             font-size: 28px;
@@ -53,9 +53,9 @@
 
         .line {
             position: absolute;
-    margin-top: 41px;
-    border-bottom: 1.5px solid black;
-    width: 100%;
+            margin-top: 41px;
+            border-bottom: 1.5px solid black;
+            width: 100%;
         }
 
         .box-sub {
@@ -136,7 +136,7 @@
             margin: 0;
         }
 
-        input::placeholder{
+        input::placeholder {
             font-size: 18px;
             font-weight: 700;
             line-height: 27px;
@@ -146,12 +146,12 @@
 
 
 
-        input:focus{
+        input:focus {
             border: none;
         }
 
-        
-        input:active{
+
+        input:active {
             border: none;
         }
 
@@ -270,7 +270,7 @@
         }
 
         @media screen and (min-width: 360px) {
-            
+
 
             .main-title {
                 font-size: 25px;
@@ -300,10 +300,10 @@
 
             }
 
-           
+
         }
 
-        .date-details h3{
+        .date-details h3 {
             font-size: 20px;
             font-weight: 600;
             line-height: 27px;
@@ -312,76 +312,289 @@
         }
 
 
-        .btn-history{
+        .btn-history {
             font-size: 20px;
             font-weight: 700;
             line-height: 27px;
             letter-spacing: 0em;
             text-align: right;
         }
-
-        
-      
     </style>
-        <!-- title -->
-        <div class="d-flex flex-column justify-content-around align-items-center m-auto header-textss">
-            <h2 class="main-title mt-4 text-xl">
-                שלום אליהו,בעמוד זה תוכל להטעין את כרטיס
-                <span style="color: #BC9B63; font-weight: 900;">הת”תכארד </span>האישי שלך,הכל סכום שתבחר ולממש אותו
-                במגוון החנויות בהסדר.
-            </h2>
-            <div class="box mt-6">
-                <div class="box-detailss">
-                    <span class="left-span">₪</span>
-                    <input type="text" style="direction: rtl; border: none; width: 80%;" placeholder="הזן את הסכום הרצוי">
-                    <div class="line"></div>
-                </div>
-                <a href="" style="font-family: Noto Sans Hebrew;
+    <!-- title -->
+    <div class="d-flex flex-column justify-content-around align-items-center m-auto header-textss">
+        <h2 class="main-title mt-4 text-xl">
+            שלום <?php echo $pageData["member"]->full_name; ?>, בעמוד זה תוכל להטעין את כרטיס
+            <span style="color: #BC9B63; font-weight: 900;">הת”תכארד </span>האישי שלך,הכל סכום שתבחר ולממש אותו
+            במגוון החנויות בהסדר.
+        </h2>
+
+        <div class="box mt-6">
+            <div class="box-detailss">
+                <span class="left-span">₪</span>
+                <input type="text" style="direction: rtl; border: none; width: 80%;" id="loadAmount" placeholder="הזן את הסכום הרצוי">
+                <div class="line"></div>
+            </div>
+
+
+            <button onclick="loadCardModal()" style="font-family: Noto Sans Hebrew;
                                     font-size: 20px;
                                     font-weight: 500;
                                     line-height: 27px;
                                     letter-spacing: 0em;
                                     text-align: right;
-                                    " class="btn btn-dark mt-4 p-4">← לטעינת הסכום ומעבר לתשלום </a>
-                        </div>
+                                    " class="btn btn-dark mt-4 p-4">
+                ← לטעינת הסכום ומעבר לתשלום
 
+            </button>
         </div>
-        <div class="mt-4">
+
+    </div>
+    <div class=" mt-4">
+        <?php foreach ($pageData["transactions"] as $transaction) {
+
+
+        ?>
             <div class="box-date">
                 <div class="d-flex date-details">
-                    <h3>24/07/2023 <span class="bold-text">:תאריך </span></h3>
-                    <h3>₪ 250 <span class="bold-text">:סכום</span></h3>
+                    <h3><?php echo date('d/m/Y', strtotime($transaction->created_at)); ?> <span class="bold-text">:תאריך </span></h3>
+                    <h3>₪ <?php echo $transaction->balance_amount; ?> <span class="bold-text">:סכום</span></h3>
                     <h3>ערך צבור <span class="bold-text">: סוג העסקה</span></h3>
                 </div>
             </div>
-
-            <div class="box-date">
-                <div class="d-flex date-details">
-                    <h3>24/07/2023 <span class="bold-text">:תאריך </span></h3>
-                    <h3>₪ 250 <span class="bold-text">:סכום</span></h3>
-                    <h3>ערך צבור <span class="bold-text">: סוג העסקה</span></h3>
-                </div>
-            </div>
-
-            
-        </div>
+        <?php
+        } ?>
 
 
-        <!-- <div class="box-dates">
+
+    </div>
+
+
+    <!-- <div class="box-dates">
             <div class="d-flex date-detailss">
                 <h3>להסטוריית הטעינות לחץ כאן ←</h3>
             </div>
         </div> -->
 
-        <a href="" class="btn bg-white mt-4 btn-history">  ← להסטוריית הטעינות לחץ כאן 
-        </a> 
+    <a href="/member/loading-history" class="btn bg-white mt-4 btn-history"> ← להסטוריית הטעינות לחץ כאן
+    </a>
 
-        </div>
+</div>
 
 </div>
 </div>
 
+<script>
+    function loadCardModal() {
+        // Open the modal
+        jQuery('#community-member-load-card').modal('show');
 
+        let amount = document.querySelector('#loadAmount').value ? document.querySelector('#loadAmount').value : 0;
+
+        let mosadId = '<?php echo $pageData["community"]->payment_link ?>';
+        let apiValid = '<?php echo $pageData["community"]->api_valid ?>';
+        let fullName = '<?php echo $pageData["member"]->full_name ?>';
+        let phone = '<?php echo $pageData["member"]->phone_number ?>';
+        let email = '<?php echo $pageData["member"]->email_address ?>';
+
+
+        PostNedarim({
+            "Mosad": mosadId,
+            "ApiValid": apiValid,
+            "FirstName": fullName,
+            "Phone": phone,
+            "email_address": email,
+            "Amount": amount,
+            "Tashlumim": 1
+            // Add other transaction details here
+        });
+
+        if (window.addEventListener) {
+            window.addEventListener("message", ReadPostMessage, false);
+        } else {
+            window.attachEvent("onmessage", ReadPostMessage);
+        }
+        document.getElementById('NedarimFrame').onload = function() {
+            console.log('StartNedarim');
+            PostNedarim({
+                'Name': 'GetHeight'
+            })
+        }
+        document.getElementById('NedarimFrame').src = "https://matara.pro/nedarimplus/iframe";
+    }
+
+    function PayBtClick() {
+        document.getElementById('Result').innerHTML = ''
+        document.getElementById('PayBtDiv').style.display = 'none';
+        document.getElementById('OkDiv').style.display = 'none';
+        document.getElementById('WaitPay').style.display = 'block';
+        document.getElementById('ErrorDiv').innerHTML = '';
+
+        let amount = document.querySelector('#loadAmount').value ? document.querySelector('#loadAmount').value : 0;
+
+        let mosadId = '<?php echo $pageData["community"]->payment_link ?>';
+        let apiValid = '<?php echo $pageData["community"]->api_valid ?>';
+        let Groupe = '<?php echo $pageData["community"]->community_name ?>';
+        let fullName = '<?php echo $pageData["member"]->full_name ?>';
+        let phone = '<?php echo $pageData["member"]->phone_number ?>';
+        let email = '<?php echo $pageData["member"]->email_address ?>';
+        let id_number = '<?php echo $pageData["member"]->id_number ?>';
+
+
+        PostNedarim({
+            'Name': 'FinishTransaction2',
+            'Value': {
+                'Mosad': mosadId,
+                'ApiValid': apiValid,
+                'PaymentType': 'Ragil',
+                'Currency': '1',
+
+                'Zeout': id_number,
+                'FirstName': fullName,
+                'LastName': '',
+                'Street': '',
+                'City': '',
+                'Phone': phone,
+                'Mail': email,
+
+                'Amount': amount,
+                'Tashlumim': '1',
+
+                'Groupe': Groupe,
+                'Comment': '',
+
+                'Param1': '',
+                'Param2': '',
+                'ForceUpdateMatching': '1', //מיועד לקמפיין אם מעוניינים שהמידע יידחף ליעד, למרות שזה לא נהוג באייפרם
+
+                'CallBack': '<?php echo get_site_url() . "/member/callback" ?>', //מיועד לקבלת WEBHOOK לאחר כל עסקה / סירוב
+                'CallBackMailError': '', //מיועד לקבלת התראה על תקלת בשליחת קאלבק למייל של המפתח במקום למייל של אנשי הקשר של המוסד
+
+                'Tokef': '' //אם אתם מנהלים את התוקף בדף שלכם (מיועד למי שרוצה להפריד בין חודש לשנה ורוצה לעצב מותאם אישית)
+
+            }
+        });
+    }
+
+    function ReadPostMessage(event) {
+        console.log(event.data);
+        switch (event.data.Name) {
+            case 'Height':
+                //Here you get the height of iframe | event.data.Value
+                document.getElementById('NedarimFrame').style.height = (parseInt(event.data.Value) + 15) + "px";
+                document.getElementById('WaitNedarimFrame').style.display = 'none';
+                break;
+
+            case 'TransactionResponse':
+                document.getElementById('Result').innerHTML = '<b>TransactionResponse:<br/>' + JSON.stringify(event.data.Value) + '</b><br/>see full data in console';
+                console.log(event.data.Value)
+                if (event.data.Value.Status == 'Error') {
+                    document.getElementById('ErrorDiv').innerHTML = event.data.Value.Message
+                    document.getElementById('WaitPay').style.display = 'none';
+                    document.getElementById('PayBtDiv').style.display = 'block';
+
+                } else {
+                    document.getElementById('WaitPay').style.display = 'none';
+                    document.getElementById('OkDiv').style.display = 'block';
+
+                    let amount = document.querySelector('#loadAmount').value ? document.querySelector('#loadAmount').value : 0;
+
+                    jQuery.ajax({
+                        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                        type: 'POST',
+                        data: {
+                            action: 'csvp_ajax', // Action hook
+                            csvp_request: 'CSVP_CommunityMember', // Action hook
+                            csvp_handler: 'add_balance', // Action hook
+                            data: {
+                                member_id: <?php echo $pageData["member"]->id ?>,
+                                new_balance: amount
+                            }
+                        },
+                        success: function(response) {
+                            // Handle success response
+                            if (response) {
+
+                                console.log(response);
+
+                            };
+                        },
+                        error: function(xhr, status, error) {
+                            // Handle error response
+                            console.error(xhr.responseText);
+                            console.error("Unexpected response format:", xhr.responseText);
+                        }
+                    });
+
+
+                }
+        }
+    }
+
+    // window.onerror = function(msg, url, line, col, error) {
+    //     alert("שגיאת תוכנה. פנה לתמיכה טכנית", "שגיאה: " + msg, 30000, true)
+    // }
+    // window.onload = function() {
+    //     setTimeout(function() {
+    //         document.getElementById('NedarimFrame').src = "https://matara.pro/nedarimplus/iframe?language=en";
+    //     }, 500)
+    // }
+    // if (window.addEventListener) {
+    //     window.addEventListener("message", ReadPostMessage, false);
+    // } else {
+    //     window.attachEvent("onmessage", ReadPostMessage);
+    // }
+
+
+
+
+    // function ReadPostMessage(event) {
+    //     switch (event.data.Name) {
+    //         case 'Height':
+    //             //Here you get the height of iframe | event.data.Value
+    //             document.getElementById('NedarimFrame').style.height = (parseInt(event.data.Value) + 15) + "px";
+    //             document.getElementById('WaitNedarimFrame').style.display = 'none';
+    //             break;
+    //         case 'ValidateFields':
+    //             // if field are validates, event.data.Value == 'OK'
+    //             // else event.data.ErrorType show (Empty or Wrong) and event.data.Field tell you the id of element
+    //             if (event.data.Value == 'OK') {
+    //                 // CREATE TRANSACTION WITH DEBITIFRAME AND CONTINUE
+
+    //                 iframeWin.postMessage({
+    //                     'Name': 'FinishTransaction',
+    //                     'Value': 156
+    //                 }, "*");
+    //             } else {
+    //                 document.getElementById('ErrorDiv').innerHTML = event.data.Field + ' is ' + event.data.ErrorType
+    //                 document.getElementById('WaitPay').style.display = 'none';
+    //                 document.getElementById('PayBtDiv').style.display = 'block';
+    //             }
+    //             break;
+    //         case 'TransactionResponse':
+    //             document.getElementById('Result').innerHTML = '<b>TransactionResponse:<br/>' + JSON.stringify(event.data.Value) + '</b><br/>see full data in console';
+    //             console.log(event.data.Value)
+    //             if (event.data.Value.Status == 'Error') {
+    //                 document.getElementById('ErrorDiv').innerHTML = event.data.Value.Message
+    //                 document.getElementById('WaitPay').style.display = 'none';
+    //                 document.getElementById('PayBtDiv').style.display = 'block';
+    //             } else {
+    //                 document.getElementById('WaitPay').style.display = 'none';
+    //                 alert('Transaction Done')
+    //             }
+    //     }
+    // }
+
+    // function PayBtClick() {
+    //     document.getElementById('Result').innerHTML = ''
+    //     document.getElementById('PayBtDiv').style.display = 'none';
+    //     document.getElementById('WaitPay').style.display = 'block';
+    //     document.getElementById('ErrorDiv').innerHTML = '';
+
+    //     iframeWin.postMessage({
+    //         'Name': 'ValidateFields'
+    //     }, "*");
+    // }
+</script>
 </body>
 
 </html>

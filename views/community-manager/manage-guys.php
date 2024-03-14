@@ -780,7 +780,11 @@
 
           <tbody class="d-flex flex-column ts-text">
 
-            <?php foreach ($pageData["members"] as $key => $member) {
+            <?php 
+            
+            if(!empty($pageData["members"])){
+                 
+            foreach ($pageData["members"] as $key => $member) {
               ?>
               <tr>
                 <td class="ts-date">
@@ -833,6 +837,10 @@
 
               <?php
             } ?>
+          <?php  } else {
+            echo "No Data Found";
+          }
+         ?>
 
 
 
