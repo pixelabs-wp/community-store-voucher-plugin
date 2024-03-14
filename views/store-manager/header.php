@@ -323,9 +323,9 @@
                     <h1 class="top-heading"> שליחת הודעה למנהל המערכת</h1>
                     <div>
                         <form action="" method="POST">
-                            <input type="text" name="fullname" placeholder="שם פרטי ומשפחה">
-                            <input type="text" name="phoneno" placeholder="מספר טלפון לחזרה">
-                            <textarea name="message" id="" cols="30" rows="3" placeholder="תוכן ההודעה..."></textarea>
+                            <input type="text" name="full_name" placeholder="שם פרטי ומשפחה">
+                            <input type="text" name="phone_no" placeholder="מספר טלפון לחזרה">
+                            <textarea name="content" id="" cols="30" rows="3" placeholder="תוכן ההודעה..."></textarea>
 						    <input type="hidden" name="csvp_request" value="send_message_admin">
                             <button>שליחת ההודעה ←</button>
                         </form>

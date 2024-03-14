@@ -9,3 +9,9 @@ Test: create_store_test | Result: Pass | Response: 2
 Test: create_store_test | Result: Fail | Response: null
 Test: create_store_test | Result: Fail | Response: null
 Test: create_store_test | Result: Fail | Response: null
+Test: create_store_test | Result: Pass | Response: {"errors":{"database_error":["Failed to create community."]},"error_data":{"database_error":{"status":500}}}
+Test: create_store_test | Result: Pass | Response: {"errors":{"database_error":["Failed to create community."]},"error_data":{"database_error":{"status":500}}}
+Test: create_store_test | Result: Pass | Response: 1
+Test: create_store_test | Result: Pass | Response: {"errors":{"request_error":["Failed to create community. Email Already Exists"]},"error_data":{"request_error":{"status":500}}}
+Test: create_store_test | Result: Pass | Response: {"errors":{"request_error":["Failed to create community. Email Already Exists"]},"error_data":{"request_error":{"status":500}}}
+Test: create_store_test | Result: Pass | Response: {"errors":{"request_error":["Failed to create community. Email Already Exists"]},"error_data":{"request_error":{"status":500}}}
