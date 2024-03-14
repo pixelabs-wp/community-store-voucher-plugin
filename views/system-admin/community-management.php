@@ -61,34 +61,34 @@
 
 <!-- store-full-details modal starts here -->
 
-<div class="modal fade" id="store-full-details-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="community-full-details-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content p-4">
 
             <div class="datagrid" style="direction: rtl;">
                 <div class="datagrid-item">
-                    <div class="datagrid-title">שם החנות:</div>
+                    <div class="datagrid-title">שם ראש הת”ת:</div>
                     <div class="datagrid-content">אקסוס</div>
                 </div>
 
                 <div class="datagrid-item">
-                    <div class="datagrid-title">כתובת החנות:</div>
+                    <div class="datagrid-title">טלפון יצירת קשר:</div>
                     <div class="datagrid-content"> רבי עקיבא 84 בני ברק</div>
                 </div>
 
                 <div class="datagrid-item">
-                    <div class="datagrid-title">מספר טלפון:</div>
+                    <div class="datagrid-title">שם הישיבה:</div>
                     <div class="datagrid-content">054-6268012</div>
                 </div>
 
                 <div class="datagrid-item">
-                    <div class="datagrid-title">ישיבות בהסדר:</div>
+                    <div class="datagrid-title">כתובת הישיבה</div>
                     <div class="datagrid-content">450</div>
                 </div>
 
                 <div class="datagrid-item">
-                    <div class="datagrid-title">טלפון איש קופות</div>
+                    <div class="datagrid-title">Payment Link</div>
                     <div class="datagrid-content">054-6268012</div>
                 </div>
 
@@ -267,7 +267,7 @@
                                 </div>
 
                         </div>
-                        <a href="" class="btn btn-dark">← לפרטים המלאים</a>
+                        <a href="" data-bs-toggle="modal" data-bs-target="#community-full-details-modal" class="btn btn-dark">← לפרטים המלאים</a>
                     </div>
 
 
