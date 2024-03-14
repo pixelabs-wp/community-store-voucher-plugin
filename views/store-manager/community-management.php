@@ -1175,7 +1175,7 @@
 	<?php }
 	} ?>
 	<?php
-	if ($pageData["not_requested_communities"]) {
+	if (isset($pageData["not_requested_communities"])) {
 		foreach ($pageData["not_requested_communities"] as $community) { ?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->

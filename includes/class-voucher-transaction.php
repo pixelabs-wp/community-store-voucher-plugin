@@ -97,6 +97,24 @@ class CSVP_VoucherTransaction{
         return !empty($voucher_transactions) ? $voucher_transactions : null;
     }
 
+    public function get_all_voucher_transactions_by_store_id($data) {
+        global $wpdb;
+        $status = isset($data['status']) ? $data['status'] : false;
+        $logged_in_store_id = $data['store_id'];
+
+            // Prepare SQL query to select voucher transactions by member ID
+            $query = $wpdb->prepare("SELECT vt.*
+            FROM wp_csvp_voucher_transaction vt
+            INNER JOIN wp_csvp_voucher v ON vt.voucher_id = v.id
+            WHERE v.store_id  = %d AND vt.status = %s",  $logged_in_store_id, $status);
+    
+        // Execute the query and fetch the results
+        $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return !empty($voucher_transactions) ? $voucher_transactions : null;
+    }
+
     public function get_all_voucher_transactions_by_community_id($data)
         {
             global $wpdb;

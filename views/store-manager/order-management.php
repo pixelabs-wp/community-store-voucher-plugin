@@ -356,7 +356,11 @@
 
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
-    <?php foreach ($pageData["accepted_store_orders"] as $order) {
+	
+    <?php
+	if(isset($pageData["accepted_store_orders"]))
+	{
+	foreach ($pageData["accepted_store_orders"] as $order) {
 		if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING || $order['order_status'] == ORDER_STATUS_PAID)
 		{ ?>
         <div class="card order-management-cards col-xl-4 rounded-3">
@@ -395,7 +399,7 @@
                 <p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: <?php echo $total_cost; ?> ₪</p>
             </div>
         </div>
-    <?php } } ?>
+    <?php } } } ?>
 </div>
 <script>
     function populateModal(orderid) {

@@ -8,6 +8,7 @@ class CSVP_Store
     public $store_manager_id;
     public $joining_request;
     public $order;
+    public $voucherTransaction;
     // Constructor
     public function __construct()
     {
@@ -18,6 +19,7 @@ class CSVP_Store
         $this->community = new CSVP_Community(); 
         $this->joining_request = new CSVP_JoiningRequest();
         $this->order = new CSVP_Order();
+        $this->voucherTransaction = new CSVP_VoucherTransaction();
     }
 
     public function render_community_management()
@@ -131,7 +133,7 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
         }
-        
+        $pageData = [];
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
         $response["joined_communities"] = $joined_communities;
@@ -282,9 +284,23 @@ class CSVP_Store
         CSVP_View_Manager::load_view('return-management');
     }
 
-    public static function render_transaction_history()
+    public  function render_transaction_history()
     {
-        CSVP_View_Manager::load_view('transaction-history');
+        $pageData = [];
+        $data = [];
+        $data['status'] = VOUCHER_STATUS_USED;
+        $data['store_id'] = get_current_user_id();
+        $voucher_transactions = $this->voucherTransaction->get_all_voucher_transactions_by_store_id($data);
+        $response["voucher_transactions"] = $voucher_transactions;
+        if (is_wp_error($response["voucher_transactions"])) 
+        {
+        }
+        else
+        {
+            $pageData["voucher_transactions"] = $voucher_transactions;
+        }
+
+        CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
     public static function render_walk_order()

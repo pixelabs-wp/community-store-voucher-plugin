@@ -99,7 +99,7 @@
       class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
-		
+
       <!-- CSV Download Filter  -->
       <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
         <div class="card card-sm p-relative">
@@ -252,7 +252,8 @@
       </div>
     </div>
 
-
+		<?php
+    var_dump( $pageData['voucher_transactions'] ); ?>
     <!-- Page Content -->
     <div class="card-x mt-3 store-manager-transaction-history-table">
       <div style="overflow-x: auto; direction: rtl;">
