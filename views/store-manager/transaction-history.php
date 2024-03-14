@@ -262,9 +262,11 @@
       <div style="overflow-x: auto; direction: rtl;">
         <table class="table table-vcenter card-table">
           <tbody class="d-flex flex-column ts-text">
-          <?php if (isset($pageData["voucher_transactions"])) {
-             $order_count = 0;
-             $order_total = 0;
+          <?php 
+           $order_count = 0;
+           $order_total = 0;
+          if (isset($pageData["voucher_transactions"])) {
+            
 	          foreach ($pageData["voucher_transactions"] as $voucher_transaction) { 
               $date = new DateTime($voucher_transaction['created_at']);
               // Format the date according to the desired format

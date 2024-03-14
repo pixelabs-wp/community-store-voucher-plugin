@@ -25,3 +25,7 @@ define('ORDER_STATUS_COMPLETED', 'Completed');
 define('ORDER_STATUS_RETURNED', 'Returned');
 define('ORDER_STATUS_PAID', 'Paid');
 define('ORDER_STATUS_CANCELLED', 'Cancelled');
+
+
+define('MESSAGE_STATUS_UNSEEN', 'Unseen');
+define('MESSAGE_STATUS_SEEN', 'Seen');

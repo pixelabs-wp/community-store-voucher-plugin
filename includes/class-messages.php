@@ -15,8 +15,9 @@ class CSVP_CommunityMessage{
         global $wpdb;
 
         // Extract data from the input array
-        $community_member_id = $data['community_member_id'];
-        $community_id = $data['community_id'];
+        $to_id = $data['to_id'];
+        $from_id = $data['from_id'];
+        $to_user_role = $data['to_user_role'];
         $full_name = $data['full_name'];
         $phone_no = $data['phone_no'];
         $content = $data['content'];
@@ -25,8 +26,9 @@ class CSVP_CommunityMessage{
         $wpdb->insert(
             $this->table_name,
             array(
-                'community_member_id' => $community_member_id,
-                'community_id' => $community_id,
+                'to_id' => $to_id,
+                'from_id' => $from_id,
+                'to_user_role' => $to_user_role,
                 'full_name' => $full_name,
                 'phone_no' => $phone_no,
                 'content' => $content
@@ -122,13 +124,13 @@ class CSVP_CommunityMessage{
     }
 
     // Method to retrieve community messages by member ID
-    public function get_community_messages_by_member_id($data) {
+    public function get_community_messages_by_from_id($data) {
         global $wpdb;
         
-        $member_id = $data['member_id'];
+        $member_id = $data['from_id'];
         
         // Prepare SQL query to select community messages by member ID
-        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_member_id = %d", $member_id);
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE from_id = %d", $member_id);
 
         // Execute the query and fetch the results
         $messages = $wpdb->get_results($query, ARRAY_A);
@@ -138,13 +140,13 @@ class CSVP_CommunityMessage{
     }
 
     // Method to retrieve community messages by community ID
-    public function get_community_messages_by_community_id($data) {
+    public function get_community_messages_by_to_id($data) {
         global $wpdb;
 
-        $community_id = $data['community_id'];
+        $community_id = $data['to_id'];
 
         // Prepare SQL query to select community messages by community ID
-        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_id = %d", $community_id);
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE to_id = %d", $community_id);
 
         // Execute the query and fetch the results
         $messages = $wpdb->get_results($query, ARRAY_A);
