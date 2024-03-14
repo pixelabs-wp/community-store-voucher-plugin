@@ -41,7 +41,8 @@ class CSVP_Voucher_Test {
             'voucher_price' => 10.50,
             'normal_price' => 15.00,
             'product_image' => 'test_product.jpg',
-            'store_id' => 1
+            'store_id' => 1,
+            'community_id' => 1
         );
 
         // Create voucher
