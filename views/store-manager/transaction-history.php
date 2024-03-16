@@ -302,8 +302,8 @@
                 </a>
               </li>
 
-              <li class="page-item page-next">
-                <a class="page-link" href="#">
+              <li class="page-item page-next disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
                     סה”כ שווי הזמנות: <?php echo $order_total; ?>₪
                   </div>
