@@ -258,39 +258,28 @@
                     </h1>
                 </div>
                 <div class="container-fluid " style="overflow: auto;">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="container mt-5 d-flex flex-column gap-5">
                             <div class="row">
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">טלפון יצירת קשר </label>
                                     <input type="text" class="form-control" name="community_manager_phone">
                                 </div>
-
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">שם ראש הת”ת</label>
                                     <input type="text" class="form-control" name="community_manager_name" required>
                                 </div>
-
                             </div>
-
-
                             <div class="row">
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">כתובת הישיבה</label>
                                     <input type="text" class="form-control" name="community_address">
                                 </div>
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">שם הישיבה</label>
                                     <input type="text" class="form-control" name="community_name">
                                 </div>
-
                             </div>
-
-
                             <div class="row">
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">כתובת מייל</label>
@@ -300,37 +289,33 @@
                                     <label class="form-label">Mosad</label>
                                     <input type="text" class="form-control" name="payment_link">
                                 </div>
+                            </div>      
+                            <div class="row">
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">ApiValid</label>
                                     <input type="text" class="form-control" name="api_valid">
                                 </div>
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">Commission Percentage</label>
+                                    <input type="number" class="form-control"  name="commision_percentage">
+                                </div>
                             </div>
-
                             <div class="row">
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">סיסמת כניסה</label>
                                     <input type="password" class="form-control" name="password">
                                 </div>
-
                                 <div class="mb-3 col-xl-6">
                                     <label class="form-label">שם משתמש</label>
                                     <input type="text" class="form-control" name="username">
                                 </div>
-
                             </div>
-
                             <div class="row">
-
                                 <div class="mb-3 col-xl-12">
                                     <label class="form-label">Community Logo</label>
-                                    <input type="file" class="form-control" name="password">
+                                    <input type="file" class="form-control" name="community_logo">
                                 </div>
-
                             </div>
-
-
-
                             <input type="hidden" name="csvp_request" value="add_community">
                             <input type="submit" class="btn btn-dark " value="← להוספת הישיבה למערכת ">
 

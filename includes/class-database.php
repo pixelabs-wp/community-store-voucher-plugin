@@ -23,6 +23,7 @@ class CSVP_Initialize_Database {
             community_address varchar(255) NOT NULL,
             wp_user_id bigint(20) NOT NULL,
             payment_link varchar(255) NOT NULL,
+            commision_percentage decimal(10,2) NOT NULL,
             api_valid varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";

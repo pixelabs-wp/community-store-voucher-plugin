@@ -268,6 +268,42 @@ class CSVP_Store
         
     }
 
+
+    public function get_all_joined_store_for_communities()
+    {
+        global $wpdb, $community;
+        $community_id = $community->get_current_community_id();
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+        $query = $wpdb->prepare("
+        SELECT 
+            s.id AS store_id,
+            s.store_name,
+            COUNT(o.id) AS order_count,
+            SUM(o.order_total) AS total_order_amount
+        FROM 
+            {$wpdb->prefix}csvp_store s
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_order o ON s.id = o.store_id
+        INNER JOIN 
+            {$wpdb->prefix}csvp_joining_request jr ON s.id = jr.store_id AND jr.community_id = %d AND jr.request_status = %s
+        WHERE
+            o.community_id = %d
+        GROUP BY 
+            s.id, s.store_name;
+    ", $community_id, JOINING_REQUEST_STATUS_APPROVED, $community_id);
+    
+        $store = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($store) {
+            // Return array of community objects
+            return $store;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Joined Stores.', 'csvp'), array('status' => 404));
+        }
+    }
+
     public static function render_return_management()
     {
         CSVP_View_Manager::load_view('return-management');
