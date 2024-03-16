@@ -226,6 +226,7 @@
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        align-items: center;
     }
 
     .tran>div {
@@ -244,7 +245,8 @@
     }
 
     .tran h3 {
-        color: #5A4222;
+        color: rgba(0, 0, 0, 1);
+        margin: 0;
     }
 
     .title {

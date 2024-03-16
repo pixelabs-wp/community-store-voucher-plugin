@@ -145,7 +145,7 @@
                     <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
                         <div class="" style="direction: rtl;">
                             <label class="form-label">חיפוש לפי שם</label>
-                            <input type="text" class="form-select" placeholder="" name="" id="">
+                            <input type="text" class="form-control" placeholder="" name="" id="">
 
                             <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
                         </div>
