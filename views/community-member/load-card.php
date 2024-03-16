@@ -496,6 +496,7 @@
                     document.getElementById('WaitPay').style.display = 'none';
                     document.getElementById('OkDiv').style.display = 'block';
 
+
                     let amount = document.querySelector('#loadAmount').value ? document.querySelector('#loadAmount').value : 0;
 
                     jQuery.ajax({
@@ -524,7 +525,6 @@
                             console.error("Unexpected response format:", xhr.responseText);
                         }
                     });
-
 
                 }
         }

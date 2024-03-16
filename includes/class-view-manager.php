@@ -40,10 +40,16 @@ class CSVP_View_Manager{
 
     // Load view file
     private static function load_view_file($view_file, $pageData) {
+        global $community_member, $voucher_transaction, $store;
         $view_path = CSVP_PLUGIN_PATH . "views/$view_file.php";
         if (file_exists($view_path)) {
             wp_head();
             include $view_path;
+            echo '<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>';
         } else {
             echo "Bad Request : $view_path";
         }

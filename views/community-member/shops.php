@@ -547,71 +547,12 @@
         <div class="body2" style="">
           <nav class="black-nav">
             <ul>
-              <li><button class="btn-my">חייגו לחנות ←</button></li>
-              <li><button class="">כתובהחנות:שמגר 12 ירושלים</button></li>
-              <li><button class="">שם החנות: בגיר</button></li>
+              <li><a href="" class="btn-my mt-2" id="call_btn">חייגו לחנות ←</a></li>
+              <li><button class="">כתובהחנות:<span id="store_address"></span></button></li>
+              <li><button class="">שם החנות: <span id="store_name"></span></button></li>
             </ul>
           </nav>
-          <div class="card123">
-
-            <div class="card1">
-              <div class="card-bodyer">
-                <div class="card card-content ">
-                  <div class="inner">
-
-                  </div>
-                  <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(./static/photos/home-office-desk-with-macbook-iphone-calendar-watch-and-organizer.jpg)">
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">חליפה 70% צמר </h3>
-                    <h3 class="card-title"> 680₪ במקום 990₪</h3>
-                    <div class=" mx-auto h-32" style=" background-color: #01051D; width: 200px; height: 40px; border-radius: 10px; margin-top: 50px;">
-                      <h5 class="phone">לרכישת השובר ←</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="card1">
-              <div class="card-bodyer">
-                <div class="card card-content ">
-                  <div class="inner2">
-
-                  </div>
-                  <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(./static/photos/home-office-desk-with-macbook-iphone-calendar-watch-and-organizer.jpg)">
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">חולצה 100% כותנה </h3>
-                    <h3 class="card-title"> 180 ₪</h3>
-                    <div class=" mx-auto h-32" style=" text-align: center; background-color: #01051D; width: 200px; height: 40px; border-radius: 10px; margin-top: 50px;">
-                      <h5 class="phone">לרכישת השובר ←</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-            <div class="card1">
-              <div class="card-bodyer">
-                <div class="card card-content ">
-                  <div class="inner">
-
-                  </div>
-                  <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(./static/photos/home-office-desk-with-macbook-iphone-calendar-watch-and-organizer.jpg)">
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">חליפה 70% צמר </h3>
-                    <h3 class="card-title"> 680₪ במקום 990₪</h3>
-                    <div class=" mx-auto h-32" style=" background-color: #01051D; width: 200px; height: 40px; border-radius: 10px; margin-top: 50px;">
-                      <h5 class="phone">לרכישת השובר ←</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
+          <div class="card123" id="vouchers">
           </div>
         </div>
       </div>
@@ -619,9 +560,26 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+    <div class="modal-content p-4" style="direction: rtl">
+      <h3>Do you wish to purchase <span id="voucher_name"></span> for <span id="voucher_price"></span></h3>
 
+      <div class="add-new-benefit-buttons mt-4">
+        <form method="POST" action="">
+          <input type="hidden" name="voucher_id" id="voucher_id">
+          <input type="hidden" name="csvp_request" value="purchase_voucher">
+          <input type="hidden" name="community_member_id" id="community_member_id">
+          <input type="hidden" name="transaction_amount" id="transaction_amount">
+          <input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+          <button type="submit" class="btn btn-danger w-25">ביטול</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 <!--  shop-details modal ends here -->
-
 
 <div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="margin-left: 10px;">
   <?php foreach ($pageData["shops"] as $key => $request) {
@@ -636,14 +594,14 @@
 
 
       <p class="card-footer-text pt-4 pb-0 m-0">
-        <strong>שם החנות:</strong> <?= $request[""] ?><br>
-        <strong>כתובת החנות:</strong> רבי עקיבא 148 בני ברק
+        <strong>שם החנות:</strong> <?php echo $request->store_data->store_name; ?><br>
+        <strong>כתובת החנות:</strong> <?php echo $request->store_data->store_address; ?>
       </p>
 
       <div class="card-body px-3 m-auto">
         <div class="d-flex flex-column gap-3">
-          <a href="" class="btn btn-gray">← חייגו לחנות</a>
-          <a href="" data-bs-toggle="modal" data-bs-target="#community-member-shop-details-popup" class="btn btn-dark">← לשוברי החנות</a>
+          <a href="tel:<?php echo $request->store_data->store_phone; ?>" class="btn btn-gray">← חייגו לחנות</a>
+          <button class="btn btn-dark" onclick='loadStoreModal(<?php echo json_encode($request); ?>)'>← לשוברי החנות</button>
         </div>
 
       </div>
@@ -657,7 +615,57 @@
 
 </div>
 </div>
+<script>
+  function loadStoreModal(storeData) {
+    jQuery('#community-member-shop-details-popup').modal('show');
+    console.log(storeData)
 
+    let modal = document.querySelector('#community-member-shop-details-popup');
+    modal.querySelector("#call_btn").href = `tel:${storeData.store_data.store_phone}`;
+    modal.querySelector("#store_name").innerHTML = storeData.store_data.store_name;
+    modal.querySelector("#store_address").innerHTML = storeData.store_data.store_address;
+    modal.querySelector("img").src = `https://placehold.co/800x300?text=${storeData.store_data.store_name}&font=roboto`;
+
+    console.log('')
+    // Assuming storeData is an array containing the voucher data
+    let vouchersHTML = storeData.vouchers.map((voucher) => {
+      let product_image = '<?php echo home_url(); ?>/wp-content/uploads' + voucher.product_image;
+      return `
+        <div class="card1">
+            <div class="card-bodyer">
+                <div class="card card-content ">
+                    <div class="inner"></div>
+                    <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(${product_image})"></div>
+                    <div class="card-body">
+                        <h3 class="card-title">${voucher.product_name}</h3>
+                        <h3 class="card-title">${voucher.voucher_price}₪ במקום ${voucher.normal_price}₪</h3>
+                        <div class=" mx-auto h-32" style=" background-color: #01051D; width: 200px; height: 40px; border-radius: 10px; margin-top: 50px;">
+                            <h5 class="phone" onclick='buyVoucher(${JSON.stringify(voucher)}, "<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->id; ?>")'">לרכישת השובר ←</h5>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    });
+
+    modal.querySelector("#vouchers").innerHTML = vouchersHTML;
+
+
+  }
+
+  function buyVoucher(voucher, member_id) {
+    console.log(voucher)
+    jQuery('#store-manager-voucher-delete').modal('show');
+
+    let modal = document.querySelector('#store-manager-voucher-delete');
+    modal.querySelector('#voucher_name').innerHTML = voucher.product_name;
+    modal.querySelector('#voucher_price').innerHTML = voucher.voucher_price;
+    modal.querySelector('#transaction_amount').value = voucher.voucher_price;
+    modal.querySelector('#voucher_id').value = voucher.id;
+    modal.querySelector('#community_member_id').value = member_id;
+  }
+</script>
 </div>
 </div>
 </body>

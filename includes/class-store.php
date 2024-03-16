@@ -15,7 +15,6 @@ class CSVP_Store
     {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
-        $this->store_manager_id = get_current_user_id();
         $this->voucher = new CSVP_Voucher(); 
         $this->community = new CSVP_Community(); 
         $this->joining_request = new CSVP_JoiningRequest();
@@ -29,7 +28,7 @@ class CSVP_Store
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_new_benifit") {
             $payload = $_POST;
                 $payload["is_active"] = true;
-                $payload["store_id"] = $this->store_manager_id;
+                $payload["store_id"] = $this->get_store_id();
 
                 $response = $this->voucher->create_voucher($payload);
                 if ($response["status"] !== false) {
@@ -43,7 +42,7 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["is_active"] = true;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
 
             $response = $this->joining_request->set_credit_limit_by_store_manager($payload);
             if ($response["status"] !== false) {
@@ -57,7 +56,7 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["is_active"] = true;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $totalcost = 0;
             foreach($payload["total_cost"] as $value)
             {
@@ -75,7 +74,7 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["is_active"] = true;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $response = $this->voucher->delete_voucher($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
@@ -87,10 +86,10 @@ class CSVP_Store
         {
             $payload = $_POST;
             $payload["is_active"] = true;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $payload["request_status"] = JOINING_REQUEST_STATUS_PENDING;
             // Get user data
-            $user_data = get_userdata($this->store_manager_id);
+            $user_data = get_userdata(get_current_user_id());
             // Check if user data exists
             if ($user_data) {
                 // Get user role
@@ -108,7 +107,7 @@ class CSVP_Store
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
         {
             $payload = $_POST;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PAID;
             $payload["message"] = "Order Set As Paid";
             $response = $this->order->update_order_status($payload);
@@ -121,7 +120,7 @@ class CSVP_Store
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
         {
             $payload = $_POST;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
             $payload["message"] = "Payment Request Sent";
             $response = $this->order->update_order_status($payload);
@@ -171,7 +170,7 @@ class CSVP_Store
         if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
         {
             $payload = $_POST;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PAID;
             $payload["message"] = "Order Set As Paid";
             $response = $this->order->update_order_status($payload);
@@ -184,7 +183,7 @@ class CSVP_Store
         else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
         {
             $payload = $_POST;
-            $payload["store_id"] = $this->store_manager_id;
+            $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
             $payload["message"] = "Payment Request Sent";
             $response = $this->order->update_order_status($payload);
@@ -195,7 +194,7 @@ class CSVP_Store
             }
         }
 
-        $user_id = get_current_user_id();
+        $user_id = $this->get_store_id();
         if ($user_id) {
             $data = array(
                 'store_id' => $user_id, // Replace 123 with the actual store ID
@@ -288,7 +287,7 @@ class CSVP_Store
                 $admin_id = 0;
             }
             $payload = $_POST;
-            $payload["from_id"] = get_current_user_id();
+            $payload["from_id"] = $this->get_store_id();
             $payload["to_id"] = $admin_id;
             $payload["to_user_role"] = 'Admin';
             $response = $this->message->create_community_message($payload);
@@ -306,7 +305,7 @@ class CSVP_Store
         $pageData = [];
         $data = [];
         $data['status'] = VOUCHER_STATUS_USED;
-        $data['store_id'] = get_current_user_id();
+        $data['store_id'] = $this->get_store_id();
         $voucher_transactions = $this->voucherTransaction->get_all_voucher_transactions_by_store_id($data);
         $response["voucher_transactions"] = $voucher_transactions;
         if (is_wp_error($response["voucher_transactions"])) 

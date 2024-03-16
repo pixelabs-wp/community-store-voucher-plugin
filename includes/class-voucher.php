@@ -1,7 +1,7 @@
 <?php
 class CSVP_Voucher{
     // Properties
-    private $table_name;
+    public $table_name;
 
     // Constructor
     public function __construct() {
@@ -83,21 +83,18 @@ class CSVP_Voucher{
         $voucher_id = $data['voucher_id'];
 
         // Prepare SQL query to retrieve voucher data by ID
-        $query = $wpdb->prepare(
-            "SELECT * FROM $this->table_name WHERE id = %d",
-            $voucher_id
-        );
+        $query = "SELECT * FROM $this->table_name WHERE id = $voucher_id";
 
         // Execute the query
-        $voucher = $wpdb->get_row($query);
+        $voucherData = $wpdb->get_results($query);
 
         // Check if a voucher was found
-        if ($voucher) {
+        if ($voucherData) {
             // Return voucher data as an object
-            return $voucher;
+            return $voucherData;
         } else {
             // Return false if voucher not found
-            return false;
+            return $query;
         }
     }
 
@@ -180,10 +177,11 @@ class CSVP_Voucher{
     }
 
     public function get_all_vouchers_by_store_id_and_community_id($data) {
-        global $wpdb;
+        global $wpdb, $store;
 
-         $store_id = get_current_user_id();
-         $community_id = $data['community_id'];
+
+        $store_id = $data['store_id'] ? $data['store_id'] : $store->get_store_id();   
+        $community_id = $data['community_id'];
         
         // Prepare SQL query to select all vouchers by store ID
         $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE store_id = %d  AND community_id = %d", $store_id, $community_id);
@@ -194,6 +192,22 @@ class CSVP_Voucher{
         // Return the results if any, otherwise return null
         return !empty($vouchers) ? $vouchers : null;
     }
+
+    public function get_all_vouchers_by_community_id($data)
+    {
+        global $wpdb;
+        $community_id = $data['community_id'];
+
+        // Prepare SQL query to select all vouchers by store ID
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_id = %d", $community_id);
+
+        // Execute the query and fetch the results
+        $vouchers = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return !empty($vouchers) ? $vouchers : array();
+    }
+
 
 }
 ?>

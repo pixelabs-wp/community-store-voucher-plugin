@@ -3,11 +3,13 @@
 class CSVP_VoucherTransaction{
     // Properties
     private $table_name;
+    private $voucher;
 
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_voucher_transaction';
+        $this->voucher = new CSVP_Voucher();
     }
 
    public function create_voucher_transaction($data) {
@@ -40,7 +42,7 @@ class CSVP_VoucherTransaction{
             return $wpdb->insert_id;
         } else {
             // Return false if insertion failed
-            return false;
+            return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
         }
     }
 
@@ -197,10 +199,10 @@ class CSVP_VoucherTransaction{
 
     public function get_all_voucher_transactions_by_community_id($data)
         {
-            global $wpdb;
+            global $wpdb, $community;
             $community_member = $wpdb->prefix . 'csvp_community_member';
             $status = isset($data['status']) ? $data['status'] : false;
-            $community_id = isset($data['community_id']) ? $data['community_id'] : get_current_user_id();
+            $community_id = isset($data['community_id']) ? $data['community_id'] : $community->get_current_community_id();
             if (!$status) {
             // Prepare SQL query to select voucher transactions by member ID
             $query = $wpdb->prepare("SELECT t.* FROM $this->table_name AS t  INNER JOIN $community_member AS m ON t.community_member_id = m.id WHERE m.community_id = %d", $community_id);
@@ -216,10 +218,11 @@ class CSVP_VoucherTransaction{
         }
 
     public function get_voucher_transactions_by_member_id($data) {
-        global $wpdb;
+        global $wpdb, $store, $voucher;
         
         $member_id = $data['member_id'];
         $status = isset($data['status']) ? $data['status'] : false;
+        $count = isset($data['count']) ? $data['count'] : false;
         
         if(!$status){
             // Prepare SQL query to select voucher transactions by member ID
@@ -228,12 +231,24 @@ class CSVP_VoucherTransaction{
             $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_member_id = %d AND status = %d", $member_id, $status);
 
         }
-
         // Execute the query and fetch the results
         $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
 
-        // Return the results if any, otherwise return null
-        return !empty($voucher_transactions) ? $voucher_transactions : null;
+        if(!$count){
+
+            $modifiedTransactions = array();
+
+            foreach ($voucher_transactions as $transaction) {
+                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id"=>22));
+                $transaction["store_data"] = $store->get_store_by_id($transaction["voucher_data"][0]->store_id);
+                array_push($modifiedTransactions, $transaction);
+            }
+
+            return $modifiedTransactions;
+        } else {
+            return $wpdb->num_rows;
+        }
+       
     }
 
     public function get_voucher_transactions_by_voucher_id($data) {

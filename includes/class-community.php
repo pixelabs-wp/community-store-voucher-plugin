@@ -256,8 +256,8 @@ class CSVP_Community{
     }
 
     public function get_all_joined_communities_for_store() {
-        global $wpdb;
-        $store_id = get_current_user_id();
+        global $wpdb, $store;
+        $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
         $query = $wpdb->prepare("
         SELECT 
@@ -290,8 +290,8 @@ class CSVP_Community{
     }
 
     public function get_all_requested_communities_for_store() {
-        global $wpdb;
-        $store_id = get_current_user_id();
+        global $wpdb, $store;
+        $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
         $query = $wpdb->prepare("
         SELECT 
@@ -323,8 +323,8 @@ class CSVP_Community{
     }
 
     public function get_all_not_requested_communities_for_store() {
-        global $wpdb;
-        $store_id = get_current_user_id();
+        global $wpdb, $store;
+        $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
         $query = $wpdb->prepare("
             SELECT 
@@ -364,10 +364,10 @@ class CSVP_Community{
 
 
     public function get_community_data_for_store_popup($data) {
-        global $wpdb;
+        global $wpdb, $store;
 
         $community_id = $data['community_id'];
-        $store_id = get_current_user_id();
+        $store_id = $store->get_store_id();
 
         $query = $wpdb->prepare(
             "SELECT c.*, jr.credit_limit 

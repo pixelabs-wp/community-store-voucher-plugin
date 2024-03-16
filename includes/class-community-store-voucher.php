@@ -32,41 +32,27 @@ define('ORDER_STATUS_CANCELLED', 'Cancelled');
 define('MESSAGE_STATUS_UNSEEN', 'Unseen');
 define('MESSAGE_STATUS_SEEN', 'Seen');
 
+define('VOUCHER_TRANSACTION_PURCHASE', 'Voucher Purchase');
+define('VOUCHER_TRANSACTION_REDEEM', 'Voucher Redeem');
 
-add_action('init', 'redirect_user');
+add_action('wp_login', 'redirect_after_login', 10, 2);
 
-function redirect_user() {
-    // Check if user is logged in
-    if (is_user_logged_in()) {
-        $current_url = $_SERVER['REQUEST_URI'];
-
-        // Check if user is an admin and not already on /admin or its child pages, but allow access to wp-admin
-        if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_SYSTEM_ADMIN) && !preg_match('/\/admin(\/.*)?$/', $current_url) && !is_admin()) {
-            // Redirect the admin user to the admin page
-            wp_redirect(site_url('/admin'));
-            exit;
-        }
-
-        // Check if user is a community manager and not already on /community or its child pages
-        elseif (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MANAGER) && !preg_match('/\/community(\/.*)?$/', $current_url)) {
-            // Redirect the community manager user to the community page
-            wp_redirect(site_url('/community'));
-            exit;
-        }
-
-        // Check if user is a store manager and not already on /store or its child pages
-        elseif (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_STORE_MANAGER) && !preg_match('/\/store(\/.*)?$/', $current_url)) {
-            // Redirect the store manager user to the store page
-            wp_redirect(site_url('/store'));
-            exit;
-        }
-
-        // Check if user is a community member and not already on /member or its child pages
-        elseif (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MEMBER) && !preg_match('/\/member(\/.*)?$/', $current_url)) {
-            // Redirect the community member user to the member page
-            wp_redirect(site_url('/member'));
-            exit;
-        }
+function redirect_after_login($user_login, $user)
+{
+    // Check if the user is a community manager
+    if (CSVP_User_Roles::user_has_role($user->ID, CSVP_User_Roles::ROLE_COMMUNITY_MANAGER)) {
+        wp_redirect(site_url('/community'));
+        exit;
+    }
+    // Check if the user is a store manager
+    elseif (CSVP_User_Roles::user_has_role($user->ID, CSVP_User_Roles::ROLE_STORE_MANAGER)) {
+        wp_redirect(site_url('/store'));
+        exit;
+    }
+    // Check if the user is a community member
+    elseif (CSVP_User_Roles::user_has_role($user->ID, CSVP_User_Roles::ROLE_COMMUNITY_MEMBER)) {
+        wp_redirect(site_url('/member'));
+        exit;
     }
 }
 

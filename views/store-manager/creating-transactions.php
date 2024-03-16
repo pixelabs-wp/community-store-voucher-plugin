@@ -49,17 +49,18 @@
             width: 48%;
         }
     }
+
     @media screen and (max-width: 767px) {
         .creating-transaction-guy-data {
             width: 100% !important;
         }
     }
+
     @media screen and (max-width: 580px) {
         .card-wrapper .card {
             width: 100%;
         }
     }
-
 </style>
 
 <div class="container-fluid">
@@ -68,6 +69,16 @@
             <h3>elyau malka</h3>
             <h3>1254545216</h3>
             <h3>Total: 450₪ </h3>
+        </div>
+        <div class="d-flex flex-row align-items-center justify-content-between gap-2">
+
+            <div class="form-group col-8">
+                <input type="text" class="form-control" placeholder="magnetic card number" list="members">
+                <datalist id="members">
+                    
+                </datalist>
+            </div>
+            <input type="submit" class="form-control btn btn-dark">
         </div>
         <hr class="m-0 mt-2">
     </div>
@@ -79,8 +90,7 @@
 
         <div class="mt-4 d-flex flex-row align-items-center justify-content-center">
             <h1 class="text-white me-2">₪</h1>
-            <input style="width: 42%;" type="text" class="px-4 py-2 outline-0 bg-transparent border-0 text-white"
-                name="" id="">
+            <input style="width: 42%;" type="text" class="px-4 py-2 outline-0 bg-transparent border-0 text-white" name="" id="">
         </div>
         <div class="d-flex flex-column align-items-center justify-content-center">
             <hr class="w-50 text-center text-white m-0 mt-2" style="border-width: 3px;">
@@ -96,8 +106,7 @@
 
             <div class="card">
                 <!-- Photo -->
-                <div class="img-responsive img-responsive-21x9 card-img-top"
-                    style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+                <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
                 </div>
                 <div class="card-body bg-white text-center">
                     <h3 class="card-title">חליפה 70% צמר </h3>

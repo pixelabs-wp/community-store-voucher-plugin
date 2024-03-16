@@ -32,15 +32,79 @@ class CSVP_CommunityMember {
         global $community;
         $pageData["community"] = $community->get_community_by_id($community->get_current_community_id());
         $pageData["member"] = $this->community_member_user;
-        $pageData["transactions"] = $this->get_all_balances(array("member_id"=> $this->community_member_user->id));
+        $pageData["transactions"] = $this->get_all_balances(array("member_id"=> $this->community_member_user->id, "limit" => 2));
         CSVP_View_Manager::load_view('load-card', $pageData);
     }
 
     public function render_coupons(){
-        CSVP_View_Manager::load_view('coupons');
+        global $voucher_transaction, $voucher, $store, $community;
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "purchase_voucher") {
+            $payload = $_POST;
+
+            $member_balance = $this->community_member_user->card_balance;
+
+            if ($payload["transaction_amount"] > $member_balance) {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "You card balance is less than the required amount");
+            } else {
+                $payload["transaction_type"] = VOUCHER_TRANSACTION_PURCHASE;
+                $payload["transaction_date"] = date("Y-m-d H:i:s");
+                $payload["status"] = VOUCHER_STATUS_PENDING;
+                $response = $voucher_transaction->create_voucher_transaction($payload);
+
+                if (!is_wp_error($response)) {
+
+                    $updated_balance = $member_balance - $payload["transaction_amount"];
+                    $this->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+                }
+            }
+        }
+        $voucherData = $voucher->get_all_vouchers_by_community_id(array('community_id'=> $this->community_member_user->community_id));
+        $modified_storeData = array();
+        foreach ($voucherData as $voucher) {
+            
+            $voucher["store_data"] = $store->get_store_by_id($voucher["store_id"]);
+            $voucher["community_data"] = $community->get_community_by_id($voucher["community_id"]);
+            array_push($modified_storeData, $voucher);
+        }
+        $pageData["vouchers"] = $modified_storeData;
+        CSVP_View_Manager::load_view('coupons', $pageData);
     }
     
     public function render_shops(){
+        global $voucher_transaction;
+        
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "purchase_voucher"){
+            $payload = $_POST;
+
+            $member_balance = $this->community_member_user->card_balance;
+
+            if($payload["transaction_amount"] > $member_balance){
+                CSVP_Notification::add(CSVP_Notification::ERROR, "You card balance is less than the required amount");
+            } else {
+                $payload["transaction_type"] = VOUCHER_TRANSACTION_PURCHASE;
+                $payload["transaction_date"] = date("Y-m-d H:i:s");
+                $payload["status"] = VOUCHER_STATUS_PENDING;
+                $response = $voucher_transaction->create_voucher_transaction($payload);
+
+                if (!is_wp_error($response)) {
+
+                    $updated_balance = $member_balance - $payload["transaction_amount"];
+                    $this->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+                }
+            }
+
+           
+        }
+
         $shops = $this->joining_request->get_all_joining_requests(array(
                 "community_id" => $this->community_member_user->community_id,
                 "status"=> JOINING_REQUEST_STATUS_APPROVED
@@ -332,6 +396,12 @@ class CSVP_CommunityMember {
         $new_balance = $data['new_balance'];
         $current_balance = $this->get_balance_by_member_id($member_id);
         $current_balance = $current_balance + $new_balance;
+
+        $member = $this->get_community_member_by_id($member_id);
+        $card_balance = $member->card_balance;
+        $card_balance = $card_balance + $new_balance;
+        $this->update_community_member(array("community_member_id"=> $member_id,"card_balance"=> $card_balance));
+
         $result = $wpdb->insert(
             $this->balance_table,
             array('balance_amount' => $new_balance, 
@@ -350,11 +420,11 @@ class CSVP_CommunityMember {
         global $wpdb;
 
         $member_id = $data["member_id"] ? $data["member_id"] : false;
-
+        $imit = isset($data["limit"]) ? "  ORDER BY id DESC LIMIT ". $data["limit"] . "" : "";
         if($member_id){
-            $query = "SELECT * FROM $this->balance_table WHERE community_member_id = '$member_id'";
+            $query = "SELECT * FROM $this->balance_table WHERE community_member_id = '$member_id' $imit";
         } else {
-            $query = "SELECT * FROM $this->balance_table";
+            $query = "SELECT * FROM $this->balance_table $imit";
         }
         
 
@@ -362,6 +432,8 @@ class CSVP_CommunityMember {
 
         return $balances !== null ? $balances : false;
     }
+
+    // public function get_all_community_members
 }
 
 ?>

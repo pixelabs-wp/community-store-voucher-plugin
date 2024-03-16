@@ -2,12 +2,11 @@
 class CSVP_JoiningRequest{
     // Properties
     private $table_name;
-    private $community;
     // Constructor
     public function __construct() {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_joining_request';
-        // $this->community = new CSVP_Community();
+    
     }
 
     /**
@@ -108,7 +107,7 @@ class CSVP_JoiningRequest{
      */
     public function get_all_joining_requests($data)
     {
-        global $wpdb;
+        global $wpdb, $community, $store, $voucher;
 
         $where_conditions = array();
         if (isset($data["community_id"])) {
@@ -127,9 +126,12 @@ class CSVP_JoiningRequest{
         $query = "SELECT * FROM $this->table_name $where_clause";
         $results = $wpdb->get_results($query);
 
-        foreach ($results as $key => $request) {
-            $results["community_data"] = $this->community->get_community_member_by_id($request["community_id"]);
+        foreach ($results as $request) {
+            $request->community_data = $community->get_community_by_id($request->community_id);
+            $request->store_data = $store->get_store_by_id($request->store_id);
+            $request->vouchers = $voucher->get_all_vouchers_by_store_id_and_community_id(array("store_id"=> $request->store_id, "community_id"=> $request->community_id));
         }
+        
         return $results;
     }
 
