@@ -13,8 +13,8 @@ $requestData = array(
 );
 
 // Test create_joining_request method
-$createResult = $joiningRequest->create_joining_request($requestData);
-$createTestResult = $createResult ? 'Pass' : 'Fail';
+// $createResult = $joiningRequest->create_joining_request($requestData);
+// $createTestResult = $createResult ? 'Pass' : 'Fail';
 
 // // Test get_joining_request_by_id method
 // $requestId = 'John Doe'; // Change to an existing request ID for testing

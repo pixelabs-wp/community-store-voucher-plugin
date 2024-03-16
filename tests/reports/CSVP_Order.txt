@@ -36,3 +36,6 @@ Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher
 Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}
 Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}
 Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}
+Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}
+Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}
+Test: create_order | Result: Pass | Response: {"status":true,"response":"Voucher created successfully for Product: Shirts, Jeans, Ties"}

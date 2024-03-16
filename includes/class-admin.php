@@ -61,11 +61,18 @@ class CSVP_Admin
 
             unset($_POST);
         }
-
+        $pageData = array(); // or $emptyArray = [];
         $stores = $this->store->get_all_stores();
+        if (!is_wp_error($stores)) 
+        {
+            $pageData["stores"] = $stores;
+        }
         $number_of_stores = $this->store->get_all_stores(array("count" => true));
-        $pageData["stores"] = $stores;
-        $pageData["total_stores"] = $number_of_stores;
+        if (!is_wp_error($stores)) 
+        {
+            $pageData["total_stores"] = $number_of_stores;
+        }
+        
 
         CSVP_View_Manager::load_view('store-management', $pageData);
     }

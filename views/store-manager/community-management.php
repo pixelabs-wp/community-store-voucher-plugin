@@ -1257,7 +1257,6 @@ table.addEventListener('change', (event) => {
 								</table>
 							</div>
 						</div>
-						<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 					</div>
 					<div class="w-35"
 						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">

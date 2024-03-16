@@ -342,7 +342,7 @@
                     </h1>
                 </div>
                 <div class="container-fluid " style="overflow: auto;">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         <div class="container mt-5 d-flex flex-column gap-5">
                             <div class="row">
 

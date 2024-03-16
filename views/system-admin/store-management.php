@@ -239,7 +239,12 @@
 
 
         <div class="container mt-4 d-flex flex-wrap" style="row-gap: 1rem; column-gap: 1rem;">
-            <?php foreach ($pageData["stores"] as $key => $store) {
+            <?php
+            if(isset($pageData["stores"]))
+            {
+            foreach ($pageData["stores"] as $key => $store) {
+
+                $imageUrl = esc_url(get_site_url() . '/wp-content/uploads/') . $store["store_logo"];
                 ?>
                 <div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
                     data-bs-target="#store-details">
@@ -247,7 +252,7 @@
                     <div class="card-body d-flex flex-column p-0">
 
                         <div class="w-35"
-                            style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $store["store_logo"] ? $store["store_logo"] : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                            style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $imageUrl ? $imageUrl : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                             <svg style="position: absolute; top: 8px; right: 8px;" width="40" height="40"
                                 viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_542_250)">
@@ -311,7 +316,8 @@
                 </div>
 
 
-            <?php } ?>
+            <?php }    
+        } ?>
         </div>
 
 

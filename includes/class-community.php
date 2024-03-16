@@ -74,19 +74,19 @@ class CSVP_Community
             $pageData["joined_store"] = $joined_store;
         }
 
-        // $requested_communities = $store->get_all_requested_store_for_communities();
-        // $check_2["requested_communities"] = $requested_communities;
-        // if (!is_wp_error($check_2["requested_communities"])) 
-        // {
-        //     $pageData["requested_communities"] = $requested_communities;
-        // }
+        $requested_stores = $store->get_all_requested_store_for_communities();
+        $check_2["requested_stores"] = $requested_stores;
+        if (!is_wp_error($check_2["requested_stores"])) 
+        {
+            $pageData["requested_stores"] = $requested_stores;
+        }
         
-        // $not_requested_communities = $store->get_all_not_requested_store_for_communities();
-        // $check_3["not_requested_communities"] = $not_requested_communities;
-        // if (!is_wp_error($check_3["not_requested_communities"])) 
-        // {
-        //     $pageData["not_requested_communities"] = $not_requested_communities;
-        // }
+        $not_requested_stores = $store->get_all_not_requested_store_for_communities();
+        $check_3["not_requested_stores"] = $not_requested_stores;
+        if (!is_wp_error($check_3["not_requested_stores"])) 
+        {
+            $pageData["not_requested_stores"] = $not_requested_stores;
+        }
         
         CSVP_View_Manager::load_view('store-management', $pageData);
 
@@ -188,7 +188,7 @@ class CSVP_Community
                     }
                 }
             } else {
-                return array("status" => false, "response" => "No product image uploaded or error occurred");
+                return array("status" => false, "response" => "No Community image uploaded or error occurred");
             }
             }else{
               
