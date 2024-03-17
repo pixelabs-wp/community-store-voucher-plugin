@@ -18,7 +18,7 @@ class CSVP_Community{
 
     public function render_dashboard(){
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->get_current_community_id(),"count"=>true));
-        echo $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED));
+        $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED));
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
