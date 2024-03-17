@@ -51,6 +51,7 @@ class CSVP_Store
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
+            $payload["message"] = "Order Created Successfully";
             $totalcost = 0;
             foreach ($payload["total_cost"] as $value) {
                 $totalcost = $totalcost + $value;
@@ -193,12 +194,44 @@ class CSVP_Store
         }
     }
 
+    public function get_store_data_for_community_popup($data)
+    {
+        global $wpdb, $store, $community;
+
+        $store_id = $data['store_id'];
+        $community_id = $community->get_current_community_id();
+
+        $query = $wpdb->prepare(
+            "SELECT s.*, jr.credit_limit 
+            FROM {$wpdb->prefix}csvp_store s 
+            LEFT JOIN {$wpdb->prefix}csvp_joining_request jr 
+            ON s.id = jr.store_id 
+            WHERE s.id = %d AND jr.community_id = %d",
+            $store_id,
+            $community_id
+        );
+
+        // Execute the query
+        $community_data = $wpdb->get_results($query);
+
+        // Check if communities were found
+        if ($community_data) {
+            // Return array of community objects
+            return $community_data;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Store Data found.', 'csvp'), array('status' => 404));
+        }
+    }
+
     public function render_order_request()
     {
+        global $store;
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request") {
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_COMPLETED;
             $payload["message"] = "Order Approved";
+            $payload["store_id"] = $this->get_store_id();
             $response = $this->order->update_order_status($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
@@ -209,6 +242,7 @@ class CSVP_Store
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_CANCELLED;
             $payload["message"] = "Order Rejected";
+            $payload["store_id"] = $this->get_store_id();
             $response = $this->order->update_order_status($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
@@ -217,10 +251,10 @@ class CSVP_Store
             }
         }
 
-        $user_id = get_current_user_id();
-        if ($user_id) {
+        $store_id = $this->get_store_id();
+       
             $data = array(
-                'store_id' => $user_id, // Replace 123 with the actual store ID
+                'store_id' => $store_id, // Replace 123 with the actual store ID
                 'suffix' => '_store' // Replace '_xyz' with the actual suffix value
             );
 
@@ -233,10 +267,7 @@ class CSVP_Store
                 // Handle error
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
-        } else {
-            // Handle error
-            CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
-        }
+        
     }
 
 
@@ -279,7 +310,7 @@ class CSVP_Store
         // Prepare SQL query to retrieve communities by name using LIKE operator
        
             // Prepare SQL query to select voucher transactions by member ID
-            $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s LIMIT 1",  $community_id, JOINING_REQUEST_STATUS_PENDING);
+            $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s AND requested_by = 'community_manager'",  $community_id, JOINING_REQUEST_STATUS_PENDING);
     
             // Execute the query and fetch the results
             $joined_store = $wpdb->get_results($query, ARRAY_A);
@@ -379,9 +410,39 @@ class CSVP_Store
 
    }
 
-    public static function render_return_management()
+    public function render_return_management()
     {
-        CSVP_View_Manager::load_view('return-management');
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_return_request") {
+            $payload = $_POST;
+            $payload["order_status"] = ORDER_STATUS_RETURNED_PAID;
+            $payload["message"] = "Credit Made";
+            $payload["store_id"] = $this->get_store_id();
+            $response = $this->order->update_order_status($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+
+
+        $store_id = $this->get_store_id();
+       
+        $data = array(
+            'store_id' => $store_id, // Replace 123 with the actual store ID
+            'suffix' => '_store' // Replace '_xyz' with the actual suffix value
+        );
+
+        $order_requests = $this->order->get_orders_by_store_id($data);
+
+        if (!is_wp_error($order_requests)) {
+            $pageData["store_return_order_requests"] = $order_requests;
+            CSVP_View_Manager::load_view('return-management', $pageData);
+        } else {
+            // Handle error
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+        }
     }
 
     public  function render_transaction_history()

@@ -700,8 +700,7 @@
 <div class="modal fade" id="community-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
 		<div class="modal-content">
-			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
-			</button>
+			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
 			<div class="main">
 				<div class="credit-container">
 					<div class="balance">
@@ -714,8 +713,8 @@
 				<div class="d-flex  align-items-center gap-3 header-data-wrapper">
 					<div class="address d-flex flex-column align-items-end gap-3">
 						<h1 id="name_of_community">ת”ת אור התורה </h1>
-						<div>
-							<h2 class="address-title"> אליהו מנהל ת”ת: <span
+						<div> 
+							<h2 class="address-title">אליהו מנהל ת”ת:<span
 									id="community_manager_no">054-6268012</span> <span id="community_manager_address">
 									רבי עקיבא 84 בני ברק</span> :כתובת</h2>
 							<h3 class="address-title"></h3>
@@ -730,23 +729,10 @@
 								אשראי</button>
 						</div>
 					</div>
-
 					<div class="svggroup">
 						<div class="svvg">
 						</div>
 						<img src="" id="community_logo" alt="" width="207" height="194">
-						<!-- <svg width="207" height="194" viewBox="0 0 207 194" fill="none"
-							xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-							<rect width="207" height="194" rx="10" fill="url(#pattern0)" />
-							<defs>
-								<pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-									<use xlink:href="#image0_0_1351"
-										transform="matrix(0.00444444 0 0 0.00474227 0 -0.0335052)" />
-								</pattern>
-								<image id="image0_0_1351" width="225" height="225"
-									xlink:href="data:image/png;base64,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" />
-							</defs>
-						</svg> -->
 					</div>
 				</div>
 			</div>
@@ -784,43 +770,13 @@
 			<!-- 2st one -->
 			<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
 				<h3 class="title">הסטוריית הזמנות </h3>
-				<!-- <div class="d-flex justify-content-between tran">
-					<div><button class="buttons" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success">שולם</button></div>
-					<div class="d-flex gap-3">
-						<div><button class="buttonss" style="background-color: #9D0000; ">לפרטי ההזמנה</button></div>
-						<h3 class="titl">תאריך הזמנה: 27/03/2023</h3>
-						<h3 class="titl">סכום: 5,400 ₪ </h3>
-						<h3 class="titl">הזמנה: 51426</h3>
-					</div>
-				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #BC9B63;">+ שליחת דרישת תשלום</button>
-					</div>
-					<div class="d-flex gap-3">
-						<div><button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button></div>
-						<h3 class="titl">תאריך הזמנה: 28/04/2023</h3>
-						<h3 class="titl">סכום: 5,400 ₪ </h3>
-						<h3 class="titl">הזמנה: 51426</h3>
-					</div>
-				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);">ממתין
-							לתשלום</button></div>
-					<div class="d-flex gap-3">
-						<div><button class="buttonss" style="background-color: #9D0000;">לפרטי ההזמנה</button></div>
-						<h3 class="titl">תאריך הזמנה: 28/04/2023</h3>
-						<h3 class="titl">סכום: 5,400 ₪ </h3>
-						<h3 class="titl">הזמנה: 51426</h3>
-					</div>
-				</div> -->
 			</div>
 			<!-- 3st one -->
 			<div>
 				<div class="d-flex flex-column align-items-end cont">
 					<h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
-					<div class="d-flex gap-4 flex-wrap " style=" direction: rtl; " id="parentElementId">
+					<div class="d-flex gap-4 flex-wrap " style=" direction: rtl; " id="voucherElementId">
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -935,88 +891,101 @@
 
 <script>
 
+	const table = document.querySelector('table');
 
-// Select the entire table element
-const table = document.querySelector('table');
+	table.addEventListener('change', (event) => {
+	const target = event.target;
 
-// Event delegation for better performance
-table.addEventListener('change', (event) => {
-  const target = event.target;
-
-  // Check if the changed element is either amount-input or cost-input
-  if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-    const currentRow = target.closest('tr'); // Find the current table row
-
-    // Get references to all relevant inputs in the row
-    const amountInput = currentRow.querySelector('.amount-input');
-    const costInput = currentRow.querySelector('.cost-input');
-    const totalInput = currentRow.querySelector('.name-input'); // Assuming "name-input" is for total cost
-
-    // Handle potential invalid input gracefully (e.g., non-numeric values)
-    const amount = parseFloat(amountInput.value) || 0;
-    const cost = parseFloat(costInput.value) || 0;
-
-    // Calculate the total cost
-    const totalCost = amount * cost;
-
-    // Update the total cost input with the calculated value
-    totalInput.value = totalCost;
-  }
-});
-
-
-
+	if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+		const currentRow = target.closest('tr');
+		const amountInput = currentRow.querySelector('.amount-input');
+		const costInput = currentRow.querySelector('.cost-input');
+		const totalInput = currentRow.querySelector('.total-input'); 
+		const amount = parseFloat(amountInput.value) || 0;
+		const cost = parseFloat(costInput.value) || 0;
+		const totalCost = amount * cost;
+		totalInput.value = totalCost;
+	}
+	});
 
 	function updateTotalItems() {
-
 		const totalItemInputs = document.querySelectorAll('.amount-input');
-
 		let total = 0;
-
 		for (const input of totalItemInputs) {
 			const value = parseFloat(input.value) || 0;
 			total += value;
 		}
-
 		const totalSpan = document.querySelector('.total-added-items');
 		totalSpan.textContent = total;
 	}
 
-	document.querySelector('table').addEventListener('change', (event) => {
-
-		updateTotalItems();
-
-	});
+	document.querySelector('table').addEventListener('change', (event) => { updateTotalItems(); });
 
 	updateTotalItems();
 
-
-
-
-
-
 	function updateCost() {
-
-		const totalItemInputs = document.querySelectorAll('.cost-input');
-
+		const totalItemInputs = document.querySelectorAll('.total-input');
 		let total = 0;
-
 		for (const input of totalItemInputs) {
 			const value = parseFloat(input.value) || 0;
 			total += value;
 		}
-
 		const totalSpan = document.querySelector('.total-cost');
 		totalSpan.textContent = total;
 	}
-
-	document.querySelector('table').addEventListener('change', (event) => {
-
-		updateCost();
-
-	});
+	
+	document.querySelector('table').addEventListener('change', (event) => { updateCost(); });
 
 	updateCost();
+
+
+// 	document.addEventListener('DOMContentLoaded', function () {
+//     const table = document.querySelector('table');
+
+//     function updateTotalItems() {
+//         const totalItemInputs = document.querySelectorAll('.amount-input');
+//         let total = 0;
+//         for (const input of totalItemInputs) {
+//             const value = parseFloat(input.value) || 0;
+//             total += value;
+//         }
+//         const totalSpan = document.querySelector('.total-added-items');
+//         totalSpan.textContent = total;
+//     }
+
+//     function updateCost() {
+//         const totalItemInputs = document.querySelectorAll('.total-input');
+//         let total = 0;
+//         for (const input of totalItemInputs) {
+//             const value = parseFloat(input.value) || 0;
+//             total += value;
+//         }
+//         const totalSpan = document.querySelector('.total-cost');
+//         totalSpan.textContent = total;
+//     }
+
+//     function calculateTotal() {
+//         table.addEventListener('input', (event) => {
+//             const target = event.target;
+
+//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+//                 const currentRow = target.closest('tr');
+//                 const amountInput = currentRow.querySelector('.amount-input');
+//                 const costInput = currentRow.querySelector('.cost-input');
+//                 const totalInput = currentRow.querySelector('.total-input');
+//                 const amount = parseFloat(amountInput.value) || 0;
+//                 const cost = parseFloat(costInput.value) || 0;
+//                 const totalCost = amount * cost;
+//                 totalInput.value = totalCost;
+
+//                 updateTotalItems();
+//                 updateCost();
+//             }
+//         });
+//     }
+
+//     calculateTotal();
+// });
 
 </script>
 
@@ -1347,14 +1316,18 @@ table.addEventListener('change', (event) => {
 
 
 <script>
+
+var voucherElementId = document.getElementById("voucherElementId");
+
+	
 	function addRow() {
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
 		newRow.innerHTML = `
-		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-cost" class="name-input" name="total_cost[]" placeholder="סך הכל" ></th>
+		<th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-cost" class="total-input" name="total_cost[]" placeholder="סך הכל" ></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="cost-per-item" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-item" class="amount-input" name="total_item[]" placeholder="כמות"></th>
-	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="total-input" name="product_name[]" placeholder="שם המוצר"></th>`;
+	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="name-input" name="product_name[]" placeholder="שם המוצר"></th>`;
 	}
 
 	function addSection(id, imageSrc, title, price, discountPrice) {
@@ -1384,8 +1357,8 @@ table.addEventListener('change', (event) => {
 		</div>
 
 	`;
-		var parentElement = document.getElementById("parentElementId");
-		parentElement.innerHTML += section; // Use innerHTML to append HTML content
+		
+	voucherElementId.innerHTML += section; // Use innerHTML to append HTML content
 	}
 
 
@@ -1555,7 +1528,7 @@ table.addEventListener('change', (event) => {
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
 				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
 				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
-				document.getElementById('community_logo').src = response[0]["community_logo"];
+				document.getElementById('community_logo').src = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + response[0]["community_logo"];
 			},
 			error: function (xhr, status, error) {
 				// Handle error response
@@ -1571,19 +1544,20 @@ table.addEventListener('change', (event) => {
 				csvp_request: 'CSVP_Voucher', // Action hook
 				csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
 				data: {
-					community_id: id
+					id: id,
+                    type: "store"
 				}
 			},
 			success: function (response) {
 				// Handle success response
 				if (response.length > 0) {
-					var parentElement = document.getElementById("parentElementId");
+					var parentElement = document.getElementById("voucherElementId");
 					parentElement.innerHTML = "";
 					response.forEach(function (item) {
 						addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
 					});
 				} else {
-					var parentElement = document.getElementById("parentElementId");
+					var parentElement = document.getElementById("voucherElementId");
 					parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
 				}
 
@@ -1600,16 +1574,16 @@ table.addEventListener('change', (event) => {
 			data: {
 				action: 'csvp_ajax', // Action hook
 				csvp_request: 'CSVP_Order', // Action hook
-				csvp_handler: 'get_orders_by_community_id', // Action hook
+				csvp_handler: 'get_orders_data_using_store_and_community', // Action hook
 				data: {
-					community_id: id,
-					suffix: '_store'
+					id: id,
+					suffix: '_store',
+					type: 'store'
 				}
 			},
 			success: function (response) {
 				// Handle success response
 				if (response) {
-					var parentOrderHistory = document.getElementById("parentOrderHistory");
 					parentOrderHistory.innerHTML = "";
 					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
 					console.log(response);
@@ -1617,8 +1591,8 @@ table.addEventListener('change', (event) => {
 						addOrderHistory(item);
 					});
 				} else {
-					var parentElement = document.getElementById("parentElementId");
-					parentElement.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
+					parentOrderHistory.innerHTML = "";
+					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Orders Found</label>";
 				}
 
 			},

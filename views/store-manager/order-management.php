@@ -360,9 +360,12 @@
     <?php
 	if(isset($pageData["accepted_store_orders"]))
 	{
+		$total_credit = 0;
+		$total_item = 0;
 	foreach ($pageData["accepted_store_orders"] as $order) {
+		
 		if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING || $order['order_status'] == ORDER_STATUS_PAID)
-		{ ?>
+		{ $total_credit = $total_credit + $order['order_total']; ?>
         <div class="card order-management-cards col-xl-4 rounded-3">
             <!-- Photo -->
             <div class="" style=""><img src="media/inviting-logo-2.png" style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
@@ -384,7 +387,8 @@
                         <table>
                             <?php
                             $total_cost = 0 ;
-                            foreach($order['order_data'] as $data){ ?>
+                            foreach($order['order_data'] as $data){ 
+								echo $total_item = $total_item +  $data['total_items']; ?>
                                 <tr class="d-flex gap-2 text-center">
                                     <td><strong>מחיר: </strong><?php echo $data['cost_per_item']; ?> ₪ יח’</td>
                                     <td><strong>כמות: </strong><?php echo $data['total_items']; ?></td>
@@ -441,14 +445,14 @@
 						<span class="w-25">
 							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
 								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-									סה”כ חובות: 150,000 ₪ </div>
+								סה”כ חובות: <?php if(isset($total_credit)){ echo $total_credit; } ?> ₪  </div>
 							</a>
 						</span>
 
 						<span class="w-75">
 							<a class="page-link" href="#" style="text-align: right;">
 								<div class="page-item-title text-white mx-4" style="font-size: 20px">
-									סך הפריטים שהוזמנו: חולצות: 1,850 יח’ חפתים: 450 יח’ גרביים: 350 יח’ עניבות: 850 יח’
+								סך הפריטים שנמכרו: <?php if(isset($total_item)){ echo $total_item; } ?>
 								</div>
 							</a>
 						</span>

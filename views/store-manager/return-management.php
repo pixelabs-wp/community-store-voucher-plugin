@@ -361,277 +361,108 @@
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
 
-		<div class="card order-management-cards col-xl-4 rounded-3">
-			<!-- Photo -->
-			<div class="" style=""><img src="media/inviting-logo-2.png"
-					style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
+	<?php 
+		if (isset($pageData["store_return_order_requests"])) {
+			$total_credit = 0;
+			$total_item = 0;
+			foreach ($pageData["store_return_order_requests"] as $order) {
+			if (($order['order_status'] == ORDER_STATUS_RETURNED) || ($order['order_status'] == ORDER_STATUS_RETURNED_PAID)){ 
+				$total_credit = $total_credit + $order['order_total'];
+				
+				?>
+				<div class="card order-management-cards col-xl-4 rounded-3">
+					<!-- Photo -->
+					<div class="" style=""><img src="media/inviting-logo-2.png"
+							style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
 
-			<div class="card-body px-3">
-				<div class="d-flex justify-content-between">
-					<a href="" class="btn btn-brown">שולם</a>
-					<a href="" class="btn btn-dark">מס’ הזמנה: 175684</a>
-				</div>
-				<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-						<table>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-						</table>
+					<div class="card-body px-3">
+						<div class="d-flex justify-content-between">
+							<?php if ($order['order_status'] == ORDER_STATUS_RETURNED) { ?>
+								<button type="button" class="btn btn-red" data-bs-toggle="modal"
+									data-bs-target="#store-manager-accept-return-order"
+									onclick="populateModal('<?php echo $order['id']; ?>' , <?php echo htmlentities(json_encode($order['order_data'])); ?>)">בצע זיכוי</button>
+							<?php } else if ($order['order_status'] == ORDER_STATUS_RETURNED_PAID) { ?>
+									<span class="btn btn-brown">זוכה</span>
+							<?php } ?>
+							<span class="btn btn-dark">מס’ הזמנה:
+								<?php echo $order['id']; ?>
+							</span>
+						</div>
+						<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
+							<div class="row-1 p-2 d-flex align-items-center justify-content-center">
+								<table>
+									<?php
+									$total_cost = 0;
+									foreach ($order['order_data'] as $data) {
+										$total_item = $total_item +  $data['total_items'];
+										 ?>
+										<tr class="d-flex gap-2 text-center">
+											<td><strong>מחיר: </strong>
+												<?php echo $data['cost_per_item']; ?> ₪ יח’
+											</td>
+											<td><strong>כמות: </strong>
+												<?php echo $data['total_items']; ?>
+											</td>
+											<td><strong>מוצר: </strong>
+												<?php echo $data['product_name']; ?>
+											</td>
+										</tr>
+										<?php
+										$total_cost = $total_cost + $data['total_cost'];
+									} ?>
+								</table>
+							</div>
+						</div>
+						<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה:
+							<?php echo $total_cost; ?> ₪
+						</p>
 					</div>
 				</div>
-				<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: 157,950 ₪</p>
-			</div>
+			<?php }
+		} } ?>
+	</div>
 
+	<div class="modal fade" id="store-manager-accept-return-order" tabindex="-1" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
+			<div class="modal-content p-4">
+				<div class="background-box text-center">
+					<form action="" method="POST" enctype="multipart/form-data">
+						<div class="text-center mt-2">
+							<h1 style="font-size: 26px; font-weight: 600;">בקשת הזמנה</h1>
+						</div>
+						<div class="bg-[#FFFFFF] mt-4 " style=" overflow: auto;  ">
+							<table class="table table-bordered table-hover">
+								<thead class="table-hover">
+									<tr>
+										<th scope="col text-center">סך הכל</th>
+										<th scope="col text-center">עלות לפריט</th>
+										<th scope="col text-center">כמות</th>
+										<th scope="col text-center">שם המוצר</th>
+									</tr>
+								</thead>
+								<tbody>
 
-		</div>
+								</tbody>
 
-		<div class="card  order-management-cards col-xl-4 rounded-3">
-			<!-- Photo -->
-			<div class="" style=""><img src="media/inviting-logo-2.png"
-					style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
-
-			<div class="card-body px-3">
-				<div class="d-flex justify-content-between">
-					<a href="" class="btn btn-brown">שולם</a>
-					<a href="" class="btn btn-dark">מס’ הזמנה: 175684</a>
+							</table>
+						</div>
+						<div class="styled-element" style="font-size: 18px; font-weight: 600;">
+							<span>סה”כ שווי החזרה: ₪12,150</span>
+							<span>סה”כ פריטים: 32 פריטים</span>
+						</div>
+						<div class="btngroup mt-2">
+							<form action="" method="POST" class="d-inline">
+								<input type="hidden" id="accept_return_request_order_id" name="order_id" value="">
+								<input type="hidden" name="csvp_request" value="accept_order_return_request">
+								<input type="submit" class="btn bg-dark text-white" value="בצע זיכוי">
+							</form>
+						</div>
+					</form>
 				</div>
-				<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-						<table>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: 157,950 ₪</p>
-			</div>
-
-
-		</div>
-
-		<div class="card col-xl-4 order-management-cards rounded-3">
-			<!-- Photo -->
-			<div class="" style=""><img src="media/inviting-logo-2.png"
-					style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
-
-			<div class="card-body px-3">
-				<div class="d-flex justify-content-between">
-					<a href="" class="btn btn-brown">שולם</a>
-					<a href="" class="btn btn-dark">מס’ הזמנה: 175684</a>
-				</div>
-				<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-						<table>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: 157,950 ₪</p>
 			</div>
 		</div>
-		<div class="card col-xl-4 order-management-cards rounded-3">
-			<!-- Photo -->
-			<div class="" style=""><img src="media/inviting-logo-2.png"
-					style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
-
-			<div class="card-body px-3">
-				<div class="d-flex justify-content-between">
-					<a href="" class="btn btn-brown">שולם</a>
-					<a href="" class="btn btn-dark">מס’ הזמנה: 175684</a>
-				</div>
-				<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-						<table>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: 157,950 ₪</p>
-			</div>
-
-
-		</div>
-		<div class="card col-xl-4 order-management-cards rounded-3">
-			<!-- Photo -->
-			<div class="" style=""><img src="media/inviting-logo-2.png"
-					style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
-
-			<div class="card-body px-3">
-				<div class="d-flex justify-content-between">
-					<a href="" class="btn btn-brown">שולם</a>
-					<a href="" class="btn btn-dark">מס’ הזמנה: 175684</a>
-				</div>
-				<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-					<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-						<table>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-							<tr class="d-flex gap-2 text-center">
-
-								<td><strong>מחיר: </strong>84.9 ₪ יח’</td>
-								<td><strong>כמות: </strong>1500</td>
-								<td><strong>מוצר: </strong>חולצות</td>
-
-							</tr>
-
-						</table>
-					</div>
-				</div>
-				<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: 157,950 ₪</p>
-			</div>
-
-
-		</div>
-
+	</div>
 
 	</div>
 
@@ -643,14 +474,14 @@
 						<span class="w-25">
 							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
 								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-									סה”כ חובות: 150,000 ₪ </div>
+								סה”כ זיכויים: <?php if(isset($total_credit)){ echo $total_credit; } ?> ₪ </div>
 							</a>
 						</span>
 
 						<span class="w-75">
 							<a class="page-link" href="#" style="text-align: right;">
 								<div class="page-item-title text-white mx-4" style="font-size: 20px">
-									סך הפריטים שהוזמנו: חולצות: 1,850 יח’ חפתים: 450 יח’ גרביים: 350 יח’ עניבות: 850 יח’
+								סך הפריטים שהחזרו: <?php if(isset($total_item)){ echo $total_item; } ?>
 								</div>
 							</a>
 						</span>
@@ -680,6 +511,33 @@
 
 
 <script>
+
+function populateModal(orderid, orderData) {
+			var tableBody = document.querySelector("#store-manager-accept-return-order tbody");
+			tableBody.innerHTML = '';
+
+			var totalCost = 0;
+			orderData.forEach(function (data) {
+				var row = document.createElement('tr');
+				row.innerHTML = `
+			<td>${data.total_cost} ₪ יח’</td>
+			<td>${data.cost_per_item} ₪ יח’</td>
+			<td>${data.total_items}</td>
+			<td>${data.product_name}</td>
+		`;
+				tableBody.appendChild(row);
+				totalCost += parseInt(data.total_cost);
+			});
+
+			var styledElement = document.querySelector(".styled-element");
+			styledElement.innerHTML = `
+		<span>סה”כ שווי החזרה: ₪${totalCost}</span>
+		<span>סה”כ פריטים: ${orderData.length} פריטים</span>
+	`;
+			document.getElementById('accept_return_request_order_id').value = orderid;
+		}
+
+
   // @formatter:off
   document.addEventListener("DOMContentLoaded", function () {
     var el;

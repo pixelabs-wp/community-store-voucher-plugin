@@ -21,7 +21,8 @@ class CSVP_Order_Test {
             'product_name' => array('Shirts', 'Jeans', 'Ties'),
             'cost_per_item' => array('10', '15', '20'),
             'total_item' => array('2', '1', '5'),
-            'total_cost' => array('20','15', '100')
+            'total_cost' => array('20','15', '100'),
+            'message' => "Order Created Successfully"
         );
 
         // Create CSVPC_Order instance

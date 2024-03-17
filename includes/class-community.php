@@ -6,6 +6,9 @@ class CSVP_Community
     public $community_id;
     public $community_member;
     public $voucher;
+    public $joining_request;
+    public $order;
+
 
     // Constructor
     public function __construct()
@@ -14,6 +17,8 @@ class CSVP_Community
         $this->table_name = $wpdb->prefix . 'csvp_community';
         $this->community_member = new CSVP_CommunityMember();
         $this->voucher = new CSVP_VoucherTransaction();
+        $this->joining_request = new CSVP_JoiningRequest();
+        $this->order = new CSVP_Order();
     }
 
     public function render_dashboard()
@@ -64,6 +69,64 @@ class CSVP_Community
     public function render_store_management()
     {
         global $store;
+
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["community_id"] = $this->get_current_community_id();
+            $payload["request_status"] = JOINING_REQUEST_STATUS_PENDING;
+            // Get user data
+            $user_data = get_userdata(get_current_user_id());
+            // Check if user data exists
+            if ($user_data) {
+                // Get user role
+                $user_role = isset($user_data->roles[0]) ? $user_data->roles[0] : '';
+            }
+
+            $payload["requested_by"] = $user_role;
+            $response = $this->joining_request->create_joining_request($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["community_id"] = $this->get_current_community_id();
+            $payload["message"] = "Order Created Successfully";
+            $totalcost = 0;
+            foreach ($payload["total_cost"] as $value) {
+                $totalcost = $totalcost + $value;
+            }
+            $payload["order_total"] =  $totalcost;
+            $response = $this->order->create_order($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
+            $payload = $_POST;
+            $payload["is_active"] = true;
+            $payload["community_id"] = $this->get_current_community_id();
+            $payload["order_status"] = ORDER_STATUS_RETURNED;
+            $payload["message"] = "Return Order Request Sent";
+            $totalcost = 0;
+            foreach ($payload["total_cost"] as $value) {
+                $totalcost = $totalcost + $value;
+            }
+            $payload["order_total"] =  $totalcost;
+            $response = $this->order->create_order($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
 
         $pageData = [];
 
@@ -449,13 +512,13 @@ class CSVP_Community
 
         $query = $wpdb->prepare(
             "SELECT c.*, jr.credit_limit 
-            FROM $this->table_name c 
+            FROM {$wpdb->prefix}csvp_community c 
             LEFT JOIN {$wpdb->prefix}csvp_joining_request jr 
             ON c.id = jr.community_id 
-            WHERE c.id = %d",
-            $community_id
+            WHERE c.id = %d AND jr.store_id = %d",
+            $community_id,
+            $store_id
         );
-
 
         // Execute the query
         $community_data = $wpdb->get_results($query);
@@ -469,6 +532,9 @@ class CSVP_Community
             return new WP_Error('not_found', __('No communities Data found.', 'csvp'), array('status' => 404));
         }
     }
+
+
+   
 
     /**
      * Function to update a community in the database based on its ID.
