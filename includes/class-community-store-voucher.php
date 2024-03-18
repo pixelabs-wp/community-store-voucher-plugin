@@ -25,6 +25,7 @@ define('ORDER_STATUS_PENDING', 'Pending');
 define('ORDER_STATUS_PROCESSING', 'Processing');
 define('ORDER_STATUS_COMPLETED', 'Completed');
 define('ORDER_STATUS_RETURNED', 'Returned');
+define('ORDER_STATUS_RETURNED_PAID', 'Return Paid');
 define('ORDER_STATUS_PAID', 'Paid');
 define('ORDER_STATUS_CANCELLED', 'Cancelled');
 

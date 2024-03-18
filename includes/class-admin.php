@@ -79,7 +79,28 @@ class CSVP_Admin
 
     public function render_store_commisions()
     {
-        CSVP_View_Manager::load_view('store-commision');
+        global $commision, $store;
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "pay_commision") {
+
+            $data = array("month" => $_POST["month"], "year" => $_POST["year"], "entity_type" => CSVP_User_Roles::ROLE_STORE_MANAGER, "entity_id" => $_POST["entity_id"], "status" => COMMISSION_STATUS_PAID);
+
+            $reponse = $commision->update_commission($data);
+            if ($reponse) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Commision Paid");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Commision Not Paid : " . $reponse);
+            }
+        }
+
+        $commision_data = $commision->get_entity_commissions(CSVP_User_Roles::ROLE_STORE_MANAGER);
+        $commisions = array();
+        foreach ($commision_data as $value) {
+            $value["store_data"] = $store->get_store_by_id($value["entity_id"]);
+            array_push($commisions, $value);
+        }
+        $pageData["commision"] = $commisions;
+        CSVP_View_Manager::load_view('store-commision', $pageData);
     }
 
     public function render_messages()
@@ -89,7 +110,52 @@ class CSVP_Admin
 
     public function render_community_commisions()
     {
-        CSVP_View_Manager::load_view('community-commision');
+        global $commision, $community;
+
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "pay_commision"){
+
+            $data = array("month" => $_POST["month"], "year" => $_POST["year"], "entity_type"=>CSVP_User_Roles::ROLE_COMMUNITY_MANAGER, "entity_id"=> $_POST["entity_id"], "status"=>COMMISSION_STATUS_PAID);
+
+            $reponse = $commision->update_commission($data);
+            if($reponse){
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Commision Paid");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Commision Not Paid : ". $reponse);
+
+            }
+        }
+
+        $commision_data = $commision->get_entity_commissions(CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
+        $commisions = array();
+        foreach ($commision_data as $value) {
+            $value["community_data"] = $community->get_community_by_id($value["entity_id"]);
+            array_push($commisions, $value);
+        }
+        $pageData["commision"] = $commisions;
+        CSVP_View_Manager::load_view('community-commision', $pageData);
     }
 
+    public function render_requests(){
+        global $joining_request;
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_request") {
+            $payload = $_POST;
+
+            $payload["request_status"] = JOINING_REQUEST_STATUS_APPROVED;
+
+            $response = $joining_request->update_joining_request($payload);
+
+            if (is_wp_error($response)) {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+            } else {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, 'Request Approved Successfully');
+            }
+
+            unset($_POST);
+        }
+
+        $joining_request_data = $joining_request->get_all_joining_requests();
+        $pageData["joining_request_data"] = $joining_request_data;
+        CSVP_View_Manager::load_view('joining-requests', $pageData);
+    }
 }

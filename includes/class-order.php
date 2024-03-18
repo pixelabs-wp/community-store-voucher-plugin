@@ -25,6 +25,7 @@ class CSVP_Order{
         $order_total = $data['order_total'];
         $order_date = isset($data['order_date']) ? $data['order_date'] : current_time('mysql');
         $loggined_id = get_current_user_id();
+        $message = $data['message'];
 
         if (isset($_FILES['order_info_file']) && $_FILES['order_info_file']['error'] == UPLOAD_ERR_OK) {
 
@@ -68,7 +69,7 @@ class CSVP_Order{
 
                     $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
                     // Return the ID of the newly inserted order
-                    return array("status" => true, "response" => "Voucher created successfully for Product: " . implode(", ", $data["product_name"]));
+                    return array("status" => true, "response" => $message);
                 } else {
                     // Failed to move uploaded file
                     return array("status" => false, "response" => "Something Went Wrong");
@@ -95,7 +96,7 @@ class CSVP_Order{
 
                 $this->add_order_data($data["product_name"], $data["cost_per_item"], $data["total_item"], $data["total_cost"], $wpdb->insert_id."_store");
                 // Return the ID of the newly inserted order
-                return array("status" => true, "response" => "Voucher created successfully for Product: " . implode(", ", $data["product_name"]));
+                return array("status" => true, "response" => $message);
             } else {
                 // Failed to move uploaded file
                 return array("status" => false, "response" => "Something Went Wrong");
@@ -386,6 +387,37 @@ class CSVP_Order{
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : null;
     }
+
+    public function get_orders_data_using_store_and_community($data) {
+        global $wpdb, $store, $community;
+
+        if($data['type'] == "community")
+        {
+            $store_id = $data['id'];
+            $community_id = $community->get_current_community_id();
+        }
+        else if($data['type'] == "store"){
+            $store_id = $store->get_store_id();
+            $community_id = $data['id'];
+        }
+        $suffix = $data['suffix'];
+        // Prepare SQL query to select orders by store ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE store_id = %d AND community_id = %d",
+            $store_id, $community_id
+        );
+
+        $results = $wpdb->get_results($query, ARRAY_A);
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"]. $suffix));
+            $results[$key]["order_data"] = $order_data;
+        }
+
+        // Execute the query and fetch the results
+        // Return the results if any, otherwise return null
+        return !empty($results) ? $results : null;
+    }
+
 
     // Function to retrieve order data by ID
     function get_order_data_by_id($order_id)

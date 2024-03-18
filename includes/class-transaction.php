@@ -149,6 +149,6 @@ class CSVP_Transaction{
         $results = $wpdb->get_results($query, ARRAY_A);
 
         // Return the results if any, otherwise return null
-        return !empty($results) ? $results : null;
+        return !empty($results) ? $results : array();
     }
 }

@@ -125,7 +125,7 @@ class CSVP_VoucherTransaction{
         }
 
         // Return the results if any, otherwise return null
-        return !empty($voucher_transactions) ? $voucher_transactions : null;
+        return !empty($voucher_transactions) ? $voucher_transactions : array();
     }
 
     public function get_voucher_data_by_id($voucher_id) {

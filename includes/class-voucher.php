@@ -177,11 +177,22 @@ class CSVP_Voucher{
     }
 
     public function get_all_vouchers_by_store_id_and_community_id($data) {
-        global $wpdb, $store;
+        global $wpdb, $store, $community; 
 
+        if(isset($data['type'])){
+            if ($data['type'] == "store") {
+                $store_id = $store->get_store_id();
+                $community_id = $data['id'];
+            } else if ($data['type'] == "community") {
+                $community_id =  $community->get_current_community_id();
+                $store_id = $data['id'];
+            }
+        } else {
+            $store_id = $data["store_id"];
+            $community_id = $data["community_id"];
 
-        $store_id = isset($data['store_id']) ? $data['store_id'] : $store->get_store_id();   
-        $community_id = $data['community_id'];
+        }
+       
         
         // Prepare SQL query to select all vouchers by store ID
         $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE store_id = %d  AND community_id = %d", $store_id, $community_id);

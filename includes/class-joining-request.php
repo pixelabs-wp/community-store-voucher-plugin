@@ -63,6 +63,7 @@ class CSVP_JoiningRequest{
 
         // Remove request_id from the data array to prevent updating it
         unset($data['request_id']);
+        unset($data['csvp_request']);
 
         // Format the update data for the SQL query
         $update_data = [];
@@ -105,7 +106,7 @@ class CSVP_JoiningRequest{
      *
      * @return array Array of joining request objects.
      */
-    public function get_all_joining_requests($data)
+    public function get_all_joining_requests($data = array())
     {
         global $wpdb, $community, $store, $voucher;
 

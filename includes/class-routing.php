@@ -131,6 +131,10 @@ class CSVP_Router {
                 'path' => 'admin/messages',
                 'callback' => array('CSVP_Admin', 'render_messages'),
             ),
+            'admin_requests' => array(
+                'path' => 'admin/joining-requests',
+                'callback' => array('CSVP_Admin', 'render_requests'),
+            ),
         ));
 
        

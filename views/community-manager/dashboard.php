@@ -43,7 +43,11 @@
 							</svg>
 
 						</span>
-						<h1 class="m-0" style="font-weight: 900;"><?php echo $pageData["redeemed_voucher"]; ?></h1>
+						<h1 class="m-0" style="font-weight: 900;"><?php
+						if(isset($pageData["redeemed_voucher"]))
+						{
+							echo $pageData["redeemed_voucher"];
+						}  ?></h1>
 						<p class="m-0">Total transactions</p>
 					</div>
 				</div>
@@ -76,7 +80,10 @@
 							</svg>
 
 						</span>
-						<h1 class="m-0" style="font-weight: 900;">$pageData["redeemed_voucher"]</h1>
+						<h1 class="m-0" style="font-weight: 900;"><?php if(isset($pageData["redeemed_voucher"]))
+						{
+							echo $pageData["redeemed_voucher"];
+						} ?></h1>
 						<p class="m-0">Vouchers redeemed</p>
 					</div>
 				</div>

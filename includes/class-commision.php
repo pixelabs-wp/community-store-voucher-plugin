@@ -76,29 +76,33 @@ class CSVP_Commission{
     /**
      * Function to update a commission in the database based on its ID.
      *
-     * @param array $data Associative array containing the updated commission data.
+     * @param array $data Associative array containing the updated commission data,
+     *                    including 'month', 'year', 'status', 'entity_type', and 'entity_id' keys.
      * @return bool True on success, false on failure.
      */
-    public function update_commission($data) {
+    public function update_commission($data)
+    {
         global $wpdb;
 
-        // Extract commission ID from the data array
-        $commission_id = $data['commission_id'];
+        // Remove commission_id and month, year, status, entity_type, entity_id from the data array to prevent updating them
+        $month = $data['month'];
+        $year = $data['year'];
+        $status = $data['status'];
+        $entity_type = $data['entity_type'];
+        $entity_id = $data['entity_id'];
+        unset($data['month'], $data['year'], $data['status'], $data['entity_type'], $data['entity_id']);
 
-        // Remove commission_id from the data array to prevent updating it
-        unset($data['commission_id']);
+        // Add condition to set commission_status to the provided status where month, year, entity_type, and entity_id match
+        $data['commission_status'] = "CASE WHEN MONTH(created_at) = $month AND YEAR(created_at) = $year AND entity_type = '$entity_type' AND entity_id = $entity_id THEN '$status' ELSE commission_status END";
 
         // Format the update data for the SQL query
         $update_data = [];
         foreach ($data as $key => $value) {
-            $update_data[] = "$key = '$value'";
+            $update_data[] = "$key = $value";
         }
 
         // Prepare SQL query to update commission data
-        $query = $wpdb->prepare(
-            "UPDATE $this->table_name SET " . implode(', ', $update_data) . " WHERE id = %d",
-            $commission_id // Commission ID for the WHERE clause
-        );
+        $query = "UPDATE $this->table_name SET " . implode(', ', $update_data);
 
         // Execute the query and return true on success, false on failure
         $result = $wpdb->query($query);
@@ -109,6 +113,8 @@ class CSVP_Commission{
             return false;
         }
     }
+
+
 
     /**
      * Function to delete a commission from the database based on its ID.
@@ -170,6 +176,39 @@ class CSVP_Commission{
 
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : null;
+    }
+
+
+    /**
+     * Function to retrieve commissions by type from the database.
+     *
+     * @param string $commission_type The type of commission to search for.
+     * @return array|null Array of commissions matching the search criteria on success, null on failure.
+     */
+    public function get_entity_commissions($entity_type)
+    {
+        global $wpdb;
+
+        // $entity_type = $data["entity_type"];
+
+        // Prepare SQL query to retrieve commissions by type
+        $query = $wpdb->prepare(
+            "SELECT *, YEAR(created_at) AS year,
+    MONTH(created_at) AS month,
+    SUM(commission_value) AS total_commision,
+    COUNT(*) AS total_loads FROM $this->table_name WHERE entity_type = %s GROUP BY 
+    entity_id,
+    YEAR(created_at),
+    MONTH(created_at)
+    ",
+            $entity_type
+        );
+
+        // Execute the query and fetch the results
+        $results = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return !empty($results) ? $results : array();
     }
 
     /**
