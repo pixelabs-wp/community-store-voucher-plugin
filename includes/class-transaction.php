@@ -23,6 +23,7 @@ class CSVP_Transaction{
         $store_id = $data['store_id'];
         $transaction_type = $data['transaction_type'];
         $transaction_amount = $data['transaction_amount'];
+        $community_member_id = $data['community_member_id'];
         $transaction_date = isset($data['transaction_date']) ? $data['transaction_date'] : current_time('mysql');
 
         // Insert data into the database
@@ -33,7 +34,8 @@ class CSVP_Transaction{
                 'store_id' => $store_id,
                 'transaction_type' => $transaction_type,
                 'transaction_amount' => $transaction_amount,
-                'transaction_date' => $transaction_date
+                'transaction_date' => $transaction_date,
+                'community_member_id' => $community_member_id
             ) // Data to be inserted
         );
 

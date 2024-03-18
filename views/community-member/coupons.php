@@ -391,7 +391,7 @@
 
 <script>
     function buyVoucher(voucher, member_id) {
-        console.log(voucher)
+        voucher = JSON.parse(voucher)
         jQuery('#store-manager-voucher-delete').modal('show');
 
         let modal = document.querySelector('#store-manager-voucher-delete');
@@ -401,7 +401,7 @@
         modal.querySelector('#voucher_id').value = voucher.id;
         modal.querySelector('#community_member_id').value = member_id;
     }
-    
+
     // Wait for the document to be ready
     jQuery(document).ready(function() {
         // Attach click event to the SVG element

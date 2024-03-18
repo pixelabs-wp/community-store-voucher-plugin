@@ -180,7 +180,7 @@ class CSVP_Voucher{
         global $wpdb, $store;
 
 
-        $store_id = $data['store_id'] ? $data['store_id'] : $store->get_store_id();   
+        $store_id = isset($data['store_id']) ? $data['store_id'] : $store->get_store_id();   
         $community_id = $data['community_id'];
         
         // Prepare SQL query to select all vouchers by store ID

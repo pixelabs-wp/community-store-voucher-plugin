@@ -35,6 +35,10 @@ define('MESSAGE_STATUS_SEEN', 'Seen');
 define('VOUCHER_TRANSACTION_PURCHASE', 'Voucher Purchase');
 define('VOUCHER_TRANSACTION_REDEEM', 'Voucher Redeem');
 
+define('TRANSACTION_TYPE_DEBIT', 'debit');
+define('TRANSACTION_TYPE_CREDIT', 'credit');
+
+
 add_action('wp_login', 'redirect_after_login', 10, 2);
 
 function redirect_after_login($user_login, $user)
@@ -72,7 +76,7 @@ function my_add_csvp_menu() {
 }
 
 function my_csvp_page_callback() {
-    echo '<script>window.location.href = "' . home_url() . '";</script>';
+    echo '<script>window.location.href = "' . home_url('/admin') . '";</script>';
     exit;
   }
   

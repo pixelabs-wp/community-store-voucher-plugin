@@ -23,6 +23,7 @@ class CSVP_Initialize_Database {
             community_address varchar(255) NOT NULL,
             wp_user_id bigint(20) NOT NULL,
             payment_link varchar(255) NOT NULL,
+            commision_percentage decimal(10,2) NOT NULL,
             api_valid varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
@@ -91,6 +92,7 @@ class CSVP_Initialize_Database {
             updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
             wp_user varchar(255) NOT NULL DEFAULT 1,
             community_id bigint(20) NOT NULL,
+            community_member_id bigint(20) NOT NULL,
             store_id bigint(20) NOT NULL,
             transaction_type varchar(255) NOT NULL,
             transaction_amount decimal(10,2) NOT NULL,

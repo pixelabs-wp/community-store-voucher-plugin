@@ -251,6 +251,38 @@ class CSVP_VoucherTransaction{
        
     }
 
+
+    public function get_vouchers_by_member_id_and_store_id($data)
+    {
+        global $wpdb, $store, $voucher;
+
+        $member_id = $data['member_id'];
+        $store_id = $data['store_id'];
+        $status = $data['status'];
+        $count = isset($data['count']) ? $data['count'] : false;
+
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_member_id = %d AND status = %s", $member_id, $status);
+        // Execute the query and fetch the results
+        $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
+
+        if (!$count) {
+
+            $modifiedTransactions = array();
+
+            foreach ($voucher_transactions as $transaction) {
+                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id" => 22));
+                $transaction["store_data"] = $store->get_store_by_id($transaction["voucher_data"][0]->store_id);
+                if($transaction["voucher_data"][0]->store_id == $store_id){
+                    array_push($modifiedTransactions, $transaction);
+                }
+            }
+
+            return $modifiedTransactions;
+        } else {
+            return $wpdb->num_rows;
+        }
+    }
+
     public function get_voucher_transactions_by_voucher_id($data) {
         global $wpdb;
 

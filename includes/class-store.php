@@ -15,8 +15,8 @@ class CSVP_Store
     {
         global $wpdb;
         $this->table_name = $wpdb->prefix . 'csvp_store';
-        $this->voucher = new CSVP_Voucher(); 
-        $this->community = new CSVP_Community(); 
+        $this->voucher = new CSVP_Voucher();
+        $this->community = new CSVP_Community();
         $this->joining_request = new CSVP_JoiningRequest();
         $this->order = new CSVP_Order();
         $this->voucherTransaction = new CSVP_VoucherTransaction();
@@ -27,19 +27,16 @@ class CSVP_Store
     {
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_new_benifit") {
             $payload = $_POST;
-                $payload["is_active"] = true;
-                $payload["store_id"] = $this->get_store_id();
+            $payload["is_active"] = true;
+            $payload["store_id"] = $this->get_store_id();
 
-                $response = $this->voucher->create_voucher($payload);
-                if ($response["status"] !== false) {
-                    CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
-                } else {
-                    CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
-                }
-        }
-
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "set_credit_limit")
-        {
+            $response = $this->voucher->create_voucher($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "set_credit_limit") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
@@ -50,16 +47,12 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
             $totalcost = 0;
-            foreach($payload["total_cost"] as $value)
-            {
+            foreach ($payload["total_cost"] as $value) {
                 $totalcost = $totalcost + $value;
             }
             $payload["order_total"] =  $totalcost;
@@ -69,9 +62,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_voucher")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_voucher") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
@@ -81,9 +72,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
@@ -103,9 +92,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment") {
             $payload = $_POST;
             $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PAID;
@@ -116,9 +103,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        } 
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment") {
             $payload = $_POST;
             $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
@@ -134,28 +119,23 @@ class CSVP_Store
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
         $check_1["joined_communities"] = $joined_communities;
-        if (is_wp_error($check_1["joined_communities"])) 
-        {
-        }
-        else
-        {
+        if (is_wp_error($check_1["joined_communities"])) {
+        } else {
             $pageData["joined_communities"] = $joined_communities;
         }
 
         $requested_communities = $this->community->get_all_requested_communities_for_store();
         $check_2["requested_communities"] = $requested_communities;
-        if (!is_wp_error($check_2["requested_communities"])) 
-        {
+        if (!is_wp_error($check_2["requested_communities"])) {
             $pageData["requested_communities"] = $requested_communities;
         }
-        
+
         $not_requested_communities = $this->community->get_all_not_requested_communities_for_store();
         $check_3["not_requested_communities"] = $not_requested_communities;
-        if (!is_wp_error($check_3["not_requested_communities"])) 
-        {
+        if (!is_wp_error($check_3["not_requested_communities"])) {
             $pageData["not_requested_communities"] = $not_requested_communities;
         }
-        
+
         CSVP_View_Manager::load_view('community-management', $pageData);
     }
 
@@ -167,8 +147,7 @@ class CSVP_Store
     public function render_order_management()
     {
 
-        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment")
-        {
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_payment") {
             $payload = $_POST;
             $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PAID;
@@ -179,9 +158,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_payment") {
             $payload = $_POST;
             $payload["store_id"] = $this->get_store_id();
             $payload["order_status"] = ORDER_STATUS_PROCESSING;
@@ -200,9 +177,9 @@ class CSVP_Store
                 'store_id' => $user_id, // Replace 123 with the actual store ID
                 'suffix' => '_store' // Replace '_xyz' with the actual suffix value
             );
-        
+
             $order_requests = $this->order->get_orders_by_store_id($data);
-        
+
             if (!is_wp_error($order_requests)) {
                 $pageData["accepted_store_orders"] = $order_requests;
                 CSVP_View_Manager::load_view('order-management', $pageData);
@@ -214,13 +191,11 @@ class CSVP_Store
             // Handle error
             CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
         }
-        
     }
 
     public function render_order_request()
     {
-        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request")
-        {
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "accept_order_request") {
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_COMPLETED;
             $payload["message"] = "Order Approved";
@@ -230,10 +205,7 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-
-        }
-        else if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "cancel_order_request")
-        {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "cancel_order_request") {
             $payload = $_POST;
             $payload["order_status"] = ORDER_STATUS_CANCELLED;
             $payload["message"] = "Order Rejected";
@@ -244,16 +216,16 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
-        
+
         $user_id = get_current_user_id();
         if ($user_id) {
             $data = array(
                 'store_id' => $user_id, // Replace 123 with the actual store ID
                 'suffix' => '_store' // Replace '_xyz' with the actual suffix value
             );
-        
+
             $order_requests = $this->order->get_orders_by_store_id($data);
-        
+
             if (!is_wp_error($order_requests)) {
                 $pageData["store_order_requests"] = $order_requests;
                 CSVP_View_Manager::load_view('order-requests', $pageData);
@@ -265,8 +237,8 @@ class CSVP_Store
             // Handle error
             CSVP_Notification::add(CSVP_Notification::ERROR, "User Not Loggined");
         }
-        
     }
+
 
     public static function render_return_management()
     {
@@ -275,15 +247,12 @@ class CSVP_Store
 
     public  function render_transaction_history()
     {
-
-        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin")
-        {
+        global $transaction, $community, $community_member;
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin") {
             $admin = get_user_by('role', 'administrator');
             if ($admin) {
                 $admin_id = $admin->ID;
-            }
-            else
-            {
+            } else {
                 $admin_id = 0;
             }
             $payload = $_POST;
@@ -291,15 +260,11 @@ class CSVP_Store
             $payload["to_id"] = $admin_id;
             $payload["to_user_role"] = 'Admin';
             $response = $this->message->create_community_message($payload);
-            if ($response) 
-            {
+            if ($response) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
-            }
-            else
-            {
+            } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
             }
-
         }
 
         $pageData = [];
@@ -307,13 +272,22 @@ class CSVP_Store
         $data['status'] = VOUCHER_STATUS_USED;
         $data['store_id'] = $this->get_store_id();
         $voucher_transactions = $this->voucherTransaction->get_all_voucher_transactions_by_store_id($data);
-        $response["voucher_transactions"] = $voucher_transactions;
-        if (is_wp_error($response["voucher_transactions"])) 
-        {
+
+        $d_accumulated_transactions = $transaction->get_transactions_by_store_id($this->get_store_id());
+        $accumulated_transactions = array();
+        foreach ($d_accumulated_transactions as $transaction) {
+            $communityData = $community->get_community_by_id($transaction["community_id"]); // line 118
+            $memberData = $community_member->get_community_member_by_id(array('community_member_id'=>$transaction["community_member_id"])); // line 118
+            $transaction["community_data"] = $communityData;
+            $transaction["member_data"] = $memberData;
+            array_push($accumulated_transactions, $transaction);
         }
-        else
-        {
-            $pageData["voucher_transactions"] = $voucher_transactions;
+
+        $transactions = array_merge($voucher_transactions, $accumulated_transactions);
+        $response["voucher_transactions"] = $voucher_transactions;
+        if (is_wp_error($response["voucher_transactions"])) {
+        } else {
+            $pageData["transactions"] = $transactions;
         }
 
         CSVP_View_Manager::load_view('transaction-history', $pageData);
@@ -325,10 +299,210 @@ class CSVP_Store
     }
 
 
-    public static function render_creating_transactions()
+    public function render_creating_transactions()
     {
-        CSVP_View_Manager::load_view('creating-transactions');
+        global $community_member, $community, $voucher_transaction, $transaction;
+
+        if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_voucher"){
+            $payload = $_POST;
+            $payload["transaction_type"] = VOUCHER_TRANSACTION_REDEEM;
+            $payload["transaction_date"] = date("Y-m-d H:i:s");
+            $payload["status"] = VOUCHER_STATUS_USED;
+            unset($payload['csvp_request']);
+
+            $response = $voucher_transaction->update_voucher_transaction($payload);
+
+            if (!is_wp_error($response)) {
+
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been charged successfully");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+            }
+
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_card") {
+            $payload = $_POST;
+
+            $member = $community_member->get_community_member_by_id(array('community_member_id'=>$payload["community_member_id"]));
+            $updated_balance = $member->card_balance - $payload["transaction_amount"];
+            $response = $community_member->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+
+            $transaction_data = array(
+                'community_id' => $member->community_id,
+                'store_id' => $this->get_store_id(),
+                'transaction_amount' => $payload["transaction_amount"],
+                'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                'community_member_id' => $payload["community_member_id"]
+            );
+
+            $transaction->create_transaction($transaction_data);
+
+            unset($payload['csvp_request']);
+
+       
+            if (!is_wp_error($response)) {
+
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Card has been charged successfully");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+            }
+        }
+
+        $joined_communities = $community->get_all_joined_communities_for_store();
+        $community_members = array();
+        if(!is_wp_error($joined_communities)){
+            foreach ($joined_communities as $request) {
+                $members = $community_member->get_community_members_by_community_id(array("community_id"=> $request->community_id));
+                array_push($community_members, $members);
+            }
+        }
+        $community_members = array_reduce($community_members, function ($carry, $item) {
+            return array_merge($carry, $item);
+        }, []);
+
+        $pageData["members"] = $community_members;
+        CSVP_View_Manager::load_view('creating-transactions', $pageData);
     }
+
+
+
+    public function get_all_joined_store_for_communities()
+    {
+        global $wpdb, $community;
+        $community_id = $community->get_current_community_id();
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s LIMIT 1",  $community_id, JOINING_REQUEST_STATUS_APPROVED);
+
+        // Execute the query and fetch the results
+        $joined_store = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($joined_store as $key => $store) {
+            $order_data = $this->get_order_data_by_id(($store["store_id"]));
+            $joined_store[$key]["order_data"] = $order_data;
+
+            $store_data = $this->get_store_data_by_id(($store["store_id"]));
+            $joined_store[$key]["store_data"] = $store_data;
+        }
+
+        // Check if communities were found
+        if ($joined_store) {
+            // Return array of community objects
+            return $joined_store;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Joined Stores.', 'csvp'), array('status' => 404));
+        }
+    }
+
+
+
+    public function get_all_requested_store_for_communities()
+    {
+        global $wpdb, $community;
+        $community_id = $community->get_current_community_id();
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s LIMIT 1",  $community_id, JOINING_REQUEST_STATUS_PENDING);
+
+        // Execute the query and fetch the results
+        $joined_store = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($joined_store as $key => $store) {
+            $order_data = $this->get_order_data_by_id(($store["store_id"]));
+            $joined_store[$key]["order_data"] = $order_data;
+
+            $store_data = $this->get_store_data_by_id(($store["store_id"]));
+            $joined_store[$key]["store_data"] = $store_data;
+        }
+
+        // Check if communities were found
+        if ($joined_store) {
+            // Return array of community objects
+            return $joined_store;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Joined Stores.', 'csvp'), array('status' => 404));
+        }
+    }
+
+    public function get_all_not_requested_store_for_communities()
+    {
+        global $wpdb, $community;
+        $community_id = $community->get_current_community_id();
+        // Prepare SQL query to retrieve store IDs
+        $query = $wpdb->prepare("SELECT id FROM {$wpdb->prefix}csvp_store");
+        $store_ids = $wpdb->get_results($query, ARRAY_A);
+        $storesWithoutRequests = [];
+        // Iterate over each store ID
+        foreach ($store_ids as $row) {
+            $store_id = $row["id"];
+            // Prepare SQL query to check if there are any requests for this store and community
+            $query = $wpdb->prepare("SELECT COUNT(*) AS count FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND store_id = %d", $community_id, $store_id);
+            $ids_result = $wpdb->get_results($query, ARRAY_A);
+            // Check if there are any rows
+            if ($ids_result && isset($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
+                $storesWithoutRequests[] = $store_id;
+            }
+        }
+        $not_requested_store = [];
+        // Iterate over each store ID without requests
+        foreach ($storesWithoutRequests as $key => $store_id) {
+            // Get order data by store ID
+            $order_data = $this->get_order_data_by_id($store_id);
+            // Get store data by store ID
+            $store_data = $this->get_store_data_by_id($store_id);
+            // Append order data and store data to joined store array
+            $not_requested_store[$key]["order_data"] = $order_data;
+            $not_requested_store[$key]["store_data"] = $store_data;
+        }
+        // Check if joined store data was found
+        if (!empty($not_requested_store)) {
+            // Return array of joined store data
+            return $not_requested_store;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No stores without requests found.', 'csvp'), array('status' => 404));
+        }
+    }
+
+
+    public function get_order_data_by_id($store_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT store_id, COUNT(id) AS order_count, SUM(order_total) AS total_order_amount FROM {$wpdb->prefix}csvp_order WHERE store_id = %d GROUP BY store_id", $store_id);
+        // Execute the query
+        $order_data = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($order_data) {
+            // Return voucher data as an object
+            return $order_data;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
+
+    public function get_store_data_by_id($store_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_store WHERE id = %d", $store_id);
+        // Execute the query
+        $store_data = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($store_data) {
+            // Return voucher data as an object
+            return $store_data;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
+
+
     /**
      * Function to create a new store in the database.
      *
@@ -343,45 +517,81 @@ class CSVP_Store
         $store_name = $data['store_name'];
         $store_phone = $data['store_phone'];
         $store_address = $data['store_address'];
-        $store_logo = $data['store_logo'];
         $store_mail_address = $data['store_mail_address'];
         $store_cashier_phone = $data["store_cashier_phone"];
-        $password = $data["store_cashier_phone"];
+        $password = $data["password"];
         $fee_amount_per_transaction = $data['fee_amount_per_transaction'];
         if (!$this->get_store_by_email(array('email_address' => $store_mail_address))) {
-            // Create WordPress user
-            $user_id = wp_create_user($store_mail_address, $password, $store_mail_address);
-            $user_id_role = new WP_User($user_id);
-            $user_id_role->set_role(CSVP_User_Roles::ROLE_STORE_MANAGER);
 
-            // Insert data into the database
-            $wpdb->insert(
-                $this->table_name, // Table name
-                array(
-                    'store_name' => $store_name,
-                    'store_phone' => $store_phone,
-                    'store_address' => $store_address,
-                    'store_logo' => $store_logo,
-                    'store_mail_address' => $store_mail_address,
-                    'wp_user' => get_current_user_id(),
-                    'fee_amount_per_transaction' => $fee_amount_per_transaction,
-                    'wp_user_id'=> $user_id,
-                    'store_cashier_phone' => $store_cashier_phone
-                ) // Data to be inserted
-            );
+            $email_exists = email_exists($store_mail_address);
 
-            // Check if the insertion was successful
-            if ($wpdb->insert_id) {
-                // Return the ID of the newly inserted store
-                return $wpdb->insert_id;
+            if (!$email_exists) {
+
+                if (isset($_FILES['store_logo']) && $_FILES['store_logo']['error'] == UPLOAD_ERR_OK) {
+
+                    // Handle file upload
+                    $upload_dir = wp_upload_dir(); // Get the upload directory
+                    $file_name = basename($_FILES['store_logo']['name']);
+
+                    // Get the file extension
+                    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+                    // Generate a unique identifier (timestamp or random string)
+                    $unique_identifier = uniqid(); // Using a timestamp-based unique identifier
+
+                    // Construct the file name with the extension
+                    $file_name = 'store_logo' . $unique_identifier . '.' . $file_extension;
+
+
+                    // Check if the upload directory is writable
+                    $moved = move_uploaded_file($_FILES['store_logo']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+
+                    if ($moved) {
+
+                        $file_path = $upload_dir['subdir'] . '/' . $file_name;
+
+
+                        // Create WordPress user
+                        $user_id = wp_create_user($store_mail_address, $password, $store_mail_address);
+                        $user_id_role = new WP_User($user_id);
+                        $user_id_role->set_role(CSVP_User_Roles::ROLE_STORE_MANAGER);
+
+                        // Insert data into the database
+                        $wpdb->insert(
+                            $this->table_name, // Table name
+                            array(
+                                'store_name' => $store_name,
+                                'store_phone' => $store_phone,
+                                'store_address' => $store_address,
+                                'store_logo' => $file_path,
+                                'store_mail_address' => $store_mail_address,
+                                'wp_user' => get_current_user_id(),
+                                'fee_amount_per_transaction' => $fee_amount_per_transaction,
+                                'wp_user_id' => $user_id,
+                                'store_cashier_phone' => $store_cashier_phone
+                            ) // Data to be inserted
+                        );
+
+                        // Check if the insertion was successful
+                        if ($wpdb->insert_id) {
+                            // Return the ID of the newly inserted store
+                            return $wpdb->insert_id;
+                        } else {
+                            // Send error response
+                            return new WP_Error('database_error', __('Failed to create Store.', 'csvp'), array('status' => 500));
+                        }
+                    }
+                } else {
+                    return array("status" => false, "response" => "No Store image uploaded or error occurred");
+                }
             } else {
+
                 // Send error response
-                return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
+                return new WP_Error('request_error', __('Failed to create Store. Email Already Exists', 'csvp'), array('status' => 500));
             }
         } else {
-            return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
+            return new WP_Error('request_error', __('Failed to create Store. Email Already Exists', 'csvp'), array('status' => 500));
         }
-
     }
 
     /**
@@ -484,7 +694,7 @@ class CSVP_Store
         $community_email = $data["email_address"];
         // Prepare SQL query to retrieve community data by ID
         $query = "SELECT * FROM $this->table_name WHERE store_mail_address = '$community_email'";
-            
+
         // Execute the query
         $community = $wpdb->get_row($query);
 
@@ -569,7 +779,7 @@ class CSVP_Store
         global $wpdb;
 
         $count = isset($data["count"]) ? true : false;
-        
+
         // Prepare SQL query to select all stores
         $query = "SELECT * FROM $this->table_name";
 
@@ -592,16 +802,16 @@ class CSVP_Store
 
     public function get_store_id($user_id = false)
     {
-        if(!$user_id){
+        if (!$user_id) {
             if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_STORE_MANAGER)) {
                 $store_data = $this->get_store_by_user_id(get_current_user_id());
                 return $store_data->id;
-            } else { return false; }
+            } else {
+                return false;
+            }
         } else {
             $store_data = $this->get_store_by_user_id($user_id);
             return $store_data->id;
         }
-       
     }
-
 }

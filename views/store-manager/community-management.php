@@ -1257,7 +1257,6 @@ table.addEventListener('change', (event) => {
 								</table>
 							</div>
 						</div>
-						<!-- <a class="btn btn-dark">← להסדרים וחובות</a> -->
 					</div>
 					<div class="w-35"
 						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
@@ -1434,6 +1433,8 @@ table.addEventListener('change', (event) => {
 	var parentOrderHistory = document.getElementById("parentOrderHistory");
 
 	function addOrderHistory(item) {
+		var section  =``;
+		
 		if (item.order_status == '<?php echo ORDER_STATUS_PAID; ?>') {
 			var date = new Date(item.created_at);
 			var day = date.getDate();
@@ -1443,7 +1444,7 @@ table.addEventListener('change', (event) => {
 			var formattedMonth = (month < 10) ? '0' + month : month;
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 
-			var section = `
+			 section = section+`
 			<div class="d-flex justify-content-between tran">
 				<div>
 					<button class="buttons" >שולם</button>
@@ -1472,7 +1473,7 @@ table.addEventListener('change', (event) => {
 			var formattedMonth = (month < 10) ? '0' + month : month;
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 
-			var section = `
+		 section = section+`
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">+ שליחת דרישת תשלום</button>
@@ -1502,7 +1503,7 @@ table.addEventListener('change', (event) => {
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 			console.log(item);
 
-			var section = `
+			 section = section+`
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">ממתין לתשלום</button>
@@ -1524,11 +1525,6 @@ table.addEventListener('change', (event) => {
 			</div>
 		</div>`;
 		}
-		else{
-			section  =``;
-		}
-
-
 		parentOrderHistory.insertAdjacentHTML('beforeend', section);
 		// Append content to the end of parentOrderHistory
 	}

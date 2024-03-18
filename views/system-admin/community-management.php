@@ -145,7 +145,7 @@
                     <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
                         <div class="" style="direction: rtl;">
                             <label class="form-label">חיפוש לפי שם</label>
-                            <input type="text" class="form-select" placeholder="" name="" id="">
+                            <input type="text" class="form-control" placeholder="" name="" id="">
 
                             <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
                         </div>
@@ -222,14 +222,20 @@
 
         <div class="container mt-4 d-flex flex-wrap" style="row-gap: 1rem; column-gap: 1rem;">
 
-            <?php foreach ($pageData["communities"] as $key => $community) {
+            <?php
+            if(isset($pageData["communities"]))
+            {
+            
+            foreach ($pageData["communities"] as $key => $community) {
+
+$imageUrl = esc_url(get_site_url() . '/wp-content/uploads/') . $community["community_logo"];
             ?>
 
                 <div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal" data-bs-target="#store-details">
                     <!-- Photo -->
                     <div class="card-body d-flex flex-column p-0">
 
-                        <div class="w-35" style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $community["community_logo"] ? $community["community_logo"] : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                        <div class="w-35" style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $imageUrl ? $imageUrl : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                             <svg style="position: absolute; top: 8px; right: 8px;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g clip-path="url(#clip0_542_250)">
                                     <path d="M5.83334 40.0006H30.8333C32.3828 39.9962 33.8673 39.3773 34.9609 38.2796C36.0545 37.1819 36.668 35.6951 36.6667 34.1456V21.584C36.6667 21.142 36.4911 20.718 36.1785 20.4055C35.866 20.0929 35.442 19.9173 35 19.9173C34.558 19.9173 34.1341 20.0929 33.8215 20.4055C33.5089 20.718 33.3333 21.142 33.3333 21.584V34.1456C33.3356 34.8114 33.0736 35.4508 32.6049 35.9235C32.1362 36.3963 31.499 36.6638 30.8333 36.6673H5.83334C5.16762 36.6638 4.53051 36.3963 4.06181 35.9235C3.59311 35.4508 3.33112 34.8114 3.33334 34.1456V9.18898C3.33112 8.52327 3.59311 7.88387 4.06181 7.4111C4.53051 6.93834 5.16762 6.67085 5.83334 6.66732H18.3333C18.7754 6.66732 19.1993 6.49172 19.5118 6.17916C19.8244 5.8666 20 5.44268 20 5.00065C20 4.55862 19.8244 4.1347 19.5118 3.82214C19.1993 3.50958 18.7754 3.33398 18.3333 3.33398H5.83334C4.28384 3.3384 2.79939 3.95737 1.70576 5.05506C0.612136 6.15275 -0.00132849 7.63948 2.16018e-06 9.18898V34.1456C-0.00132849 35.6951 0.612136 37.1819 1.70576 38.2796C2.79939 39.3773 4.28384 39.9962 5.83334 40.0006Z" fill="#01051D" />
@@ -281,7 +287,7 @@
 
             </div>
 
-<?php } ?>
+<?php } }?>
         </div>
 
 

@@ -188,6 +188,8 @@ class CSVP_CommunityMember {
         }
     }
 
+
+
     // Method to get a community member by ID
     public function get_community_member_by_user_id($data)
     {
@@ -391,8 +393,10 @@ class CSVP_CommunityMember {
      */
     public function add_balance($data)
     {
-        global $wpdb;
+        global $wpdb, $transaction;
         $member_id = $data['member_id'];
+        $store_id = isset($data['store_id']) ? $data['store_id'] : 0;
+        $transaction_type = isset($data['transaction_type']) ? $data['transaction_type'] : TRANSACTION_TYPE_CREDIT;
         $new_balance = $data['new_balance'];
         $current_balance = $this->get_balance_by_member_id($member_id);
         $current_balance = $current_balance + $new_balance;
@@ -407,6 +411,17 @@ class CSVP_CommunityMember {
             array('balance_amount' => $new_balance, 
             'community_member_id' => $member_id)
         );
+
+        $transaction_data = array(
+            'community_id' => $member->community_id,
+            'store_id' => $store_id,
+            'transaction_amount' => $new_balance,
+            'transaction_type' => $transaction_type,
+            'community_member_id' => $member_id 
+        );
+
+        $transaction->create_transaction($transaction_data);
+
 
         return $result !== false;
     }
