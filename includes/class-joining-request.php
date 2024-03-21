@@ -17,14 +17,37 @@ class CSVP_JoiningRequest{
      */
     public function create_joining_request($data) {
         global $wpdb;
-
+    
         // Extract data from the input array
         $community_id = $data['community_id'];
         $store_id = $data['store_id'];
         $request_status = $data['request_status'];
         $requested_by = $data['requested_by'];
-
-
+    
+        // Check if a request already exists for the same store_id and community_id
+        $existing_request = $wpdb->get_row(
+            $wpdb->prepare(
+                "SELECT * FROM {$this->table_name} WHERE store_id = %d AND community_id = %d",
+                $store_id,
+                $community_id
+            ),
+            ARRAY_A // Fetch the result as an associative array
+        );
+    
+        // If an existing request is found, return error response
+        if ($existing_request) {
+            $requestedBy = $existing_request['requested_by'];
+            if($requestedBy == CSVP_User_Roles::ROLE_COMMUNITY_MANAGER){
+                $message = "Community Manager";
+                
+            } else if($requestedBy == CSVP_User_Roles::ROLE_STORE_MANAGER)
+                {
+                    $message = "Store Manager";
+                }
+            
+            return array("status" => false, "response" => "A request already exists by: $message.");
+        }
+    
         // Insert data into the database
         $result = $wpdb->insert(
             $this->table_name,
@@ -36,17 +59,17 @@ class CSVP_JoiningRequest{
                 'credit_limit' => '10000'
             )
         );
-
+    
         // Check if the insertion was successful
         if ($result) {
-            // Return the ID of the newly inserted joining request
-            // return $wpdb->insert_id;
-            return array("status"=>true, "response"=>"Join Request Sent");
+            // Return success response
+            return array("status" => true, "response" => "Join Request Sent");
         } else {
-        // Failed to move uploaded file
-        return array("status" => false, "response" => "Something Went Wrong");
+            // Return error response
+            return array("status" => false, "response" => "Something Went Wrong");
         }
     }
+    
 
     /**
      * Update a joining request in the database based on its ID.

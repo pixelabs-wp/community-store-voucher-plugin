@@ -309,7 +309,7 @@ class CSVP_VoucherTransaction{
             $modifiedTransactions = array();
 
             foreach ($voucher_transactions as $transaction) {
-                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id" => 22));
+                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id" => $transaction['voucher_id']));
                 $transaction["store_data"] = $store->get_store_by_id($transaction["voucher_data"][0]->store_id);
                 if($transaction["voucher_data"][0]->store_id == $store_id){
                     array_push($modifiedTransactions, $transaction);
