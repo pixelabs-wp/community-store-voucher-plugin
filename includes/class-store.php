@@ -324,7 +324,7 @@ class CSVP_Store
 
     public function render_creating_transactions()
     {
-        global $community_member, $community, $voucher_transaction, $transaction;
+        global $community_member, $community, $voucher_transaction, $transaction, $commision;
 
         if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_voucher"){
             $payload = $_POST;
@@ -337,9 +337,24 @@ class CSVP_Store
 
             if (!is_wp_error($response)) {
 
+
+                $store = $this->get_store_data_by_id($this->get_store_id()); // line 118
+
+
+                $commision_Data = array(
+                    "entity_id" => $this->get_store_id(),
+                    "entity_type" => CSVP_User_Roles::ROLE_STORE_MANAGER,
+                    "commission_type" => COMMISSION_TYPE_ACCUMULATED,
+                    "commission_value" => $store->fee_amount_per_transaction,
+                    "commission_status" => COMMISSION_STATUS_PENDING
+                );
+
+                $commision->create_commission($commision_Data);
+
+
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been charged successfully");
             } else {
-                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
             }
 
         } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_card") {
@@ -363,6 +378,19 @@ class CSVP_Store
 
        
             if (!is_wp_error($response)) {
+
+                $store = $this->get_store_data_by_id($this->get_store_id()); // line 118
+
+
+                $commision_Data = array(
+                    "entity_id" => $this->get_store_id(),
+                    "entity_type" => CSVP_User_Roles::ROLE_STORE_MANAGER,
+                    "commission_type" => COMMISSION_TYPE_ACCUMULATED,
+                    "commission_value" => $store->fee_amount_per_transaction,
+                    "commission_status" => COMMISSION_STATUS_PENDING
+                );
+
+                $commision->create_commission($commision_Data);
 
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Card has been charged successfully");
             } else {

@@ -1201,7 +1201,7 @@
 
 	if (isset($pageData["joined_communities"])) {
 		foreach ($pageData["joined_communities"] as $community) { 
-			
+		
 			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
 				data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
@@ -1549,6 +1549,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 				}
 			},
 			success: function (response) {
+
+				console.log(response)
 				// Handle success response
 				if (response.length > 0) {
 					var parentElement = document.getElementById("voucherElementId");

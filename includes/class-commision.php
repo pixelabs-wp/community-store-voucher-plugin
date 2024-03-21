@@ -23,6 +23,7 @@ class CSVP_Commission{
         $entity_type = $data['entity_type'];
         $commission_type = $data['commission_type'];
         $commission_value = $data['commission_value'];
+        $commission_status = $data['commission_status'];
 
         // Insert data into the database
         $wpdb->insert(
@@ -31,7 +32,8 @@ class CSVP_Commission{
                 'entity_id' => $entity_id,
                 'entity_type' => $entity_type,
                 'commission_type' => $commission_type,
-                'commission_value' => $commission_value
+                'commission_value' => $commission_value,
+                'commission_status' => $commission_status
             ) // Data to be inserted
         );
 
@@ -203,7 +205,6 @@ class CSVP_Commission{
     ",
             $entity_type
         );
-
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
 

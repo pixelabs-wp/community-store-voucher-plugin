@@ -500,6 +500,7 @@
         <div class="page-wrapper bg col-12 md-w">
             <!-- Page header -->
 
+            <?php $store_data = $store->get_store_by_id($store->get_store_id()); ?>
             <header class="navbar-expand-sm  w-100 border border-dark">
                 <div class="" id="navbar-menu">
                     <div class="navbar bg">
@@ -514,7 +515,7 @@
                                                     line-height: 27px;
                                                     letter-spacing: 0em;
                                                     text-align: center;
-                                                    ">שם החנות: בגיר</p>
+                                                    ">שם החנות: <?php echo $store_data->store_name; ?></p>
                             </div>
 
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
