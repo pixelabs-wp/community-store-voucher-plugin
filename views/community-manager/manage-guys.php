@@ -33,7 +33,7 @@
   }
 
   .ts-store-name {
-    width: 10%;
+    width: 16%;
   }
 
   .ts-guy-name {
