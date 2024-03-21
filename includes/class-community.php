@@ -410,40 +410,72 @@ class CSVP_Community
         }
     }
 
+
     public function get_all_joined_communities_for_store()
     {
         global $wpdb, $store;
         $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
-        $query = $wpdb->prepare("
-        SELECT 
-            c.id AS community_id,
-            c.community_name,
-            COUNT(DISTINCT cm.id) AS active_members_count,
-            SUM(o.order_total) AS total_order_amount
-        FROM 
-            {$wpdb->prefix}csvp_community c
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
-        INNER JOIN 
-            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
-        GROUP BY 
-            c.id, c.community_name;
-        ", JOINING_REQUEST_STATUS_APPROVED);
 
-        $communities = $wpdb->get_results($query);
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
+
+        // Execute the query and fetch the results
+        $joined_communities = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($joined_communities as $key => $community) {
+            $order_data = $this->get_order_data_by_id(($community["community_id"]));
+            $joined_communities[$key]["order_data"] = $order_data;
+
+            $community_data = $this->get_community_data_by_id(($community["community_id"]));
+            $joined_communities[$key]["community_data"] = $community_data;
+        }
 
         // Check if communities were found
-        if ($communities) {
+        if ($joined_communities) {
             // Return array of community objects
-            return $communities;
+            return $joined_communities;
         } else {
             // Send error response
-            return new WP_Error('not_found', __('No Joined communities.', 'csvp'), array('status' => 404));
+            return new WP_Error('not_found', __('No Joined Communities.', 'csvp'), array('status' => 404));
         }
     }
+    public function get_order_data_by_id($community_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT community_id, COUNT(id) AS order_count, SUM(order_total) AS total_order_amount FROM {$wpdb->prefix}csvp_order WHERE community_id = %d GROUP BY community_id", $community_id);
+        // Execute the query
+        $order_data = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($order_data) {
+            // Return voucher data as an object
+            return $order_data;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
+
+
+    public function get_community_data_by_id($community_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_community WHERE id = %d", $community_id);
+        // Execute the query
+        $community_data = $wpdb->get_row($query);
+
+       // Check if a voucher was found
+       if ($community_data) {
+           // Return voucher data as an object
+           return $community_data;
+       } else {
+           // Return false if voucher not found
+           return false;
+       }
+
+   }
+
 
     public function get_all_requested_communities_for_store()
     {

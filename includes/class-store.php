@@ -394,7 +394,7 @@ class CSVP_Store
         // Prepare SQL query to retrieve communities by name using LIKE operator
 
         // Prepare SQL query to select voucher transactions by member ID
-        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s AND requested_by = 'community_manager'",  $community_id, JOINING_REQUEST_STATUS_APPROVED);
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s",  $community_id, JOINING_REQUEST_STATUS_APPROVED);
 
         // Execute the query and fetch the results
         $joined_store = $wpdb->get_results($query, ARRAY_A);
@@ -426,7 +426,7 @@ class CSVP_Store
         // Prepare SQL query to retrieve communities by name using LIKE operator
        
             // Prepare SQL query to select voucher transactions by member ID
-            $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s AND requested_by = 'community_manager'",  $community_id, JOINING_REQUEST_STATUS_PENDING);
+            $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND request_status = %s",  $community_id, JOINING_REQUEST_STATUS_PENDING);
     
             // Execute the query and fetch the results
             $joined_store = $wpdb->get_results($query, ARRAY_A);
