@@ -174,6 +174,30 @@ class CSVP_VoucherTransaction{
         }
     }
 
+
+    public function get_store_data_by_id($store_id) {
+        global $wpdb;
+      
+        $store_data_table = $wpdb->prefix . 'csvp_store';
+        // Prepare SQL query to retrieve community data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $store_data_table WHERE id = %d",
+            $store_id
+        );
+
+        // Execute the query
+        $store = $wpdb->get_row($query);
+
+        // Check if a community was found
+        if ($store) {
+            // Return community data as an object
+            return $store;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('Store not found.', 'csvp'), array('status' => 404));
+        }
+    }
+
     public function get_member_data_by_id($community_member_id) {
         global $wpdb;
         
@@ -213,9 +237,24 @@ class CSVP_VoucherTransaction{
             // Execute the query and fetch the results
             $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
 
+        foreach ($voucher_transactions as $key => $transaction) {
+            
+            $member = $this->get_member_data_by_id($transaction["community_member_id"]); // line 118
+            $voucher_transactions[$key]["member_data"] = $member;
+
+            $voucher_data = $this->get_voucher_data_by_id(($transaction["voucher_id"]));
+            $voucher_transactions[$key]["voucher_data"] = $voucher_data;
+
+            $store = $this->get_store_data_by_id($voucher_data->store_id); // line 118
+            $voucher_transactions[$key]["store_data"] = $store;
+        }
+
+
             // Return the results if any, otherwise return null
             return !empty($voucher_transactions) ? $voucher_transactions : null;
         }
+    
+
 
     public function get_voucher_transactions_by_member_id($data) {
         global $wpdb, $store, $voucher;
@@ -239,7 +278,7 @@ class CSVP_VoucherTransaction{
             $modifiedTransactions = array();
 
             foreach ($voucher_transactions as $transaction) {
-                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id"=>22));
+                $transaction["voucher_data"] = $this->voucher->get_voucher_by_id(array("voucher_id"=>$transaction["voucher_id"]));
                 $transaction["store_data"] = $store->get_store_by_id($transaction["voucher_data"][0]->store_id);
                 array_push($modifiedTransactions, $transaction);
             }

@@ -107,7 +107,7 @@
 	<div
 		class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
-
+   
       <!-- CSV Download Filter  -->
       <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
         <div class="card card-sm p-relative">
@@ -273,42 +273,43 @@
       <div class="transaction-history-table" style="overflow-x: auto">
         <table class="table table-vcenter card-table">
           <tbody class="d-flex flex-column ts-text">
+          <?php
+          $total_order = 0;
+          $total_order_value = 0;
+          if (isset($pageData["voucher_transaction"])) {
+            foreach ($pageData["voucher_transaction"] as $transaction) {
+              $total_order =  $total_order +1;
+              $total_order_value = $total_order_value + $transaction['transaction_amount'];
+              $date = new DateTime($transaction['transaction_date']);
+              $formattedDate = $date->format('d/m/Y');
+              ?>
             <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
+              <td class="ts-date">תאריך: <?php echo $formattedDate; ?></td>
+              <td class="text-muted ts-price"><?php echo $transaction['transaction_amount']; ?> ₪</td>
               <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
+                <a href="#" class="text-reset">מוצר: <?php echo $transaction['voucher_data']->product_name; ?></a>
               </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
+              <td class="text-muted ts-store-name">שם חנות: <?php echo $transaction['store_data']->store_name; ?></td>
+              <td class="ts-guy-name">שם הבחור: <?php echo $transaction['member_data']->full_name; ?></td>
             </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
-            <tr>
-              <td class="ts-date">תאריך: 25/07/2023</td>
-              <td class="text-muted ts-price">250 ₪</td>
-              <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: חליפת צמר 70%</a>
-              </td>
-              <td class="text-muted ts-store-name">שם חנות: בגיר</td>
-              <td class="ts-guy-name">שם הבחור: משה וענונו</td>
-            </tr>
+           <?php } } ?>
+           <?php
+            if (isset($pageData["amount_transaction"])) {
+              foreach ($pageData["amount_transaction"] as $amount) {
+                $date = new DateTime($transaction['transaction_date']);
+                $formattedDate = $date->format('d/m/Y');
+                ?>
+              <tr>
+                <td class="ts-date">תאריך: <?php echo $formattedDate; ?></td>
+                <td class="text-muted ts-price"><?php echo $amount['transaction_amount']; ?> ₪</td>
+                <td class="text-muted ts-product">
+                  <a href="#" class="text-reset">מוצר: <?php echo $amount['transaction_type'] ?></a>
+                </td>
+                <td class="text-muted ts-store-name">Transaction</td>
+                <td class="ts-guy-name">שם הבחור: <?php echo $amount['member_data']->full_name; ?></td>
+              </tr>
+            <?php } } ?>
+           
           </tbody>
         </table>
       </div>
@@ -320,13 +321,13 @@
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
                   <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                    סה”כ הזמנות: 45
+                    סה”כ הזמנות: <?php echo  $total_order; ?>
                   </div>
               </li>
 
               <li class="page-item page-next" disabled>
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                    סה”כ שווי הזמנות: 3,400₪
+                    סה”כ שווי הזמנות: <?php echo  $total_order_value; ?>₪
                   </div>
               </li>
             </ul>
