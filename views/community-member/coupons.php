@@ -310,7 +310,7 @@
 
 <div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
-        <div class="modal-content p-4" style="direction: rtl">
+        <div class="modal-content p-4" style="direction: rtl" style="overflow: auto;">
             <h3>Do you wish to purchase <span id="voucher_name"></span> for <span id="voucher_price"></span></h3>
 
             <div class="add-new-benefit-buttons mt-4">
