@@ -1213,13 +1213,13 @@
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
 										<td><strong>שם החנות: </strong>
-											<?php echo $community->community_name; ?>
+											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-											<?php echo $community->active_members_count; ?>
+											<?php echo $community['community_member_data']->member_count; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-											<?php echo $community->active_members_count; ?> ₪
+											<?php echo $community['order_data']->total_order_amount; ?> ₪
 										</td>
 
 									</tr>

@@ -417,8 +417,6 @@ class CSVP_Store
         }
     }
 
-
-
     public function get_all_requested_store_for_communities()
     {
         global $wpdb, $community;
@@ -445,7 +443,7 @@ class CSVP_Store
             return $joined_store;
         } else {
             // Send error response
-            return new WP_Error('not_found', __('No Joined Stores.', 'csvp'), array('status' => 404));
+            return new WP_Error('not_found', __('No Requested Stores.', 'csvp'), array('status' => 404));
         }
     }
 
