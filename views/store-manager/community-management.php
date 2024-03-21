@@ -253,7 +253,7 @@
 	}
 
 	.tran h3 {
-		color: #5A4222;
+		color: black;
 	}
 
 	.title {
@@ -1166,7 +1166,7 @@
 						</span>
 					</div>
 					<div class="col">
-						<input type="text" id="store-search" class="px-2" placeholder="חיפוש חנות ">
+						<input type="text" id="store-search" class="px-2" placeholder="חיפוש ת”ת">
 					</div>
 				</div>
 			</div>
@@ -1177,7 +1177,7 @@
 			<div class="card-body-rounded p-1 m-1">
 				<div class="row align-items-center">
 					<div class="col">
-						<div class="font-weight-medium ts-text"> חנויות שלא בהסדר</div>
+						<div class="font-weight-medium ts-text">תת”ים שלא בהסדר</div>
 					</div>
 				</div>
 			</div>
@@ -1188,7 +1188,7 @@
 			<div class="card-body-rounded p-1 m-1">
 				<div class="row align-items-center">
 					<div class="col">
-						<div class="font-weight-medium ts-text">חנויות בהסדר</div>
+						<div class="font-weight-medium ts-text">תת”ים בהסדר</div>
 					</div>
 				</div>
 			</div>
@@ -1212,13 +1212,13 @@
 							<div class="row-1 p-2 d-flex align-items-center justify-content-end">
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
-										<td><strong>שם החנות: </strong>
+										<td><strong>שם הת”ת: </strong>
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
-										<td><strong>כמות הזמנות: </strong>
+										<td><strong>כמות בחורים: </strong>
 											<?php echo $community['community_member_data']->member_count; ?>
 										</td>
-										<td><strong>סך הזמנות: </strong>
+										<td><strong>סך הזמנות:</strong>
 											<?php echo $community['order_data']->total_order_amount; ?> ₪
 										</td>
 
