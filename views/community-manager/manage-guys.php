@@ -459,7 +459,7 @@
 
 <!-- Guy Details modal Starts here -->
 
-<div class="modal fade" id="community-manager-guy-full-detail" tabindex="-1" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="community-member-guy-full-detail" tabindex="-1" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
     <div class="modal-content " style="overflow: auto;">
@@ -479,11 +479,11 @@
 
           <div class="col-lg-4 p-4 bg-gray rounded-3 my-5 mx-2" style="background: rgba(228, 228, 228, 1);">
             <h2><strong>פרטי הבחור:</strong></h2>
-            <h2><strong>שם הבחור:</strong> משה וענונו</h2>
-            <h2><strong>מס’ טלפון:</strong> 0546268012</h2>
-            <h2><strong>כתובת מייל:</strong> elikako.m@gmail.com</h2>
-            <h2><strong>מס’ תעודת זהות:</strong> 2042856524</h2>
-            <h2><strong>מס’ כרטיס מגנטי:</strong> 154626652</h2>
+            <h2><strong>שם הבחור:</strong><span id="guy_name"></span></h2>
+            <h2><strong>מס’ טלפון:</strong> <span id="guy_no"></span></h2>
+            <h2><strong>כתובת מייל:</strong> <span id="guy_email"></span></h2>
+            <h2><strong>מס’ תעודת זהות:</strong> <span id="guy_id_no"></span></h2>
+            <h2><strong>מס’ כרטיס מגנטי:</strong> <span id="guy_magnetic_card_no"></span></h2>
           </div>
 
           <div class="col-lg-7 p-4 bg-white rounded-3 my-5 mx-2"
@@ -491,24 +491,8 @@
             <h1>הסטוריית טעינות</h1>
             <div style="  height: 200px; overflow: auto;">
               <table class="guy-loading-history-data">
-                <tbody>
-                  <tr>
-                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                    <td><strong>סכום: </strong>250 ₪</td>
-                    <td><strong>תאריך: </strong>24/07/2023</td>
-                  </tr>
-
-                  <tr>
-                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                    <td><strong>סכום: </strong>250 ₪</td>
-                    <td><strong>תאריך: </strong>24/07/2023</td>
-                  </tr>
-
-                  <tr>
-                    <td><strong>סוג העסקה: </strong>ערך צבור</td>
-                    <td><strong>סכום: </strong>250 ₪</td>
-                    <td><strong>תאריך: </strong>24/07/2023</td>
-                  </tr>
+                <tbody id="guy-transaction-history">
+                  
                 </tbody>
 
               </table>
@@ -789,7 +773,8 @@
               <tr>
                 <td class="ts-date">
                   <div class="card card-sm bg-black ts-round" style="direction: rtl;" data-bs-toggle="modal"
-                    data-bs-target="#community-manager-guy-full-detail">
+                    data-bs-target="#community-member-guy-full-detail"  onclick="populateOrderDetailModalFunction(this)"
+        data-member-details='<?php echo json_encode($member); ?>' data-member-details='<?php echo json_encode($member); ?>' data-voucher-details='<?php echo json_encode($member); ?>'>
                     <div class="card-body p-1 m-1">
                       <div class="row align-items-center">
                         <div class="col-auto">
@@ -815,7 +800,7 @@
                 <td class="ts-guy-name">שם הבחור: </span>
                   <?php echo $member["full_name"]; ?><span>
                 </td>
-                <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40"
+                <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40"  
                     viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_0_2848)">
                       <path
@@ -1036,5 +1021,120 @@
         }));
       });
       // @formatter:on
+
+      var tableData = document.getElementById('guy-transaction-history');
+      function addSection(transaction_type, transaction_amount, transaction_date) {
+
+        const dateObj = new Date(transaction_date);
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObj.getFullYear().toString();
+        date = `${day}/${month}/${year}`;
+        var section = `
+        <tr>
+          <td><strong>סוג העסקה: </strong>${transaction_type}</td>
+          <td><strong>סכום: </strong>${transaction_amount} ₪</td>
+          <td><strong>תאריך: </strong>${date}</td>
+        </tr> `;
+	      tableData.insertAdjacentHTML('beforeend', section);
+      }
+      function addSection_2(transaction_type, transaction_amount, transaction_date) {
+
+        const dateObj = new Date(transaction_date);
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObj.getFullYear().toString();
+        date = `${day}/${month}/${year}`;
+        var section = `
+                        <tr>
+                            <td><strong>סוג העסקה: </strong>${transaction_type}</td>
+                            <td><strong>שובר : </strong>${transaction_amount} ₪</td>
+                            <td><strong>תאריך: </strong>${date}</td>
+                          </tr>`;
+        tableData.insertAdjacentHTML('beforeend', section);
+        }
+
+      function populateOrderDetailModalFunction(button) {
+
+      var orderDetails = button.getAttribute('data-member-details');
+      var parsedDetails = JSON.parse(orderDetails);
+
+      var id = parsedDetails.id;
+      var is_active = parsedDetails.is_active;
+      var created_at = parsedDetails.created_at;
+      var updated_at = parsedDetails.updated_at;
+      var wp_user = parsedDetails.wp_user;
+      var community_id = parsedDetails.community_id;
+      var full_name = parsedDetails.full_name;
+      var phone_number = parsedDetails.phone_number;
+      var email_address = parsedDetails.email_address;
+      var lesson = parsedDetails.lesson;
+      var id_number = parsedDetails.id_number;
+      var wp_user_id = parsedDetails.wp_user_id;
+      var address = parsedDetails.address;
+      var magnetic_card_number_association = parsedDetails.magnetic_card_number_association;
+      var card_balance = parsedDetails.card_balance;
+
+      document.getElementById("guy_name").innerHTML = full_name;
+      document.getElementById("guy_no").innerHTML = phone_number;
+      document.getElementById("guy_email").innerHTML = email_address;
+      document.getElementById("guy_id_no").innerHTML = id_number;
+      document.getElementById("guy_magnetic_card_no").innerHTML = magnetic_card_number_association;
+      tableData.innerHTML = "";
+
+      jQuery.ajax({
+        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+        type: 'POST',
+        data: {
+          action: 'csvp_ajax', // Action hook
+          csvp_request: 'CSVP_Transaction', // Action hook
+          csvp_handler: 'get_transactions_by_community_member_id', // Action hook
+          data: {
+            id: id
+          }
+        },
+        success: function (response) {
+          // Handle success response
+          console.log(response);
+          response.forEach(function (item) {
+						addSection(item.transaction_type, item.transaction_amount, item.transaction_date);
+					});
+        },
+        error: function (xhr, status, error) {
+          // Handle error response
+          console.error(xhr.responseText);
+        }
+      });
+
+      jQuery.ajax({
+        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+        type: 'POST',
+        data: {
+          action: 'csvp_ajax', // Action hook
+          csvp_request: 'CSVP_VoucherTransaction', // Action hook
+          csvp_handler: 'get_voucher_transactions_by_member_id', // Action hook
+          data: {
+            member_id: id
+          }
+        },
+        success: function (response) {
+          // Handle success response
+          console.log(response);
+          response.forEach(function (item) {
+						addSection_2(item.transaction_type, item.transaction_amount, item.transaction_date);
+					});
+        },
+        error: function (xhr, status, error) {
+          // Handle error response
+          console.error(xhr.responseText);
+        }
+      });
+
+                
+                  
+      
+}
+
+
 
     </script>

@@ -8,6 +8,7 @@ class CSVP_Community
     public $voucher;
     public $joining_request;
     public $order;
+    public $transaction;
 
 
     // Constructor
@@ -19,6 +20,7 @@ class CSVP_Community
         $this->voucher = new CSVP_VoucherTransaction();
         $this->joining_request = new CSVP_JoiningRequest();
         $this->order = new CSVP_Order();
+        $this->transaction = new CSVP_Transaction();
     }
 
     public function render_dashboard(){
@@ -60,9 +62,26 @@ class CSVP_Community
         CSVP_View_Manager::load_view('messages');
     }
 
-    public static function render_transaction_history()
+    public function render_transaction_history()
     {
-        CSVP_View_Manager::load_view('transaction-history');
+        $pageData = [];
+        $payload["community_id"] = $this->get_current_community_id();
+        $id = $this->get_current_community_id();
+        $voucher_transaction =  $this->voucher->get_all_voucher_transactions_by_community_id($payload);
+        $check_1["voucher_transaction"] = $voucher_transaction;
+        if (!is_wp_error($check_1["voucher_transaction"])) 
+        {
+            $pageData["voucher_transaction"] = $voucher_transaction;
+        }
+
+        $amount_transaction =  $this->transaction->get_transactions_by_community_id($id);
+        $check_2["amount_transaction"] = $amount_transaction;
+        if (!is_wp_error($check_2["amount_transaction"])) 
+        {
+            $pageData["amount_transaction"] = $amount_transaction;
+        }
+        
+        CSVP_View_Manager::load_view('transaction-history', $pageData);   
     }
 
     public function render_store_management()
