@@ -68,7 +68,6 @@ $voucher = new CSVP_Voucher();
 $walk_order = new CSVP_WalkOrder();
 $community_member = new CSVP_CommunityMember();
 $messages = new CSVP_CommunityMessage();
-
 add_action( 'init', 'run_tests' );
 
 function run_tests() {

@@ -379,7 +379,10 @@ class CSVP_Store
             }
         }
         $community_members = array_reduce($community_members, function ($carry, $item) {
-            return array_merge($carry, $item);
+            if (is_array($item)) {
+                return array_merge($carry, $item);
+            }
+            return $carry; // If $item is not an array, just return $carry unchanged
         }, []);
 
         $pageData["members"] = $community_members;
