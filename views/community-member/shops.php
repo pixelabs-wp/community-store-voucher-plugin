@@ -12,7 +12,7 @@
   }
 
   .btn {
-    width: 278px;
+    width: 100%;
     height: 55px;
     top: 240px;
     left: 31px;
