@@ -413,7 +413,7 @@
 								</table>
 							</div>
 						</div>
-						<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה:
+						<p class="card-footer-text pt-4 pb-2">סה”כ סכום ההחזרה:
 							<?php echo $total_cost; ?> ₪
 						</p>
 					</div>
@@ -473,14 +473,14 @@
 					<div class="store-management-return-history-footer p-3 d-flex">
 						<span class="w-25">
 							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
+								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px; direction: rtl;">
 								סה”כ זיכויים: <?php if(isset($total_credit)){ echo $total_credit; } ?> ₪ </div>
 							</a>
 						</span>
 
 						<span class="w-75">
 							<a class="page-link" href="#" style="text-align: right;">
-								<div class="page-item-title text-white mx-4" style="font-size: 20px">
+								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
 								סך הפריטים שהחזרו: <?php if(isset($total_item)){ echo $total_item; } ?>
 								</div>
 							</a>

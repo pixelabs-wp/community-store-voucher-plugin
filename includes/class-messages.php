@@ -21,6 +21,7 @@ class CSVP_CommunityMessage{
         $full_name = $data['full_name'];
         $phone_no = $data['phone_no'];
         $content = $data['content'];
+        $status = MESSAGE_STATUS_UNREAD;
 
         // Insert data into the database
         $wpdb->insert(
@@ -31,7 +32,8 @@ class CSVP_CommunityMessage{
                 'to_user_role' => $to_user_role,
                 'full_name' => $full_name,
                 'phone_no' => $phone_no,
-                'content' => $content
+                'content' => $content,
+                'message_status' => $status
             )
         );
 
@@ -147,6 +149,24 @@ class CSVP_CommunityMessage{
 
         // Prepare SQL query to select community messages by community ID
         $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE to_id = %d", $community_id);
+
+        // Execute the query and fetch the results
+        $messages = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return !empty($messages) ? $messages : null;
+    }
+
+
+    // Method to retrieve community messages by community ID
+    public function get_community_messages_by_to_role($data)
+    {
+        global $wpdb;
+
+        $to_user_role = $data['to_user_role'];
+
+        // Prepare SQL query to select community messages by community ID
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE to_user_role = %s", $to_user_role);
 
         // Execute the query and fetch the results
         $messages = $wpdb->get_results($query, ARRAY_A);

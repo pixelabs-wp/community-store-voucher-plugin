@@ -441,17 +441,17 @@
 		<div class="container p-0">
 			<div class="card-x">
 				<div class="card-body my-3 bg-black rounded-3 p-2">
-					<div class="store-management-order-history-footer p-3 d-flex">
+					<div class="store-management-order-history-footer p-3 d-flex" >
 						<span class="w-25">
 							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
+								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px; direction: rtl;">
 								סה”כ חובות: <?php if(isset($total_credit)){ echo $total_credit; } ?> ₪  </div>
 							</a>
 						</span>
 
 						<span class="w-75">
 							<a class="page-link" href="#" style="text-align: right;">
-								<div class="page-item-title text-white mx-4" style="font-size: 20px">
+								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
 								סך הפריטים שנמכרו: <?php if(isset($total_item)){ echo $total_item; } ?>
 								</div>
 							</a>

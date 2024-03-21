@@ -483,6 +483,25 @@ class CSVP_Community
     }
 
 
+    public function get_community_member_data_by_id($community_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT community_id, COUNT(id) AS member_count FROM {$wpdb->prefix}csvp_community_member WHERE community_id = %d", $community_id);
+        // Execute the query
+        $member_data = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($member_data) {
+            // Return voucher data as an object
+            return $member_data;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
+    
+
+
     public function get_community_data_by_id($community_id)
     {
         global $wpdb;
@@ -502,80 +521,77 @@ class CSVP_Community
    }
 
 
-    public function get_all_requested_communities_for_store()
-    {
-        global $wpdb, $store;
-        $store_id = $store->get_store_id();
-        // Prepare SQL query to retrieve communities by name using LIKE operator
-        $query = $wpdb->prepare("
-        SELECT 
-            c.id AS community_id,
-            c.community_name,
-            COUNT(DISTINCT cm.id) AS active_members_count,
-            SUM(o.order_total) AS total_order_amount
-        FROM 
-            {$wpdb->prefix}csvp_community c
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
-        INNER JOIN 
-            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
-        GROUP BY 
-            c.id, c.community_name;
-        ", JOINING_REQUEST_STATUS_PENDING);
-        $communities = $wpdb->get_results($query);
+   public function get_all_requested_communities_for_store()
+   {
+       global $wpdb, $store;
+       $store_id = $store->get_store_id();
+       // Prepare SQL query to retrieve communities by name using LIKE operator
+      
+           // Prepare SQL query to select voucher transactions by member ID
+           $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_PENDING);
+   
+           // Execute the query and fetch the results
+           $requested_store = $wpdb->get_results($query, ARRAY_A);
 
-        // Check if communities were found
-        if ($communities) {
-            // Return array of community objects
-            return $communities;
-        } else {
-            // Send error response
-            return new WP_Error('not_found', __('No Pending Request communities.', 'csvp'), array('status' => 404));
+       
+           foreach ($requested_store as $key => $community) {
+            $order_data = $this->get_order_data_by_id(($community["community_id"]));
+            $requested_store[$key]["order_data"] = $order_data;
+
+            $community_data = $this->get_community_data_by_id(($community["community_id"]));
+            $requested_store[$key]["community_data"] = $community_data;
         }
-    }
 
-    public function get_all_not_requested_communities_for_store()
-    {
-        global $wpdb, $store;
-        $store_id = $store->get_store_id();
-        // Prepare SQL query to retrieve communities by name using LIKE operator
-        $query = $wpdb->prepare("
-            SELECT 
-                c.id AS community_id,
-                c.community_name,
-                COUNT(DISTINCT cm.id) AS active_members_count,
-                SUM(o.order_total) AS total_order_amount
-            FROM 
-                {$wpdb->prefix}csvp_community c
-            LEFT JOIN 
-                {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
-            LEFT JOIN 
-                {$wpdb->prefix}csvp_order o ON c.id = o.community_id
-            WHERE 
-                c.id NOT IN (
-                    SELECT jr.community_id
-                    FROM {$wpdb->prefix}csvp_joining_request jr
-                    WHERE jr.store_id = %d
-                )
-            GROUP BY 
-                c.id, c.community_name;
-        ", $store_id);
-
-        $communities = $wpdb->get_results($query);
-
-        // Check if communities were found
-        if ($communities) {
-            // Return array of community objects
-            return $communities;
-        } else {
-            // Send error response
-            return new WP_Error('not_found', __('No New communities.', 'csvp'), array('status' => 404));
-        }
-    }
+       // Check if communities were found
+       if ($requested_store) {
+           // Return array of community objects
+           return $requested_store;
+       } else {
+           // Send error response
+           return new WP_Error('not_found', __('No Requested Communities.', 'csvp'), array('status' => 404));
+       }
+   }
 
 
+   public function get_all_not_requested_communities_for_store()
+   {
+       global $wpdb, $store;
+       $store_id = $store->get_store_id();
+       // Prepare SQL query to retrieve store IDs
+       $query = $wpdb->prepare("SELECT id FROM {$wpdb->prefix}csvp_community");
+       $community_ids = $wpdb->get_results($query, ARRAY_A);
+       $communitiesWithoutRequests = [];
+       // Iterate over each store ID
+       foreach ($community_ids as $row) {
+           $community_id = $row["id"];
+           // Prepare SQL query to check if there are any requests for this store and community
+           $query = $wpdb->prepare("SELECT COUNT(*) AS count FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND store_id = %d", $community_id, $store_id);
+           $ids_result = $wpdb->get_results($query, ARRAY_A);
+           // Check if there are any rows
+           if ($ids_result && isset($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
+               $communitiesWithoutRequests[] = $community_id;
+           }
+       }
+       $not_requested_community = [];
+       // Iterate over each store ID without requests
+       foreach ($communitiesWithoutRequests as $key => $community_id) {
+           // Get order data by store ID
+           $order_data = $this->get_order_data_by_id($community_id);
+           // Get store data by store ID
+           $community_data = $this->get_community_data_by_id($community_id);
+           // Append order data and store data to joined store array
+           $not_requested_community[$key]["order_data"] = $order_data;
+           $not_requested_community[$key]["community_data"] = $community_data;
+       }
+       // Check if joined store data was found
+       if (!empty($not_requested_community)) {
+           // Return array of joined store data
+           return $not_requested_community;
+       } else {
+           // Send error response
+           return new WP_Error('not_found', __('No Communities without requests found.', 'csvp'), array('status' => 404));
+       }
+   }
 
 
     public function get_community_data_for_store_popup($data)
