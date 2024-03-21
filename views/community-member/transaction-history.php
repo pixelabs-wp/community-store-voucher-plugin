@@ -1,4 +1,4 @@
-    <?php include CSVP_PLUGIN_PATH."views/community-member/header.php" ?>
+ <?php include CSVP_PLUGIN_PATH."views/community-member/header.php" ?>
 
   <style>
       @import url("https://rsms.me/inter/inter.css");
@@ -90,7 +90,7 @@
                   <td class="ts-date">תאריך: 24/07/2023</td>
 
                   <td class="text-muted ts-product">
-                    <a href="#" class="text-reset">שם החנות: בגיר</a>
+                    שם החנות: בגיר
                   </td>
                   <td class="text-muted ts-price">סכום: ₪250</td>
                   <td class="text-muted ts-store-name">סוג העסקה: ערך צבור</td>
@@ -99,7 +99,7 @@
                   <td class="ts-date">תאריך: 25/07/2023</td>
                   <td class="text-muted ts-price">שם החנות: אקסוס</td>
                   <td class="text-muted ts-product">
-                    <a href="#" class="text-reset">סוג השובר: חליפה</a>
+                    סוג השובר: חליפה
                   </td>
                   <td class="text-muted ts-store-name">
                     סוג העסקה: מימוש שובר
@@ -109,7 +109,7 @@
                   <td class="ts-date">תאריך: 24/07/2023</td>
 
                   <td class="text-muted ts-product">
-                    <a href="#" class="text-reset">שם החנות: בגיר</a>
+                   שם החנות: בגיר
                   </td>
                   <td class="text-muted ts-price">סכום: ₪250</td>
                   <td class="text-muted ts-store-name">סוג העסקה: ערך צבור</td>
@@ -118,7 +118,7 @@
                   <td class="ts-date">תאריך: 25/07/2023</td>
                   <td class="text-muted ts-price">שם החנות: אקסוס</td>
                   <td class="text-muted ts-product">
-                    <a href="#" class="text-reset">סוג השובר: חליפה</a>
+                    סוג השובר: חליפה
                   </td>
                   <td class="text-muted ts-store-name">
                     סוג העסקה: מימוש שובר
