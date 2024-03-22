@@ -15,6 +15,7 @@ class CSVP_Admin
     //Method to render transaction history
     public function render_community_management()
     {
+        global $commision, $filter;
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_community") {
             $payload = $_POST;
 
@@ -25,7 +26,6 @@ class CSVP_Admin
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, 'Community Added Successfully');
             }
         }
-        $pageData = array(); // or $emptyArray = [];
 
         $communities = $this->community->get_all_communities();
         $modifiedCommunities = array(); // Create a new array to hold modified data
@@ -36,12 +36,22 @@ class CSVP_Admin
                 $number_of_guys = $this->community_member->get_community_members_by_community_id(array('count' => 'true', 'community_id' => $community['id']));
                 // Add the count of members as a new key in each community array
                 $community['number_of_guys'] = $number_of_guys;
+                $community['commision_pending'] = count($commision->get_commissions_by_entity_id($community['id'], CSVP_User_Roles::ROLE_COMMUNITY_MANAGER, COMMISSION_STATUS_PENDING)) > 0 ? 0 : 1;
                 $modifiedCommunities[] = $community; // Add the modified community to the new array
             }
             $number_of_communities = $this->community->get_all_communities(array("count"=>true));
             $pageData["communities"] = $modifiedCommunities;
             $pageData["total_communities"] = $number_of_communities;
             // Assuming CSVP_View_Manager::load_view() is properly configured  
+        }
+
+        if(isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_communities_by_name"){
+            unset($_POST["csvp_filter"]);
+            $pageData["communities"] = $filter->filterData($pageData["communities"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_communities_by_debt") {
+            unset($_POST["csvp_filter"]);
+            $pageData["communities"] = $filter->filterData($pageData["communities"], $_POST);
+
         }
        
         CSVP_View_Manager::load_view('community-management', $pageData);
@@ -158,4 +168,39 @@ class CSVP_Admin
         $pageData["joining_request_data"] = $joining_request_data;
         CSVP_View_Manager::load_view('joining-requests', $pageData);
     }
+
+    function login_community() {
+        $community_id = isset($_REQUEST["community_id"]) ? $_REQUEST["community_id"] : false;
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : home_url('/admin');
+        if($community_id){
+            if(CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_SYSTEM_ADMIN)){
+                // switch_to_user
+            }
+        } else {
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid Community");
+            header("Location: ". $referrer);
+        }
+        
+    }
+
+    function switch_to_user($user_id)
+    {
+        // Check if the user ID is valid
+        if (!is_numeric($user_id) || $user_id <= 0) {
+            return new WP_Error('invalid_user_id', 'Invalid user ID provided.');
+        }
+
+        // Get the user data
+        $user = get_user_by('id', $user_id);
+        if (!$user) {
+            return new WP_Error('user_not_found', 'User not found.');
+        }
+
+        // Set the current user
+        wp_set_current_user($user_id, $user->user_login);
+
+        // Log in as the specified user
+        wp_set_auth_cookie($user_id);
+    }
+
 }

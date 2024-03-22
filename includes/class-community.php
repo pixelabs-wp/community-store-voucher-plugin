@@ -353,6 +353,8 @@ class CSVP_Community
         }
     }
 
+    
+
     /**
      * Function to retrieve a community by its ID from the database.
      *

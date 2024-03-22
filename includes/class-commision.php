@@ -218,11 +218,11 @@ class CSVP_Commission{
      * @param string $community_name The name of the community to search for.
      * @return array|null Array of commissions matching the search criteria on success, null on failure.
      */
-    public function get_commissions_by_entity_id($entity_id) {
+    public function get_commissions_by_entity_id($entity_id, $entity_role) {
         global $wpdb;
 
         // Prepare SQL query to retrieve commissions by community name using LIKE operator
-        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE entity_id = %s", $entity_id);
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE entity_id = %s AND entity_type = %s", $entity_id, $entity_role);
 
         // Execute the query and fetch the results
         $results = $wpdb->get_results($query, ARRAY_A);
@@ -230,4 +230,26 @@ class CSVP_Commission{
         // Return the results if any, otherwise return null
         return $results;
     }
+
+
+    /**
+     * Function to retrieve commissions by community name (partial or full match) from the database.
+     *
+     * @param string $community_name The name of the community to search for.
+     * @return array|null Array of commissions matching the search criteria on success, null on failure.
+     */
+    public function get_due_commision($entity_id, $entity_role, $status)
+    {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve commissions by community name using LIKE operator
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE entity_id = %s AND entity_type = %s AND commission_status = %s", $entity_id, $entity_role, $status);
+
+        // Execute the query and fetch the results
+        $results = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return $results;
+    }
+
 }
