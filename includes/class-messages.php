@@ -21,7 +21,7 @@ class CSVP_CommunityMessage{
         $full_name = $data['full_name'];
         $phone_no = $data['phone_no'];
         $content = $data['content'];
-        $status = MESSAGE_STATUS_UNREAD;
+        $status = MESSAGE_STATUS_UNSEEN;
 
         // Insert data into the database
         $wpdb->insert(
@@ -161,7 +161,7 @@ class CSVP_CommunityMessage{
         $community_id = $data['to_id'];
 
         // Prepare SQL query to select community messages by community ID
-        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE to_id = %d", $community_id);
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE to_id = %d AND to_user_role = %s", $community_id, CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
 
         // Execute the query and fetch the results
         $messages = $wpdb->get_results($query, ARRAY_A);

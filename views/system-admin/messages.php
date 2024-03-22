@@ -255,8 +255,6 @@
                 {
                     if($message['message_status'] == MESSAGE_STATUS_UNSEEN)
                     { 
-                        $dateTime = new DateTime($message['created_at']);
-                        $formattedDate = $dateTime->format('d/m/Y');
                         $seen_status = MESSAGE_STATUS_SEEN;
                         ?> 
                         <div class="accordion-item">
@@ -289,13 +287,8 @@
                     </div>
                    <?php  }
 
-                }
-                foreach($pageData['messages'] as $message)
-                {
-                    if($message['message_status'] == MESSAGE_STATUS_SEEN)
+                   else  if($message['message_status'] == MESSAGE_STATUS_SEEN)
                     { 
-                        $dateTime = new DateTime($message['created_at']);
-                        $formattedDate = $dateTime->format('d/m/Y');
                         $archive_status = MESSAGE_STATUS_ARCHIVED;
                         ?>
             
@@ -332,14 +325,9 @@
                             </div>
                         </div>
 
-            <?php  } }
-            
-            foreach($pageData['messages'] as $message)
-                {
-                    if($message['message_status'] == MESSAGE_STATUS_ARCHIVED)
+            <?php  } 
+                   else if($message['message_status'] == MESSAGE_STATUS_ARCHIVED)
                     { 
-                        $dateTime = new DateTime($message['created_at']);
-                        $formattedDate = $dateTime->format('d/m/Y');
                         ?> 
                         <div class="accordion-item">
                         <h2 class="accordion-header" id="heading-2">
