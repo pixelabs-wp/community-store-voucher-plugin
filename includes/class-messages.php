@@ -171,7 +171,6 @@ class CSVP_CommunityMessage{
     }
 
 
-<<<<<<< HEAD
     public function update_message_status($data) {
         global $wpdb;
     
@@ -209,7 +208,6 @@ class CSVP_CommunityMessage{
     
 
     
-=======
     // Method to retrieve community messages by community ID
     public function get_community_messages_by_to_role($data)
     {
@@ -226,7 +224,6 @@ class CSVP_CommunityMessage{
         // Return the results if any, otherwise return null
         return !empty($messages) ? $messages : null;
     }
->>>>>>> a3181c014ac7ad8d6ebd343f09f3fe1d1bb65cc7
 }
 
 ?>
