@@ -176,7 +176,7 @@
                                 </span>
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">יצא לאקסל</div>
+                                <button class="font-weight-medium ts-text btn border-0 text-right w-20" onclick='outToExcel( <?php echo isset($pageData["commision"]) ? json_encode($pageData["commision"]) : "[]"; ?>)'>יצא לאקסל</button>
                             </div>
                         </div>
                     </div>
@@ -266,8 +266,10 @@
                 <table class="table table-vcenter card-table">
                     <tbody class="d-flex flex-column ts-text">
                         <?php
-
+                        $totalCommisionsAmount = 0;
+                        $totalCommisions = count($pageData["commision"]);
                         foreach ($pageData["commision"] as $commision) {
+                            $totalCommisionsAmount += $commision["total_commision"];
                         ?>
 
                             <tr>
@@ -313,15 +315,15 @@
                             <li class="page-item page-prev disabled">
                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                     <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                                        סה”כ טעינות במערכת: 87 </div>
+                                        סה”כ טעינות במערכת: <?php echo $totalCommisionsAmount; ?> </div>
                                 </a>
                             </li>
 
                             <li class="page-item page-next">
-                               
-                                    <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                        סה”כ ישיבות: 450 </div>
-                                
+
+                                <div class="page-item-title text-white mx-4" style="font-size: 20px">
+                                    סה”כ ישיבות: <?php echo $totalCommisions; ?></div>
+
                             </li>
                         </ul>
                     </div>

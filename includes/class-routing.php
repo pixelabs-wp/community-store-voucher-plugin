@@ -135,9 +135,13 @@ class CSVP_Router {
                 'path' => 'admin/joining-requests',
                 'callback' => array('CSVP_Admin', 'render_requests'),
             ),
-            'admin_requests' => array(
+            'admin_login_community' => array(
                 'path' => 'admin/community-login',
                 'callback' => array('CSVP_Admin', 'login_community'),
+            ),
+            'admin_logout_community' => array(
+                'path' => 'community/community-logout',
+                'callback' => array('CSVP_Admin', 'logout_community'),
             ),
         ));
 
@@ -152,6 +156,7 @@ class CSVP_Router {
         
         // Extract requested URL path
        $requested_path = trim(parse_url(add_query_arg(array()), PHP_URL_PATH), '/');
+
         // Match requested path against registered routes
         foreach ($this->routes as $route) {
             if ($requested_path === $route['path']) {

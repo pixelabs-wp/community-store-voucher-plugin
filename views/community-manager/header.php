@@ -236,8 +236,13 @@
                             </svg>
 
 
+                            <?php 
+                            
+                            $logout_url = get_option('admin_link_id') ? "/community/community-logout" : wp_logout_url(get_permalink());
 
-                            <span class="d-none ms-2 logout-button d-md-inline-flex"><a href="<?php echo wp_logout_url(get_permalink()); ?>" title="Logout">התנתקות מהמערכת</a>
+
+                            ?>
+                            <span class="d-none ms-2 logout-button d-md-inline-flex"><a href="<?php echo $logout_url; ?>" title="Logout">התנתקות מהמערכת</a>
                             </span>
 
                         </button>
