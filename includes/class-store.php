@@ -275,24 +275,7 @@ class CSVP_Store
     public  function render_transaction_history()
     {
         global $transaction, $community, $community_member;
-        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin") {
-            $admin = get_user_by('role', 'administrator');
-            if ($admin) {
-                $admin_id = $admin->ID;
-            } else {
-                $admin_id = 0;
-            }
-            $payload = $_POST;
-            $payload["from_id"] = $this->get_store_id();
-            $payload["to_id"] = $admin_id;
-            $payload["to_user_role"] = 'Admin';
-            $response = $this->message->create_community_message($payload);
-            if ($response) {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
-            } else {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
-            }
-        }
+        
 
         $pageData = [];
         $data = [];

@@ -123,6 +123,19 @@ class CSVP_CommunityMessage{
         return !empty($messages) ? $messages : null;
     }
 
+    public function get_all_community_messages_of_admin() {
+        global $wpdb;
+        $role = CSVP_User_Roles::ROLE_SYSTEM_ADMIN;
+        // Prepare SQL query to select all community messages
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name where to_user_role = %s ",$role);
+
+        // Execute the query and fetch the results
+        $messages = $wpdb->get_results($query, ARRAY_A);
+
+        // Return the results if any, otherwise return null
+        return !empty($messages) ? $messages : null;
+    }
+
     // Method to retrieve community messages by member ID
     public function get_community_messages_by_from_id($data) {
         global $wpdb;
@@ -154,6 +167,45 @@ class CSVP_CommunityMessage{
         // Return the results if any, otherwise return null
         return !empty($messages) ? $messages : null;
     }
+
+
+    public function update_message_status($data) {
+        global $wpdb;
+    
+        // Extract data from input array
+        $message_id = isset($data['message_id']) ? (int)$data['message_id'] : 0;
+        $new_status = isset($data['new_status']) ? $data['new_status'] : '';
+    
+        // Validate input data
+        if ($message_id <= 0 || empty($new_status)) {
+            // Invalid input data
+            return "No Data";
+        }
+    
+        // Prepare SQL query to update message status
+        $query = $wpdb->prepare("UPDATE $this->table_name SET message_status = %s WHERE id = %d", $new_status, $message_id);
+    
+        // Execute the query
+        $result = $wpdb->query($query);
+    
+        // Check if the query was successful
+        if ($result !== false) {
+            // Query executed successfully, check if rows were affected
+            if ($result > 0) {
+                // Rows were affected, update successful
+                return "Updated";
+            } else {
+                // No rows were affected, message ID not found
+                return "No data matched";
+            }
+        } else {
+            // Query execution failed
+            return "Update Fail";
+        }
+    }
+    
+
+    
 }
 
 ?>

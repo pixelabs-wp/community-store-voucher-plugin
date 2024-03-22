@@ -250,125 +250,169 @@
     </div>
     <div class="accordion" id="accordion-example">
         <div class="card-x">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-1">
-                    <div class="container-xl button-op-cl p-0 m-0">
-                        <button class="button-open p-2"
-                            style="background-color: #F9F8C7; color: black; font-size: 20px; font-weight: 600;"
-                            id="button-open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1"
-                            aria-expanded="true" onclick="markAsRead()">
-                            סגור וסמן כנקרא
-                        </button>
-                        <div class="content">
-                            25/10/2018<strong>:תאריך</strong>
+            <?php
+                foreach($pageData['messages'] as $message)
+                {
+                    if($message['message_status'] == MESSAGE_STATUS_UNSEEN)
+                    { 
+                        $dateTime = new DateTime($message['created_at']);
+                        $formattedDate = $dateTime->format('d/m/Y');
+                        $seen_status = MESSAGE_STATUS_SEEN;
+                        ?> 
+                        <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-2">
+                            <div class="container-xl button-op-cl p-0 m-0">
+                                <div id="status-button-<?php echo $message['id']; ?>">
+                                <button class="button-open p-2" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#unseen-<?php echo $message['id']; ?>" aria-expanded="true" onclick="statusChange('<?php echo $message['id']; ?>', '<?php echo $seen_status; ?>' , 'status-button-<?php echo $message['id']; ?>', 'unseen-<?php echo $message['id']; ?>')">
+                                    ← לחץ לפתיחה
+                                </button>
+                                </div>
+                                <div class="content">תאריך: <?php echo  $formattedDate; ?></div>
+                                <div class="content">טל: <?php echo $message['phone_no']; ?></div>
+                                <div class="content">שם החנות: <?php echo $message['full_name']; ?> </div>
+                                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                    <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
+                                            fill="white" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </h2>
+                        <div id="unseen-<?php echo $message['id']; ?>" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+                            <div class="accordion-body pt-0">
+                                    <?php echo $message['content']; ?>
+                            </div>
                         </div>
-                        <div class="content">טל: 054-6268012</div>
-                        <div class="content">שם החנות: אקסוס </div>
-                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
-                            <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
-                                    fill="white" />
-                            </svg>
-                        </button>
                     </div>
-                </h2>
-                <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
-                    <div class="accordion-body pt-0">
-                        היי מיארה,רכשתי בבגיר חליפה והמוכר ממש העליב אותי אני
-                        חושב שאנחנו לא יכולים לעבוד איתם יותר
+                   <?php  }
+
+                }
+                foreach($pageData['messages'] as $message)
+                {
+                    if($message['message_status'] == MESSAGE_STATUS_SEEN)
+                    { 
+                        $dateTime = new DateTime($message['created_at']);
+                        $formattedDate = $dateTime->format('d/m/Y');
+                        $archive_status = MESSAGE_STATUS_ARCHIVED;
+                        ?>
+            
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-1">
+                                <div class="container-xl button-op-cl p-0 m-0">
+                                    <div id="archive-status-button-<?php echo $message['id']; ?>">
+                                    <button class="button-open p-2"
+                                        style="background-color: #F9F8C7; color: black; font-size: 20px; font-weight: 600;"
+                                        id="button-open" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $message['id']; ?>"
+                                        aria-expanded="true" onclick="statusChange('<?php echo $message['id']; ?>', '<?php echo $archive_status; ?>' , 'archive-status-button-<?php echo $message['id']; ?>', 'collapse-<?php echo $message['id']; ?>')">
+                                        סגור וסמן כנקרא
+                                    </button>
                     </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-2">
-                    <div class="container-xl button-op-cl p-0 m-0">
-                        <button class="button-open p-2" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse-2" aria-expanded="true">
-                            ← לחץ לפתיחה
-                        </button>
-                        <div class="content">תאריך: 25/10/2018</div>
-                        <div class="content">טל: 054-6268012</div>
-                        <div class="content">שם החנות: אקסוס </div>
-                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
-                            <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
-                                    fill="white" />
-                            </svg>
-                        </button>
+                                    <div class="content">
+                                    <?php echo  $formattedDate; ?><strong>:תאריך</strong>
+                                    </div>
+                                    <div class="content">טל: <?php echo $message['phone_no']; ?></div>
+                                    <div class="content">שם החנות: <?php echo $message['full_name']; ?> </div>
+                                    <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                        <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
+                                                fill="white" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </h2>
+                            <div id="collapse-<?php echo $message['id']; ?>" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+                                <div class="accordion-body pt-0">
+                                        <?php echo $message['content']; ?>
+                                </div>
+                            </div>
+                        </div>
+
+            <?php  } }
+            
+            foreach($pageData['messages'] as $message)
+                {
+                    if($message['message_status'] == MESSAGE_STATUS_ARCHIVED)
+                    { 
+                        $dateTime = new DateTime($message['created_at']);
+                        $formattedDate = $dateTime->format('d/m/Y');
+                        ?> 
+                        <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading-2">
+                            <div class="container-xl button-op-cl p-0 m-0">
+                                <button class="button-open p-2" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#readonly-<?php echo $message['id']; ?>" aria-expanded="true" >
+                                    ← לחץ לקריאה בלבד
+                                </button>
+                                <div class="content">תאריך: <?php echo  $formattedDate; ?></div>
+                                <div class="content">טל: <?php echo $message['phone_no']; ?></div>
+                                <div class="content">שם החנות: <?php echo $message['full_name']; ?> </div>
+                                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                    <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
+                                            fill="white" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </h2>
+                        <div id="readonly-<?php echo $message['id']; ?>" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+                            <div class="accordion-body pt-0">
+                                    <?php echo $message['content']; ?>
+                            </div>
+                        </div>
                     </div>
-                </h2>
-                <div id="collapse-2" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
-                    <div class="accordion-body pt-0">
-                        היי מיארה,רכשתי בבגיר חליפה והמוכר ממש העליב אותי אני
-                        חושב שאנחנו לא יכולים לעבוד איתם יותר
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-3">
-                    <div class="container-xl button-op-cl p-0 m-0">
-                        <button class="button-open p-2" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse-3" aria-expanded="true">
-                            ← לחץ לפתיחה
-                        </button>
-                        <div class="content">תאריך: 25/10/2018</div>
-                        <div class="content">טל: 054-6268012</div>
-                        <div class="content">שם החנות: אקסוס </div>
-                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
-                            <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
-                                    fill="white" />
-                            </svg>
-                        </button>
-                    </div>
-                </h2>
-                <div id="collapse-3" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
-                    <div class="accordion-body pt-0">
-                        היי מיארה,רכשתי בבגיר חליפה והמוכר ממש העליב אותי אני
-                        חושב שאנחנו לא יכולים לעבוד איתם יותר
-                    </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-4">
-                    <div class="container-xl button-op-cl p-0 m-0">
-                        <button class="button-open p-2" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse-4" aria-expanded="true">
-                            ← לחץ לפתיחה
-                        </button>
-                        <div class="content">תאריך: 25/10/2018</div>
-                        <div class="content">טל: 054-6268012</div>
-                        <div class="content">שם החנות: אקסוס </div>
-                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
-                            <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
-                                    fill="white" />
-                            </svg>
-                        </button>
-                    </div>
-                </h2>
-                <div id="collapse-4" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
-                    <div class="accordion-body pt-0">
-                        היי מיארה,רכשתי בבגיר חליפה והמוכר ממש העליב אותי אני
-                        חושב שאנחנו לא יכולים לעבוד איתם יותר
-                    </div>
-                </div>
-            </div>
+                   <?php  }
+
+                }
+                ?>
+            
+            
         </div>
     </div>
 
     <script>
-        function markAsRead() {
-            const myButton = document.getElementsById("button-open");
-            myButton.classList.add("button-clicked");
+        
+        function statusChange(id , status, block, blockId)
+        {
+            jQuery.ajax({
+                url: "<?php echo admin_url('admin-ajax.php'); ?>",
+                type: 'POST',
+                data: {
+                    action: 'csvp_ajax', // Action hook
+                    csvp_request: 'CSVP_CommunityMessage', // Action hook
+                    csvp_handler: 'update_message_status', // Action hook
+                    data: {
+                        message_id: id,
+                        new_status: status
+                    }
+                },
+
+                success: function (response) {
+                    // Handle success response
+                    console.log(response);
+                    var status_old = status;
+                    var status_new_1 = '<?php echo MESSAGE_STATUS_SEEN; ?>';
+                    var status_new_2 = '<?php echo MESSAGE_STATUS_ARCHIVED; ?>';
+                    if(status_old == status_new_1)
+                    {
+                        document.getElementById(block).innerHTML = '<button class="button-open p-2" style="background-color: #F9F8C7; color: black; font-size: 20px; font-weight: 600;" id="button-open" type="button" data-bs-toggle="collapse" data-bs-target="' + blockId + '" aria-expanded="true" onclick="statusChange(\'' + id + '\', \'' + status_new_2 + '\' , \'' + block + '\', \'' + blockId + '\')"> סגור וסמן כנקרא </button>';
+                    }
+                    else if(status_old == status_new_2)
+                    {
+                        document.getElementById(block).innerHTML = '<button class="button-open p-2" type="button" data-bs-toggle="collapse" data-bs-target="#' + blockId + '" aria-expanded="true" > ← לחץ לקריאה בלבד </button>';
+                    }
+                 },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                }
+            });
         }
     </script>
 </div>

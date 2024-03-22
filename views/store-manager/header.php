@@ -1,4 +1,21 @@
 <!doctype html>
+
+<?php
+if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin") {
+    $message = new CSVP_CommunityMessage();
+    $admin_id = 1;
+    $payload = $_POST;
+    $payload["from_id"] = $store->get_store_id();
+    $payload["to_id"] = $admin_id;
+    $payload["to_user_role"] = CSVP_User_Roles::ROLE_SYSTEM_ADMIN;
+    $response = $message->create_community_message($payload);
+    if ($response) {
+        CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
+    } else {
+        CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+    }
+}
+?>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
 * @version 1.0.0-beta19

@@ -5,12 +5,14 @@ class CSVP_Admin
     private $community;
     private $community_member;
     private $store;
+    private $message;
     
     public function __construct()
     {
         $this->community = new CSVP_Community();
         $this->store = new CSVP_Store();
         $this->community_member = new CSVP_CommunityMember();
+        $this->message = new CSVP_CommunityMessage();
     }
     //Method to render transaction history
     public function render_community_management()
@@ -105,7 +107,11 @@ class CSVP_Admin
 
     public function render_messages()
     {
-        CSVP_View_Manager::load_view('messages');
+        $pageData = array();
+
+        $messages = $this->message->get_all_community_messages_of_admin();
+        $pageData["messages"] = $messages;
+        CSVP_View_Manager::load_view('messages', $pageData);
     }
 
     public function render_community_commisions()
