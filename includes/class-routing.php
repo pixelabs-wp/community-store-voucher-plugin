@@ -135,6 +135,10 @@ class CSVP_Router {
                 'path' => 'admin/joining-requests',
                 'callback' => array('CSVP_Admin', 'render_requests'),
             ),
+            'admin_requests' => array(
+                'path' => 'admin/community-login',
+                'callback' => array('CSVP_Admin', 'login_community'),
+            ),
         ));
 
        

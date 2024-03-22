@@ -79,4 +79,11 @@ function my_csvp_page_callback() {
     echo '<script>window.location.href = "' . home_url('/admin') . '";</script>';
     exit;
   }
-  
+
+function nestedLowercase($value)
+{
+  if (is_array($value)) {
+    return array_map('nestedLowercase', $value);
+  }
+  return strtolower($value);
+}
