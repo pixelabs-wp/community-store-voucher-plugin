@@ -14,9 +14,6 @@ define('COMMISSION_TYPE_ORDER', 'Order');
 define('COMMISSION_TYPE_VOUCHER', 'Voucher');
 define('COMMISSION_TYPE_ACCUMULATED', 'accumulated');
 
-define('MESSAGE_STATUS_UNREAD', 'Unread');
-define('MESSAGE_STATUS_READ', 'Read');
-define('MESSAGE_STATUS_ARCHIVED', 'Archived');
 
 define('JOINING_REQUEST_STATUS_PENDING', 'Pending');
 define('JOINING_REQUEST_STATUS_APPROVED', 'Approved');
@@ -33,6 +30,7 @@ define('ORDER_STATUS_CANCELLED', 'Cancelled');
 
 define('MESSAGE_STATUS_UNSEEN', 'Unseen');
 define('MESSAGE_STATUS_SEEN', 'Seen');
+define('MESSAGE_STATUS_ARCHIVED', 'Archived');
 
 define('VOUCHER_TRANSACTION_PURCHASE', 'Voucher Purchase');
 define('VOUCHER_TRANSACTION_REDEEM', 'Voucher Redeem');

@@ -451,7 +451,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             <textarea id="" cols="30" rows="3" placeholder="תוכן ההודעה..." name="content"></textarea>
                             <input type="hidden" name="from_id" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->id; ?>">
                             <input type="hidden" name="to_id" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->community_id; ?>">
-                            <input type="hidden" name="to_user_role" value="<?php echo CSVP_User_Roles::ROLE_STORE_MANAGER; ?>">
+                            <input type="hidden" name="to_user_role" value="<?php echo CSVP_User_Roles::ROLE_COMMUNITY_MANAGER; ?>">
                             <input type="hidden" name="csvp_request" value="send_guy_message">
                             <button>שליחת ההודעה ←</button>
                         </form>

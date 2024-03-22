@@ -21,6 +21,7 @@ class CSVP_Store
         $this->order = new CSVP_Order();
         $this->voucherTransaction = new CSVP_VoucherTransaction();
         $this->message = new CSVP_CommunityMessage();
+
     }
 
     public function render_community_management()
@@ -275,24 +276,7 @@ class CSVP_Store
     public  function render_transaction_history()
     {
         global $transaction, $community, $community_member;
-        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin") {
-            $admin = get_user_by('role', 'administrator');
-            if ($admin) {
-                $admin_id = $admin->ID;
-            } else {
-                $admin_id = 0;
-            }
-            $payload = $_POST;
-            $payload["from_id"] = $this->get_store_id();
-            $payload["to_id"] = $admin_id;
-            $payload["to_user_role"] = 'Admin';
-            $response = $this->message->create_community_message($payload);
-            if ($response) {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
-            } else {
-                CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
-            }
-        }
+        
 
         $pageData = [];
         $data = [];
@@ -536,6 +520,8 @@ class CSVP_Store
         }
     }
 
+
+
     public function get_store_data_by_id($store_id)
     {
         global $wpdb;
@@ -553,6 +539,32 @@ class CSVP_Store
        }
 
    }
+
+
+   public function get_store_data($data)
+    {
+        global $wpdb;
+
+        $wp_user_id = $data['wp_user_id'];
+
+        // Prepare SQL query to retrieve community member by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE wp_user_id = %d",
+            $wp_user_id
+        );
+
+        // Execute the query
+        $store = $wpdb->get_row($query);
+
+        // Check if a community member was found
+        if ($store) {
+            // Return community member data as an object
+            return $store;
+        } else {
+            // Return false if community member not found
+            return false;
+        }
+    }
 
     public function render_return_management()
     {

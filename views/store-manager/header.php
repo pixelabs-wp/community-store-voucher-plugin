@@ -1,4 +1,21 @@
 <!doctype html>
+
+<?php
+if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_admin") {
+    $message = new CSVP_CommunityMessage();
+    $admin_id = 1;
+    $payload = $_POST;
+    $payload["from_id"] = $store->get_store_id();
+    $payload["to_id"] = $admin_id;
+    $payload["to_user_role"] = CSVP_User_Roles::ROLE_SYSTEM_ADMIN;
+    $response = $message->create_community_message($payload);
+    if ($response) {
+        CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent");
+    } else {
+        CSVP_Notification::add(CSVP_Notification::ERROR, "Something is Wrong");
+    }
+}
+?>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
 * @version 1.0.0-beta19
@@ -310,7 +327,7 @@
 </head>
 
 <body>
-
+ 
 
 
     <!-- Send Message modal Starts here -->
@@ -323,8 +340,8 @@
                     <h1 class="top-heading"> שליחת הודעה למנהל המערכת</h1>
                     <div>
                         <form action="" method="POST">
-                            <input type="text" name="full_name" placeholder="שם פרטי ומשפחה">
-                            <input type="text" name="phone_no" placeholder="מספר טלפון לחזרה">
+                            <input type="text" name="full_name" placeholder="שם פרטי ומשפחה" value="<?php echo $store->get_store_data(array('wp_user_id' => get_current_user_id()))->store_name; ?>">
+                            <input type="text" name="phone_no" placeholder="מספר טלפון לחזרה" value="<?php echo $store->get_store_data(array('wp_user_id' => get_current_user_id()))->store_phone; ?>">
                             <textarea name="content" id="" cols="30" rows="3" placeholder="תוכן ההודעה..."></textarea>
 						    <input type="hidden" name="csvp_request" value="send_message_admin">
                             <button>שליחת ההודעה ←</button>
