@@ -417,21 +417,43 @@ class CSVP_Community
         $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
 
-        // Prepare SQL query to select voucher transactions by member ID
-        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
+        // // Prepare SQL query to select voucher transactions by member ID
+        // $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
 
-        // Execute the query and fetch the results
-        $joined_communities = $wpdb->get_results($query, ARRAY_A);
+        // // Execute the query and fetch the results
+        // $joined_communities = $wpdb->get_results($query, ARRAY_A);
+
+ 
+
+
+
+        $query = $wpdb->prepare("
+        SELECT 
+            c.id AS community_id,
+            c.community_name,
+            COUNT(DISTINCT cm.id) AS active_members_count,
+            SUM(o.order_total) AS total_order_amount,
+            jr.id as request_id
+        FROM 
+            {$wpdb->prefix}csvp_community c
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
+        LEFT JOIN 
+            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
+        INNER JOIN 
+            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
+        GROUP BY 
+            c.id, c.community_name;
+        ", JOINING_REQUEST_STATUS_APPROVED);
+        $joined_communities = $wpdb->get_results($query);
+
 
         foreach ($joined_communities as $key => $community) {
-            $order_data = $this->get_order_data_by_id(($community["community_id"]));
-            $joined_communities[$key]["order_data"] = $order_data;
+            $order_data = $this->get_order_data_by_id(($community->community_id));
+            $joined_communities[$key]->order_data = $order_data;
 
-            $community_data = $this->get_community_data_by_id(($community["community_id"]));
-            $joined_communities[$key]["community_data"] = $community_data;
-
-            $community_data = $this->get_community_member_data_by_id(($community["community_id"]));
-            $joined_communities[$key]["community_member_data"] = $community_data;
+            $community_data = $this->get_community_data_by_id(($community->community_id));
+            $joined_communities[$key]->community_data = $community_data;
         }
 
         // Check if communities were found

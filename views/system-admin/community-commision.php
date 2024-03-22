@@ -190,7 +190,7 @@
 
                     <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
                         <div class="" style="direction: rtl;">
-                            <label class="form-label">חיפוש לפי שם חנות</label>
+                            <label class="form-label">חיפוש לפי שם ישיבה</label>
                             <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value="" multiple>
                                 <option value="HTML">HTML</option>
                                 <option value="JavaScript">JavaScript</option>
@@ -215,7 +215,7 @@
                                 </span>
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">חיפוש לפי שם חנות</div>
+                                <div class="font-weight-medium ts-text">חיפוש לפי שם ישיבה</div>
                             </div>
                         </div>
                     </div>
@@ -318,10 +318,10 @@
                             </li>
 
                             <li class="page-item page-next">
-                                <a class="page-link" href="#">
+                               
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
                                         סה”כ ישיבות: 450 </div>
-                                </a>
+                                
                             </li>
                         </ul>
                     </div>

@@ -109,7 +109,7 @@
             <?php foreach ($pageData["transactions"] as $key => $transaction) {
             ?>
               <tr>
-                <td class="ts-date"><?php echo date('d/m/Y', strtotime($transaction->created_at)); ?></td>
+                <td class="ts-date"><?php echo date('d/m/Y', strtotime($transaction->created_at)); ?> :תאריך</td>
 
                 <td class="text-muted ts-price">₪<?php echo $transaction->balance_amount; ?>:סכום</td>
                 <td class="text-muted ts-store-name">סוג העסקה: ערך צבור</td>

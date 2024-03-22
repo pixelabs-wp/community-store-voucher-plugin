@@ -12,6 +12,7 @@ define('COMMISSION_STATUS_REJECTED', 'Rejected');
 define('COMMISSION_STATUS_PAID', 'Paid');
 define('COMMISSION_TYPE_ORDER', 'Order');
 define('COMMISSION_TYPE_VOUCHER', 'Voucher');
+define('COMMISSION_TYPE_ACCUMULATED', 'accumulated');
 
 define('MESSAGE_STATUS_UNREAD', 'Unread');
 define('MESSAGE_STATUS_READ', 'Read');

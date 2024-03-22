@@ -1,3 +1,16 @@
+<?php
+
+if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message") {
+    $response = $messages->create_community_message($_POST);
+
+    if ($response) {
+        CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message Sent Successfully");
+    } else {
+        CSVP_Notification::add(CSVP_Notification::ERROR, "Message not sent");
+    }
+}
+
+?>
 <!doctype html>
 <!--
 * Tabler - Premium and Open Source dashboard template with responsive and high quality UI.
@@ -401,7 +414,7 @@
                                     </div>
                                 </div>
 
-                                <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo home_url().'/wp-content/uploads'. $transaction["voucher_data"][0]->product_image; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                                <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo home_url() . '/wp-content/uploads' . $transaction["voucher_data"][0]->product_image; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                                 </div>
 
                             </div>
@@ -432,10 +445,14 @@
                 <div class="send-message-form-wrapper">
                     <h1 class="top-heading">שליחת הודעה לראש הת”ת</h1>
                     <div>
-                        <form action="">
-                            <input type="text" placeholder="שם פרטי ומשפחה">
-                            <input type="text" placeholder="מספר טלפון לחזרה">
-                            <textarea name="" id="" cols="30" rows="3" placeholder="תוכן ההודעה..."></textarea>
+                        <form action="" method="post">
+                            <input type="text" placeholder="שם פרטי ומשפחה" name="full_name" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->full_name; ?>">
+                            <input type="text" placeholder="מספר טלפון לחזרה" name="phone_no" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->phone_number; ?>">
+                            <textarea id="" cols="30" rows="3" placeholder="תוכן ההודעה..." name="content"></textarea>
+                            <input type="hidden" name="from_id" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->id; ?>">
+                            <input type="hidden" name="to_id" value="<?php echo $community_member->get_community_member_by_user_id(array('wp_user_id' => get_current_user_id()))->community_id; ?>">
+                            <input type="hidden" name="to_user_role" value="<?php echo CSVP_User_Roles::ROLE_STORE_MANAGER; ?>">
+                            <input type="hidden" name="csvp_request" value="send_guy_message">
                             <button>שליחת ההודעה ←</button>
                         </form>
                     </div>

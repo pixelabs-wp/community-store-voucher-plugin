@@ -413,7 +413,7 @@
 								</table>
 							</div>
 						</div>
-						<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה:
+						<p class="card-footer-text pt-4 pb-2">סה”כ סכום ההזמנה:
 							<?php echo $total_cost; ?> ₪
 						</p>
 					</div>
@@ -511,14 +511,14 @@
 					<div class="store-management-order-request-footer p-3 d-flex">
 						<span class="w-25">
 							<a class="page-link"   tabindex="-1" aria-disabled="true" disabled>
-								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
+								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px; direction: rtl;">
 								סה”כ הזמנות: <?php if(isset($total_credit)){ echo $total_credit; } ?>  ₪ </div>
 							</a>
 						</span>
 
 						<span class="w-75">
 							<a class="page-link"   style="text-align: right;" disabled>
-								<div class="page-item-title text-white mx-4" style="font-size: 20px">
+								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
 									סך הפריטים שנמכרו: <?php if(isset($total_item)){ echo $total_item; } ?>
 								</div>
 							</a>
