@@ -134,28 +134,32 @@
   <div class="container col-12">
     <div class="row row-cards justify-content-sm-end gap-sm-3 gap-3 gap-lg-0 bg-black px-2 py-2 m-0 ts-round">
 
+
       <!-- Date Range Filter   -->
       <div class="col-sm-5 col-lg-3 m-0">
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
             <div class="mb-3">
-              <label class="form-label">Datepicker</label>
+              <form action="" method="post">
+                <label class="form-label">Select Date</label>
 
-              <div class="input-icon mb-2">
-                <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="2020-06-20" />
-                <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                    <path d="M16 3v4" />
-                    <path d="M8 3v4" />
-                    <path d="M4 11h16" />
-                    <path d="M11 15h1" />
-                    <path d="M12 15v3" />
-                  </svg>
-                </span>
-              </div>
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                <div class="input-icon mb-2">
+                  <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="<?php echo isset($_POST["message_filter_date"]) ? $_POST["message_filter_date"] : ""; ?>" name="message_filter_date" />
+                  <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+                      <path d="M16 3v4" />
+                      <path d="M8 3v4" />
+                      <path d="M4 11h16" />
+                      <path d="M11 15h1" />
+                      <path d="M12 15v3" />
+                    </svg>
+                  </span>
+                </div>
+                <input type="hidden" name="csvp_filter" value="filter_by_date">
+                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+              </form>
             </div>
           </div>
 
@@ -179,24 +183,18 @@
 
 
 
-      <!-- Store Filter -->
+      <!-- Guy Filter -->
       <div class="col-sm-5 col-lg-3 m-0">
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
-            <div class="" style="direction: rtl;">
-              <label class="form-label">סינון בחורים </label>
-              <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
-                <option value="HTML">HTML</option>
-                <option value="JavaScript">JavaScript</option>
-                <option value="CSS">CSS</option>
-                <option value="jQuery">jQuery</option>
-                <option value="Bootstrap">Bootstrap</option>
-                <option value="Ruby">Ruby</option>
-                <option value="Python">Python</option>
-              </select>
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-            </div>
-
+            <form action="" method="post">
+              <div class="" style="direction: rtl;">
+                <label class="form-label">חיפוש לפי שם</label>
+                <input type="text" class="form-control" placeholder="" name="full_name" value="<?php echo isset($_POST["full_name"]) ? $_POST["full_name"] : ""; ?>">
+                <input type="hidden" name="csvp_filter" value="filter_by_name">
+                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+              </div>
+            </form>
           </div>
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
@@ -208,12 +206,13 @@
                 </span>
               </div>
               <div class="col" style="z-index:1">
-                <div class="font-weight-medium ts-text">סינון בחורים </div>
+                <div class="font-weight-medium ts-text">סינון חנויות </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
 
 
 
@@ -224,9 +223,9 @@
 
       <?php
 
-      $message_data = $messages->get_community_messages_by_to_id(array("to_id" => $community->get_current_community_id()));
+      $message_data = $pageData["messages"];
 
-      foreach ($message_data as $key => $message) {
+      foreach ($message_data as $message) {
         if ($message['message_status'] == MESSAGE_STATUS_UNSEEN) {
           $seen_status = MESSAGE_STATUS_SEEN;
       ?>
@@ -322,42 +321,38 @@
   </div>
 
   <script>
-    function statusChange(id , status, block, blockId)
-        {
-            jQuery.ajax({
-                url: "<?php echo admin_url('admin-ajax.php'); ?>",
-                type: 'POST',
-                data: {
-                    action: 'csvp_ajax', // Action hook
-                    csvp_request: 'CSVP_CommunityMessage', // Action hook
-                    csvp_handler: 'update_message_status', // Action hook
-                    data: {
-                        message_id: id,
-                        new_status: status
-                    }
-                },
+    function statusChange(id, status, block, blockId) {
+      jQuery.ajax({
+        url: "<?php echo admin_url('admin-ajax.php'); ?>",
+        type: 'POST',
+        data: {
+          action: 'csvp_ajax', // Action hook
+          csvp_request: 'CSVP_CommunityMessage', // Action hook
+          csvp_handler: 'update_message_status', // Action hook
+          data: {
+            message_id: id,
+            new_status: status
+          }
+        },
 
-                success: function (response) {
-                    // Handle success response
-                    console.log(response);
-                    var status_old = status;
-                    var status_new_1 = '<?php echo MESSAGE_STATUS_SEEN; ?>';
-                    var status_new_2 = '<?php echo MESSAGE_STATUS_ARCHIVED; ?>';
-                    if(status_old == status_new_1)
-                    {
-                        document.getElementById(block).innerHTML = '<button class="button-open p-2" style="background-color: #F9F8C7; color: black; font-size: 20px; font-weight: 600;" id="button-open" type="button" data-bs-toggle="collapse" data-bs-target="' + blockId + '" aria-expanded="true" onclick="statusChange(\'' + id + '\', \'' + status_new_2 + '\' , \'' + block + '\', \'' + blockId + '\')"> סגור וסמן כנקרא </button>';
-                    }
-                    else if(status_old == status_new_2)
-                    {
-                        document.getElementById(block).innerHTML = '<button class="button-open p-2" type="button" data-bs-toggle="collapse" data-bs-target="#' + blockId + '" aria-expanded="true" > ← לחץ לקריאה בלבד </button>';
-                    }
-                 },
-                error: function (xhr, status, error) {
-                    // Handle error response
-                    console.error(xhr.responseText);
-                }
-            });
+        success: function(response) {
+          // Handle success response
+          console.log(response);
+          var status_old = status;
+          var status_new_1 = '<?php echo MESSAGE_STATUS_SEEN; ?>';
+          var status_new_2 = '<?php echo MESSAGE_STATUS_ARCHIVED; ?>';
+          if (status_old == status_new_1) {
+            document.getElementById(block).innerHTML = '<button class="button-open p-2" style="background-color: #F9F8C7; color: black; font-size: 20px; font-weight: 600;" id="button-open" type="button" data-bs-toggle="collapse" data-bs-target="' + blockId + '" aria-expanded="true" onclick="statusChange(\'' + id + '\', \'' + status_new_2 + '\' , \'' + block + '\', \'' + blockId + '\')"> סגור וסמן כנקרא </button>';
+          } else if (status_old == status_new_2) {
+            document.getElementById(block).innerHTML = '<button class="button-open p-2" type="button" data-bs-toggle="collapse" data-bs-target="#' + blockId + '" aria-expanded="true" > ← לחץ לקריאה בלבד </button>';
+          }
+        },
+        error: function(xhr, status, error) {
+          // Handle error response
+          console.error(xhr.responseText);
         }
+      });
+    }
   </script>
 </div>
 </div>

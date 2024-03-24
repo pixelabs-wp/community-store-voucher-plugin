@@ -230,6 +230,7 @@
         <div class="container mt-4 d-flex flex-wrap" style="row-gap: 1rem; column-gap: 1rem;">
             <?php
             if (isset($pageData["stores"])) {
+                $totalStores = count($pageData["stores"]);
                 foreach ($pageData["stores"] as $key => $store) {
                     $noDebt = ($store['commision_pending'] == 0) ? "no-debt" : "";
 
@@ -287,7 +288,7 @@
                                     </div>
 
                                 </div>
-                                <a href="" data-bs-toggle="modal" data-bs-target="#store-full-details-modal" class="btn btn-dark">← לפרטים המלאים</a>
+                                <a href="/admin/store-login?store_user_id=<?php echo $store["wp_user_id"]; ?>" class="btn btn-dark">← לפרטים המלאים</a>
                             </div>
 
                         </div>
@@ -305,17 +306,12 @@
                 <div class="card-x">
                     <div class="card-body my-3 bg-black rounded-3 p-2">
                         <ul class="pagination p-1">
-                            <li class="page-item page-prev disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                    <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                                        סה”כ עסקאות במערכת: 87 </div>
-                                </a>
-                            </li>
+
 
                             <li class="page-item page-next">
                                 <a class="page-link" href="#">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                        סה”כ חנויות: 450 </div>
+                                        סה”כ חנויות: <?php echo $totalStores; ?> </div>
                                 </a>
                             </li>
                         </ul>

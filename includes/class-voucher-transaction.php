@@ -226,17 +226,22 @@ class CSVP_VoucherTransaction{
             global $wpdb, $community;
             $community_member = $wpdb->prefix . 'csvp_community_member';
             $status = isset($data['status']) ? $data['status'] : false;
+            $count = "t.*";
+            $count_func = isset($data['count']) ? true : false;
             $community_id = isset($data['community_id']) ? $data['community_id'] : $community->get_current_community_id();
             if (!$status) {
             // Prepare SQL query to select voucher transactions by member ID
-            $query = $wpdb->prepare("SELECT t.* FROM $this->table_name AS t  INNER JOIN $community_member AS m ON t.community_member_id = m.id WHERE m.community_id = %d", $community_id);
+            $query = $wpdb->prepare("SELECT $count FROM $this->table_name AS t  INNER JOIN $community_member AS m ON t.community_member_id = m.id WHERE m.community_id = %d", $community_id);
 
             } else {
-                $query = $wpdb->prepare("SELECT t.* FROM $this->table_name AS t  INNER JOIN $community_member AS m ON t.community_member_id = m.id WHERE m.community_id = %d AND t.status = %d", $community_id, $status);
+                $query = $wpdb->prepare("SELECT $count FROM $this->table_name AS t  INNER JOIN $community_member AS m ON t.community_member_id = m.id WHERE m.community_id = %d AND t.status = %s", $community_id, $status);
             }
+
             // Execute the query and fetch the results
             $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
-
+            if($count_func){
+                return $wpdb->num_rows;
+            }
         foreach ($voucher_transactions as $key => $transaction) {
             
             $member = $this->get_member_data_by_id($transaction["community_member_id"]); // line 118

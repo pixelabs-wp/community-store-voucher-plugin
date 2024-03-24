@@ -136,7 +136,7 @@
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
 					<div class="mb-3">
-						<label class="form-label">Datepicker</label>
+						<label class="form-label">Select Date</label>
 
 						<div class="input-icon mb-2">
 							<input class="form-control " placeholder="Select a date" id="datepicker-icon"

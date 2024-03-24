@@ -420,6 +420,7 @@ class CSVP_Store
 
             $store_data = $this->get_store_data_by_id(($store["store_id"]));
             $joined_store[$key]["store_data"] = $store_data;
+            $joined_store[$key]["store_name"] = $store_data->store_name;
         }
 
         // Check if communities were found
@@ -450,6 +451,7 @@ class CSVP_Store
 
             $store_data = $this->get_store_data_by_id(($store["store_id"]));
             $joined_store[$key]["store_data"] = $store_data;
+            $joined_store[$key]["store_name"] = $store_data->store_name;
         }
 
         // Check if communities were found
@@ -491,6 +493,8 @@ class CSVP_Store
             // Append order data and store data to joined store array
             $not_requested_store[$key]["order_data"] = $order_data;
             $not_requested_store[$key]["store_data"] = $store_data;
+            $not_requested_store[$key]["store_name"] = $store_data->store_name;
+
         }
         // Check if joined store data was found
         if (!empty($not_requested_store)) {

@@ -143,6 +143,14 @@ class CSVP_Router {
                 'path' => 'community/community-logout',
                 'callback' => array('CSVP_Admin', 'logout_community'),
             ),
+            'admin_login_store' => array(
+                'path' => 'admin/store-login',
+                'callback' => array('CSVP_Admin', 'login_store'),
+            ),
+            'admin_logout_store' => array(
+                'path' => 'store/store-logout',
+                'callback' => array('CSVP_Admin', 'logout_store'),
+            ),
         ));
 
        

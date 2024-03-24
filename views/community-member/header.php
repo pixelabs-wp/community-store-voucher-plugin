@@ -718,7 +718,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                                                     line-height: 27px;
                                                     letter-spacing: 0em;
                                                     text-align: center;
-                                                    ">ת”ת תומכי תורה</p>
+                                                    "><?php echo $community->get_community_by_id($community->get_current_community_id())->community_name; ?></p>
                             </div>
 
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
