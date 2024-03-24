@@ -1204,7 +1204,7 @@
 		
 			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
-				data-bs-target="#community-details" data-id="<?php echo $community->community_id; ?>">
+				data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
 					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
@@ -1216,10 +1216,10 @@
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות בחורים: </strong>
-											<?php echo $community['community_member_data']->member_count; ?>
+										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות:</strong>
-											<?php echo $community['order_data']->total_order_amount; ?> ₪
+										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
 
 									</tr>
@@ -1246,15 +1246,14 @@
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
 										<td><strong>שם החנות: </strong>
-											<?php echo $community->community_name; ?>
+											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-											<?php echo $community->active_members_count; ?>
+										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-											<?php echo $community->active_members_count; ?> ₪
+										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
-
 									</tr>
 								</table>
 							</div>
@@ -1280,13 +1279,13 @@
 								<table>
 									<tr class="d-flex flex-column gap-2 text-center">
 										<td><strong>שם החנות: </strong>
-											<?php echo $community->community_name; ?>
+											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-											<?php echo $community->active_members_count; ?>
+										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-											<?php echo $community->active_members_count; ?> ₪
+										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
 									</tr>
 								</table>
@@ -1294,7 +1293,7 @@
 						</div>
 						<form method="POST" action="">
 							<input type="hidden" id="benifit_community_id" name="community_id"
-								value="<?php echo $community->community_id; ?>">
+								value="<?php echo $community['community_data']->id; ?>">
 							<input type="hidden" name="csvp_request" value="joining_request">
 							<button class="btn btn-dark">לצירוף הת”ת ←</button>
 						</form>

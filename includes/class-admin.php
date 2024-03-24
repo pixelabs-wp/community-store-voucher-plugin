@@ -56,6 +56,7 @@ class CSVP_Admin
 
         }
        
+
         CSVP_View_Manager::load_view('community-management', $pageData);
     }
 

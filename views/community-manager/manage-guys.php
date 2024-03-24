@@ -496,21 +496,24 @@
 
           <h2 style="font-size: 25px; padding-right: 40px; padding-top: 50px; font-weight: 800;" class="col-12 card-wrapper">שוברים להטענה</h2>
 
+          <!-- <?php echo json_encode($pageData["vouchers"]); ?> -->
           <div class="col-12 p-5 card-wrapper" id="guy-voucher-data">
 
 
-
-
-            <div class="card">
-              <!-- Photo -->
-              <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(http://rsvp.local/wp-content/uploads/2024/03/Coupon-image.jpg);height: 250px;">
+            <?php foreach ($pageData["vouchers"] as $key => $voucherData) {
+            ?> <div class="card">
+                <!-- Photo -->
+                <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(<?php echo home_url() . '/wp-content/uploads' . $voucherData['product_image']; ?>);height: 250px;">
+                </div>
+                <div class="card-body bg-white text-center">
+                  <h3 class="card-title"><?php echo $voucherData["product_name"]; ?></h3>
+                  <h3 class="text-secondary"><?php echo $voucherData["voucher_price"]; ?>₪ במקום <?php echo $voucherData["normal_price"] ?>₪</h3>
+                  <input type="hidden" id="member_id">
+                  <button class="btn bg-black text-white" onclick='buyVoucher(JSON.stringify(<?php echo json_encode($voucherData); ?>))'>הטענת השובר</button>
+                </div>
               </div>
-              <div class="card-body bg-white text-center">
-                <h3 class="card-title"><?php echo $transaction["voucher_data"][0]->product_name; ?></h3>
-                <h3 class="text-secondary"><?php echo $transaction["voucher_data"][0]->voucher_price; ?>₪ במקום <?php echo $transaction["voucher_data"][0]->normal_price; ?>₪</h3>
-                <button class="btn bg-black text-white">הטענת השובר</button>
-              </div>
-            </div>
+            <?php } ?>
+
 
 
 
@@ -527,6 +530,25 @@
 
 
 
+<div class="modal fade" id="store-manager-voucher-purchase" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+    <div class="modal-content p-4" style="direction: rtl" style="overflow: auto;">
+      <h3>Do you wish to load <span id="voucher_name"></span></h3>
+
+      <div class="add-new-benefit-buttons mt-4">
+        <form method="POST" action="">
+          <input type="hidden" name="voucher_id" id="voucher_id">
+          <input type="hidden" name="csvp_request" value="load_voucher">
+          <input type="hidden" name="community_member_id" id="community_member_id">
+          <input type="hidden" name="transaction_amount" id="transaction_amount">
+          <input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+          <button type="button" class="btn btn-danger w-25" data-bs-dismiss=" modal" aria-label="Close">ביטול</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- page content -->
 
@@ -700,6 +722,10 @@
             if (!empty($pageData["members"])) {
 
               foreach ($pageData["members"] as $key => $member) {
+
+
+                $transactions_count = $voucher_transaction->get_voucher_transactions_by_member_id(array("member_id" => $member["id"], "status" => VOUCHER_STATUS_PENDING, "count" => true));
+
             ?>
                 <tr>
                   <td class="ts-date">
@@ -717,7 +743,7 @@
                         </div>
                       </div>
                   </td>
-                  <td class="text-muted ts-price data-vochers">מס’ שוברים פעילים: <span>5</span></td>
+                  <td class="text-muted ts-price data-vochers">מס’ שוברים פעילים: <span><?php echo $transactions_count;  ?></span></td>
                   <td class="text-muted ts-product">
                     <a href="#" class="text-reset data: phone">מס’ טלפון: <span>
                         <?php echo $member["phone_number"]; ?>
@@ -794,6 +820,21 @@
 
 
     <script>
+      function buyVoucher(voucher) {
+        voucher = JSON.parse(voucher)
+
+        console.log(voucher)
+        jQuery('#store-manager-voucher-purchase').modal('show');
+
+        let modal = document.querySelector('#store-manager-voucher-purchase');
+        let member_id = document.querySelector('#member_id').value;
+        modal.querySelector('#voucher_name').innerHTML = voucher.product_name;
+        modal.querySelector('#transaction_amount').value = voucher.voucher_price;
+        modal.querySelector('#voucher_id').value = voucher.id;
+        modal.querySelector('#community_member_id').value = member_id;
+      }
+
+
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function() {
         var el;
@@ -1007,6 +1048,9 @@
         tableData.innerHTML = "";
 
         var memberVouchers = document.getElementById("guy-voucher-data")
+
+        memberVouchers.querySelector('#member_id').value = id;
+
         jQuery.ajax({
           url: "<?php echo admin_url('admin-ajax.php'); ?>",
           type: 'POST',
@@ -1055,49 +1099,7 @@
           }
         });
 
-        jQuery.ajax({
-          url: "<?php echo admin_url('admin-ajax.php'); ?>",
-          type: 'POST',
-          data: {
-            action: 'csvp_ajax', // Action hook
-            csvp_request: 'CSVP_VoucherTransaction', // Action hook
-            csvp_handler: 'get_voucher_transactions_by_member_id', // Action hook
-            data: {
-              member_id: id,
-              status: '<?php echo VOUCHER_STATUS_PENDING; ?>'
-            }
-          },
-          success: function(response) {
-            // Handle success response
-            console.log(memberVouchers);
 
-            let vouchers = response.map((voucher) => {
-              let stringedVoucher = JSON.stringify(voucher.voucher_data[0]);
-              return `
-              <div class="card">
-                <!-- Photo -->
-                <div class="img-responsive img-responsive-21x9 card-img-top" style="background-image: url(<?php echo home_url() . '/wp-content/uploads'; ?>${voucher.voucher_data[0].product_image});height: 250px;">
-                </div>
-                <div class="card-body bg-white text-center">
-                  <h3 class="card-title">${voucher.voucher_data[0].product_name}</h3>
-                  <h3 class="text-secondary">${voucher.voucher_data[0].voucher_price}₪ במקום ${voucher.voucher_data[0].normal_price}₪</h3>
-                  <button class="btn bg-black text-white">הטענת השובר</button>
-                </div>
-              </div>
-            
-            
-            
-            `
-            }).join('');
-            memberVouchers.innerHTML = vouchers;
-
-          },
-          error: function(xhr, status, error) {
-            // Handle error response
-            console.error(xhr.responseText);
-            console.error("Unexpected response format:", xhr.responseText);
-          }
-        });
 
 
       }

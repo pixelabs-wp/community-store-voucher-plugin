@@ -32,7 +32,8 @@ define('MESSAGE_STATUS_UNSEEN', 'Unseen');
 define('MESSAGE_STATUS_SEEN', 'Seen');
 define('MESSAGE_STATUS_ARCHIVED', 'Archived');
 
-define('VOUCHER_TRANSACTION_PURCHASE', 'Voucher Purchase');
+define( 'VOUCHER_TRANSACTION_PURCHASE', 'Voucher Purchase');
+define('VOUCHER_TRANSACTION_LOAD', 'Voucher Load');
 define('VOUCHER_TRANSACTION_REDEEM', 'Voucher Redeem');
 
 define('TRANSACTION_TYPE_DEBIT', 'debit');

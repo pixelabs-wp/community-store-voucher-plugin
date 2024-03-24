@@ -23,8 +23,9 @@ class CSVP_Community
         $this->transaction = new CSVP_Transaction();
     }
 
-    public function render_dashboard(){
-        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id"=> $this->get_current_community_id(),"count"=>true));
+    public function render_dashboard()
+    {
+        $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
         $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count"=> true));
 
         CSVP_View_Manager::load_view('dashboard', $pageData);
@@ -32,6 +33,7 @@ class CSVP_Community
 
     public function render_manage_guys()
     {
+        global $voucher, $store, $community, $voucher_transaction;
         //Sample Post Request
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
 
@@ -50,6 +52,37 @@ class CSVP_Community
                 CSVP_Notification::add(CSVP_Notification::ERROR, 'Guy with this email already exists');
             }
         }
+
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "load_voucher") {
+            $payload = $_POST;
+
+        
+          
+                $payload["transaction_type"] = VOUCHER_TRANSACTION_LOAD;
+                $payload["transaction_date"] = date("Y-m-d H:i:s");
+                $payload["status"] = VOUCHER_STATUS_PENDING;
+                $response = $voucher_transaction->create_voucher_transaction($payload);
+
+                if (!is_wp_error($response)) {
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
+                } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+
+                }
+        }
+        
+
+        $voucherData = $voucher->get_all_vouchers_by_community_id(array('community_id' => $this->get_current_community_id()));
+        $modified_storeData = array();
+        foreach ($voucherData as $voucher) {
+
+            $voucher["store_data"] = $store->get_store_by_id($voucher["store_id"]);
+            $voucher["community_data"] = $community->get_community_by_id($voucher["community_id"]);
+            array_push($modified_storeData, $voucher);
+        }
+        $pageData["vouchers"] = $modified_storeData;
 
         // Load Data
         $members_data = $this->community_member->get_community_members_by_community_id(array('community_id' => $this->get_current_community_id()));
@@ -92,19 +125,17 @@ class CSVP_Community
         $id = $this->get_current_community_id();
         $voucher_transaction =  $this->voucher->get_all_voucher_transactions_by_community_id($payload);
         $check_1["voucher_transaction"] = $voucher_transaction;
-        if (!is_wp_error($check_1["voucher_transaction"])) 
-        {
+        if (!is_wp_error($check_1["voucher_transaction"])) {
             $pageData["voucher_transaction"] = $voucher_transaction;
         }
 
         $amount_transaction =  $this->transaction->get_transactions_by_community_id($id);
         $check_2["amount_transaction"] = $amount_transaction;
-        if (!is_wp_error($check_2["amount_transaction"])) 
-        {
+        if (!is_wp_error($check_2["amount_transaction"])) {
             $pageData["amount_transaction"] = $amount_transaction;
         }
-        
-        CSVP_View_Manager::load_view('transaction-history', $pageData);   
+
+        CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
     public function render_store_management()
@@ -132,8 +163,7 @@ class CSVP_Community
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["community_id"] = $this->get_current_community_id();
@@ -149,8 +179,7 @@ class CSVP_Community
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        }
-        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
+        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["community_id"] = $this->get_current_community_id();
@@ -173,22 +202,19 @@ class CSVP_Community
 
         $joined_store = $store->get_all_joined_store_for_communities();
         $check_1["joined_store"] = $joined_store;
-        if (!is_wp_error($check_1["joined_store"])) 
-        {
+        if (!is_wp_error($check_1["joined_store"])) {
             $pageData["joined_store"] = $joined_store;
         }
 
         $requested_stores = $store->get_all_requested_store_for_communities();
         $check_2["requested_stores"] = $requested_stores;
-        if (!is_wp_error($check_2["requested_stores"])) 
-        {
+        if (!is_wp_error($check_2["requested_stores"])) {
             $pageData["requested_stores"] = $requested_stores;
         }
-        
+
         $not_requested_stores = $store->get_all_not_requested_store_for_communities();
         $check_3["not_requested_stores"] = $not_requested_stores;
-        if (!is_wp_error($check_3["not_requested_stores"])) 
-        {
+        if (!is_wp_error($check_3["not_requested_stores"])) {
             $pageData["not_requested_stores"] = $not_requested_stores;
         }
 
@@ -248,71 +274,71 @@ class CSVP_Community
             if (!$email_exists) {
 
 
-            if (isset($_FILES['community_logo']) && $_FILES['community_logo']['error'] == UPLOAD_ERR_OK) {
+                if (isset($_FILES['community_logo']) && $_FILES['community_logo']['error'] == UPLOAD_ERR_OK) {
 
-                // Handle file upload
-                $upload_dir = wp_upload_dir(); // Get the upload directory
-                $file_name = basename($_FILES['community_logo']['name']);
+                    // Handle file upload
+                    $upload_dir = wp_upload_dir(); // Get the upload directory
+                    $file_name = basename($_FILES['community_logo']['name']);
 
-                // Get the file extension
-                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                    // Get the file extension
+                    $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
-                // Generate a unique identifier (timestamp or random string)
-                $unique_identifier = uniqid(); // Using a timestamp-based unique identifier
+                    // Generate a unique identifier (timestamp or random string)
+                    $unique_identifier = uniqid(); // Using a timestamp-based unique identifier
 
-                // Construct the file name with the extension
-                $file_name = 'community_logo_' . $unique_identifier . '.' . $file_extension;
+                    // Construct the file name with the extension
+                    $file_name = 'community_logo_' . $unique_identifier . '.' . $file_extension;
 
 
-                // Check if the upload directory is writable
-                $moved = move_uploaded_file($_FILES['community_logo']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+                    // Check if the upload directory is writable
+                    $moved = move_uploaded_file($_FILES['community_logo']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
 
-                if ($moved) {
+                    if ($moved) {
 
-                    $file_path = $upload_dir['subdir'] . '/' . $file_name;
+                        $file_path = $upload_dir['subdir'] . '/' . $file_name;
 
-                    // Create WordPress user
-                    $user_id = wp_create_user($username, $password, $community_mail_address);
-                    $user_id_role = new WP_User($user_id);
-                    $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
+                        // Create WordPress user
+                        $user_id = wp_create_user($username, $password, $community_mail_address);
+                        $user_id_role = new WP_User($user_id);
+                        $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MANAGER);
 
-                    // Insert data into the database
-                    $insert_result = $wpdb->insert(
-                        $this->table_name, // Table name
-                        array(
-                            'community_name' => $community_name,
-                            'community_manager_name' => $community_manager_name,
-                            'community_manager_phone' => $community_manager_phone,
-                            'community_logo' => $file_path,
-                            'community_mail_address' => $community_mail_address,
-                            'community_address' => $community_address,
-                            'wp_user_id' => $user_id,
-                            'payment_link' => $payment_link,
-                            'api_valid' => $api_valid,
-                            'commision_percentage' => $commision_percentage,
-                            'wp_user' => get_current_user_id()
-                        ) // Data to be inserted
-                    );
+                        // Insert data into the database
+                        $insert_result = $wpdb->insert(
+                            $this->table_name, // Table name
+                            array(
+                                'community_name' => $community_name,
+                                'community_manager_name' => $community_manager_name,
+                                'community_manager_phone' => $community_manager_phone,
+                                'community_logo' => $file_path,
+                                'community_mail_address' => $community_mail_address,
+                                'community_address' => $community_address,
+                                'wp_user_id' => $user_id,
+                                'payment_link' => $payment_link,
+                                'api_valid' => $api_valid,
+                                'commision_percentage' => $commision_percentage,
+                                'wp_user' => get_current_user_id()
+                            ) // Data to be inserted
+                        );
 
-                    // Check if the insertion was successful
-                    if ($insert_result) {
-                        // Return the ID of the newly inserted community
-                        return $wpdb->insert_id;
-                    } else {
-                        // Send error response
-                        return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
+                        // Check if the insertion was successful
+                        if ($insert_result) {
+                            // Return the ID of the newly inserted community
+                            return $wpdb->insert_id;
+                        } else {
+                            // Send error response
+                            return new WP_Error('database_error', __('Failed to create community.', 'csvp'), array('status' => 500));
+                        }
                     }
+                } else {
+                    return new WP_Error('response', __('No Community image uploaded or error occurred', 'csvp'), array('status' => 500));
                 }
             } else {
-                return array("status" => false, "response" => "No Community image uploaded or error occurred");
-            }
-            }else{
-              
+
                 // Send error response
                 return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
             }
         } else {
-           
+
             // Send error response
             return new WP_Error('request_error', __('Failed to create community. Email Already Exists', 'csvp'), array('status' => 500));
         }
@@ -454,45 +480,22 @@ class CSVP_Community
         $store_id = $store->get_store_id();
         // Prepare SQL query to retrieve communities by name using LIKE operator
 
-        // // Prepare SQL query to select voucher transactions by member ID
-        // $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
 
-        // // Execute the query and fetch the results
-        // $joined_communities = $wpdb->get_results($query, ARRAY_A);
-
- 
-
-
-
-        $query = $wpdb->prepare("
-        SELECT 
-            c.id AS community_id,
-            c.community_name,
-            COUNT(DISTINCT cm.id) AS active_members_count,
-            SUM(o.order_total) AS total_order_amount,
-            jr.id as request_id
-        FROM 
-            {$wpdb->prefix}csvp_community c
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_community_member cm ON c.id = cm.community_id AND cm.is_active = 1
-        LEFT JOIN 
-            {$wpdb->prefix}csvp_order o ON c.id = o.community_id
-        INNER JOIN 
-            {$wpdb->prefix}csvp_joining_request jr ON c.id = jr.community_id AND jr.store_id = $store_id AND jr.request_status = %s
-        GROUP BY 
-            c.id, c.community_name;
-        ", JOINING_REQUEST_STATUS_APPROVED);
-        $joined_communities = $wpdb->get_results($query);
-
+        // Execute the query and fetch the results
+        $joined_communities = $wpdb->get_results($query, ARRAY_A);
 
         foreach ($joined_communities as $key => $community) {
-            $order_data = $this->get_order_data_by_id(($community->community_id));
-            $joined_communities[$key]->order_data = $order_data;
+            $order_data = $this->get_order_data_by_id(($community["community_id"]));
+            $joined_communities[$key]["order_data"] = $order_data;
 
-            $community_data = $this->get_community_data_by_id(($community->community_id));
-            $joined_communities[$key]->community_data = $community_data;
+            $community_data = $this->get_community_data_by_id(($community["community_id"]));
+            $joined_communities[$key]["community_data"] = $community_data;
+
+            $community_member_data = $this->get_community_member_data_by_id(($community["community_id"]));
+            $joined_communities[$key]["community_member_data"] = $community_member_data;
         }
-
         // Check if communities were found
         if ($joined_communities) {
             // Return array of community objects
@@ -536,7 +539,7 @@ class CSVP_Community
             return false;
         }
     }
-    
+
 
 
     public function get_community_data_by_id($community_id)
@@ -546,89 +549,92 @@ class CSVP_Community
         // Execute the query
         $community_data = $wpdb->get_row($query);
 
-       // Check if a voucher was found
-       if ($community_data) {
-           // Return voucher data as an object
-           return $community_data;
-       } else {
-           // Return false if voucher not found
-           return false;
-       }
+        // Check if a voucher was found
+        if ($community_data) {
+            // Return voucher data as an object
+            return $community_data;
+        } else {
+            // Return false if voucher not found
+            return false;
+        }
+    }
 
-   }
+
+    public function get_all_requested_communities_for_store()
+    {
+        global $wpdb, $store;
+        $store_id = $store->get_store_id();
+        // Prepare SQL query to retrieve communities by name using LIKE operator
+
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_PENDING);
+
+        // Execute the query and fetch the results
+        $requested_community = $wpdb->get_results($query, ARRAY_A);
 
 
-   public function get_all_requested_communities_for_store()
-   {
-       global $wpdb, $store;
-       $store_id = $store->get_store_id();
-       // Prepare SQL query to retrieve communities by name using LIKE operator
-      
-           // Prepare SQL query to select voucher transactions by member ID
-           $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_PENDING);
-   
-           // Execute the query and fetch the results
-           $requested_store = $wpdb->get_results($query, ARRAY_A);
-
-       
-           foreach ($requested_store as $key => $community) {
+        foreach ($requested_community as $key => $community) {
             $order_data = $this->get_order_data_by_id(($community["community_id"]));
-            $requested_store[$key]["order_data"] = $order_data;
+            $requested_community[$key]["order_data"] = $order_data;
 
             $community_data = $this->get_community_data_by_id(($community["community_id"]));
-            $requested_store[$key]["community_data"] = $community_data;
+            $requested_community[$key]["community_data"] = $community_data;
+
+            $community_member_data = $this->get_community_member_data_by_id(($community["community_id"]));
+            $requested_community[$key]["community_member_data"] = $community_member_data;
         }
 
-       // Check if communities were found
-       if ($requested_store) {
-           // Return array of community objects
-           return $requested_store;
-       } else {
-           // Send error response
-           return new WP_Error('not_found', __('No Requested Communities.', 'csvp'), array('status' => 404));
-       }
-   }
+        // Check if communities were found
+        if ($requested_community) {
+            // Return array of community objects
+            return $requested_community;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Requested Communities.', 'csvp'), array('status' => 404));
+        }
+    }
 
 
-   public function get_all_not_requested_communities_for_store()
-   {
-       global $wpdb, $store;
-       $store_id = $store->get_store_id();
-       // Prepare SQL query to retrieve store IDs
-       $query = $wpdb->prepare("SELECT id FROM {$wpdb->prefix}csvp_community");
-       $community_ids = $wpdb->get_results($query, ARRAY_A);
-       $communitiesWithoutRequests = [];
-       // Iterate over each store ID
-       foreach ($community_ids as $row) {
-           $community_id = $row["id"];
-           // Prepare SQL query to check if there are any requests for this store and community
-           $query = $wpdb->prepare("SELECT COUNT(*) AS count FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND store_id = %d", $community_id, $store_id);
-           $ids_result = $wpdb->get_results($query, ARRAY_A);
-           // Check if there are any rows
-           if ($ids_result && isset($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
-               $communitiesWithoutRequests[] = $community_id;
-           }
-       }
-       $not_requested_community = [];
-       // Iterate over each store ID without requests
-       foreach ($communitiesWithoutRequests as $key => $community_id) {
-           // Get order data by store ID
-           $order_data = $this->get_order_data_by_id($community_id);
-           // Get store data by store ID
-           $community_data = $this->get_community_data_by_id($community_id);
-           // Append order data and store data to joined store array
-           $not_requested_community[$key]["order_data"] = $order_data;
-           $not_requested_community[$key]["community_data"] = $community_data;
-       }
-       // Check if joined store data was found
-       if (!empty($not_requested_community)) {
-           // Return array of joined store data
-           return $not_requested_community;
-       } else {
-           // Send error response
-           return new WP_Error('not_found', __('No Communities without requests found.', 'csvp'), array('status' => 404));
-       }
-   }
+    public function get_all_not_requested_communities_for_store()
+    {
+        global $wpdb, $store;
+        $store_id = $store->get_store_id();
+        // Prepare SQL query to retrieve store IDs
+        $query = $wpdb->prepare("SELECT id FROM {$wpdb->prefix}csvp_community");
+        $community_ids = $wpdb->get_results($query, ARRAY_A);
+        $communitiesWithoutRequests = [];
+        // Iterate over each store ID
+        foreach ($community_ids as $row) {
+            $community_id = $row["id"];
+            // Prepare SQL query to check if there are any requests for this store and community
+            $query = $wpdb->prepare("SELECT COUNT(*) AS count FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND store_id = %d", $community_id, $store_id);
+            $ids_result = $wpdb->get_results($query, ARRAY_A);
+            // Check if there are any rows
+            if ($ids_result && isset($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
+                $communitiesWithoutRequests[] = $community_id;
+            }
+        }
+        $not_requested_community = [];
+        // Iterate over each store ID without requests
+        foreach ($communitiesWithoutRequests as $key => $community_id) {
+            // Get order data by store ID
+            $order_data = $this->get_order_data_by_id($community_id);
+            $community_data = $this->get_community_data_by_id($community_id);
+            $community_member_data = $this->get_community_member_data_by_id($community_id);
+
+            $not_requested_community[$key]["order_data"] = $order_data;
+            $not_requested_community[$key]["community_data"] = $community_data;
+            $not_requested_community[$key]["community_member_data"] = $community_member_data;
+        }
+        // Check if joined store data was found
+        if (!empty($not_requested_community)) {
+            // Return array of joined store data
+            return $not_requested_community;
+        } else {
+            // Send error response
+            return new WP_Error('not_found', __('No Communities without requests found.', 'csvp'), array('status' => 404));
+        }
+    }
 
 
     public function get_community_data_for_store_popup($data)
@@ -662,7 +668,7 @@ class CSVP_Community
     }
 
 
-   
+
 
     /**
      * Function to update a community in the database based on its ID.
