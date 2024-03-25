@@ -26,12 +26,14 @@ class CSVP_Community
     public function render_dashboard()
     {
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
-        $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED));
+        $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count"=> true));
+
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
     public function render_manage_guys()
     {
+        global $voucher, $store, $community, $voucher_transaction;
         //Sample Post Request
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
 
@@ -51,6 +53,37 @@ class CSVP_Community
             }
         }
 
+
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "load_voucher") {
+            $payload = $_POST;
+
+        
+          
+                $payload["transaction_type"] = VOUCHER_TRANSACTION_LOAD;
+                $payload["transaction_date"] = date("Y-m-d H:i:s");
+                $payload["status"] = VOUCHER_STATUS_PENDING;
+                $response = $voucher_transaction->create_voucher_transaction($payload);
+
+                if (!is_wp_error($response)) {
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
+                } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+
+                }
+        }
+        
+
+        $voucherData = $voucher->get_all_vouchers_by_community_id(array('community_id' => $this->get_current_community_id()));
+        $modified_storeData = array();
+        foreach ($voucherData as $voucher) {
+
+            $voucher["store_data"] = $store->get_store_by_id($voucher["store_id"]);
+            $voucher["community_data"] = $community->get_community_by_id($voucher["community_id"]);
+            array_push($modified_storeData, $voucher);
+        }
+        $pageData["vouchers"] = $modified_storeData;
+
         // Load Data
         $members_data = $this->community_member->get_community_members_by_community_id(array('community_id' => $this->get_current_community_id()));
         $pageData["members"] = $members_data;
@@ -60,7 +93,29 @@ class CSVP_Community
 
     public static function render_messages()
     {
-        CSVP_View_Manager::load_view('messages');
+        global $community, $messages, $filter;
+        $messagesData = $messages->get_community_messages_by_to_id(array("to_id" => $community->get_current_community_id()));
+
+
+        $modifiedMessages = array();
+
+        foreach ($messagesData as $message) {
+            $message["message_filter_date"] = date('Y-m-d', strtotime($message["created_at"]));
+            array_push($modifiedMessages, $message);
+        }
+
+        $pageData["messages"] = $modifiedMessages;
+
+        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_date") {
+            unset($_POST["csvp_filter"]);
+            $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
+        }
+        
+        CSVP_View_Manager::load_view('messages', $pageData);
     }
 
     public function render_transaction_history()
@@ -85,7 +140,7 @@ class CSVP_Community
 
     public function render_store_management()
     {
-        global $store;
+        global $store, $filter;
 
 
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
@@ -163,6 +218,18 @@ class CSVP_Community
             $pageData["not_requested_stores"] = $not_requested_stores;
         }
 
+        if(isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_joined"){
+            $pageData["not_requested_stores"] = array();
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_not_joined") {
+            $pageData["joined_store"] = array();
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["not_requested_stores"] = $filter->filterData($pageData["not_requested_stores"], $_POST);
+            $pageData["requested_stores"] = $filter->filterData($pageData["requested_stores"], $_POST);
+            $pageData["joined_store"] = $filter->filterData($pageData["joined_store"], $_POST);
+        }
+        
         CSVP_View_Manager::load_view('store-management', $pageData);
 
         // CSVP_View_Manager::load_view('store-management');

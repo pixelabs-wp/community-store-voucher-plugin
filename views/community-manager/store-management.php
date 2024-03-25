@@ -878,7 +878,7 @@
                     </div>
                     <div class="styled-element">
                         <span>סה”כ שווי החזרה: ₪ <span class="total-cost"></span></span>
-						<span>סה”כ פריטים: <span class="total-added-items"></span> פריטים</span>
+                        <span>סה”כ פריטים: <span class="total-added-items"></span> פריטים</span>
                     </div>
                     <div class="btngroup">
                         <input type="hidden" id="order__return_request_store_id" name="store_id" value="">
@@ -968,12 +968,12 @@
             <!-- 3st one -->
             <div class="d-flex flex-column align-items-end cont" id="parentOrderReturn">
                 <h3 class="buttons">הסטוריית החזרות </h3>
-               
+
             </div>
             <!-- 4st one -->
             <div class="d-flex flex-column align-items-end cont" id="parentOrderPending">
                 <h3 class="title">בקשות הזמנה ממתינות לאישור </h3>
-                
+
             </div>
             <div>
                 <div class="d-flex flex-column align-items-end cont">
@@ -1031,7 +1031,16 @@
                         </span>
                     </div>
                     <div class="col">
-                        <input type="text" id="store-search" placeholder="חיפוש חנות ">
+                        <form action="" method="post">
+                            <input type="text" id="store-search" name="store_name" list="stores" value="<?php echo isset($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>" placeholder="חיפוש חנות ">
+                            <input type="hidden" name="csvp_filter" value="filter_by_name">
+                            <datalist id="stores">
+                                <?php foreach ($store->get_all_stores() as $key => $storeData) {
+                                    echo '<option value="' . $storeData['store_name'] . '">' . $storeData['store_name'] . '</option>';
+                                }; ?>
+
+                            </datalist>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1042,7 +1051,10 @@
             <div class="card-body-rounded p-1 m-1">
                 <div class="row align-items-center">
                     <div class="col">
-                        <div class="font-weight-medium ts-text"> חנויות שלא בהסדר</div>
+                        <form action="" method="post">
+                            <input type="hidden" name="csvp_filter" value="filter_by_not_joined">
+                            <button class="font-weight-medium ts-text btn border-0 text-right w-20"> חנויות שלא בהסדר</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1053,7 +1065,10 @@
             <div class="card-body-rounded p-1 m-1">
                 <div class="row align-items-center">
                     <div class="col">
-                        <div class="font-weight-medium ts-text">חנויות בהסדר</div>
+                        <form action="" method="post">
+                            <input type="hidden" name="csvp_filter" value="filter_by_joined">
+                            <button type="submit" class="font-weight-medium ts-text btn border-0 text-right w-20">יצא לאקסל</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -1182,8 +1197,8 @@
     var voucherElement = document.getElementById("voucherElementId");
 
     function addSection(id, imageSrc, title, price, discountPrice) {
-		var imageUrl = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + imageSrc;
-		var section = `
+        var imageUrl = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + imageSrc;
+        var section = `
 		<div class="d-flex gap-3">
 			<div class="card border-white rounded-1 mb-3" style="max-width: 18rem;">
 				<div class="cards">
@@ -1199,9 +1214,10 @@
 		</div>
 
 	`;
-		
+
         voucherElement.innerHTML += section; // Use innerHTML to append HTML content
-	}
+    }
+
     function populateOrderDetailModalFunction(button) {
         var orderDetails = JSON.parse(button.getAttribute('data-order-details'));
 
@@ -1356,7 +1372,7 @@
 
     }
 
-    
+
 
 
     jQuery('#store-details').on('show.bs.modal', function(event) {
@@ -1368,65 +1384,65 @@
         jQuery('#order__return_request_store_id').val(id);
 
         jQuery.ajax({
-			url: "<?php echo admin_url('admin-ajax.php'); ?>",
-			type: 'POST',
-			data: {
-				action: 'csvp_ajax', // Action hook
-				csvp_request: 'CSVP_Store', // Action hook
-				csvp_handler: 'get_store_data_for_community_popup', // Action hook
-				data: {
-					store_id: id
-				}
-			},
-			success: function (response) {
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Store', // Action hook
+                csvp_handler: 'get_store_data_for_community_popup', // Action hook
+                data: {
+                    store_id: id
+                }
+            },
+            success: function(response) {
                 console.log(response);
-				// Handle success response
-				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
+                // Handle success response
+                document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
                 document.getElementById('name_of_store').innerHTML = response[0]["store_name"];
                 document.getElementById('store_manager_no').innerHTML = response[0]["store_cashier_phone"];
                 document.getElementById('store_manager_address').innerHTML = response[0]["store_address"];
                 document.getElementById('store_logo').src = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + response[0]["store_logo"];
 
-			},
-			error: function (xhr, status, error) {
-				// Handle error response
-				console.error(xhr.responseText);
-			}
-		});
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
 
         jQuery.ajax({
-			url: "<?php echo admin_url('admin-ajax.php'); ?>",
-			type: 'POST',
-			data: {
-				action: 'csvp_ajax', // Action hook
-				csvp_request: 'CSVP_Voucher', // Action hook
-				csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
-				data: {
-					id: id,
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Voucher', // Action hook
+                csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
+                data: {
+                    id: id,
                     type: "community"
-				}
-			},
-			success: function (response) {
-				// Handle success response
-				if (response.length > 0) {
-					var voucherElementId = document.getElementById("voucherElementId");
-					voucherElementId.innerHTML = "";
-					response.forEach(function (item) {
-						addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
-					});
-				} else {
-					var voucherElementId = document.getElementById("voucherElementId");
-					voucherElementId.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
-				}
+                }
+            },
+            success: function(response) {
+                // Handle success response
+                if (response.length > 0) {
+                    var voucherElementId = document.getElementById("voucherElementId");
+                    voucherElementId.innerHTML = "";
+                    response.forEach(function(item) {
+                        addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
+                    });
+                } else {
+                    var voucherElementId = document.getElementById("voucherElementId");
+                    voucherElementId.innerHTML = "<label>No Vouchers Found</label>"; // Use innerHTML to append HTML content
+                }
 
-			},
-			error: function (xhr, status, error) {
-				// Handle error response
-				console.error(xhr.responseText);
-				console.error("Unexpected response format:", xhr.responseText);
-			}
-		});
-        
+            },
+            error: function(xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+                console.error("Unexpected response format:", xhr.responseText);
+            }
+        });
+
 
         jQuery.ajax({
             url: "<?php echo admin_url('admin-ajax.php'); ?>",
@@ -1475,7 +1491,7 @@
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="cost-per-item" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-item" class="amount-input" name="total_item[]" placeholder="כמות"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="name-input" name="product_name[]" placeholder="שם המוצר"></th>`;
-	}
+    }
 
     function addReturnRow() {
         var table = document.getElementById('return_items');
@@ -1485,81 +1501,80 @@
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="cost-per-item" class="cost-input" name="cost_per_item[]" placeholder="עלות לפריט"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="number" id="total-item" class="amount-input" name="total_item[]" placeholder="כמות"></th>
 	  <th><input style="border: none; background-color: #f0f0f0; text-align: center; font-weight:bold;" type="text" class="name-input" name="product_name[]" placeholder="שם המוצר"></th>`;
-	}
+    }
 </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const modal1 = document.getElementById('community-manager-add-new-order');
-    const modal2 = document.getElementById('community-manager-return-request');
-    const modal1Table = modal1.querySelector('table');
-    const modal2Table = modal2.querySelector('table');
+    document.addEventListener('DOMContentLoaded', function() {
+        const modal1 = document.getElementById('community-manager-add-new-order');
+        const modal2 = document.getElementById('community-manager-return-request');
+        const modal1Table = modal1.querySelector('table');
+        const modal2Table = modal2.querySelector('table');
 
-    function updateTotalItems(table) {
-        const totalItemInputs = table.querySelectorAll('.amount-input');
-        let total = 0;
-        for (const input of totalItemInputs) {
-            const value = parseFloat(input.value) || 0;
-            total += value;
-        }
-        const totalSpan = table.closest('.modal-content').querySelector('.total-added-items');
-        totalSpan.textContent = total;
-    }
-
-    function updateCost(table) {
-        const totalItemInputs = table.querySelectorAll('.total-input');
-        let total = 0;
-        for (const input of totalItemInputs) {
-            const value = parseFloat(input.value) || 0;
-            total += value;
-        }
-        const totalSpan = table.closest('.modal-content').querySelector('.total-cost');
-        totalSpan.textContent = total;
-    }
-
-    function calculateTotal(table) {
-        table.addEventListener('input', (event) => {
-            const target = event.target;
-
-            if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-                const currentRow = target.closest('tr');
-                const amountInput = currentRow.querySelector('.amount-input');
-                const costInput = currentRow.querySelector('.cost-input');
-                const totalInput = currentRow.querySelector('.total-input');
-                const amount = parseFloat(amountInput.value) || 0;
-                const cost = parseFloat(costInput.value) || 0;
-                const totalCost = amount * cost;
-                totalInput.value = totalCost;
-
-                updateTotalItems(table);
-                updateCost(table);
+        function updateTotalItems(table) {
+            const totalItemInputs = table.querySelectorAll('.amount-input');
+            let total = 0;
+            for (const input of totalItemInputs) {
+                const value = parseFloat(input.value) || 0;
+                total += value;
             }
+            const totalSpan = table.closest('.modal-content').querySelector('.total-added-items');
+            totalSpan.textContent = total;
+        }
+
+        function updateCost(table) {
+            const totalItemInputs = table.querySelectorAll('.total-input');
+            let total = 0;
+            for (const input of totalItemInputs) {
+                const value = parseFloat(input.value) || 0;
+                total += value;
+            }
+            const totalSpan = table.closest('.modal-content').querySelector('.total-cost');
+            totalSpan.textContent = total;
+        }
+
+        function calculateTotal(table) {
+            table.addEventListener('input', (event) => {
+                const target = event.target;
+
+                if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+                    const currentRow = target.closest('tr');
+                    const amountInput = currentRow.querySelector('.amount-input');
+                    const costInput = currentRow.querySelector('.cost-input');
+                    const totalInput = currentRow.querySelector('.total-input');
+                    const amount = parseFloat(amountInput.value) || 0;
+                    const cost = parseFloat(costInput.value) || 0;
+                    const totalCost = amount * cost;
+                    totalInput.value = totalCost;
+
+                    updateTotalItems(table);
+                    updateCost(table);
+                }
+            });
+        }
+
+        function resetValues(modal) {
+            const inputs = modal.querySelectorAll('input[type="number"]');
+            const inputss = modal.querySelectorAll('input[type="text"]');
+            for (const input of inputs) {
+                input.value = ''; // Reset input values
+            }
+            for (const inputsss of inputss) {
+                inputsss.value = ''; // Reset input values
+            }
+            updateTotalItems(modal.querySelector('table'));
+            updateCost(modal.querySelector('table'));
+        }
+
+        modal1.addEventListener('hidden.bs.modal', function() {
+            resetValues(modal1);
         });
-    }
 
-    function resetValues(modal) {
-        const inputs = modal.querySelectorAll('input[type="number"]');
-        const inputss = modal.querySelectorAll('input[type="text"]');
-        for (const input of inputs) {
-            input.value = ''; // Reset input values
-        }
-        for (const inputsss of inputss) {
-            inputsss.value = ''; // Reset input values
-        }
-        updateTotalItems(modal.querySelector('table'));
-        updateCost(modal.querySelector('table'));
-    }
+        modal2.addEventListener('hidden.bs.modal', function() {
+            resetValues(modal2);
+        });
 
-    modal1.addEventListener('hidden.bs.modal', function () {
-        resetValues(modal1);
+        calculateTotal(modal1Table);
+        calculateTotal(modal2Table);
     });
-
-    modal2.addEventListener('hidden.bs.modal', function () {
-        resetValues(modal2);
-    });
-
-    calculateTotal(modal1Table);
-    calculateTotal(modal2Table);
-});
-
 </script>

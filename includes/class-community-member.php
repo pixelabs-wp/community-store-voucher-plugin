@@ -448,7 +448,7 @@ class CSVP_CommunityMember {
         return $balances !== null ? $balances : false;
     }
 
-    // public function get_all_community_members
+    
 }
 
 ?>

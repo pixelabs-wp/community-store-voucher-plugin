@@ -177,7 +177,8 @@
                                 </span>
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">יצא לאקסל</div>
+                                <button class="font-weight-medium ts-text btn border-0 text-right w-20" onclick='outToExcel( <?php echo isset($pageData["commision"]) ? json_encode($pageData["commision"]) : "[]"; ?>)'>יצא לאקסל</button>
+
                             </div>
                         </div>
                     </div>
@@ -190,20 +191,14 @@
                 <div class="card card-sm p-relative" style="position: relative;">
 
                     <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
-                        <div class="" style="direction: rtl;">
-                            <label class="form-label">חיפוש לפי שם חנות</label>
-                            <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value="" multiple>
-                                <option value="HTML">HTML</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="CSS">CSS</option>
-                                <option value="jQuery">jQuery</option>
-                                <option value="Bootstrap">Bootstrap</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="Python">Python</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-                        </div>
-
+                        <form action="" method="post">
+                            <div class="" style="direction: rtl;">
+                                <label class="form-label">חיפוש לפי שם</label>
+                                <input type="text" class="form-control" placeholder="" name="store_name" value="<?php echo isset($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>">
+                                <input type="hidden" name="csvp_filter" value="filter_commision_by_name">
+                                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="card-body-rounded p-1 m-1 filter-card">
@@ -225,23 +220,20 @@
 
 
             <!-- Search by months Filter -->
+            <!-- Search by months Filter -->
             <div class="col-sm-5 col-lg-4 m-0">
                 <div class="card card-sm p-relative" style="position: relative;">
                     <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
-                        <div class="" style="direction: rtl;">
-                            <label class="form-label">חיפוש לפי חודשים</label>
-                            <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
-                                <option value="HTML">HTML</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="CSS">CSS</option>
-                                <option value="jQuery">jQuery</option>
-                                <option value="Bootstrap">Bootstrap</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="Python">Python</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-                        </div>
+                        <form action="" method="post">
 
+                            <div class="" style="direction: rtl;">
+                                <label class="form-label">חיפוש לפי חודשים</label>
+                                <input type="month" id="start" name="month_year" min="2018-03" value="<?php echo isset($_POST["month_year"]) ? $_POST["month_year"] : ""; ?>" />
+                                <input type="hidden" name="csvp_filter" value="filter_commision_by_my">
+
+                                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="card-body-rounded p-1 m-1 filter-card">
                         <div class="row align-items-center">

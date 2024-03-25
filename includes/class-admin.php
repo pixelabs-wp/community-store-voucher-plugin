@@ -38,7 +38,7 @@ class CSVP_Admin
                 $number_of_guys = $this->community_member->get_community_members_by_community_id(array('count' => 'true', 'community_id' => $community['id']));
                 // Add the count of members as a new key in each community array
                 $community['number_of_guys'] = $number_of_guys;
-                $community['commision_pending'] = count($commision->get_commissions_by_entity_id($community['id'], CSVP_User_Roles::ROLE_COMMUNITY_MANAGER, COMMISSION_STATUS_PENDING)) > 0 ? 0 : 1;
+                $community['commision_pending'] = count($commision->get_commissions_by_entity_id($community['id'], CSVP_User_Roles::ROLE_COMMUNITY_MANAGER, COMMISSION_STATUS_PENDING)) > 0 ? 1 : 0;
                 $modifiedCommunities[] = $community; // Add the modified community to the new array
             }
             $number_of_communities = $this->community->get_all_communities(array("count"=>true));
@@ -56,11 +56,14 @@ class CSVP_Admin
 
         }
        
+
         CSVP_View_Manager::load_view('community-management', $pageData);
     }
 
     public function render_store_management()
     {
+        global $commision, $filter;
+
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_store") {
             $payload = $_POST;
 
@@ -75,14 +78,29 @@ class CSVP_Admin
         }
         $pageData = array(); // or $emptyArray = [];
         $stores = $this->store->get_all_stores();
+        $modifiedStores = array();
         if (!is_wp_error($stores)) 
         {
-            $pageData["stores"] = $stores;
+            foreach ($stores as $store) {
+                $store['commision_pending'] = count($commision->get_commissions_by_entity_id($store['id'], CSVP_User_Roles::ROLE_STORE_MANAGER, COMMISSION_STATUS_PENDING)) > 0 ? 1 : 0;
+                array_push($modifiedStores, $store);
+            }
+
+            $pageData["stores"] = $modifiedStores;
         }
         $number_of_stores = $this->store->get_all_stores(array("count" => true));
-        if (!is_wp_error($stores)) 
+        if (!is_wp_error($number_of_stores)) 
         {
             $pageData["total_stores"] = $number_of_stores;
+        }
+
+
+        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_stores_by_name") {
+            unset($_POST["csvp_filter"]);
+            $pageData["stores"] = $filter->filterData($pageData["stores"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_stores_by_debt") {
+            unset($_POST["csvp_filter"]);
+            $pageData["stores"] = $filter->filterData($pageData["stores"], $_POST);
         }
         
 
@@ -91,7 +109,7 @@ class CSVP_Admin
 
     public function render_store_commisions()
     {
-        global $commision, $store;
+        global $commision, $store, $filter;
 
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "pay_commision") {
 
@@ -109,24 +127,57 @@ class CSVP_Admin
         $commisions = array();
         foreach ($commision_data as $value) {
             $value["store_data"] = $store->get_store_by_id($value["entity_id"]);
+            $value["store_name"] = $value["store_data"]->store_name;
+            $value["month_year"] = date("Y", strtotime($value["year"])) . "-" . date("m", strtotime($value["year"]));
             array_push($commisions, $value);
         }
         $pageData["commision"] = $commisions;
+
+        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_commision_by_name") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["commision"] = $filter->filterData($pageData["commision"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_commision_by_my") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["commision"] = $filter->filterData($pageData["commision"], $_POST);
+        } 
+
+
         CSVP_View_Manager::load_view('store-commision', $pageData);
     }
 
     public function render_messages()
     {
+        global $filter;
         $pageData = array();
 
         $messages = $this->message->get_all_community_messages_of_admin();
-        $pageData["messages"] = $messages;
+
+        $modifiedMessages = array();
+
+        foreach ($messages as $message) {
+             $message["message_filter_date"] = date('Y-m-d', strtotime($message["created_at"]));
+             array_push($modifiedMessages, $message);
+        }
+
+        $pageData["messages"] = $modifiedMessages;
+
+
+        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_date") {
+            unset($_POST["csvp_filter"]);
+            $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
+        }
         CSVP_View_Manager::load_view('messages', $pageData);
     }
 
     public function render_community_commisions()
     {
-        global $commision, $community;
+        global $commision, $community, $filter;
 
         if(isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "pay_commision"){
 
@@ -145,9 +196,22 @@ class CSVP_Admin
         $commisions = array();
         foreach ($commision_data as $value) {
             $value["community_data"] = $community->get_community_by_id($value["entity_id"]);
+            $value["community_name"] = $value["community_data"]->community_name;
+            $value["month_year"] = date("Y", strtotime($value["year"])) . "-" . date("m", strtotime($value["year"]));
             array_push($commisions, $value);
         }
         $pageData["commision"] = $commisions;
+
+
+        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_commision_by_name") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["commision"] = $filter->filterData($pageData["commision"], $_POST);
+        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_commision_by_my") {
+            unset($_POST["csvp_filter"]);
+
+            $pageData["commision"] = $filter->filterData($pageData["commision"], $_POST);
+        } 
         CSVP_View_Manager::load_view('community-commision', $pageData);
     }
 
@@ -176,19 +240,110 @@ class CSVP_Admin
     }
 
     function login_community() {
-        $community_id = isset($_REQUEST["community_id"]) ? $_REQUEST["community_id"] : false;
+        $community_user_id = isset($_REQUEST["community_user_id"]) ? $_REQUEST["community_user_id"] : false;
         $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : home_url('/admin');
-        if($community_id){
+        $target = home_url('/community');
+        $admin_id  = get_current_user_id();
+        if($community_user_id){
             if(CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_SYSTEM_ADMIN)){
-                // switch_to_user
+                $response = $this->switch_to_user($community_user_id);
+                if(!is_wp_error($response)){
+                    update_option('admin_link_id', $admin_id);
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Logging In");
+                    header("Location: " . $target);
+                } else {
+                    echo $response->get_error_message();
+                    // header("Location: " . $referrer);
+                }
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid request");
+                header("Location: " . $referrer);
             }
         } else {
-            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid Community");
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid community_user_id");
             header("Location: ". $referrer);
         }
-        
     }
 
+
+    function logout_community()
+    {
+        $admin_link_id = get_option('admin_link_id') ? get_option('admin_link_id') : false;
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : home_url('/community');
+        $target = home_url('/admin');
+        $community_id  = get_current_user_id();
+        if ($admin_link_id) {
+      
+                $response = $this->switch_to_user($admin_link_id);
+                if (!is_wp_error($response)) {
+                    delete_option('admin_link_id');
+                    CSVP_Notification::add(CSVP_Notification::ERROR, "Logging Out");
+                    header("Location: " . $target);
+                } else {
+                    echo $response->get_error_message();
+                    header("Location: " . $referrer);
+                }
+           
+        } else {
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid admin_link_id");
+            header("Location: " . $referrer);
+        }
+    }
+
+
+    function login_store()
+    {
+        $store_user_id = isset($_REQUEST["store_user_id"]) ? $_REQUEST["store_user_id"] : false;
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : home_url('/admin');
+        $target = home_url('/store');
+        $admin_id  = get_current_user_id();
+        if ($store_user_id) {
+            if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_SYSTEM_ADMIN)) {
+                $response = $this->switch_to_user($store_user_id);
+                if (!is_wp_error($response)) {
+                    update_option('admin_link_id', $admin_id);
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Logging In");
+                    header("Location: " . $target);
+                } else {
+                    echo $response->get_error_message();
+                    // header("Location: " . $referrer);
+                }
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid request");
+                header("Location: " . $referrer);
+            }
+        } else {
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid store_user_id");
+            header("Location: " . $referrer);
+        }
+    }
+
+
+    function logout_store()
+    {
+        $admin_link_id = get_option('admin_link_id') ? get_option('admin_link_id') : false;
+        $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : home_url('/store');
+        $target = home_url('/admin');
+        $store_id  = get_current_user_id();
+        if ($admin_link_id) {
+
+            $response = $this->switch_to_user($admin_link_id);
+            if (!is_wp_error($response)) {
+                delete_option('admin_link_id');
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Logging Out");
+                header("Location: " . $target);
+            } else {
+                echo $response->get_error_message();
+                header("Location: " . $referrer);
+            }
+        } else {
+            CSVP_Notification::add(CSVP_Notification::ERROR, "Invalid admin_link_id");
+            header("Location: " . $referrer);
+        }
+    }
+
+
+    
     function switch_to_user($user_id)
     {
         // Check if the user ID is valid
@@ -207,6 +362,8 @@ class CSVP_Admin
 
         // Log in as the specified user
         wp_set_auth_cookie($user_id);
+
+        return $user;
     }
 
 }

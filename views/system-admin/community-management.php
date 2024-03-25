@@ -267,7 +267,7 @@
                                     </div>
 
                                 </div>
-                                <a href="/admin/community-login?community_id=<?php echo $community["id"]; ?>" class="btn btn-dark">← לפרטים המלאים</a>
+                                <a href="/admin/community-login?community_user_id=<?php echo $community["wp_user_id"]; ?>" class="btn btn-dark">← לפרטים המלאים</a>
                             </div>
 
 

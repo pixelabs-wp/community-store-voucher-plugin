@@ -176,33 +176,26 @@
                                 </span>
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">יצא לאקסל</div>
+                                <button class="font-weight-medium ts-text btn border-0 text-right w-20" onclick='outToExcel( <?php echo isset($pageData["commision"]) ? json_encode($pageData["commision"]) : "[]"; ?>)'>יצא לאקסל</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-
             <!-- Search by store name Filter  -->
             <div class="col-sm-5 col-lg-4 m-0">
                 <div class="card card-sm p-relative" style="position: relative;">
 
                     <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
-                        <div class="" style="direction: rtl;">
-                            <label class="form-label">חיפוש לפי שם ישיבה</label>
-                            <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value="" multiple>
-                                <option value="HTML">HTML</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="CSS">CSS</option>
-                                <option value="jQuery">jQuery</option>
-                                <option value="Bootstrap">Bootstrap</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="Python">Python</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-                        </div>
-
+                        <form action="" method="post">
+                            <div class="" style="direction: rtl;">
+                                <label class="form-label">חיפוש לפי שם</label>
+                                <input type="text" class="form-control" placeholder="" name="community_name" value="<?php echo isset($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
+                                <input type="hidden" name="csvp_filter" value="filter_commision_by_name">
+                                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                            </div>
+                        </form>
                     </div>
 
                     <div class="card-body-rounded p-1 m-1 filter-card">
@@ -215,7 +208,7 @@
                                 </span>
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">חיפוש לפי שם ישיבה</div>
+                                <div class="font-weight-medium ts-text">חיפוש לפי שם</div>
                             </div>
                         </div>
                     </div>
@@ -227,20 +220,16 @@
             <div class="col-sm-5 col-lg-4 m-0">
                 <div class="card card-sm p-relative" style="position: relative;">
                     <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
-                        <div class="" style="direction: rtl;">
-                            <label class="form-label">חיפוש לפי חודשים</label>
-                            <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
-                                <option value="HTML">HTML</option>
-                                <option value="JavaScript">JavaScript</option>
-                                <option value="CSS">CSS</option>
-                                <option value="jQuery">jQuery</option>
-                                <option value="Bootstrap">Bootstrap</option>
-                                <option value="Ruby">Ruby</option>
-                                <option value="Python">Python</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-                        </div>
+                        <form action="" method="post">
 
+                            <div class="" style="direction: rtl;">
+                                <label class="form-label">חיפוש לפי חודשים</label>
+                                <input type="month" id="start" name="month_year" min="2018-03" value="<?php echo isset($_POST["month_year"]) ? $_POST["month_year"] : ""; ?>" />
+                                <input type="hidden" name="csvp_filter" value="filter_commision_by_my">
+
+                                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                            </div>
+                        </form>
                     </div>
                     <div class="card-body-rounded p-1 m-1 filter-card">
                         <div class="row align-items-center">
@@ -266,8 +255,10 @@
                 <table class="table table-vcenter card-table">
                     <tbody class="d-flex flex-column ts-text">
                         <?php
-
+                        $totalCommisionsAmount = 0;
+                        $totalCommisions = count($pageData["commision"]);
                         foreach ($pageData["commision"] as $commision) {
+                            $totalCommisionsAmount += $commision["total_commision"];
                         ?>
 
                             <tr>
@@ -313,15 +304,15 @@
                             <li class="page-item page-prev disabled">
                                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                     <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                                        סה”כ טעינות במערכת: 87 </div>
+                                        סה”כ טעינות במערכת: <?php echo $totalCommisionsAmount; ?> </div>
                                 </a>
                             </li>
 
                             <li class="page-item page-next">
-                               
-                                    <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                        סה”כ ישיבות: 450 </div>
-                                
+
+                                <div class="page-item-title text-white mx-4" style="font-size: 20px">
+                                    סה”כ ישיבות: <?php echo $totalCommisions; ?></div>
+
                             </li>
                         </ul>
                     </div>
