@@ -10,6 +10,7 @@ class CSVP_Store
     public $order;
     public $voucherTransaction;
     public $message;
+    public $transaction;
     // Constructor
     public function __construct()
     {
@@ -21,7 +22,7 @@ class CSVP_Store
         $this->order = new CSVP_Order();
         $this->voucherTransaction = new CSVP_VoucherTransaction();
         $this->message = new CSVP_CommunityMessage();
-
+        $this->transaction = new CSVP_Transaction();
     }
 
     public function render_community_management()
@@ -117,6 +118,31 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
         }
+        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "request_trasanction") {
+            $payload = $_POST;
+            $payload["status"] = VOUCHER_STATUS_REQUESTED;
+            $payload['status_transaction'] = 2;
+            $payload["message"] = "Payment Request Sent";
+            $response = $this->transaction->update_transaction_status($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+        else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "aprrove_trasanction") {
+            $payload = $_POST;
+            $payload["status"] = VOUCHER_STATUS_PAID;
+            $payload['status_transaction'] = 3;
+            $payload["message"] = "Payment Set as Paid";
+            $response = $this->transaction->update_transaction_status($payload);
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        }
+
         $pageData = [];
 
         $joined_communities = $this->community->get_all_joined_communities_for_store();
@@ -386,7 +412,8 @@ class CSVP_Store
         $community_members = array();
         if(!is_wp_error($joined_communities)){
             foreach ($joined_communities as $request) {
-                $members = $community_member->get_community_members_by_community_id(array("community_id"=> $request->community_id));
+               
+                $members = $community_member->get_community_members_by_community_id(array("community_id"=> $request['community_id']));
                 array_push($community_members, $members);
             }
         }

@@ -4,7 +4,9 @@ define('VOUCHER_STATUS_PENDING', 'Pending');
 define('VOUCHER_STATUS_APPROVED', 'Approved');
 define('VOUCHER_STATUS_REJECTED', 'Rejected');
 define('VOUCHER_STATUS_USED', 'Used');
+define('VOUCHER_STATUS_REQUESTED', 'Requested');
 define('VOUCHER_STATUS_EXPIRED', 'Expired');
+define('VOUCHER_STATUS_PAID', 'Paid');
 
 define('COMMISSION_STATUS_PENDING', 'Pending');
 define('COMMISSION_STATUS_APPROVED', 'Approved');
