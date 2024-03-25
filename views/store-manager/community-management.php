@@ -713,10 +713,11 @@
 				<div class="d-flex  align-items-center gap-3 header-data-wrapper">
 					<div class="address d-flex flex-column align-items-end gap-3">
 						<h1 id="name_of_community">ת”ת אור התורה </h1>
-						<div> 
-							<h2 class="address-title">אליהו מנהל ת”ת:<span
-									id="community_manager_no">054-6268012</span> <span id="community_manager_address">
-									רבי עקיבא 84 בני ברק</span> :כתובת</h2>
+						<div>
+							<h2 class="address-title">אליהו מנהל ת”ת:<span id="community_manager_no">054-6268012</span>
+								<span id="community_manager_address">
+									רבי עקיבא 84 בני ברק</span> :כתובת
+							</h2>
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
@@ -894,18 +895,18 @@
 	const table = document.querySelector('table');
 
 	table.addEventListener('change', (event) => {
-	const target = event.target;
+		const target = event.target;
 
-	if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-		const currentRow = target.closest('tr');
-		const amountInput = currentRow.querySelector('.amount-input');
-		const costInput = currentRow.querySelector('.cost-input');
-		const totalInput = currentRow.querySelector('.total-input'); 
-		const amount = parseFloat(amountInput.value) || 0;
-		const cost = parseFloat(costInput.value) || 0;
-		const totalCost = amount * cost;
-		totalInput.value = totalCost;
-	}
+		if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+			const currentRow = target.closest('tr');
+			const amountInput = currentRow.querySelector('.amount-input');
+			const costInput = currentRow.querySelector('.cost-input');
+			const totalInput = currentRow.querySelector('.total-input');
+			const amount = parseFloat(amountInput.value) || 0;
+			const cost = parseFloat(costInput.value) || 0;
+			const totalCost = amount * cost;
+			totalInput.value = totalCost;
+		}
 	});
 
 	function updateTotalItems() {
@@ -933,59 +934,59 @@
 		const totalSpan = document.querySelector('.total-cost');
 		totalSpan.textContent = total;
 	}
-	
+
 	document.querySelector('table').addEventListener('change', (event) => { updateCost(); });
 
 	updateCost();
 
 
-// 	document.addEventListener('DOMContentLoaded', function () {
-//     const table = document.querySelector('table');
+	// 	document.addEventListener('DOMContentLoaded', function () {
+	//     const table = document.querySelector('table');
 
-//     function updateTotalItems() {
-//         const totalItemInputs = document.querySelectorAll('.amount-input');
-//         let total = 0;
-//         for (const input of totalItemInputs) {
-//             const value = parseFloat(input.value) || 0;
-//             total += value;
-//         }
-//         const totalSpan = document.querySelector('.total-added-items');
-//         totalSpan.textContent = total;
-//     }
+	//     function updateTotalItems() {
+	//         const totalItemInputs = document.querySelectorAll('.amount-input');
+	//         let total = 0;
+	//         for (const input of totalItemInputs) {
+	//             const value = parseFloat(input.value) || 0;
+	//             total += value;
+	//         }
+	//         const totalSpan = document.querySelector('.total-added-items');
+	//         totalSpan.textContent = total;
+	//     }
 
-//     function updateCost() {
-//         const totalItemInputs = document.querySelectorAll('.total-input');
-//         let total = 0;
-//         for (const input of totalItemInputs) {
-//             const value = parseFloat(input.value) || 0;
-//             total += value;
-//         }
-//         const totalSpan = document.querySelector('.total-cost');
-//         totalSpan.textContent = total;
-//     }
+	//     function updateCost() {
+	//         const totalItemInputs = document.querySelectorAll('.total-input');
+	//         let total = 0;
+	//         for (const input of totalItemInputs) {
+	//             const value = parseFloat(input.value) || 0;
+	//             total += value;
+	//         }
+	//         const totalSpan = document.querySelector('.total-cost');
+	//         totalSpan.textContent = total;
+	//     }
 
-//     function calculateTotal() {
-//         table.addEventListener('input', (event) => {
-//             const target = event.target;
+	//     function calculateTotal() {
+	//         table.addEventListener('input', (event) => {
+	//             const target = event.target;
 
-//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-//                 const currentRow = target.closest('tr');
-//                 const amountInput = currentRow.querySelector('.amount-input');
-//                 const costInput = currentRow.querySelector('.cost-input');
-//                 const totalInput = currentRow.querySelector('.total-input');
-//                 const amount = parseFloat(amountInput.value) || 0;
-//                 const cost = parseFloat(costInput.value) || 0;
-//                 const totalCost = amount * cost;
-//                 totalInput.value = totalCost;
+	//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+	//                 const currentRow = target.closest('tr');
+	//                 const amountInput = currentRow.querySelector('.amount-input');
+	//                 const costInput = currentRow.querySelector('.cost-input');
+	//                 const totalInput = currentRow.querySelector('.total-input');
+	//                 const amount = parseFloat(amountInput.value) || 0;
+	//                 const cost = parseFloat(costInput.value) || 0;
+	//                 const totalCost = amount * cost;
+	//                 totalInput.value = totalCost;
 
-//                 updateTotalItems();
-//                 updateCost();
-//             }
-//         });
-//     }
+	//                 updateTotalItems();
+	//                 updateCost();
+	//             }
+	//         });
+	//     }
 
-//     calculateTotal();
-// });
+	//     calculateTotal();
+	// });
 
 </script>
 
@@ -1166,42 +1167,68 @@
 						</span>
 					</div>
 					<div class="col">
-						<input type="text" id="store-search" class="px-2" placeholder="חיפוש ת”ת">
+						<form action="" method="post">
+							<div class="" style="direction: rtl;">
+								<input type="text" id="store-search" class="form-control" placeholder="חיפוש ת”ת"
+									name="community_name"
+									value="<?php echo isset ($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
+								<input type="hidden" name="csvp_filter" value="filter_communities_by_name">
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	<?php
+	// echo json_encode($_POST);
+	?>
+
 	<div class="col-sm-5 col-lg-4 m-0">
-		<div class="card card-sm">
-			<div class="card-body-rounded p-1 m-1">
-				<div class="row align-items-center">
-					<div class="col">
-						<div class="font-weight-medium ts-text">תת”ים שלא בהסדר</div>
+		<form action="" method="POST">
+			<button class="card card-sm w-100 d-flex align-items-center" >
+				<div>
+					<div class="card-body-rounded p-1 m-1">
+						<div class="row align-items-center">
+							<div class="col">
+								<input type="hidden" name="non_agreed_store_filter" id="">
+								<div class="font-weight-medium text-center ts-text">תת”ים שלא בהסדר</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</button>
+		</form>
 	</div>
+
+
 	<div class="col-sm-5 col-lg-4 m-0">
-		<div class="card card-sm">
-			<div class="card-body-rounded p-1 m-1">
-				<div class="row align-items-center">
-					<div class="col">
-						<div class="font-weight-medium ts-text">תת”ים בהסדר</div>
+		<form action="" method="POST">
+			<button class="card card-sm w-100 d-flex align-items-center" >
+				<div>
+					<div class="card-body-rounded p-1 m-1">
+						<div class="row align-items-center">
+							<div class="col">
+								<input type="hidden" name="agreed_store_filter" id="">
+								<div class="font-weight-medium text-center ts-text">תת”ים בהסדר</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</button>
+		</form>
 	</div>
+	
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
 	<?php
 
-	if (isset($pageData["joined_communities"])) {
-		foreach ($pageData["joined_communities"] as $community) { 
-		
+	if (isset ($pageData["joined_communities"])) {
+		foreach ($pageData["joined_communities"] as $community) {
+
 			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
 				data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
@@ -1216,10 +1243,11 @@
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות בחורים: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset ($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות:</strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset ($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
 										</td>
 
 									</tr>
@@ -1235,7 +1263,7 @@
 		<?php }
 	} ?>
 	<?php
-	if (isset($pageData["requested_communities"])) {
+	if (isset ($pageData["requested_communities"])) {
 		foreach ($pageData["requested_communities"] as $community) { ?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
@@ -1249,10 +1277,11 @@
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset ($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset ($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
 										</td>
 									</tr>
 								</table>
@@ -1268,7 +1297,7 @@
 		<?php }
 	} ?>
 	<?php
-	if (isset($pageData["not_requested_communities"])) {
+	if (isset ($pageData["not_requested_communities"])) {
 		foreach ($pageData["not_requested_communities"] as $community) { ?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
@@ -1282,10 +1311,11 @@
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset ($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset ($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
 										</td>
 									</tr>
 								</table>
@@ -1316,9 +1346,9 @@
 
 <script>
 
-var voucherElementId = document.getElementById("voucherElementId");
+	var voucherElementId = document.getElementById("voucherElementId");
 
-	
+
 	function addRow() {
 		var table = document.querySelector('.table tbody');
 		var newRow = table.insertRow();
@@ -1356,8 +1386,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 		</div>
 
 	`;
-		
-	voucherElementId.innerHTML += section; // Use innerHTML to append HTML content
+
+		voucherElementId.innerHTML += section; // Use innerHTML to append HTML content
 	}
 
 
@@ -1405,8 +1435,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 	var parentOrderHistory = document.getElementById("parentOrderHistory");
 
 	function addOrderHistory(item) {
-		var section  =``;
-		
+		var section = ``;
+
 		if (item.order_status == '<?php echo ORDER_STATUS_PAID; ?>') {
 			var date = new Date(item.created_at);
 			var day = date.getDate();
@@ -1416,7 +1446,7 @@ var voucherElementId = document.getElementById("voucherElementId");
 			var formattedMonth = (month < 10) ? '0' + month : month;
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 
-			 section = section+`
+			section = section + `
 			<div class="d-flex justify-content-between tran">
 				<div>
 					<button class="buttons" >שולם</button>
@@ -1424,12 +1454,12 @@ var voucherElementId = document.getElementById("voucherElementId");
 				<div class="d-flex gap-3">
 					<div>
 					<button class="buttonss" 
-        style="background-color: #9D0000;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#order_details" 
-        onclick="populateOrderDetailModalFunction(this)"
-        data-order-details='${JSON.stringify(item)}'>
-    לפרטי ההזמנה
+		style="background-color: #9D0000;" 
+		data-bs-toggle="modal" 
+		data-bs-target="#order_details" 
+		onclick="populateOrderDetailModalFunction(this)"
+		data-order-details='${JSON.stringify(item)}'>
+	לפרטי ההזמנה
 </button>					</div>
 					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
@@ -1445,7 +1475,7 @@ var voucherElementId = document.getElementById("voucherElementId");
 			var formattedMonth = (month < 10) ? '0' + month : month;
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 
-		 section = section+`
+			section = section + `
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">+ שליחת דרישת תשלום</button>
@@ -1453,12 +1483,12 @@ var voucherElementId = document.getElementById("voucherElementId");
 			<div class="d-flex gap-3">
 				<div>
 				<button class="buttonss" 
-        style="background-color: #9D0000;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#order_details" 
-        onclick="populateOrderDetailModalFunction(this)"
-        data-order-details='${JSON.stringify(item)}'>
-    לפרטי ההזמנה
+		style="background-color: #9D0000;" 
+		data-bs-toggle="modal" 
+		data-bs-target="#order_details" 
+		onclick="populateOrderDetailModalFunction(this)"
+		data-order-details='${JSON.stringify(item)}'>
+	לפרטי ההזמנה
 </button>				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
@@ -1475,7 +1505,7 @@ var voucherElementId = document.getElementById("voucherElementId");
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 			console.log(item);
 
-			 section = section+`
+			section = section + `
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">ממתין לתשלום</button>
@@ -1544,7 +1574,7 @@ var voucherElementId = document.getElementById("voucherElementId");
 				csvp_handler: 'get_all_vouchers_by_store_id_and_community_id', // Action hook
 				data: {
 					id: id,
-                    type: "store"
+					type: "store"
 				}
 			},
 			success: function (response) {

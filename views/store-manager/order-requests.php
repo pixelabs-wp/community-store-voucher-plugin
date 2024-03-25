@@ -197,7 +197,9 @@
 
 
 		<!-- CSV Download Filter  -->
-		<div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
+		<div class="col-sm-5 col-lg-3 m-0"
+			onclick='outToExcel( <?php echo isset ($pageData["store_order_requests"]) ? json_encode($pageData["store_order_requests"]) : "[]"; ?>)'
+			style="cursor: pointer;">
 			<div class="card card-sm p-relative">
 				<div class="card-body-rounded p-1 m-1 filter-card">
 					<div class="row align-items-center">
@@ -226,28 +228,58 @@
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
 					<div class="mb-3">
-						<label class="form-label">Select Date</label>
+						<form action="" method="post">
+							<label class="form-label">Select Date</label>
 
-						<div class="input-icon mb-2">
-							<input class="form-control " placeholder="Select a date" id="datepicker-icon"
-								value="2020-06-20" />
-							<span
-								class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-									viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-									<path d="M16 3v4" />
-									<path d="M8 3v4" />
-									<path d="M4 11h16" />
-									<path d="M11 15h1" />
-									<path d="M12 15v3" />
-								</svg>
-							</span>
-						</div>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+							<input type="hidden" name="order_range_filter">
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select first date" id="first-datepicker-icon"
+									name="first_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select second date"
+									id="second-datepicker-icon" name="second_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+
+						</form>
 					</div>
 				</div>
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -272,25 +304,36 @@
 		</div>
 
 
-		<!-- Store Filter  -->
+		<!-- Order Filter  -->
 		<div class="col-sm-5 col-lg-3 m-0">
 			<div class="card card-sm p-relative" style="position: relative;">
 
 				<div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
-					<div class="" style="direction: rtl;">
-						<label class="form-label">סינון הזמנות</label>
-						<select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags"
-							value="" multiple>
-							<option value="HTML">HTML</option>
-							<option value="JavaScript">JavaScript</option>
-							<option value="CSS">CSS</option>
-							<option value="jQuery">jQuery</option>
-							<option value="Bootstrap">Bootstrap</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Python">Python</option>
-						</select>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-					</div>
+					<form action="" method="POST">
+						<div class="" style="direction: rtl;">
+							<label class="form-label">סינון הזמנות</label>
+							<select name="order_array[]" type="text" class="form-select" placeholder="Select tags"
+								id="stores-select-tags" value="" multiple>
+
+								<?php
+								foreach ($pageData["store_order_requests"] as $data) {
+
+									if ($data['order_status'] == 'Completed') {
+										$order_id = $data['id'];
+										?>
+										<option value="<?php echo $order_id; ?>">
+											<?php echo $order_id; ?>
+										</option>
+										<?php
+									}
+								}
+								?>
+
+							</select>
+							<input type="hidden" name="filter_by_order">
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+						</div>
+					</form>
 
 				</div>
 
@@ -316,24 +359,34 @@
 		</div>
 
 
-		<!-- Guy Filter -->
+		<!-- Community Filter -->
 		<div class="col-sm-5 col-lg-3 m-0">
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
-					<div class="" style="direction: rtl;">
-						<label class="form-label">סינון תת”ים</label>
-						<select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value=""
-							multiple>
-							<option value="HTML">HTML</option>
-							<option value="JavaScript">JavaScript</option>
-							<option value="CSS">CSS</option>
-							<option value="jQuery">jQuery</option>
-							<option value="Bootstrap">Bootstrap</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Python">Python</option>
-						</select>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-					</div>
+					<form action="" method="POST">
+						<div class="" style="direction: rtl;">
+							<label class="form-label">סינון תת”ים</label>
+
+							<select name="community_array[]" type="text" class="form-select" placeholder="Select tags"
+								id="guys-select-tags" value="" multiple>
+								<?php
+								foreach ($pageData["store_order_requests"] as $data) {
+									$community_id = $data['community_id'];
+									$community_data = $community->get_community_data_by_id($community_id);
+									?>
+									<option value="<?php echo $community_id; ?>">
+										<?php echo $community_data->community_name; ?>
+									</option>
+									<?php
+								}
+								?>
+
+							</select>
+
+							<input type="hidden" name="communities_filter">
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+						</div>
+					</form>
 
 				</div>
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -358,68 +411,69 @@
 		</div>
 	</div>
 
-	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
-		<?php 
-		if (isset($pageData["store_order_requests"])) {
+	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: fit-content; overflow-y: auto;">
+		<?php
+		if (isset ($pageData["store_order_requests"])) {
 			$total_credit = 0;
 			$total_item = 0;
 			foreach ($pageData["store_order_requests"] as $order) {
-			if (($order['order_status'] == ORDER_STATUS_PENDING) || ($order['order_status'] == ORDER_STATUS_COMPLETED) || ($order['order_status'] == ORDER_STATUS_CANCELLED)){ 
-				$total_credit = $total_credit + $order['order_total'];
-				?>
-				<div class="card order-management-cards col-xl-4 rounded-3">
-					<!-- Photo -->
-					<div class="" style=""><img src="media/inviting-logo-2.png"
-							style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
+				if (($order['order_status'] == ORDER_STATUS_PENDING) || ($order['order_status'] == ORDER_STATUS_COMPLETED) || ($order['order_status'] == ORDER_STATUS_CANCELLED)) {
+					$total_credit = $total_credit + $order['order_total'];
+					?>
+					<div class="card order-management-cards col-xl-4 rounded-3">
+						<!-- Photo -->
+						<div class="" style=""><img src="media/inviting-logo-2.png"
+								style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
 
-					<div class="card-body px-3">
-						<div class="d-flex justify-content-between">
-							<?php if ($order['order_status'] == ORDER_STATUS_PENDING) { ?>
-								<button type="button" class="btn btn-red" data-bs-toggle="modal"
-									data-bs-target="#store-manager-accept-new-order"
-									onclick="populateModal('<?php echo $order['id']; ?>' , <?php echo htmlentities(json_encode($order['order_data'])); ?>)">ביצוע
-									הזמנה</button>
-							<?php } else if ($order['order_status'] == ORDER_STATUS_COMPLETED) { ?>
-									<span class="btn btn-brown">סופק</span>
-							<?php } else if ($order['order_status'] == ORDER_STATUS_CANCELLED) { ?>
-										<span class="btn btn-muted">מבוטל</span>
-							<?php } ?>
-							<span class="btn btn-dark">מס’ הזמנה:
-								<?php echo $order['id']; ?>
-							</span>
-						</div>
-						<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-							<div class="row-1 p-2 d-flex align-items-center justify-content-center">
-								<table>
-									<?php
-									$total_cost = 0;
-									foreach ($order['order_data'] as $data) {
-										$total_item = $total_item +  $data['total_items'];
-										 ?>
-										<tr class="d-flex gap-2 text-center">
-											<td><strong>מחיר: </strong>
-												<?php echo $data['cost_per_item']; ?> ₪ יח’
-											</td>
-											<td><strong>כמות: </strong>
-												<?php echo $data['total_items']; ?>
-											</td>
-											<td><strong>מוצר: </strong>
-												<?php echo $data['product_name']; ?>
-											</td>
-										</tr>
-										<?php
-										$total_cost = $total_cost + $data['total_cost'];
-									} ?>
-								</table>
+						<div class="card-body px-3">
+							<div class="d-flex justify-content-between">
+								<?php if ($order['order_status'] == ORDER_STATUS_PENDING) { ?>
+									<button type="button" class="btn btn-red" data-bs-toggle="modal"
+										data-bs-target="#store-manager-accept-new-order"
+										onclick="populateModal('<?php echo $order['id']; ?>' , <?php echo htmlentities(json_encode($order['order_data'])); ?>)">ביצוע
+										הזמנה</button>
+								<?php } else if ($order['order_status'] == ORDER_STATUS_COMPLETED) { ?>
+										<span class="btn btn-brown">סופק</span>
+								<?php } else if ($order['order_status'] == ORDER_STATUS_CANCELLED) { ?>
+											<span class="btn btn-muted">מבוטל</span>
+								<?php } ?>
+								<span class="btn btn-dark">מס’ הזמנה:
+									<?php echo $order['id']; ?>
+								</span>
 							</div>
+							<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
+								<div class="row-1 p-2 d-flex align-items-center justify-content-center">
+									<table>
+										<?php
+										$total_cost = 0;
+										foreach ($order['order_data'] as $data) {
+											$total_item = $total_item + $data['total_items'];
+											?>
+											<tr class="d-flex gap-2 text-center">
+												<td><strong>מחיר: </strong>
+													<?php echo $data['cost_per_item']; ?> ₪ יח’
+												</td>
+												<td><strong>כמות: </strong>
+													<?php echo $data['total_items']; ?>
+												</td>
+												<td><strong>מוצר: </strong>
+													<?php echo $data['product_name']; ?>
+												</td>
+											</tr>
+											<?php
+											$total_cost = $total_cost + $data['total_cost'];
+										} ?>
+									</table>
+								</div>
+							</div>
+							<p class="card-footer-text pt-4 pb-2">סה”כ סכום ההזמנה:
+								<?php echo $total_cost; ?> ₪
+							</p>
 						</div>
-						<p class="card-footer-text pt-4 pb-2">סה”כ סכום ההזמנה:
-							<?php echo $total_cost; ?> ₪
-						</p>
 					</div>
-				</div>
-			<?php }
-		} } ?>
+				<?php }
+			}
+		} ?>
 	</div>
 
 	<script>
@@ -510,16 +564,24 @@
 				<div class="card-body my-3 bg-black rounded-3 p-2">
 					<div class="store-management-order-request-footer p-3 d-flex">
 						<span class="w-25">
-							<a class="page-link"   tabindex="-1" aria-disabled="true" disabled>
-								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px; direction: rtl;">
-								סה”כ הזמנות: <?php if(isset($total_credit)){ echo $total_credit; } ?>  ₪ </div>
+							<a class="page-link" tabindex="-1" aria-disabled="true" disabled>
+								<div class="page-item-subtitle text-white mx-4"
+									style="font-size: 20px; direction: rtl;">
+									סה”כ הזמנות:
+									<?php if (isset ($total_credit)) {
+										echo $total_credit;
+									} ?> ₪
+								</div>
 							</a>
 						</span>
 
 						<span class="w-75">
-							<a class="page-link"   style="text-align: right;" disabled>
+							<a class="page-link" style="text-align: right;" disabled>
 								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
-									סך הפריטים שנמכרו: <?php if(isset($total_item)){ echo $total_item; } ?>
+									סך הפריטים שנמכרו:
+									<?php if (isset ($total_item)) {
+										echo $total_item;
+									} ?>
 								</div>
 							</a>
 						</span>
@@ -685,6 +747,39 @@
 	document.addEventListener("DOMContentLoaded", function () {
 		window.Litepicker && (new Litepicker({
 			element: document.getElementById('datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
+
+
+
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('first-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('second-datepicker-icon'),
 			buttonText: {
 				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
 	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,

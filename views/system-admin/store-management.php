@@ -70,6 +70,66 @@
         color: gray;
         font-weight: 400;
     }
+
+
+    #edit-store-details .form-label{
+            font-size: 25px;
+            font-weight: 600;
+            line-height: 34px;
+            text-align: right;
+        }
+
+        #edit-store-details .form-control{
+            width: 100%;
+            height: 89px;
+            border-radius: 20px;
+            text-align: right;
+            background-color: #E4E4E4;
+
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 27px;
+            letter-spacing: 0em;
+            text-align: right;
+        }
+
+        #edit-store-details .wrapped-input{
+            width: 100%;
+            border-radius: 20px;
+            text-align: right;
+            background-color: #E4E4E4;
+        }
+
+        #edit-store-details kbd {
+            font-family: "Noto Sans Hebrew", sans-serif;
+            padding: 1rem 1rem;
+            width: 400px;
+            height: 54px;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 25px;
+            font-weight: 600;
+            line-height: 34px;
+            text-align: right;
+        }
+
+        #edit-store-details .btn {
+            height: 89px;
+            top: 643px;
+            left: 66px;
+            padding: 27px, 357px, 28px, 218px;
+            border-radius: 20px;
+            font-size: 25px;
+            font-weight: 900;
+            text-align: right;
+        }
+
+        #edit-store-details .form-control:focus {
+            box-shadow: none;
+            background-color: #E4E4E4;
+            border: none;
+            /* Set the desired border color when focused */
+        }
 </style>
 
 
@@ -226,6 +286,96 @@
         </div>
 
 
+        
+    <!-- edit store modal -->
+
+    <div class="modal fade" id="edit-store-details" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content pb-4">
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+                <div class="bg-dark pt-5 pb-5">
+                    <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">Edit Store Details
+                    </h1>
+                </div>
+                <div class="container-fluid " style="overflow: auto;">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="container mt-5 d-flex flex-column gap-5">
+                            <div class="row">
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">כתובת החנות</label>
+                                    <input type="text" class="form-control" name="store_address">
+                                </div>
+
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">שם החנות</label>
+                                    <input type="text" class="form-control" name="store_name" required>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">טלפון איש קופות</label>
+                                    <input type="text" class="form-control" name="store_cashier_phone">
+                                </div>
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">טלפון</label>
+                                    <input type="text" class="form-control" name="store_phone">
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">סיסמת כניסה</label>
+                                    <input type="password" class="form-control" name="password">
+                                </div>
+
+                                <div class="mb-3 col-xl-6">
+                                    <label class="form-label">כתובת מייל </label>
+                                    <input type="email" class="form-control" name="store_mail_address">
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="mb-3 col-xl-12">
+                                    <label class="form-label">העאלת לוגו של החנות </label>
+                                    <input type="file" class="form-control" name="store_logo">
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="mb-3 col-xl-12">
+                                    <label class="form-label">₪ עמלה פר עסקה </label>
+                                    <input type="text" class="form-control" name="fee_amount_per_transaction">
+                                </div>
+
+                            </div>
+
+
+                            <input type="hidden" name="csvp_request" value="add_store">
+                            <input type="submit" class="btn btn-dark " value="← להוספת החנות למערכת">
+
+                        </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- edit store modal end -->
+
 
         <div class="container mt-4 d-flex flex-wrap" style="row-gap: 1rem; column-gap: 1rem;">
             <?php
@@ -241,7 +391,7 @@
                         <div class="card-body d-flex flex-column p-0">
 
                             <div class="w-35" style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $imageUrl ? $imageUrl : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
-                                <svg style="position: absolute; top: 8px; right: 8px;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg data-bs-toggle="modal" data-bs-target="#edit-store-details" style="position: absolute; top: 8px; right: 8px;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_542_250)">
                                         <path d="M5.83334 40.0006H30.8333C32.3828 39.9962 33.8673 39.3773 34.9609 38.2796C36.0545 37.1819 36.668 35.6951 36.6667 34.1456V21.584C36.6667 21.142 36.4911 20.718 36.1785 20.4055C35.866 20.0929 35.442 19.9173 35 19.9173C34.558 19.9173 34.1341 20.0929 33.8215 20.4055C33.5089 20.718 33.3333 21.142 33.3333 21.584V34.1456C33.3356 34.8114 33.0736 35.4508 32.6049 35.9235C32.1362 36.3963 31.499 36.6638 30.8333 36.6673H5.83334C5.16762 36.6638 4.53051 36.3963 4.06181 35.9235C3.59311 35.4508 3.33112 34.8114 3.33334 34.1456V9.18898C3.33112 8.52327 3.59311 7.88387 4.06181 7.4111C4.53051 6.93834 5.16762 6.67085 5.83334 6.66732H18.3333C18.7754 6.66732 19.1993 6.49172 19.5118 6.17916C19.8244 5.8666 20 5.44268 20 5.00065C20 4.55862 19.8244 4.1347 19.5118 3.82214C19.1993 3.50958 18.7754 3.33398 18.3333 3.33398H5.83334C4.28384 3.3384 2.79939 3.95737 1.70576 5.05506C0.612136 6.15275 -0.00132849 7.63948 2.16018e-06 9.18898V34.1456C-0.00132849 35.6951 0.612136 37.1819 1.70576 38.2796C2.79939 39.3773 4.28384 39.9962 5.83334 40.0006Z" fill="#01051D" />
                                         <path d="M15.7575 17.5733L14.4425 23.5967C14.383 23.8699 14.3931 24.1537 14.4721 24.4219C14.551 24.6902 14.6962 24.9342 14.8942 25.1317C15.0949 25.3241 15.3391 25.4654 15.606 25.5434C15.8729 25.6215 16.1547 25.634 16.4275 25.58L22.4375 24.2617C22.7496 24.1931 23.0353 24.0364 23.2608 23.81L38.4508 8.62C38.9152 8.15569 39.2836 7.60446 39.5349 6.99778C39.7862 6.39109 39.9156 5.74084 39.9156 5.08416C39.9156 4.42748 39.7862 3.77723 39.5349 3.17055C39.2836 2.56387 38.9152 2.01263 38.4508 1.54833C37.4988 0.638557 36.2327 0.130859 34.9158 0.130859C33.599 0.130859 32.3329 0.638557 31.3808 1.54833L16.2142 16.7533C15.9865 16.9773 15.828 17.2619 15.7575 17.5733ZM33.7375 3.90666C34.0546 3.6029 34.4767 3.43332 34.9158 3.43332C35.3549 3.43332 35.7771 3.6029 36.0942 3.90666C36.4025 4.22105 36.5752 4.64382 36.5752 5.08416C36.5752 5.52451 36.4025 5.94728 36.0942 6.26166L34.9158 7.44L32.5592 5.08333L33.7375 3.90666ZM18.9042 18.7633L30.1942 7.445L32.5275 9.79L21.2325 21.1117L18.2408 21.7683L18.9042 18.7633Z" fill="#01051D" />
