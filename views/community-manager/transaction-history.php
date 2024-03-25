@@ -21,7 +21,7 @@
   }
 
   .ts-price {
-    width: 10%;
+    width: 20%;
   }
 
   .ts-date {
@@ -29,7 +29,7 @@
   }
 
   .ts-product {
-    width: 25%;
+    width: 18%;
   }
 
   .ts-store-name {
@@ -37,7 +37,7 @@
   }
 
   .ts-guy-name {
-    width: 15%;
+    width: 30%;
   }
 
   .ts-text {
@@ -109,7 +109,7 @@
 
    
       <!-- CSV Download Filter  -->
-      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
+      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;" onclick='outToExcel( <?php echo isset ($pageData["amount_transaction"]) ? json_encode($pageData["amount_transaction"]) : "[]"; ?>)'>
         <div class="card card-sm p-relative">
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
@@ -136,28 +136,58 @@
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
 					<div class="mb-3">
-						<label class="form-label">Select Date</label>
+          <form action="" method="post">
+							<label class="form-label">Select Date</label>
 
-						<div class="input-icon mb-2">
-							<input class="form-control " placeholder="Select a date" id="datepicker-icon"
-								value="2020-06-20" />
-							<span
-								class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-									viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-									<path d="M16 3v4" />
-									<path d="M8 3v4" />
-									<path d="M4 11h16" />
-									<path d="M11 15h1" />
-									<path d="M12 15v3" />
-								</svg>
-							</span>
-						</div>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+							<input type="hidden" name="order_range_filter">
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select first date" id="first-datepicker-icon"
+									name="first_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select second date"
+									id="second-datepicker-icon" name="second_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+
+						</form>
 					</div>
 				</div>
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -287,7 +317,7 @@
               <td class="ts-date">תאריך: <?php echo $formattedDate; ?></td>
               <td class="text-muted ts-price"><?php echo $transaction['transaction_amount']; ?> ₪</td>
               <td class="text-muted ts-product">
-                <a href="#" class="text-reset">מוצר: <?php echo $transaction['voucher_data']->product_name; ?></a>
+                מוצר: <?php echo $transaction['voucher_data']->product_name; ?>
               </td>
               <td class="text-muted ts-store-name">שם חנות: <?php echo $transaction['store_data']->store_name; ?></td>
               <td class="ts-guy-name">שם הבחור: <?php echo $transaction['member_data']->full_name; ?></td>
@@ -303,7 +333,7 @@
                 <td class="ts-date">תאריך: <?php echo $formattedDate; ?></td>
                 <td class="text-muted ts-price"><?php echo $amount['transaction_amount']; ?> ₪</td>
                 <td class="text-muted ts-product">
-                  <a href="#" class="text-reset">מוצר: <?php echo $amount['transaction_type'] ?></a>
+                  מוצר: <?php echo $amount['transaction_type'] ?>
                 </td>
                 <td class="text-muted ts-store-name">Transaction</td>
                 <td class="ts-guy-name">שם הבחור: <?php echo $amount['member_data']->full_name; ?></td>
@@ -498,4 +528,34 @@
   });
   // @formatter:on
 
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('first-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('second-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
 </script>

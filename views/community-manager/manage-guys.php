@@ -640,7 +640,8 @@
                 <label class="form-label">סינון לפי מספר כרטיס</label>
 
                 <div class="input-icon mb-2">
-                  <input class="form-control" name="magnetic_card_number_association" type="number" placeholder="Search Card" />
+                  <input class="form-control" name="magnetic_card_number_association" type="text"
+                    placeholder="Search Card" />
                 </div>
                 <input type="hidden" name="magnetic_card_filter">
                 <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
@@ -675,27 +676,32 @@
 
           <div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון שיעורים </label>
 
+              <form action="" method="POST">
+                <label class="form-label">סינון שיעורים </label>
 
-              <select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags" value=""
-                multiple>
+                <select name="lesson_array[]" type="text" class="form-select" placeholder="Select tags"
+                  id="stores-select-tags" value="" multiple>
 
-                <?php
-                foreach ($pageData["members"] as $data) {
-
-                  $order_id = $data['lesson'];
-                  ?>
-                  <option value="<?php echo $order_id; ?>">
-                    <?php echo $order_id; ?>
-                  </option>
                   <?php
+                  foreach ($pageData["members"] as $data) {
 
-                }
+                    $full_name = $data['full_name'];
+                    ?>
+                    <option value="<?php echo $full_name; ?>">
+                      <?php echo $full_name; ?>
+                    </option>
+                    <?php
 
-                ?>
-              </select>
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                  }
+
+                  ?>
+                </select>
+                <input type="hidden" name="lesson_filter" id="">
+                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+
+              </form>
+
             </div>
 
           </div>
@@ -726,25 +732,31 @@
         <div class="card card-sm p-relative" style="position: relative;">
           <div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
             <div class="" style="direction: rtl;">
-              <label class="form-label">סינון בחורים</label>
-              <select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value="" multiple>
+              <form action="" method="POST">
+                <label class="form-label">סינון בחורים</label>
+                <select name="guyname_array[]" type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value=""
+                  multiple>
 
-                <?php
-                foreach ($pageData["members"] as $data) {
-
-                  $order_id = $data['full_name'];
-                  ?>
-                  <option value="<?php echo $order_id; ?>">
-                    <?php echo $order_id; ?>
-                  </option>
                   <?php
+                  foreach ($pageData["members"] as $data) {
 
-                }
+                    $order_id = $data['full_name'];
+                    ?>
+                    <option value="<?php echo $order_id; ?>">
+                      <?php echo $order_id; ?>
+                    </option>
+                    <?php
 
-                ?>
+                  }
 
-              </select>
-              <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+                  ?>
+
+                </select>
+
+                <input type="hidden" name="guy_name_filter">
+                <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+
+              </form>
             </div>
 
           </div>

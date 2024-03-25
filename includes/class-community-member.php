@@ -399,9 +399,9 @@ class CSVP_CommunityMember {
         $transaction_type = isset($data['transaction_type']) ? $data['transaction_type'] : TRANSACTION_TYPE_CREDIT;
         $new_balance = $data['new_balance'];
         $current_balance = $this->get_balance_by_member_id($member_id);
-        $current_balance = $current_balance + $new_balance;
+         $current_balance = $current_balance + $new_balance;
 
-        $member = $this->get_community_member_by_id($member_id);
+        $member = $this->get_community_member_by_id(array("community_member_id"=>$member_id));
         $card_balance = $member->card_balance;
         $card_balance = $card_balance + $new_balance;
         $this->update_community_member(array("community_member_id"=> $member_id,"card_balance"=> $card_balance));
@@ -421,7 +421,6 @@ class CSVP_CommunityMember {
         );
 
         $transaction->create_transaction($transaction_data);
-
 
         return $result !== false;
     }
