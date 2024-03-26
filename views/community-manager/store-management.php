@@ -1510,7 +1510,7 @@ $community_id = $community->get_current_community_id();
 
                         var section = `<div class="d-flex justify-content-between tran">
 							<div>
-								<button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">לא שולם</button>
+								<button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" >לא שולם</button>
 							</div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
@@ -1528,7 +1528,7 @@ $community_id = $community->get_current_community_id();
                         let year_previous_month_1 = parts_previous_month_1[1];
 
                         var section = `<div class="d-flex justify-content-between tran">
-							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" >לא שולם</button></div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
 								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
@@ -1545,7 +1545,7 @@ $community_id = $community->get_current_community_id();
                         let year_previous_month_2 = parts_previous_month_2[1];
 
                         var section = `<div class="d-flex justify-content-between tran">
-							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" >לא שולם</button></div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
 								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
@@ -1603,7 +1603,7 @@ $community_id = $community->get_current_community_id();
 
                         var section = `<div class="d-flex justify-content-between tran">
 							<div>
-								<button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button>
+								<button class="buttons" style="background-color:  #BC9B63;" >שליחת דרישת תשלום+</button>
 							</div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
@@ -1621,7 +1621,7 @@ $community_id = $community->get_current_community_id();
                         let year_previous_month_1 = parts_previous_month_1[1];
 
                         var section = `<div class="d-flex justify-content-between tran">
-							<div><button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div><button class="buttons" style="background-color: #BC9B63;" >שליחת דרישת תשלום+</button></div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
 								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
@@ -1638,7 +1638,7 @@ $community_id = $community->get_current_community_id();
                         let year_previous_month_2 = parts_previous_month_2[1];
 
                         var section = `<div class="d-flex justify-content-between tran">
-							<div><button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div><button class="buttons" style="background-color:  #BC9B63;" >שליחת דרישת תשלום+</button></div>
 							<div class="d-flex gap-3">
 								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
 								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
