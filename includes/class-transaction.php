@@ -156,7 +156,7 @@ class CSVP_Transaction{
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 1", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $current_month_data = $wpdb->get_row($query_current_month, ARRAY_A);
 
-        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_USED );
+        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_USED );
         $current_month_voucher_data = $wpdb->get_row($query_current_month_voucher);
 
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 1", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
@@ -165,13 +165,13 @@ class CSVP_Transaction{
         $query_previous_month_1 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 1", substr($previous_month_1, 0, 2),  substr($previous_month_1, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_1_data = $wpdb->get_row($query_previous_month_1, ARRAY_A);
 
-        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_USED );
+        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_USED );
         $previous_month_1_voucher_data = $wpdb->get_row($query_previous_month_1_voucher);
 
         $query_previous_month_2 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_2_data = $wpdb->get_row($query_previous_month_2, ARRAY_A);
 
-        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_USED );
+        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_USED );
         $previous_month_2_voucher_data = $wpdb->get_row($query_previous_month_2_voucher);
           
         $transactions['community_id'] =  $community_id;
@@ -204,7 +204,7 @@ class CSVP_Transaction{
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 2", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $current_month_data = $wpdb->get_row($query_current_month, ARRAY_A);
 
-        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
+        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
         $current_month_voucher_data = $wpdb->get_row($query_current_month_voucher);
 
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 2", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
@@ -213,13 +213,13 @@ class CSVP_Transaction{
         $query_previous_month_1 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 2", substr($previous_month_1, 0, 2),  substr($previous_month_1, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_1_data = $wpdb->get_row($query_previous_month_1, ARRAY_A);
 
-        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
+        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
         $previous_month_1_voucher_data = $wpdb->get_row($query_previous_month_1_voucher);
 
         $query_previous_month_2 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_2_data = $wpdb->get_row($query_previous_month_2, ARRAY_A);
 
-        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
+        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_REQUESTED );
         $previous_month_2_voucher_data = $wpdb->get_row($query_previous_month_2_voucher);
           
         $transactions['community_id'] =  $community_id;
@@ -252,7 +252,7 @@ class CSVP_Transaction{
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 3", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $current_month_data = $wpdb->get_row($query_current_month, ARRAY_A);
 
-        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_PAID );
+        $query_current_month_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", $current_month, $current_year, $community_id, $store_id, VOUCHER_STATUS_PAID );
         $current_month_voucher_data = $wpdb->get_row($query_current_month_voucher);
 
         $query_current_month = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 3", $current_month, $current_year, $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
@@ -261,13 +261,13 @@ class CSVP_Transaction{
         $query_previous_month_1 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s AND is_active = 3", substr($previous_month_1, 0, 2),  substr($previous_month_1, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_1_data = $wpdb->get_row($query_previous_month_1, ARRAY_A);
 
-        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_PAID );
+        $query_previous_month_1_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_1, 0, 2), substr($previous_month_1, 3), $community_id, $store_id, VOUCHER_STATUS_PAID );
         $previous_month_1_voucher_data = $wpdb->get_row($query_previous_month_1_voucher);
 
         $query_previous_month_2 = $wpdb->prepare("SELECT SUM(transaction_amount) AS total_amount, COUNT(id) as total_transactions FROM $this->table_name WHERE MONTH(transaction_date) = %d AND YEAR(transaction_date) = %d AND community_id = %d AND store_id = %d AND transaction_type = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3),  $community_id, $store_id, TRANSACTION_TYPE_DEBIT );
         $previous_month_2_data = $wpdb->get_row($query_previous_month_2, ARRAY_A);
 
-        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM wp_csvp_voucher_transaction AS vt INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_PAID );
+        $query_previous_month_2_voucher = $wpdb->prepare("SELECT SUM(v.voucher_price) AS total_amount, COUNT(vt.id) AS total_transactions FROM {$wpdb->prefix}csvp_voucher_transaction AS vt INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id WHERE MONTH(vt.transaction_date) = %d AND YEAR(vt.transaction_date) = %d AND v.community_id = %d AND v.store_id = %d AND vt.status = %s", substr($previous_month_2, 0, 2), substr($previous_month_2, 3), $community_id, $store_id, VOUCHER_STATUS_PAID );
         $previous_month_2_voucher_data = $wpdb->get_row($query_previous_month_2_voucher);
           
         $transactions['community_id'] =  $community_id;
@@ -299,8 +299,8 @@ class CSVP_Transaction{
         $status = $payload['status'];
         $status_transaction = $payload['status_transaction'];
         $update_query_voucher_transaction = $wpdb->prepare(
-            "UPDATE wp_csvp_voucher_transaction AS vt
-            INNER JOIN wp_csvp_voucher AS v ON vt.voucher_id = v.id
+            "UPDATE {$wpdb->prefix}csvp_voucher_transaction AS vt
+            INNER JOIN {$wpdb->prefix}csvp_voucher AS v ON vt.voucher_id = v.id
             SET vt.status = %s
             WHERE MONTH(vt.transaction_date) = %d
             AND YEAR(vt.transaction_date) = %d
@@ -369,8 +369,8 @@ class CSVP_Transaction{
 
             // Prepare SQL query to select voucher transactions by member ID
             $query = $wpdb->prepare("SELECT vt.*
-            FROM wp_csvp_voucher_transaction vt
-            INNER JOIN wp_csvp_voucher v ON vt.voucher_id = v.id
+            FROM {$wpdb->prefix}csvp_voucher_transaction vt
+            INNER JOIN {$wpdb->prefix}csvp_voucher v ON vt.voucher_id = v.id
             WHERE v.store_id  = %d AND vt.status = %s",  $logged_in_store_id, $status);
     
         // Execute the query and fetch the results
@@ -422,5 +422,39 @@ class CSVP_Transaction{
 
         // Return the results if any, otherwise return null
         return !empty($results) ? $results : array();
+    }
+
+
+    public function get_all_transactions_by_community_member_id() {
+        global $wpdb, $community_member, $voucher_transaction ;
+        $member_id = $community_member->get_community_id();
+        // Prepare SQL query to select voucher transactions by member ID
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_voucher_transaction WHERE community_member_id = %d ", $member_id);
+    
+        // Execute the query and fetch the results
+        $voucher_transactions = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($voucher_transactions as $key => $vouchers) {
+            $voucher_data = $voucher_transaction->get_voucher_data_by_id(($vouchers["voucher_id"]));
+            $voucher_transactions[$key]["voucher_data"] = $voucher_data;
+
+            $store = $voucher_transaction->get_store_data_by_id($voucher_data->store_id); // line 118
+            $voucher_transactions[$key]["store_data"] = $store;
+        }
+
+
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE community_member_id = %d AND transaction_type = %s", $member_id, TRANSACTION_TYPE_DEBIT);
+    
+        // Execute the query and fetch the results
+        $transactions = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($transactions as $key => $transaction) {
+            $store = $voucher_transaction->get_store_data_by_id($transaction["store_id"]); // line 118
+            $transactions[$key]["store_data"] = $store;
+        }
+
+        $pageData['transactions'] = $transactions;
+        $pageData['voucher_transactions']  = $voucher_transactions;
+        return $pageData;
     }
 }

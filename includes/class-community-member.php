@@ -17,12 +17,15 @@ class CSVP_CommunityMember {
     }
 
     //Method to render transaction history
-    public static function render_transaction_history(){
-        CSVP_View_Manager::load_view('transaction-history');
+    public function render_transaction_history(){
+        global $transaction;
+        $pageData = [];
+        $pageData["data"] = $transaction->get_all_transactions_by_community_member_id();
+        CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
     public function render_loading_history(){
-
+        $pageData = [];
         $pageData["transactions"] = $this->get_all_balances(array("member_id" => $this->community_member_user->id));
 
         CSVP_View_Manager::load_view('loading-history', $pageData);
@@ -448,7 +451,44 @@ class CSVP_CommunityMember {
         return $balances !== null ? $balances : false;
     }
 
-    
+    public function get_member_by_member_id($user_id)
+    {
+        global $wpdb;
+
+        // Prepare SQL query to retrieve store data by ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE wp_user_id = %d",
+            $user_id
+        );
+
+        // Execute the query
+        $member = $wpdb->get_row($query);
+
+        // Check if a store was found
+        if ($member) {
+            // Return store data as an object
+            return $member;
+        } else {
+            // Send error response
+            return false;
+        }
+    }
+
+
+    public function get_community_id($user_id = false)
+    {
+        if (!$user_id) {
+            if (CSVP_User_Roles::user_has_role(get_current_user_id(), CSVP_User_Roles::ROLE_COMMUNITY_MEMBER)) {
+                $member_data = $this->get_member_by_member_id(get_current_user_id());
+                return $member_data->id;
+            } else {
+                return false;
+            }
+        } else {
+            $member_data = $this->get_member_by_member_id($user_id);
+            return $member_data->id;
+        }
+    }
 }
 
 ?>
