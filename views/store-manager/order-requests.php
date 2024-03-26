@@ -193,9 +193,6 @@
 	<div
 		class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
-
-
-
 		<!-- CSV Download Filter  -->
 		<div class="col-sm-5 col-lg-3 m-0"
 			onclick='outToExcel( <?php echo isset ($pageData["store_order_requests"]) ? json_encode($pageData["store_order_requests"]) : "[]"; ?>)'

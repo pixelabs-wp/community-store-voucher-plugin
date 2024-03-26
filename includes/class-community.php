@@ -91,12 +91,34 @@ class CSVP_Community
 
         if (isset ($_POST["magnetic_card_filter"])) {
 
-            echo json_encode($_POST);
+            unset($_POST["magnetic_card_filter"]);
 
             $pageData["members"] = $filter->filterData($pageData["members"], $_POST);
 
         }
-        echo json_encode($pageData["members"]);
+
+       else if (isset ($_POST["lesson_filter"])) {
+
+            unset($_POST["lesson_filter"]);
+
+            foreach ($_POST["lesson_array"] as $lesson_array) {
+                $pageData["members"] = $filter->filterData($pageData["members"], array('lesson' => $lesson_array));
+            }
+
+        }
+
+
+        else if (isset ($_POST["guy_name_filter"])) {
+
+            unset($_POST["guy_name_filter"]);
+
+            foreach ($_POST["guyname_array"] as $guyname_array) {
+                $pageData["members"] = $filter->filterData($pageData["members"], array('full_name' => $guyname_array));
+            }
+
+        }
+
+
 
 
         CSVP_View_Manager::load_view('manage-guys', $pageData);
@@ -131,6 +153,9 @@ class CSVP_Community
 
     public function render_transaction_history()
     {
+
+        global $filter;
+
         $pageData = [];
         $payload["community_id"] = $this->get_current_community_id();
         $id = $this->get_current_community_id();
@@ -145,6 +170,87 @@ class CSVP_Community
         if (!is_wp_error($check_2["amount_transaction"])) {
             $pageData["amount_transaction"] = $amount_transaction;
         }
+
+
+        $modified_voucher_transaction = array();
+
+        foreach ($voucher_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_voucher_transaction, $voucher);
+        }
+
+        $pageData["voucher_transaction"] = $modified_voucher_transaction;
+
+
+        $modified_amount_transaction = array();
+
+        foreach ($amount_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_amount_transaction, $voucher);
+        }
+
+        $pageData["amount_transaction"] = $modified_amount_transaction;
+
+
+
+
+        if (isset ($_POST["order_range_filter"])) {
+
+
+            $first_date = $_POST["first_date"];
+            $second_date = $_POST["second_date"];
+
+            // Initialize an empty array to store the dates
+            $date_range = array();
+
+            // Convert the string dates to DateTime objects
+            $start_date = new DateTime($first_date);
+            $end_date = new DateTime($second_date);
+
+            // Iterate through the dates
+            while ($start_date <= $end_date) {
+                // Store the current date in the array
+                $date_range[] = $start_date->format('Y-m-d');
+
+                // Move to the next day
+                $start_date->modify('+1 day');
+            }
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+            $date_data_voucher = array();
+            $date_data_amount = array();
+
+            foreach ($date_range as $date) {
+
+                $filtered_data_voucher = $filter->filterData($pageData["voucher_transaction"], array('created_at' => $date));
+                if (!empty ($filtered_data_voucher)) {
+                    array_push($date_data_voucher, $filtered_data_voucher);
+                }
+
+                $filtered_data_amount = $filter->filterData($pageData["amount_transaction"], array('created_at' => $date));
+                if (!empty ($filtered_data_amount)) {
+                    array_push($date_data_amount, $filtered_data_amount);
+                }
+
+            }
+
+            $pageData["voucher_transaction"] = array_merge(...$date_data_voucher);
+            $pageData["amount_transaction"] = array_merge(...$date_data_amount);
+
+        }
+
+        $member_data = $pageData['amount_transaction'][0]['member_data'];
+
+        echo json_encode($member_data);
+
+        $pageData['members'] = $member_data;
+
+
+        // echo json_encode ($pageData["amount_transaction"]["member_data"]);
 
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
