@@ -145,10 +145,11 @@ class CSVP_Transaction{
 
     public function get_unpaid_transactions_monthly_data_by_community_id($data) {
         global $wpdb, $store;
-        $community_id = $data['id'];
+        $community_id = $data['community_id'];
+        $store_id = $data['community_id'];
         $current_month = date('m');
         $current_year = date('Y');
-        $store_id = $store->get_store_id();
+        // $store_id = $store->get_store_id();
     
         $previous_month_1 = date('m-Y', strtotime('-1 month'));
         $previous_month_2 = date('m-Y', strtotime('-2 months'));
@@ -192,11 +193,11 @@ class CSVP_Transaction{
     }
 
     public function get_requested_transactions_monthly_data_by_community_id($data) {
-        global $wpdb, $store;
-        $community_id = $data['id'];
+        global $wpdb;
         $current_month = date('m');
         $current_year = date('Y');
-        $store_id = $store->get_store_id();
+        $community_id = $data['community_id'];
+        $store_id = $data['community_id'];
     
         $previous_month_1 = date('m-Y', strtotime('-1 month'));
         $previous_month_2 = date('m-Y', strtotime('-2 months'));
@@ -241,10 +242,10 @@ class CSVP_Transaction{
     
     public function get_paid_transactions_monthly_data_by_community_id($data) {
         global $wpdb, $store;
-        $community_id = $data['id'];
         $current_month = date('m');
         $current_year = date('Y');
-        $store_id = $store->get_store_id();
+        $community_id = $data['community_id'];
+        $store_id = $data['community_id'];
     
         $previous_month_1 = date('m-Y', strtotime('-1 month'));
         $previous_month_2 = date('m-Y', strtotime('-2 months'));

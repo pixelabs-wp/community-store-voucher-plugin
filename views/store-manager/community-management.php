@@ -1,6 +1,9 @@
 <?php include CSVP_PLUGIN_PATH . "views/store-manager/header.php" ?>
 
-
+<?php
+global $store;
+$store_id = $store->get_store_id();
+?>
 
 <style>
 	.filter-text {
@@ -744,33 +747,7 @@
 					<div id="parentPaidTransactionHistory" class="d-flex flex-column align-items-end ">
 
 					</div>
-					<!-- <div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #01051D; " data-bs-toggle="modal"
-							data-bs-target="#store-manager-transaction-success">שולם</button></div>
-					<div class="d-flex gap-3 titl">
-						<h3 class="titl">סה”כ: ₪ 6,500 </h3>
-						<h3 class="titl">כמות עסקאות: 15 </h3>
-						<h3 class="titl">חודש: 02/2023</h3>
-					</div>
-				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #BC9B63;"> + שליחת דרישת תשלום</button>
-					</div>
-					<div class="d-flex gap-3">
-						<h3 class="titl">סה”כ: ₪ 1,000 </h3>
-						<h3 class="titl">כמות עסקאות: 12 </h3>
-						<h3 class="titl">חודש: 03/2023</h3>
-					</div>
-				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);">לא
-							שולם</button></div>
-					<div class="d-flex gap-3">
-						<h3 class="titl">סה”כ: ₪ 500</h3>
-						<h3 class="titl">כמות עסקאות: 6 </h3>
-						<h3 class="titl">חודש: 04/2023</h3>
-					</div>
-				</div> -->
+				
 				</div>
 				<!-- 2st one -->
 				<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
@@ -1267,6 +1244,7 @@
 
 	if (isset($pageData["joined_communities"])) {
 		foreach ($pageData["joined_communities"] as $community) {
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
 
 	?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
@@ -1292,7 +1270,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
@@ -1300,7 +1278,10 @@
 	} ?>
 	<?php
 	if (isset ($pageData["requested_communities"])) {
-		foreach ($pageData["requested_communities"] as $community) { ?>
+		foreach ($pageData["requested_communities"] as $community) {
+			
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
@@ -1324,7 +1305,7 @@
 						</div>
 						<label class="text-secondary "><b>בקשה בהמתנה</b></label>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
@@ -1332,7 +1313,11 @@
 	} ?>
 	<?php
 	if (isset ($pageData["not_requested_communities"])) {
-		foreach ($pageData["not_requested_communities"] as $community) { ?>
+		foreach ($pageData["not_requested_communities"] as $community) { 
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+
+			?>
+		
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
@@ -1361,7 +1346,7 @@
 						</form>
 
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
@@ -1572,6 +1557,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
 		var community_id = button.data('id');
+
+		var store_id = <?php echo $store_id; ?>;
 		jQuery('#benifit_community_id').val(id);
 		jQuery('#credit_limit_community_id').val(id);
 		jQuery('#order_request_community_id').val(id);
@@ -1675,7 +1662,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 				csvp_request: 'CSVP_Transaction', // Action hook
 				csvp_handler: 'get_unpaid_transactions_monthly_data_by_community_id', // Action hook
 				data: {
-					id: community_id,
+					store_id: store_id,
+                    community_id: community_id
 				}
 			},
 			success: function(response) {
@@ -1767,7 +1755,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 				csvp_request: 'CSVP_Transaction', // Action hook
 				csvp_handler: 'get_requested_transactions_monthly_data_by_community_id', // Action hook
 				data: {
-					id: community_id,
+					store_id: store_id,
+                    community_id: community_id
 				}
 			},
 			success: function(response) {
@@ -1859,7 +1848,8 @@ var voucherElementId = document.getElementById("voucherElementId");
 				csvp_request: 'CSVP_Transaction', // Action hook
 				csvp_handler: 'get_paid_transactions_monthly_data_by_community_id', // Action hook
 				data: {
-					id: community_id,
+					store_id: store_id,
+                    community_id: community_id
 				}
 			},
 			success: function(response) {

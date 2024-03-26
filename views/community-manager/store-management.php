@@ -1,5 +1,9 @@
 <?php include CSVP_PLUGIN_PATH . "views/community-manager/header.php" ?>
+<?php
+global $community;
+$community_id = $community->get_current_community_id();
 
+?>
 <style>
     .filter-text {
         font-size: 20px;
@@ -932,54 +936,40 @@
                 </div>
             </div>
             <!-- 1st one -->
-            <div class="d-flex flex-column align-items-end cont">
-                <h3 class="title">הסטוריית עסקאות</h3>
-                <div class="d-flex justify-content-between tran">
-                    <div><button class="buttons" style="background-color: #01051D; ">שולם</button></div>
-                    <div class="d-flex gap-3 titl">
-                        <h3 class="titl">סה”כ: ₪ 6,500 </h3>
-                        <h3 class="titl">כמות עסקאות: 15 </h3>
-                        <h3 class="titl">חודש: 02/2023</h3>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between tran">
-                    <div><button class="buttons" style="background-color: #BC9B63;">ממתין לתשלום</button>
-                    </div>
-                    <div class="d-flex gap-3">
-                        <h3 class="titl">סה”כ: ₪ 1,000 </h3>
-                        <h3 class="titl">כמות עסקאות: 12 </h3>
-                        <h3 class="titl">חודש: 03/2023</h3>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-between tran">
-                    <div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);">לא
-                            שולם</button></div>
-                    <div class="d-flex gap-3">
-                        <h3 class="titl">סה”כ: ₪ 500</h3>
-                        <h3 class="titl">כמות עסקאות: 6 </h3>
-                        <h3 class="titl">חודש: 04/2023</h3>
-                    </div>
-                </div>
-            </div>
-            <!-- 2st one -->
-            <div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
-                <h3 class="title">הסטוריית הזמנות </h3>
-            </div>
-            <!-- 3st one -->
-            <div class="d-flex flex-column align-items-end cont" id="parentOrderReturn">
-                <h3 class="buttons">הסטוריית החזרות </h3>
+            <div style="margin: 10px 10px 10px 10px;">
+                <div class="d-flex flex-column cont">
+                    <h3 class="title" style="text-align: right;">הסטוריית עסקאות</h3>
+                    <div id="parentUnpaidTransactionHistory" class="d-flex flex-column align-items-end ">
 
-            </div>
-            <!-- 4st one -->
-            <div class="d-flex flex-column align-items-end cont" id="parentOrderPending">
-                <h3 class="title">בקשות הזמנה ממתינות לאישור </h3>
+                    </div>
+                    <div id="parentRequestedTransactionHistory" class="d-flex flex-column align-items-end ">
 
-            </div>
-            <div>
-                <div class="d-flex flex-column align-items-end cont">
-                    <h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
-                    <div class="d-flex gap-4 flex-wrap" style="direction: rtl;" id="voucherElementId">
+                    </div>
+                    <div id="parentPaidTransactionHistory" class="d-flex flex-column align-items-end ">
 
+                    </div>
+
+                </div>
+                <!-- 2st one -->
+                <div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
+                    <h3 class="title">הסטוריית הזמנות </h3>
+                </div>
+                <!-- 3st one -->
+                <div class="d-flex flex-column align-items-end cont" id="parentOrderReturn">
+                    <h3 class="buttons">הסטוריית החזרות </h3>
+
+                </div>
+                <!-- 4st one -->
+                <div class="d-flex flex-column align-items-end cont" id="parentOrderPending">
+                    <h3 class="title">בקשות הזמנה ממתינות לאישור </h3>
+
+                </div>
+                <div>
+                    <div class="d-flex flex-column align-items-end cont">
+                        <h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
+                        <div class="d-flex gap-4 flex-wrap" style="direction: rtl;" id="voucherElementId">
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1082,6 +1072,9 @@
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
     <?php if (isset($pageData["joined_store"])) {
         foreach ($pageData["joined_store"] as $store) {
+
+            $store_logo = esc_url(get_site_url() . '/wp-content/uploads/').$store['store_data']->store_logo;
+
             $order_count = 0;
             $total_order_amount = 0;
             if (isset($store['order_data']->order_count)) {
@@ -1107,7 +1100,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
@@ -1115,6 +1108,8 @@
     } ?>
     <?php if (isset($pageData["requested_stores"])) {
         foreach ($pageData["requested_stores"] as $store) {
+            $store_logo = esc_url(get_site_url() . '/wp-content/uploads/').$store['store_data']->store_logo;
+
             $order_count = 0;
             $total_order_amount = 0;
             if (isset($store['order_data']->order_count)) {
@@ -1139,7 +1134,7 @@
                         </div>
                         <label class="text-secondary "><b>בקשה בהמתנה</b></label>
                     </div>
-                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
@@ -1147,6 +1142,7 @@
     } ?>
     <?php if (isset($pageData["not_requested_stores"])) {
         foreach ($pageData["not_requested_stores"] as $store) {
+            $store_logo = esc_url(get_site_url() . '/wp-content/uploads/').$store['store_data']->store_logo;
             $order_count = 0;
             $total_order_amount = 0;
             if (isset($store['order_data']->order_count)) {
@@ -1177,7 +1173,7 @@
                             <button class="btn btn-dark">לצירוף הת”ת ←</button>
                         </form>
                     </div>
-                    <div class="w-35 " style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35 " style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
@@ -1378,6 +1374,8 @@
     jQuery('#store-details').on('show.bs.modal', function(event) {
         var button = jQuery(event.relatedTarget);
         var id = button.data('id');
+        var store_id = button.data('id');
+        var community_id = <?php echo $community_id; ?>;
         // jQuery('#benifit_community_id').val(id);
         // jQuery('#credit_limit_community_id').val(id);
         jQuery('#order_request_store_id').val(id);
@@ -1476,6 +1474,285 @@
                 // Handle error response
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
+            }
+        });
+
+        jQuery.ajax({
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Transaction', // Action hook
+                csvp_handler: 'get_unpaid_transactions_monthly_data_by_community_id', // Action hook
+                data: {
+                    store_id: store_id,
+                    community_id: community_id
+                }
+            },
+            success: function(response) {
+                // Handle success response
+                if (response) {
+                    parentUnpaidTransactionHistory.innerHTML = "";
+                    var community_id = response.community_id;
+                    var store_id = response.store_id;
+                    var current_month = response.current_month;
+                    var previous_month_1 = response.previous_month_1;
+                    var previous_month_2 = response.previous_month_2;
+                    var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+                    var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+                    var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+                    if (total_amount_current != 0) {
+                        var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+                        let modifiedDate_current = current_month.split('-').join('/');
+                        let parts_current = current_month.split('-');
+                        let month_current = parts_current[0];
+                        let year_current = parts_current[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">לא שולם</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+                        parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_1 != 0) {
+                        var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+                        let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+                        let parts_previous_month_1 = previous_month_1.split('-');
+                        let month_previous_month_1 = parts_previous_month_1[0];
+                        let year_previous_month_1 = parts_previous_month_1[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+                        parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_2 != 0) {
+                        var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+                        let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+                        let parts_previous_month_2 = previous_month_2.split('-');
+                        let month_previous_month_2 = parts_previous_month_2[0];
+                        let year_previous_month_2 = parts_previous_month_2[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+                        parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    // response.forEach(function (item) {
+                    // 	addOrderHistory(item);
+                    // });
+                } else {
+                    parentUnpaidTransactionHistory.innerHTML = "";
+                    parentUnpaidTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Unpaid Transactions Data Found</label>";
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error("Unexpected response format:", xhr.responseText);
+
+            }
+        });
+
+        jQuery.ajax({
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Transaction', // Action hook
+                csvp_handler: 'get_requested_transactions_monthly_data_by_community_id', // Action hook
+                data: {
+                    store_id: store_id,
+                    community_id: community_id
+                }
+            },
+            success: function(response) {
+                // Handle success response
+                if (response) {
+                    parentRequestedTransactionHistory.innerHTML = "";
+                    var community_id = response.community_id;
+                    var store_id = response.store_id;
+                    var current_month = response.current_month;
+                    var previous_month_1 = response.previous_month_1;
+                    var previous_month_2 = response.previous_month_2;
+                    var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+                    var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+                    var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+                    if (total_amount_current != 0) {
+                        var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+                        let modifiedDate_current = current_month.split('-').join('/');
+                        let parts_current = current_month.split('-');
+                        let month_current = parts_current[0];
+                        let year_current = parts_current[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+                        parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_1 != 0) {
+                        var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+                        let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+                        let parts_previous_month_1 = previous_month_1.split('-');
+                        let month_previous_month_1 = parts_previous_month_1[0];
+                        let year_previous_month_1 = parts_previous_month_1[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+                        parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_2 != 0) {
+                        var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+                        let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+                        let parts_previous_month_2 = previous_month_2.split('-');
+                        let month_previous_month_2 = parts_previous_month_2[0];
+                        let year_previous_month_2 = parts_previous_month_2[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+                        parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    // response.forEach(function (item) {
+                    // 	addOrderHistory(item);
+                    // });
+                } else {
+                    parentRequestedTransactionHistory.innerHTML = "";
+                    parentRequestedTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Requested Transactions Data Found</label>";
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error("Unexpected response format:", xhr.responseText);
+
+            }
+        });
+
+        jQuery.ajax({
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Transaction', // Action hook
+                csvp_handler: 'get_paid_transactions_monthly_data_by_community_id', // Action hook
+                data: {
+                    store_id: store_id,
+                    community_id: community_id
+                }
+            },
+            success: function(response) {
+                // Handle success response
+                if (response) {
+                    parentPaidTransactionHistory.innerHTML = "";
+                    var community_id = response.community_id;
+                    var store_id = response.store_id;
+                    var current_month = response.current_month;
+                    var previous_month_1 = response.previous_month_1;
+                    var previous_month_2 = response.previous_month_2;
+                    var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+                    var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+                    var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+                    if (total_amount_current != 0) {
+                        var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+                        let modifiedDate_current = current_month.split('-').join('/');
+                        let parts_current = current_month.split('-');
+                        let month_current = parts_current[0];
+                        let year_current = parts_current[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  #01051D;">שולם</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+                        parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_1 != 0) {
+                        var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+                        let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+                        let parts_previous_month_1 = previous_month_1.split('-');
+                        let month_previous_month_1 = parts_previous_month_1[0];
+                        let year_previous_month_1 = parts_previous_month_1[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  #01051D;" >שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+                        parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    if (total_amount_previous_month_2 != 0) {
+                        var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+                        let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+                        let parts_previous_month_2 = previous_month_2.split('-');
+                        let month_previous_month_2 = parts_previous_month_2[0];
+                        let year_previous_month_2 = parts_previous_month_2[1];
+
+                        var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color: #01051D;">שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+                        parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+                    }
+                    // response.forEach(function (item) {
+                    // 	addOrderHistory(item);
+                    // });
+                } else {
+                    parentPaidTransactionHistory.innerHTML = "";
+                    parentPaidTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Paid Transactions Data Found</label>";
+                }
+
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error("Unexpected response format:", xhr.responseText);
+
             }
         });
 
