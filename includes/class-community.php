@@ -192,8 +192,6 @@ class CSVP_Community
         $pageData["amount_transaction"] = $modified_amount_transaction;
 
 
-
-
         if (isset ($_POST["order_range_filter"])) {
 
 
@@ -243,8 +241,9 @@ class CSVP_Community
 
         }
 
-        $member_data = $pageData['amount_transaction'][0]['member_data'];
+        $member_data[] = $pageData['amount_transaction'][0]['member_data'];
 
+        echo json_encode($pageData['amount_transaction']);
 
         $pageData['members'] = $member_data;
 
