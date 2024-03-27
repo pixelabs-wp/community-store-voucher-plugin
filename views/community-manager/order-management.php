@@ -291,13 +291,12 @@
 			$total_item = 0;
 			if ($order_data['order_status'] == ORDER_STATUS_PAID) {
 				$status = '<span class="btn btn-brown">שולם</span> ';
-				$total_item = $total_item +1;
+				
 				$total_payment = $total_payment+ $order_data['order_total'];
 			} elseif ($order_data['order_status'] == ORDER_STATUS_PENDING || 
 					  $order_data['order_status'] == ORDER_STATUS_PROCESSING || 
 					  $order_data['order_status'] == ORDER_STATUS_COMPLETED) {
 						$status = '<span class="btn btn-red">לא שולם</span> ';
-						$total_item = $total_item +1;
 				$total_payment = $total_payment+ $order_data['order_total'];
  					} else {
 				continue;   
@@ -319,7 +318,9 @@
 						<div class="row-1 p-2 d-flex align-items-center justify-content-center">
 							<table>
 								<?php foreach($order_data['order_data'] as $data)
-								{ ?>
+								{ 
+									$total_item = $total_item + $data['total_items'];
+									?>
 									<tr class="d-flex gap-2 text-center">
 										<td><strong>מחיר: </strong><?php echo $data['cost_per_item']; ?> ₪ יח’</td>
 										<td><strong>כמות: </strong><?php echo $data['total_items']; ?></td>
