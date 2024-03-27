@@ -104,7 +104,7 @@
 		</div>
 	</div>
 	<div class="col-12 bg d-flex flex-md-row align-items-start flex-column justify-content-between">
-		<div class="col-10 col-md-5 m-auto m-md-0 mb-2 bg-white d-flex flex-column gap-2 p-2 br">
+		<div class="col-12 col-md-12 m-auto m-md-0 mb-2 bg-white d-flex flex-column gap-2 p-2 br mx-auto">
 			<h5 class="text-end bld">Recent messages</h5>
 
 
@@ -113,6 +113,9 @@
 			<?php
 
 			$message_data = $messages->get_community_messages_by_to_id(array("to_id" => $community->get_current_community_id()));
+
+
+			if(!empty($message_data)){
 
 			foreach ($message_data as $key => $message) {
 
@@ -144,10 +147,13 @@
 
 			<?php
 			}
+			} else {
+				echo "No recent messages";
+			}
 			?>
 
 		</div>
-		<div class="col-10 col-md-3 m-auto mb-2">
+		<!-- <div class="col-10 col-md-3 m-auto mb-2">
 			<div class="card p-2 br">
 				<h5 class="text-end bld">Product order graph</h5>
 
@@ -164,7 +170,7 @@
 					<div id="chart-demo-pie2"></div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 
 	</div>
 </div>

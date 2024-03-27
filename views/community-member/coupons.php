@@ -360,7 +360,7 @@
                     <button onclick='buyVoucher(JSON.stringify(<?php echo json_encode($voucher); ?>), "<?php echo $community_member->get_community_member_by_user_id(array("wp_user_id" => get_current_user_id()))->id; ?>")' class="btn btn-dark p-3">← לרכישת השובר </a>
                 </div>
 
-                <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/coupon-image1.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo home_url() . '/wp-content/uploads' . $voucher["product_image"]; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                 </div>
 
             </div>

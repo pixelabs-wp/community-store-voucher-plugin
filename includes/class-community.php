@@ -352,7 +352,14 @@ class CSVP_Community
 
     public static function render_order_management()
     {
-        CSVP_View_Manager::load_view('order-management');
+        global $order, $community;
+        $pageData = [];
+        $data = [];
+        $community_id = $community->get_current_community_id();
+        $data['community_id'] = $community_id;
+        $data['suffix'] = '_store';
+        $pageData['all_order_data'] = $order->get_all_orders_by_community_id($data);
+        CSVP_View_Manager::load_view('order-management',$pageData);
     }
 
     public static function render_coupon_management()

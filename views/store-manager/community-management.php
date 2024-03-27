@@ -1259,10 +1259,10 @@ $store_id = $store->get_store_id();
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות בחורים: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות:</strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
 
 									</tr>
@@ -1294,10 +1294,10 @@ $store_id = $store->get_store_id();
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
 									</tr>
 								</table>
@@ -1330,10 +1330,10 @@ $store_id = $store->get_store_id();
 											<?php echo $community['community_data']->community_name; ?>
 										</td>
 										<td><strong>כמות הזמנות: </strong>
-										<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
+											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-										<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
 										</td>
 									</tr>
 								</table>
@@ -1361,8 +1361,7 @@ $store_id = $store->get_store_id();
 
 
 <script>
-
-var voucherElementId = document.getElementById("voucherElementId");
+	var voucherElementId = document.getElementById("voucherElementId");
 
 
 	function addRow() {
@@ -1524,7 +1523,7 @@ var voucherElementId = document.getElementById("voucherElementId");
 			var newDate = formattedDay + '/' + formattedMonth + '/' + year;
 			console.log(item);
 
-			 section = section+`
+			section = section + `
 		<div class="d-flex justify-content-between tran">
 			<div>
 				<button class="buttons" style="background-color: rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('${item.id}')">ממתין לתשלום</button>
