@@ -287,12 +287,18 @@
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
 		<?php foreach ($pageData['all_order_data'] as $order_data) {
+			$total_payment = 0;
+			$total_item = 0;
 			if ($order_data['order_status'] == ORDER_STATUS_PAID) {
 				$status = '<span class="btn btn-brown">שולם</span> ';
+				$total_item = $total_item +1;
+				$total_payment = $total_payment+ $order_data['order_total'];
 			} elseif ($order_data['order_status'] == ORDER_STATUS_PENDING || 
 					  $order_data['order_status'] == ORDER_STATUS_PROCESSING || 
 					  $order_data['order_status'] == ORDER_STATUS_COMPLETED) {
 						$status = '<span class="btn btn-red">לא שולם</span> ';
+						$total_item = $total_item +1;
+				$total_payment = $total_payment+ $order_data['order_total'];
  					} else {
 				continue;   
 			}
@@ -338,13 +344,13 @@
 					<div class="order-management-footer p-3 d-flex">
 						<span class="w-25">
 								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-									סה”כ חובות: 150,000 ₪ </div>
+									סה”כ חובות: <?php echo $total_payment; ?> ₪ </div>
 						</span>
 
 						<span class="w-75">
 								<div class="page-item-title text-white mx-4" style="font-size: 20px">
-									סך הפריטים שהוזמנו: חולצות: 1,850 יח’ חפתים: 450 יח’ גרביים: 350 יח’ עניבות: 850 יח’
-								</div>
+								סך הפריטים שהוזמנו: <?php echo $total_item; ?>
+															</div>
 						</span>
 					</div>
 				</div>
