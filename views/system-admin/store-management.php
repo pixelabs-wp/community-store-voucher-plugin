@@ -460,10 +460,8 @@
 
 
                             <li class="page-item page-next">
-                                <a class="page-link" href="#">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
                                         סה”כ חנויות: <?php echo $totalStores; ?> </div>
-                                </a>
                             </li>
                         </ul>
                     </div>

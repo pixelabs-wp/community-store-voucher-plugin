@@ -30,19 +30,19 @@ class CSVP_CommunityMember {
         $pageData = [];
         $pageData["transactions"] = $this->get_all_balances(array("member_id" => $this->community_member_user->id));
 
-        if (isset ($_POST["filter_by_load_id"])) {
+        // if (isset ($_POST["filter_by_load_id"])) {
 
 
-            unset($_POST["filter_by_load_id"]);
-            echo json_encode($_POST);
+        //     unset($_POST["filter_by_load_id"]);
+        //     echo json_encode($_POST);
 
-            foreach ($_POST["id_array"] as $id) {
-                $pageData["transactions"] = $filter->filterData($pageData["transactions"], array('id' => $id));
-            }
+        //     foreach ($_POST["id_array"] as $id) {
+        //         $pageData["transactions"] = $filter->filterData($pageData["transactions"], array('id' => $id));
+        //     }
 
-        }
+        // }
 
-        echo json_encode($pageData);
+        // echo json_encode($pageData);
         CSVP_View_Manager::load_view('loading-history', $pageData);
     }
 

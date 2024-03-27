@@ -487,12 +487,11 @@
                             </li> -->
 
                             <li class="page-item page-next">
-                                <a class="page-link" href="#">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
                                         סה”כ ישיבות:
                                         <?php echo $pageData["total_communities"]; ?>
                                     </div>
-                                </a>
+                            
                             </li>
                         </ul>
                     </div>

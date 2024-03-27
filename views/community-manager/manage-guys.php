@@ -870,19 +870,15 @@
           <div class="card-body my-3 bg-black rounded-3 p-2">
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                   <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
                     סה”כ שוברים: 87
                   </div>
-                </a>
               </li>
 
               <li class="page-item page-next">
-                <a class="page-link" href="#">
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
                     סה”כ בחורים: 450
                   </div>
-                </a>
               </li>
             </ul>
           </div>
@@ -910,7 +906,7 @@
         let modal = document.querySelector('#store-manager-voucher-purchase');
         let member_id = document.querySelector('#member_id').value;
         modal.querySelector('#voucher_name').innerHTML = voucher.product_name;
-        modal.querySelector('#transaction_amount').value = voucher.voucher_price;
+        modal.querySelector('#transaction_amount').value = 0;
         modal.querySelector('#voucher_id').value = voucher.id;
         modal.querySelector('#community_member_id').value = member_id;
       }

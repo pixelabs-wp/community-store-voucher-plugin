@@ -304,7 +304,7 @@
           <div class="card-body my-3 bg-black rounded-3 p-2">
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <a aria-disabled="true">
                   <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
                     סה”כ הזמנות: <?php echo $order_count; ?>
                   </div>
@@ -312,7 +312,7 @@
               </li>
 
               <li class="page-item page-next disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <a tabindex="-1" aria-disabled="true">
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
                     סה”כ שווי הזמנות: <?php echo $order_total; ?>₪
                   </div>
