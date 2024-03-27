@@ -106,8 +106,8 @@ class CSVP_VoucherTransaction{
 
             // Prepare SQL query to select voucher transactions by member ID
             $query = $wpdb->prepare("SELECT vt.*
-            FROM wp_csvp_voucher_transaction vt
-            INNER JOIN wp_csvp_voucher v ON vt.voucher_id = v.id
+            FROM {$wpdb->prefix}csvp_voucher_transaction vt
+            INNER JOIN {$wpdb->prefix}csvp_voucher v ON vt.voucher_id = v.id
             WHERE v.store_id  = %d AND vt.status = %s",  $logged_in_store_id, $status);
     
         // Execute the query and fetch the results

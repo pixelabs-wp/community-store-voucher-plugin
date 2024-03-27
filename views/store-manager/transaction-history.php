@@ -106,7 +106,8 @@
 
 
       <!-- CSV Download Filter  -->
-      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
+      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;" 
+      onclick='outToExcel( <?php echo isset ($pageData["transactions"]) ? json_encode($pageData["transactions"]) : "[]"; ?>)' >
         <div class="card card-sm p-relative">
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
@@ -303,7 +304,7 @@
           <div class="card-body my-3 bg-black rounded-3 p-2">
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <a aria-disabled="true">
                   <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
                     סה”כ הזמנות: <?php echo $order_count; ?>
                   </div>
@@ -311,7 +312,7 @@
               </li>
 
               <li class="page-item page-next disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+                <a tabindex="-1" aria-disabled="true">
                   <div class="page-item-title text-white mx-4" style="font-size: 20px">
                     סה”כ שווי הזמנות: <?php echo $order_total; ?>₪
                   </div>
@@ -464,18 +465,32 @@
   });
 
 
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('first-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
 
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function() {
-    window.Litepicker && (new Litepicker({
-      element: document.getElementById('datepicker-icon'),
-      buttonText: {
-        previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-        nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-      },
-    }));
-  });
-  // @formatter:on
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('second-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
 </script>

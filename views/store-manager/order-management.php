@@ -191,30 +191,31 @@
 		class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
-		
-		
-      <!-- CSV Download Filter  -->
-      <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;">
-        <div class="card card-sm p-relative">
-          <div class="card-body-rounded p-1 m-1 filter-card">
-            <div class="row align-items-center">
-              <div class="col-auto">
-                <span id="csv-upload-popup-svg"
-                  class="bg-black text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-                  <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M43.0833 4.58336H25.6667V1.83336C25.6666 1.69558 25.6354 1.55959 25.5756 1.4355C25.5157 1.31141 25.4286 1.20242 25.3208 1.11662C25.213 1.03083 25.0872 0.970445 24.9528 0.939958C24.8185 0.909471 24.6789 0.909666 24.5447 0.94053L0.711333 6.44053C0.509269 6.48697 0.328917 6.60054 0.199723 6.7627C0.0705279 6.92486 0.000122157 7.12603 0 7.33336L0 38.5C8.32958e-05 38.7189 0.0785044 38.9306 0.221079 39.0967C0.363654 39.2628 0.560968 39.3724 0.777333 39.4057L24.6107 43.0724C24.7413 43.0928 24.8748 43.0846 25.002 43.0485C25.1292 43.0123 25.247 42.949 25.3474 42.8629C25.4478 42.7768 25.5283 42.67 25.5834 42.5498C25.6385 42.4296 25.6669 42.2989 25.6667 42.1667V39.4167H43.0833C43.3265 39.4167 43.5596 39.3201 43.7315 39.1482C43.9034 38.9763 44 38.7431 44 38.5V5.50003C44 5.25691 43.9034 5.02376 43.7315 4.85185C43.5596 4.67994 43.3265 4.58336 43.0833 4.58336ZM25.6667 17.4167H31.1667V21.0834H25.6667V17.4167ZM7.47267 28.8475L11.4492 22.4859C11.5408 22.3404 11.5895 22.172 11.5895 22C11.5895 21.8281 11.5408 21.6597 11.4492 21.5142L7.4745 15.1525C7.40471 15.0506 7.35625 14.9356 7.33204 14.8144C7.30782 14.6933 7.30834 14.5685 7.33358 14.4475C7.35882 14.3266 7.40824 14.212 7.47889 14.1106C7.54953 14.0092 7.63994 13.9232 7.74468 13.8577C7.84941 13.7921 7.96632 13.7484 8.08837 13.7292C8.21042 13.71 8.33509 13.7157 8.4549 13.7459C8.5747 13.776 8.68717 13.8301 8.78554 13.9049C8.88391 13.9797 8.96616 14.0735 9.02733 14.1809L12.056 19.0264C12.3915 19.5617 13.2752 19.5617 13.6107 19.0264L16.6393 14.1809C16.7028 14.0784 16.7859 13.9896 16.8838 13.9194C16.9818 13.8492 17.0926 13.799 17.21 13.7717C17.3273 13.7445 17.4489 13.7407 17.5678 13.7605C17.6866 13.7804 17.8004 13.8236 17.9025 13.8875C18.0047 13.9512 18.0934 14.0344 18.1635 14.1323C18.2336 14.2302 18.2837 14.341 18.3109 14.4583C18.3381 14.5756 18.342 14.6972 18.3223 14.816C18.3025 14.9348 18.2596 15.0485 18.1958 15.1507L14.2193 21.5124C14.1277 21.6578 14.079 21.8263 14.079 21.9982C14.079 22.1701 14.1277 22.3386 14.2193 22.484L18.194 28.8457C18.2578 28.9478 18.3009 29.0614 18.3208 29.1802C18.3406 29.2989 18.3369 29.4204 18.3099 29.5377C18.2828 29.6549 18.2329 29.7658 18.163 29.8638C18.0931 29.9618 18.0046 30.0451 17.9025 30.1089C17.6945 30.2314 17.4474 30.2693 17.2123 30.2147C16.9771 30.1601 16.772 30.0172 16.6393 29.8155L13.6107 24.97C13.5275 24.8391 13.4125 24.7314 13.2766 24.6568C13.1406 24.5822 12.9879 24.5431 12.8328 24.5433C12.6777 24.5435 12.5252 24.5829 12.3894 24.6578C12.2536 24.7327 12.1389 24.8408 12.056 24.9719L9.02733 29.8174C8.89435 30.0187 8.68923 30.1613 8.45423 30.2159C8.21923 30.2704 7.97225 30.2328 7.76417 30.1107C7.66209 30.0469 7.57357 29.9636 7.50368 29.8656C7.43378 29.7676 7.38387 29.6568 7.35681 29.5395C7.32974 29.4222 7.32604 29.3007 7.34592 29.182C7.3658 29.0633 7.40887 28.9496 7.47267 28.8475ZM25.6667 22.9167H31.1667V26.5834H25.6667V22.9167ZM33 22.9167H42.1667V26.5834H33V22.9167ZM33 21.0834V17.4167H42.1667V21.0834H33ZM33 15.5834V11.9167H42.1667V15.5834H33ZM31.1667 15.5834H25.6667V11.9167H31.1667V15.5834ZM25.6667 28.4167H31.1667V32.0834H25.6667V28.4167ZM33 28.4167H42.1667V32.0834H33V28.4167ZM42.1667 10.0834H33V6.4167H42.1667V10.0834ZM31.1667 6.4167V10.0834H25.6667V6.4167H31.1667ZM25.6667 33.9167H31.1667V37.5834H25.6667V33.9167ZM33 37.5834V33.9167H42.1667V37.5834H33Z"
-                      fill="#FFFFFF" />
-                  </svg>
-                </span>
-              </div>
-              <div class="col">
-                <div class="font-weight-medium ts-text">יצא לאקסל</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+		<!-- CSV Download Filter  -->
+		<div class="col-sm-5 col-lg-3 m-0"
+			onclick='outToExcel( <?php echo isset ($pageData["accepted_store_orders"]) ? json_encode($pageData["accepted_store_orders"]) : "[]"; ?>)'
+			style="cursor: pointer;">
+			<div class="card card-sm p-relative">
+				<div class="card-body-rounded p-1 m-1 filter-card">
+					<div class="row align-items-center">
+						<div class="col-auto">
+							<span id="csv-upload-popup-svg"
+								class="bg-black text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+								<svg width="44" height="44" viewBox="0 0 44 44" fill="none"
+									xmlns="http://www.w3.org/2000/svg">
+									<path
+										d="M43.0833 4.58336H25.6667V1.83336C25.6666 1.69558 25.6354 1.55959 25.5756 1.4355C25.5157 1.31141 25.4286 1.20242 25.3208 1.11662C25.213 1.03083 25.0872 0.970445 24.9528 0.939958C24.8185 0.909471 24.6789 0.909666 24.5447 0.94053L0.711333 6.44053C0.509269 6.48697 0.328917 6.60054 0.199723 6.7627C0.0705279 6.92486 0.000122157 7.12603 0 7.33336L0 38.5C8.32958e-05 38.7189 0.0785044 38.9306 0.221079 39.0967C0.363654 39.2628 0.560968 39.3724 0.777333 39.4057L24.6107 43.0724C24.7413 43.0928 24.8748 43.0846 25.002 43.0485C25.1292 43.0123 25.247 42.949 25.3474 42.8629C25.4478 42.7768 25.5283 42.67 25.5834 42.5498C25.6385 42.4296 25.6669 42.2989 25.6667 42.1667V39.4167H43.0833C43.3265 39.4167 43.5596 39.3201 43.7315 39.1482C43.9034 38.9763 44 38.7431 44 38.5V5.50003C44 5.25691 43.9034 5.02376 43.7315 4.85185C43.5596 4.67994 43.3265 4.58336 43.0833 4.58336ZM25.6667 17.4167H31.1667V21.0834H25.6667V17.4167ZM7.47267 28.8475L11.4492 22.4859C11.5408 22.3404 11.5895 22.172 11.5895 22C11.5895 21.8281 11.5408 21.6597 11.4492 21.5142L7.4745 15.1525C7.40471 15.0506 7.35625 14.9356 7.33204 14.8144C7.30782 14.6933 7.30834 14.5685 7.33358 14.4475C7.35882 14.3266 7.40824 14.212 7.47889 14.1106C7.54953 14.0092 7.63994 13.9232 7.74468 13.8577C7.84941 13.7921 7.96632 13.7484 8.08837 13.7292C8.21042 13.71 8.33509 13.7157 8.4549 13.7459C8.5747 13.776 8.68717 13.8301 8.78554 13.9049C8.88391 13.9797 8.96616 14.0735 9.02733 14.1809L12.056 19.0264C12.3915 19.5617 13.2752 19.5617 13.6107 19.0264L16.6393 14.1809C16.7028 14.0784 16.7859 13.9896 16.8838 13.9194C16.9818 13.8492 17.0926 13.799 17.21 13.7717C17.3273 13.7445 17.4489 13.7407 17.5678 13.7605C17.6866 13.7804 17.8004 13.8236 17.9025 13.8875C18.0047 13.9512 18.0934 14.0344 18.1635 14.1323C18.2336 14.2302 18.2837 14.341 18.3109 14.4583C18.3381 14.5756 18.342 14.6972 18.3223 14.816C18.3025 14.9348 18.2596 15.0485 18.1958 15.1507L14.2193 21.5124C14.1277 21.6578 14.079 21.8263 14.079 21.9982C14.079 22.1701 14.1277 22.3386 14.2193 22.484L18.194 28.8457C18.2578 28.9478 18.3009 29.0614 18.3208 29.1802C18.3406 29.2989 18.3369 29.4204 18.3099 29.5377C18.2828 29.6549 18.2329 29.7658 18.163 29.8638C18.0931 29.9618 18.0046 30.0451 17.9025 30.1089C17.6945 30.2314 17.4474 30.2693 17.2123 30.2147C16.9771 30.1601 16.772 30.0172 16.6393 29.8155L13.6107 24.97C13.5275 24.8391 13.4125 24.7314 13.2766 24.6568C13.1406 24.5822 12.9879 24.5431 12.8328 24.5433C12.6777 24.5435 12.5252 24.5829 12.3894 24.6578C12.2536 24.7327 12.1389 24.8408 12.056 24.9719L9.02733 29.8174C8.89435 30.0187 8.68923 30.1613 8.45423 30.2159C8.21923 30.2704 7.97225 30.2328 7.76417 30.1107C7.66209 30.0469 7.57357 29.9636 7.50368 29.8656C7.43378 29.7676 7.38387 29.6568 7.35681 29.5395C7.32974 29.4222 7.32604 29.3007 7.34592 29.182C7.3658 29.0633 7.40887 28.9496 7.47267 28.8475ZM25.6667 22.9167H31.1667V26.5834H25.6667V22.9167ZM33 22.9167H42.1667V26.5834H33V22.9167ZM33 21.0834V17.4167H42.1667V21.0834H33ZM33 15.5834V11.9167H42.1667V15.5834H33ZM31.1667 15.5834H25.6667V11.9167H31.1667V15.5834ZM25.6667 28.4167H31.1667V32.0834H25.6667V28.4167ZM33 28.4167H42.1667V32.0834H33V28.4167ZM42.1667 10.0834H33V6.4167H42.1667V10.0834ZM31.1667 6.4167V10.0834H25.6667V6.4167H31.1667ZM25.6667 33.9167H31.1667V37.5834H25.6667V33.9167ZM33 37.5834V33.9167H42.1667V37.5834H33Z"
+										fill="#FFFFFF" />
+								</svg>
+							</span>
+						</div>
+						<div class="col">
+							<div class="font-weight-medium ts-text">יצא לאקסל</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 
 		<!-- Date Range Filter   -->
@@ -222,28 +223,58 @@
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="date-range-popup" style="z-index: -1; direction: rtl;">
 					<div class="mb-3">
-						<label class="form-label">Select Date</label>
+						<form action="" method="post">
+							<label class="form-label">Select Date</label>
 
-						<div class="input-icon mb-2">
-							<input class="form-control " placeholder="Select a date" id="datepicker-icon"
-								value="2020-06-20" />
-							<span
-								class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-								<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
-									viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-									stroke-linecap="round" stroke-linejoin="round">
-									<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-									<path
-										d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-									<path d="M16 3v4" />
-									<path d="M8 3v4" />
-									<path d="M4 11h16" />
-									<path d="M11 15h1" />
-									<path d="M12 15v3" />
-								</svg>
-							</span>
-						</div>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+							<input type="hidden" name="order_range_filter">
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select first date" id="first-datepicker-icon"
+									name="first_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<div class="input-icon mb-2">
+								<input class="form-control " placeholder="Select second date"
+									id="second-datepicker-icon" name="second_date" value="" />
+
+								<span
+									class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+									<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+										viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+										stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+										<path
+											d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
+										<path d="M16 3v4" />
+										<path d="M8 3v4" />
+										<path d="M4 11h16" />
+										<path d="M11 15h1" />
+										<path d="M12 15v3" />
+									</svg>
+								</span>
+							</div>
+
+
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+
+						</form>
 					</div>
 				</div>
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -268,25 +299,35 @@
 		</div>
 
 
-		<!-- Store Filter  -->
+		<!-- Filter by Order -->
 		<div class="col-sm-5 col-lg-3 m-0">
 			<div class="card card-sm p-relative" style="position: relative;">
 
 				<div class="filter-popup" id="filter-stores-popup" style="z-index: -1;">
-					<div class="" style="direction: rtl;">
-						<label class="form-label">סינון הזמנות</label>
-						<select type="text" class="form-select" placeholder="Select tags" id="stores-select-tags"
-							value="" multiple>
-							<option value="HTML">HTML</option>
-							<option value="JavaScript">JavaScript</option>
-							<option value="CSS">CSS</option>
-							<option value="jQuery">jQuery</option>
-							<option value="Bootstrap">Bootstrap</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Python">Python</option>
-						</select>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-					</div>
+					<form action="" method="POST">
+						<div class="" style="direction: rtl;">
+							<label class="form-label">סינון הזמנות</label>
+							<select name="order_array[]" type="text" class="form-select" placeholder="Select tags"
+								id="stores-select-tags" value="" multiple>
+
+								<?php
+								foreach ($pageData["accepted_store_orders"] as $data) {
+									if($data['order_status']== 'Completed'){
+										$order_id = $data['id'];
+										?>
+										<option value="<?php echo $order_id; ?>">
+											<?php echo $order_id; ?>
+										</option>
+									<?php
+									}
+								}
+								?>
+
+							</select>
+							<input type="hidden" name="filter_by_order">
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+						</div>
+					</form>
 
 				</div>
 
@@ -312,24 +353,36 @@
 		</div>
 
 
-		<!-- Guy Filter -->
+		<!-- Community Filter -->
 		<div class="col-sm-5 col-lg-3 m-0">
 			<div class="card card-sm p-relative" style="position: relative;">
 				<div class="filter-popup" id="filter-guys-popup" style="z-index: -1;">
-					<div class="" style="direction: rtl;">
-						<label class="form-label">סינון תת”ים</label>
-						<select type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value=""
-							multiple>
-							<option value="HTML">HTML</option>
-							<option value="JavaScript">JavaScript</option>
-							<option value="CSS">CSS</option>
-							<option value="jQuery">jQuery</option>
-							<option value="Bootstrap">Bootstrap</option>
-							<option value="Ruby">Ruby</option>
-							<option value="Python">Python</option>
-						</select>
-						<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
-					</div>
+
+					<form action="" method="POST">
+						<div class="" style="direction: rtl;">
+							<label class="form-label">סינון תת”ים</label>
+
+							<select name="community_array[]" type="text" class="form-select" placeholder="Select tags"
+								id="guys-select-tags" value="" multiple>
+								<?php
+								foreach ($pageData["accepted_store_orders"] as $data) {
+									$community_id = $data['community_id'];
+									$community_data = $community->get_community_data_by_id($community_id);
+									?>
+									<option value="<?php echo $community_id; ?>">
+										<?php echo $community_data->community_name; ?>
+									</option>
+									<?php
+								}
+								?>
+
+							</select>
+
+							<input type="hidden" name="communities_filter">
+							<button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
+						</div>
+					</form>
+
 
 				</div>
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -355,104 +408,122 @@
 	</div>
 
 
-	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: 700px; overflow-y: auto;">
-	
-    <?php
-	if(isset($pageData["accepted_store_orders"]))
-	{
-		$total_credit = 0;
-		$total_item = 0;
-	foreach ($pageData["accepted_store_orders"] as $order) {
-		
-		if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING || $order['order_status'] == ORDER_STATUS_PAID)
-		{ $total_credit = $total_credit + $order['order_total']; ?>
-        <div class="card order-management-cards col-xl-4 rounded-3">
-            <!-- Photo -->
-            <div class="" style=""><img src="media/inviting-logo-2.png" style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
+	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: fit-content; overflow-y: auto;">
 
-            <div class="card-body px-3">
-                <div class="d-flex justify-content-between">
-                   <?php if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING)
-                    { ?>
-                        <span class="btn btn-red" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success" onclick="populateModal('<?php echo $order['id']; ?>')">לא שולם</span>
-                    <?php } 
-					else if ($order['order_status'] == ORDER_STATUS_PAID)
-                    { ?>
-                        <span class="btn btn-brown">שולם</span>
-                    <?php } ?>
-                    <span class="btn btn-dark">מס’ הזמנה: <?php echo $order['id'] ;?></span>
-                </div>
-                <div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
-                    <div class="row-1 p-2 d-flex align-items-center justify-content-center">
-                        <table>
-                            <?php
-                            $total_cost = 0 ;
-                            foreach($order['order_data'] as $data){ 
-								echo $total_item = $total_item +  $data['total_items']; ?>
-                                <tr class="d-flex gap-2 text-center">
-                                    <td><strong>מחיר: </strong><?php echo $data['cost_per_item']; ?> ₪ יח’</td>
-                                    <td><strong>כמות: </strong><?php echo $data['total_items']; ?></td>
-                                    <td><strong>מוצר: </strong><?php echo $data['product_name']; ?></td>
-                                </tr>
-                                <?php
-                                $total_cost = $total_cost + $data['total_cost'];
-                            } ?>
-                        </table>
-                    </div>
-                </div>
-                <p class="card-footer-text pt-4 pb-2">סה”כ הזמנה: <?php echo $total_cost; ?> ₪</p>
-            </div>
-        </div>
-    <?php } } } ?>
-</div>
-<script>
-    function populateModal(orderid) {
-	document.getElementById('aprove_payment_order_id').value = orderid;
-}
+		<?php
+		if (isset ($pageData["accepted_store_orders"])) {
+			$total_credit = 0;
+			$total_item = 0;
+			foreach ($pageData["accepted_store_orders"] as $order) {
 
-</script>
+				if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING || $order['order_status'] == ORDER_STATUS_PAID) {
+					$total_credit = $total_credit + $order['order_total']; ?>
+					<div class="card order-management-cards col-xl-4 rounded-3">
+						<!-- Photo -->
+						<div class="" style=""><img src="media/inviting-logo-2.png"
+								style="object-fit: cover; width: 100%; height: 130px;" alt=""></div>
 
-<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
-	aria-hidden="true">
-	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
-		<div class="modal-content p-4" style="direction: rtl">
-			<h3>האם העסקה שולמה בהצלחה?</h3>
-			<form action="" method="POST">
-				<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
-				<input type="hidden" name="csvp_request" value="request_payment">
-				<button class="btn btn-secondary">שלח בקשת תשלום</button>
-			</form>
-			<div class="add-new-benefit-buttons mt-4">
-			<form action="" method="POST" class="d-inline">
-			 	<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
-			 	<input type="hidden" name="csvp_request" value="aprrove_payment">
-				<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-			</form>
-				<button type="submit" class="btn btn-danger w-25">ביטול</button>
+						<div class="card-body px-3">
+							<div class="d-flex justify-content-between">
+								<?php if ($order['order_status'] == ORDER_STATUS_COMPLETED || $order['order_status'] == ORDER_STATUS_PROCESSING) { ?>
+									<span class="btn btn-red" data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success"
+										onclick="populateModal('<?php echo $order['id']; ?>')">לא שולם</span>
+								<?php } else if ($order['order_status'] == ORDER_STATUS_PAID) { ?>
+										<span class="btn btn-brown">שולם</span>
+								<?php } ?>
+								<span class="btn btn-dark">מס’ הזמנה:
+									<?php echo $order['id']; ?>
+								</span>
+							</div>
+							<div class="product-information mt-3 rounded-3" style="background-color: #E4E4E4;">
+								<div class="row-1 p-2 d-flex align-items-center justify-content-center">
+									<table>
+										<?php
+										$total_cost = 0;
+										foreach ($order['order_data'] as $data) {
+											echo $total_item = $total_item + $data['total_items']; ?>
+											<tr class="d-flex gap-2 text-center">
+												<td><strong>מחיר: </strong>
+													<?php echo $data['cost_per_item']; ?> ₪ יח’
+												</td>
+												<td><strong>כמות: </strong>
+													<?php echo $data['total_items']; ?>
+												</td>
+												<td><strong>מוצר: </strong>
+													<?php echo $data['product_name']; ?>
+												</td>
+											</tr>
+											<?php
+											$total_cost = $total_cost + $data['total_cost'];
+										} ?>
+									</table>
+								</div>
+							</div>
+							<p class="card-footer-text pt-4 pb-2">סה”כ הזמנה:
+								<?php echo $total_cost; ?> ₪
+							</p>
+						</div>
+					</div>
+				<?php }
+			}
+		} ?>
+	</div>
+	<script>
+		function populateModal(orderid) {
+			document.getElementById('aprove_payment_order_id').value = orderid;
+		}
+
+	</script>
+
+	<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+			<div class="modal-content p-4" style="direction: rtl">
+				<h3>האם העסקה שולמה בהצלחה?</h3>
+				<form action="" method="POST">
+					<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+					<input type="hidden" name="csvp_request" value="request_payment">
+					<button class="btn btn-secondary">שלח בקשת תשלום</button>
+				</form>
+				<div class="add-new-benefit-buttons mt-4">
+					<form action="" method="POST" class="d-inline">
+						<input type="hidden" id="aprove_payment_order_id" name="order_id" value="">
+						<input type="hidden" name="csvp_request" value="aprrove_payment">
+						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+					</form>
+					<button type="submit" class="btn btn-danger w-25">ביטול</button>
+
+				</div>
 
 			</div>
-
 		</div>
 	</div>
-</div>
 
 
 	<div class="col-12">
 		<div class="container p-0">
 			<div class="card-x">
 				<div class="card-body my-3 bg-black rounded-3 p-2">
-					<div class="store-management-order-history-footer p-3 d-flex" >
+					<div class="store-management-order-history-footer p-3 d-flex">
 						<span class="w-25">
-							<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-								<div class="page-item-subtitle text-white mx-4" style="font-size: 20px; direction: rtl;">
-								סה”כ חובות: <?php if(isset($total_credit)){ echo $total_credit; } ?> ₪  </div>
+							<a tabindex="-1" aria-disabled="true">
+								<div class="page-item-subtitle text-white mx-4"
+									style="font-size: 20px; direction: rtl;">
+									סה”כ חובות:
+									<?php if (isset ($total_credit)) {
+										echo $total_credit;
+									} ?> ₪
+								</div>
 							</a>
 						</span>
 
 						<span class="w-75">
-							<a class="page-link" href="#" style="text-align: right;">
+							<a style="text-align: right;">
 								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
-								סך הפריטים שנמכרו: <?php if(isset($total_item)){ echo $total_item; } ?>
+									סך הפריטים שנמכרו:
+									<?php if (isset ($total_item)) {
+										echo $total_item;
+									} ?>
 								</div>
 							</a>
 						</span>
@@ -483,84 +554,84 @@
 
 
 <script>
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    var el;
-    window.TomSelect && (new TomSelect(el = document.getElementById('guys-select-tags'), {
-      copyClassesToDropdown: false,
-      dropdownParent: 'body',
-      controlInput: '<input>',
-      render: {
-        item: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-        option: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-      },
-    }));
-  });
-  // @formatter:on
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		var el;
+		window.TomSelect && (new TomSelect(el = document.getElementById('guys-select-tags'), {
+			copyClassesToDropdown: false,
+			dropdownParent: 'body',
+			controlInput: '<input>',
+			render: {
+				item: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+				option: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+			},
+		}));
+	});
+	// @formatter:on
 
 
 
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    var el;
-    window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
-      copyClassesToDropdown: false,
-      dropdownParent: 'body',
-      controlInput: '<input>',
-      render: {
-        item: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-        option: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-      },
-    }));
-  });
-  // @formatter:on
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		var el;
+		window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+			copyClassesToDropdown: false,
+			dropdownParent: 'body',
+			controlInput: '<input>',
+			render: {
+				item: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+				option: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+			},
+		}));
+	});
+	// @formatter:on
 
 
 
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    var el;
-    window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
-      copyClassesToDropdown: false,
-      dropdownParent: 'body',
-      controlInput: '<input>',
-      render: {
-        item: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-        option: function (data, escape) {
-          if (data.customProperties) {
-            return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
-          }
-          return '<div>' + escape(data.text) + '</div>';
-        },
-      },
-    }));
-  });
-  // @formatter:on
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		var el;
+		window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
+			copyClassesToDropdown: false,
+			dropdownParent: 'body',
+			controlInput: '<input>',
+			render: {
+				item: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+				option: function (data, escape) {
+					if (data.customProperties) {
+						return '<div><span class="dropdown-item-indicator">' + data.customProperties + '</span>' + escape(data.text) + '</div>';
+					}
+					return '<div>' + escape(data.text) + '</div>';
+				},
+			},
+		}));
+	});
+	// @formatter:on
 
 </script>
 
@@ -569,70 +640,85 @@
 
 <script>
 
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#filter-guys-popup-svg").click(function () {
-      jQuery("#filter-guys-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
+	// Wait for the document to be ready
+	jQuery(document).ready(function () {
+		// Attach click event to the SVG element
+		jQuery("#filter-guys-popup-svg").click(function () {
+			jQuery("#filter-guys-popup").css("z-index", function (index, value) {
+				return value == 3 ? -1 : 3;
+			});
 
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#filter-stores-popup-svg").click(function () {
-      jQuery("#filter-stores-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
+			// Toggle slide-down or slide-up animation
+		});
+	});
 
 
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#date-range-popup-svg").click(function () {
-      jQuery("#date-range-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
+	// Wait for the document to be ready
+	jQuery(document).ready(function () {
+		// Attach click event to the SVG element
+		jQuery("#filter-stores-popup-svg").click(function () {
+			jQuery("#filter-stores-popup").css("z-index", function (index, value) {
+				return value == 3 ? -1 : 3;
+			});
 
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-   // Wait for the document to be ready
-   jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#csv-upload-popup-svg").click(function () {
-      jQuery("#csv-upload-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
+			// Toggle slide-down or slide-up animation
+		});
+	});
 
 
+	// Wait for the document to be ready
+	jQuery(document).ready(function () {
+		// Attach click event to the SVG element
+		jQuery("#date-range-popup-svg").click(function () {
+			jQuery("#date-range-popup").css("z-index", function (index, value) {
+				return value == 3 ? -1 : 3;
+			});
 
-  // @formatter:off
-  document.addEventListener("DOMContentLoaded", function () {
-    window.Litepicker && (new Litepicker({
-      element: document.getElementById('datepicker-icon'),
-      buttonText: {
-        previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
-        nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
-      },
-    }));
-  });
-  // @formatter:on
+			// Toggle slide-down or slide-up animation
+		});
+	});
+
+	// Wait for the document to be ready
+	jQuery(document).ready(function () {
+		// Attach click event to the SVG element
+		jQuery("#csv-upload-popup-svg").click(function () {
+			jQuery("#csv-upload-popup").css("z-index", function (index, value) {
+				return value == 3 ? -1 : 3;
+			});
+
+			// Toggle slide-down or slide-up animation
+		});
+	});
+
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('first-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
+
+
+	// @formatter:off
+	document.addEventListener("DOMContentLoaded", function () {
+		window.Litepicker && (new Litepicker({
+			element: document.getElementById('second-datepicker-icon'),
+			buttonText: {
+				previousMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15 6l-6 6l6 6" /></svg>`,
+				nextMonth: `<!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+	<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l6 6l-6 6" /></svg>`,
+			},
+		}));
+	});
+	// @formatter:on
 
 </script>

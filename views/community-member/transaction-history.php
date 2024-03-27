@@ -86,44 +86,39 @@
           <div class="community-member-transaction-history-table" style="overflow-x: auto; direction: rtl; ">
             <table class="table table-vcenter card-table">
               <tbody class="d-flex flex-column ts-text">
-                <tr>
-                  <td class="ts-date">תאריך: 24/07/2023</td>
+                <?php
+                $total_acummulated = 0;
+                foreach($pageData["data"]["transactions"] as $transaction)
+                {
+                  $total_acummulated = $total_acummulated + 1;
+                  ?>
+                  <tr>
+                  <td class="ts-date">תאריך: <?php echo (new DateTime($transaction['transaction_date']))->format('d/m/Y'); ?></td>
 
                   <td class="text-muted ts-product">
-                    שם החנות: בגיר
+                    שם החנות: <?php echo $transaction['store_data']->store_name; ?>
                   </td>
-                  <td class="text-muted ts-price">סכום: ₪250</td>
+                  <td class="text-muted ts-price">סכום: ₪<?php echo $transaction['transaction_amount']; ?></td>
                   <td class="text-muted ts-store-name">סוג העסקה: ערך צבור</td>
                 </tr>
+                <?php } 
+                $total_voucher = 0;
+                 foreach($pageData["data"]["voucher_transactions"] as $voucher_transaction)
+                {
+                  $total_voucher = $total_voucher + 1;
+                  ?>
+                  
                 <tr>
-                  <td class="ts-date">תאריך: 25/07/2023</td>
-                  <td class="text-muted ts-price">שם החנות: אקסוס</td>
+                  <td class="ts-date">תאריך: <?php echo (new DateTime($voucher_transaction['transaction_date']))->format('d/m/Y'); ?></td>
+                  <td class="text-muted ts-price">שם החנות: <?php echo $voucher_transaction['store_data']->store_name; ?></td>
                   <td class="text-muted ts-product">
-                    סוג השובר: חליפה
+                    סוג השובר: <?php echo $voucher_transaction['voucher_data']->product_name; ?>
                   </td>
                   <td class="text-muted ts-store-name">
                     סוג העסקה: מימוש שובר
                   </td>
                 </tr>
-                <tr>
-                  <td class="ts-date">תאריך: 24/07/2023</td>
-
-                  <td class="text-muted ts-product">
-                   שם החנות: בגיר
-                  </td>
-                  <td class="text-muted ts-price">סכום: ₪250</td>
-                  <td class="text-muted ts-store-name">סוג העסקה: ערך צבור</td>
-                </tr>
-                <tr>
-                  <td class="ts-date">תאריך: 25/07/2023</td>
-                  <td class="text-muted ts-price">שם החנות: אקסוס</td>
-                  <td class="text-muted ts-product">
-                    סוג השובר: חליפה
-                  </td>
-                  <td class="text-muted ts-store-name">
-                    סוג העסקה: מימוש שובר
-                  </td>
-                </tr>
+                <?php } ?>
               </tbody>
             </table>
           </div>
@@ -144,7 +139,7 @@
                         class="page-item-subtitle text-white mx-4"
                         style="font-size: 20px"
                       >
-                        סה”כ עסקאות ערך צבור: 38
+                        סה”כ עסקאות ערך צבור: <?php echo  $total_acummulated; ?>
                       </div>
                     </a>
                   </li>
@@ -155,7 +150,7 @@
                         class="page-item-title text-white mx-4"
                         style="font-size: 20px"
                       >
-                        סה”כ עסקאות שוברים: 42
+                        סה”כ עסקאות שוברים: <?php echo  $total_voucher; ?>
                       </div>
                     </a>
                   </li>
@@ -163,7 +158,6 @@
               </div>
             </div>
           </div>
-
           </div>
 
 </div>

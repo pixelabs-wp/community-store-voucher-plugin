@@ -26,16 +26,16 @@ class CSVP_Community
     public function render_dashboard()
     {
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
-        $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count"=> true));
+        $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count" => true));
 
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
     public function render_manage_guys()
     {
-        global $voucher, $store, $community, $voucher_transaction;
+        global $voucher, $store, $community, $voucher_transaction, $filter;
         //Sample Post Request
-        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
 
             $payload = $_POST;
             if (!$this->community_member->get_community_member_by_email($payload)) {
@@ -54,25 +54,25 @@ class CSVP_Community
         }
 
 
-        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "load_voucher") {
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "load_voucher") {
             $payload = $_POST;
 
-        
-          
-                $payload["transaction_type"] = VOUCHER_TRANSACTION_LOAD;
-                $payload["transaction_date"] = date("Y-m-d H:i:s");
-                $payload["status"] = VOUCHER_STATUS_PENDING;
-                $response = $voucher_transaction->create_voucher_transaction($payload);
 
-                if (!is_wp_error($response)) {
 
-                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
-                } else {
+            $payload["transaction_type"] = VOUCHER_TRANSACTION_LOAD;
+            $payload["transaction_date"] = date("Y-m-d H:i:s");
+            $payload["status"] = VOUCHER_STATUS_PENDING;
+            $response = $voucher_transaction->create_voucher_transaction($payload);
+
+            if (!is_wp_error($response)) {
+
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
+            } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response);
 
-                }
+            }
         }
-        
+
 
         $voucherData = $voucher->get_all_vouchers_by_community_id(array('community_id' => $this->get_current_community_id()));
         $modified_storeData = array();
@@ -87,6 +87,39 @@ class CSVP_Community
         // Load Data
         $members_data = $this->community_member->get_community_members_by_community_id(array('community_id' => $this->get_current_community_id()));
         $pageData["members"] = $members_data;
+
+
+        if (isset ($_POST["magnetic_card_filter"])) {
+
+            unset($_POST["magnetic_card_filter"]);
+
+            $pageData["members"] = $filter->filterData($pageData["members"], $_POST);
+
+        }
+
+       else if (isset ($_POST["lesson_filter"])) {
+
+            unset($_POST["lesson_filter"]);
+
+            foreach ($_POST["lesson_array"] as $lesson_array) {
+                $pageData["members"] = $filter->filterData($pageData["members"], array('lesson' => $lesson_array));
+            }
+
+        }
+
+
+        else if (isset ($_POST["guy_name_filter"])) {
+
+            unset($_POST["guy_name_filter"]);
+
+            foreach ($_POST["guyname_array"] as $guyname_array) {
+                $pageData["members"] = $filter->filterData($pageData["members"], array('full_name' => $guyname_array));
+            }
+
+        }
+
+
+
 
         CSVP_View_Manager::load_view('manage-guys', $pageData);
     }
@@ -106,34 +139,118 @@ class CSVP_Community
 
         $pageData["messages"] = $modifiedMessages;
 
-        if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_date") {
+        if (isset ($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_date") {
             unset($_POST["csvp_filter"]);
             $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
-        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
+        } else if (isset ($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
             unset($_POST["csvp_filter"]);
 
             $pageData["messages"] = $filter->filterData($pageData["messages"], $_POST);
         }
-        
+
         CSVP_View_Manager::load_view('messages', $pageData);
     }
 
     public function render_transaction_history()
     {
+
+        global $filter;
+
         $pageData = [];
         $payload["community_id"] = $this->get_current_community_id();
         $id = $this->get_current_community_id();
-        $voucher_transaction =  $this->voucher->get_all_voucher_transactions_by_community_id($payload);
+        $voucher_transaction = $this->voucher->get_all_voucher_transactions_by_community_id($payload);
         $check_1["voucher_transaction"] = $voucher_transaction;
         if (!is_wp_error($check_1["voucher_transaction"])) {
             $pageData["voucher_transaction"] = $voucher_transaction;
         }
 
-        $amount_transaction =  $this->transaction->get_transactions_by_community_id($id);
+        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
         $check_2["amount_transaction"] = $amount_transaction;
         if (!is_wp_error($check_2["amount_transaction"])) {
             $pageData["amount_transaction"] = $amount_transaction;
         }
+
+
+        $modified_voucher_transaction = array();
+
+        foreach ($voucher_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_voucher_transaction, $voucher);
+        }
+
+        $pageData["voucher_transaction"] = $modified_voucher_transaction;
+
+
+        $modified_amount_transaction = array();
+
+        foreach ($amount_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_amount_transaction, $voucher);
+        }
+
+        $pageData["amount_transaction"] = $modified_amount_transaction;
+
+
+
+
+        if (isset ($_POST["order_range_filter"])) {
+
+
+            $first_date = $_POST["first_date"];
+            $second_date = $_POST["second_date"];
+
+            // Initialize an empty array to store the dates
+            $date_range = array();
+
+            // Convert the string dates to DateTime objects
+            $start_date = new DateTime($first_date);
+            $end_date = new DateTime($second_date);
+
+            // Iterate through the dates
+            while ($start_date <= $end_date) {
+                // Store the current date in the array
+                $date_range[] = $start_date->format('Y-m-d');
+
+                // Move to the next day
+                $start_date->modify('+1 day');
+            }
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+            $date_data_voucher = array();
+            $date_data_amount = array();
+
+            foreach ($date_range as $date) {
+
+                $filtered_data_voucher = $filter->filterData($pageData["voucher_transaction"], array('created_at' => $date));
+                if (!empty ($filtered_data_voucher)) {
+                    array_push($date_data_voucher, $filtered_data_voucher);
+                }
+
+                $filtered_data_amount = $filter->filterData($pageData["amount_transaction"], array('created_at' => $date));
+                if (!empty ($filtered_data_amount)) {
+                    array_push($date_data_amount, $filtered_data_amount);
+                }
+
+            }
+
+            $pageData["voucher_transaction"] = array_merge(...$date_data_voucher);
+            $pageData["amount_transaction"] = array_merge(...$date_data_amount);
+
+        }
+
+        $member_data = $pageData['amount_transaction'][0]['member_data'];
+
+        echo json_encode($member_data);
+
+        $pageData['members'] = $member_data;
+
+
+        // echo json_encode ($pageData["amount_transaction"]["member_data"]);
 
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
@@ -143,7 +260,7 @@ class CSVP_Community
         global $store, $filter;
 
 
-        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["community_id"] = $this->get_current_community_id();
@@ -153,7 +270,7 @@ class CSVP_Community
             // Check if user data exists
             if ($user_data) {
                 // Get user role
-                $user_role = isset($user_data->roles[0]) ? $user_data->roles[0] : '';
+                $user_role = isset ($user_data->roles[0]) ? $user_data->roles[0] : '';
             }
 
             $payload["requested_by"] = $user_role;
@@ -163,7 +280,7 @@ class CSVP_Community
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
+        } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_order_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["community_id"] = $this->get_current_community_id();
@@ -172,14 +289,14 @@ class CSVP_Community
             foreach ($payload["total_cost"] as $value) {
                 $totalcost = $totalcost + $value;
             }
-            $payload["order_total"] =  $totalcost;
+            $payload["order_total"] = $totalcost;
             $response = $this->order->create_order($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
-        } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
+        } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
             $payload["community_id"] = $this->get_current_community_id();
@@ -189,7 +306,7 @@ class CSVP_Community
             foreach ($payload["total_cost"] as $value) {
                 $totalcost = $totalcost + $value;
             }
-            $payload["order_total"] =  $totalcost;
+            $payload["order_total"] = $totalcost;
             $response = $this->order->create_order($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
@@ -218,18 +335,18 @@ class CSVP_Community
             $pageData["not_requested_stores"] = $not_requested_stores;
         }
 
-        if(isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_joined"){
+        if (isset ($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_joined") {
             $pageData["not_requested_stores"] = array();
-        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_not_joined") {
+        } else if (isset ($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_not_joined") {
             $pageData["joined_store"] = array();
-        } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
+        } else if (isset ($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_by_name") {
             unset($_POST["csvp_filter"]);
 
             $pageData["not_requested_stores"] = $filter->filterData($pageData["not_requested_stores"], $_POST);
             $pageData["requested_stores"] = $filter->filterData($pageData["requested_stores"], $_POST);
             $pageData["joined_store"] = $filter->filterData($pageData["joined_store"], $_POST);
         }
-        
+
         CSVP_View_Manager::load_view('store-management', $pageData);
 
         // CSVP_View_Manager::load_view('store-management');
@@ -274,7 +391,7 @@ class CSVP_Community
             if (!$email_exists) {
 
 
-                if (isset($_FILES['community_logo']) && $_FILES['community_logo']['error'] == UPLOAD_ERR_OK) {
+                if (isset ($_FILES['community_logo']) && $_FILES['community_logo']['error'] == UPLOAD_ERR_OK) {
 
                     // Handle file upload
                     $upload_dir = wp_upload_dir(); // Get the upload directory
@@ -414,7 +531,7 @@ class CSVP_Community
         }
     }
 
-    
+
 
     /**
      * Function to retrieve a community by its ID from the database.
@@ -481,7 +598,7 @@ class CSVP_Community
         // Prepare SQL query to retrieve communities by name using LIKE operator
 
         // Prepare SQL query to select voucher transactions by member ID
-        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_APPROVED);
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s", $store_id, JOINING_REQUEST_STATUS_APPROVED);
 
         // Execute the query and fetch the results
         $joined_communities = $wpdb->get_results($query, ARRAY_A);
@@ -492,6 +609,7 @@ class CSVP_Community
 
             $community_data = $this->get_community_data_by_id(($community["community_id"]));
             $joined_communities[$key]["community_data"] = $community_data;
+            $joined_communities[$key]["community_name"] = $community_data->community_name;
 
             $community_member_data = $this->get_community_member_data_by_id(($community["community_id"]));
             $joined_communities[$key]["community_member_data"] = $community_member_data;
@@ -559,6 +677,14 @@ class CSVP_Community
         }
     }
 
+    public function get_community_user_data_by_id($data)
+    {
+        $id = $data['id'];
+        $user_data = get_userdata($id);
+        return $user_data;
+
+    }
+
 
     public function get_all_requested_communities_for_store()
     {
@@ -567,7 +693,7 @@ class CSVP_Community
         // Prepare SQL query to retrieve communities by name using LIKE operator
 
         // Prepare SQL query to select voucher transactions by member ID
-        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s",  $store_id, JOINING_REQUEST_STATUS_PENDING);
+        $query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}csvp_joining_request WHERE store_id = %d AND request_status = %s", $store_id, JOINING_REQUEST_STATUS_PENDING);
 
         // Execute the query and fetch the results
         $requested_community = $wpdb->get_results($query, ARRAY_A);
@@ -579,6 +705,7 @@ class CSVP_Community
 
             $community_data = $this->get_community_data_by_id(($community["community_id"]));
             $requested_community[$key]["community_data"] = $community_data;
+            $requested_community[$key]["community_name"] = $community_data->community_name;
 
             $community_member_data = $this->get_community_member_data_by_id(($community["community_id"]));
             $requested_community[$key]["community_member_data"] = $community_member_data;
@@ -610,7 +737,7 @@ class CSVP_Community
             $query = $wpdb->prepare("SELECT COUNT(*) AS count FROM {$wpdb->prefix}csvp_joining_request WHERE community_id = %d AND store_id = %d", $community_id, $store_id);
             $ids_result = $wpdb->get_results($query, ARRAY_A);
             // Check if there are any rows
-            if ($ids_result && isset($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
+            if ($ids_result && isset ($ids_result[0]["count"]) && $ids_result[0]["count"] == 0) {
                 $communitiesWithoutRequests[] = $community_id;
             }
         }
@@ -624,10 +751,12 @@ class CSVP_Community
 
             $not_requested_community[$key]["order_data"] = $order_data;
             $not_requested_community[$key]["community_data"] = $community_data;
+            $not_requested_community[$key]["community_name"] = $community_data->community_name;
+
             $not_requested_community[$key]["community_member_data"] = $community_member_data;
         }
         // Check if joined store data was found
-        if (!empty($not_requested_community)) {
+        if (!empty ($not_requested_community)) {
             // Return array of joined store data
             return $not_requested_community;
         } else {
@@ -750,7 +879,7 @@ class CSVP_Community
     {
         global $wpdb;
 
-        $count = isset($data["count"]) ? true : false;
+        $count = isset ($data["count"]) ? true : false;
 
         // Prepare SQL query to select all communities
         $query = "SELECT * FROM $this->table_name";

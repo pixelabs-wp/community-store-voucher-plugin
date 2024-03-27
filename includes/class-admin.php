@@ -29,6 +29,65 @@ class CSVP_Admin
             }
         }
 
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "update_community") {
+            $payload = $_POST;
+            $payload_1['community_manager_phone'] = $payload['community_manager_phone'];
+            $payload_1['community_manager_name'] = $payload['community_manager_name'];
+            $payload_1['community_address'] = $payload['community_address'];
+            $payload_1['community_name'] = $payload['community_name'];
+            $payload_1['community_mail_address'] = $payload['community_mail_address'];
+            $payload_1['payment_link'] = $payload['payment_link'];
+            $payload_1['api_valid'] = $payload['api_valid'];
+            $payload_1['commision_percentage'] = $payload['commision_percentage'];
+            $payload_1['community_id'] = $payload['community_id'];
+
+            $upload_dir = wp_upload_dir(); 
+            $oldpath = $upload_dir['basedir'] . '/' . $payload['oldpath'];
+
+            if (isset ($_FILES['community_logo']) && $_FILES['community_logo']['error'] == UPLOAD_ERR_OK) {
+                $file_name = basename($_FILES['community_logo']['name']);
+                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                $unique_identifier = uniqid();
+                $file_name = 'community_logo_' . $unique_identifier . '.' . $file_extension;
+                $moved = move_uploaded_file($_FILES['community_logo']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+                if ($moved) {
+                    if (isset($oldpath) && file_exists($oldpath)) {
+                        unlink($oldpath);
+                    }
+                    $file_path = $upload_dir['subdir'] . '/' . $file_name;
+                    $payload_1['community_logo'] = $file_path;
+                    $response = $this->community->update_community($payload_1);
+                }
+            }
+            else{
+                $response = $this->community->update_community($payload_1);
+            }
+            if (is_wp_error($response)) {
+               
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+            } else{
+                
+                $message = 'Community Updated Successfully';
+                $userdata = array(
+                    'ID' => $payload['user_id'],
+                    'user_email' => $payload['community_mail_address'],
+                    'user_pass' => $payload['password']
+                );
+                
+                $user = wp_update_user($userdata);
+                if (is_wp_error($user)) {
+                    // An error occurred while updating the user
+                    $error_message = $user->get_error_message();
+                    $message = "Community User update failed: " . $error_message;
+                }
+                
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $message);
+            }
+        }
+
+
+       
+
         $communities = $this->community->get_all_communities();
         $modifiedCommunities = array(); // Create a new array to hold modified data
       
@@ -76,6 +135,60 @@ class CSVP_Admin
 
             unset($_POST);
         }
+        if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "update_store") {
+            $payload = $_POST;
+            $payload_1['store_name'] = $payload['store_name'];
+            $payload_1['store_phone'] = $payload['store_phone'];
+            $payload_1['store_cashier_phone'] = $payload['store_cashier_phone'];
+            $payload_1['store_address'] = $payload['store_address'];
+            // $payload_1['store_mail_address'] = $payload['store_mail_address'];
+            $payload_1['fee_amount_per_transaction'] = $payload['fee_amount_per_transaction'];
+            $payload_1['store_id'] = $payload['store_id'];
+            $upload_dir = wp_upload_dir(); 
+            $oldpath = $upload_dir['basedir'] . '/' . $payload['oldpath'];
+
+            if (isset ($_FILES['store_logo']) && $_FILES['store_logo']['error'] == UPLOAD_ERR_OK) {
+                $file_name = basename($_FILES['store_logo']['name']);
+                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                $unique_identifier = uniqid();
+                $file_name = 'store_logo' . $unique_identifier . '.' . $file_extension;
+                $moved = move_uploaded_file($_FILES['store_logo']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+                if ($moved) {
+                    if (isset($oldpath) && file_exists($oldpath)) {
+                        unlink($oldpath);
+                    }
+                    $file_path = $upload_dir['subdir'] . '/' . $file_name;
+                    $payload_1['store_logo'] = $file_path;
+                    $response = $this->store->update_store($payload_1);
+                }
+            }
+
+            else{
+                $response = $this->store->update_store($payload_1);
+            }
+            if (is_wp_error($response)) {
+               
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+            } else{
+                
+                $message = 'Store Updated Successfully';
+                $userdata = array(
+                    'ID' => $payload['user_id'],
+                    'user_email' => $payload['store_mail_address'],
+                    'user_pass' => $payload['password']
+                );
+                
+                $user = wp_update_user($userdata);
+                if (is_wp_error($user)) {
+                    // An error occurred while updating the user
+                    $error_message = $user->get_error_message();
+                    $message = "Store User update failed: " . $error_message;
+                }
+                
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $message);
+            }
+        }
+        
         $pageData = array(); // or $emptyArray = [];
         $stores = $this->store->get_all_stores();
         $modifiedStores = array();

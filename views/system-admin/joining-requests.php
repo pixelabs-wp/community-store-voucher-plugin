@@ -209,19 +209,15 @@
                     <div class="card-body my-3 bg-black rounded-3 p-2">
                         <ul class="pagination p-1">
                             <li class="page-item page-prev disabled">
-                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
                                     <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
                                         סה”כ עסקאות במערכת: 87
                                     </div>
-                                </a>
                             </li>
 
                             <li class="page-item page-next">
-                                <a class="page-link" href="#">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
                                         סה”כ חנויות: 450
                                     </div>
-                                </a>
                             </li>
                         </ul>
                     </div>

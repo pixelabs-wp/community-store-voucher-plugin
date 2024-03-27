@@ -1,6 +1,9 @@
 <?php include CSVP_PLUGIN_PATH . "views/store-manager/header.php" ?>
 
-
+<?php
+global $store;
+$store_id = $store->get_store_id();
+?>
 
 <style>
 	.filter-text {
@@ -707,15 +710,14 @@
 						<h4>תקרת אשראי</h4>
 						<span> ₪ <span id="credit_limit"></span> </span>
 						<h4>יתרת אשראי</h4>
-						<span> ₪ 2,500 </span>
+						<span> ₪ <span id="used_credit"></span> </span>
 					</div>
 				</div>
 				<div class="d-flex  align-items-center gap-3 header-data-wrapper">
 					<div class="address d-flex flex-column align-items-end gap-3">
-						<h1 id="name_of_community">ת”ת אור התורה </h1>
+						<h1 id="name_of_community">-</h1>
 						<div>
-							<h2 class="address-title">אליהו מנהל ת”ת:<span id="community_manager_no">054-6268012</span> <span id="community_manager_address">
-									רבי עקיבא 84 בני ברק</span> :כתובת</h2>
+							<h2 class="address-title">אליהו מנהל ת”ת: <span id="community_manager_no">000-0000000 </span> <span id="community_manager_address"> - </span> :כתובת</h2>
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
@@ -733,47 +735,34 @@
 				</div>
 			</div>
 			<!-- 1st one -->
-			<div class="d-flex flex-column align-items-end cont">
-				<h3 class="title">הסטוריית עסקאות</h3>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #01051D; " data-bs-toggle="modal" data-bs-target="#store-manager-transaction-success">שולם</button></div>
-					<div class="d-flex gap-3 titl">
-						<h3 class="titl">סה”כ: ₪ 6,500 </h3>
-						<h3 class="titl">כמות עסקאות: 15 </h3>
-						<h3 class="titl">חודש: 02/2023</h3>
+			<div style="margin: 10px 10px 10px 10px;">
+				<div class="d-flex flex-column cont">
+					<h3 class="title" style="text-align: right;">הסטוריית עסקאות</h3>
+					<div id="parentUnpaidTransactionHistory" class="d-flex flex-column align-items-end ">
+
 					</div>
+					<div id="parentRequestedTransactionHistory" class="d-flex flex-column align-items-end ">
+
+					</div>
+					<div id="parentPaidTransactionHistory" class="d-flex flex-column align-items-end ">
+
+					</div>
+				
 				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color: #BC9B63;"> + שליחת דרישת תשלום</button>
-					</div>
-					<div class="d-flex gap-3">
-						<h3 class="titl">סה”כ: ₪ 1,000 </h3>
-						<h3 class="titl">כמות עסקאות: 12 </h3>
-						<h3 class="titl">חודש: 03/2023</h3>
-					</div>
+				<!-- 2st one -->
+				<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
+					<h3 class="title">הסטוריית הזמנות </h3>
 				</div>
-				<div class="d-flex justify-content-between tran">
-					<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);">לא
-							שולם</button></div>
-					<div class="d-flex gap-3">
-						<h3 class="titl">סה”כ: ₪ 500</h3>
-						<h3 class="titl">כמות עסקאות: 6 </h3>
-						<h3 class="titl">חודש: 04/2023</h3>
+				<!-- 3st one -->
+				<div>
+					<div class="d-flex flex-column align-items-end cont">
+						<h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
+						<div class="d-flex gap-4 flex-wrap " style=" direction: rtl; " id="voucherElementId">
+						</div>
 					</div>
 				</div>
 			</div>
-			<!-- 2st one -->
-			<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
-				<h3 class="title">הסטוריית הזמנות </h3>
-			</div>
-			<!-- 3st one -->
-			<div>
-				<div class="d-flex flex-column align-items-end cont">
-					<h3 class="title">פרטי הסדרים והטבות לת”ת</h3>
-					<div class="d-flex gap-4 flex-wrap " style=" direction: rtl; " id="voucherElementId">
-					</div>
-				</div>
-			</div>
+
 		</div>
 	</div>
 </div>
@@ -931,53 +920,54 @@
 	updateCost();
 
 
-	// 	document.addEventListener('DOMContentLoaded', function () {
-	//     const table = document.querySelector('table');
+		// 	document.addEventListener('DOMContentLoaded', function () {
+		//     const table = document.querySelector('table');
 
-	//     function updateTotalItems() {
-	//         const totalItemInputs = document.querySelectorAll('.amount-input');
-	//         let total = 0;
-	//         for (const input of totalItemInputs) {
-	//             const value = parseFloat(input.value) || 0;
-	//             total += value;
-	//         }
-	//         const totalSpan = document.querySelector('.total-added-items');
-	//         totalSpan.textContent = total;
-	//     }
+		//     function updateTotalItems() {
+		//         const totalItemInputs = document.querySelectorAll('.amount-input');
+		//         let total = 0;
+		//         for (const input of totalItemInputs) {
+		//             const value = parseFloat(input.value) || 0;
+		//             total += value;
+		//         }
+		//         const totalSpan = document.querySelector('.total-added-items');
+		//         totalSpan.textContent = total;
+		//     }
 
-	//     function updateCost() {
-	//         const totalItemInputs = document.querySelectorAll('.total-input');
-	//         let total = 0;
-	//         for (const input of totalItemInputs) {
-	//             const value = parseFloat(input.value) || 0;
-	//             total += value;
-	//         }
-	//         const totalSpan = document.querySelector('.total-cost');
-	//         totalSpan.textContent = total;
-	//     }
+		//     function updateCost() {
+		//         const totalItemInputs = document.querySelectorAll('.total-input');
+		//         let total = 0;
+		//         for (const input of totalItemInputs) {
+		//             const value = parseFloat(input.value) || 0;
+		//             total += value;
+		//         }
+		//         const totalSpan = document.querySelector('.total-cost');
+		//         totalSpan.textContent = total;
+		//     }
 
-	//     function calculateTotal() {
-	//         table.addEventListener('input', (event) => {
-	//             const target = event.target;
+		//     function calculateTotal() {
+		//         table.addEventListener('input', (event) => {
+		//             const target = event.target;
 
-	//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-	//                 const currentRow = target.closest('tr');
-	//                 const amountInput = currentRow.querySelector('.amount-input');
-	//                 const costInput = currentRow.querySelector('.cost-input');
-	//                 const totalInput = currentRow.querySelector('.total-input');
-	//                 const amount = parseFloat(amountInput.value) || 0;
-	//                 const cost = parseFloat(costInput.value) || 0;
-	//                 const totalCost = amount * cost;
-	//                 totalInput.value = totalCost;
+		//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+		//                 const currentRow = target.closest('tr');
+		//                 const amountInput = currentRow.querySelector('.amount-input');
+		//                 const costInput = currentRow.querySelector('.cost-input');
+		//                 const totalInput = currentRow.querySelector('.total-input');
+		//                 const amount = parseFloat(amountInput.value) || 0;
+		//                 const cost = parseFloat(costInput.value) || 0;
+		//                 const totalCost = amount * cost;
+		//                 totalInput.value = totalCost;
 
-	//                 updateTotalItems();
-	//                 updateCost();
-	//             }
-	//         });
-	//     }
+		//                 updateTotalItems();
+		//                 updateCost();
+		//             }
+		//         });
+		//     }
 
 	//     calculateTotal();
 	// });
+
 </script>
 
 
@@ -1077,11 +1067,27 @@
 		document.getElementById('aprove_payment_order_id').value = orderid;
 		document.getElementById('aprove_payment_order_id_2').value = orderid;
 	}
+
+	function populatenewModal(month, year, community_id, store_id) {
+		document.getElementById('month_tran').value = month;
+		document.getElementById('year_tran').value = year;
+		document.getElementById('store_id_tran').value = store_id;
+		document.getElementById('community_id_tran').value = community_id;
+
+		document.getElementById('month_tran_2').value = month;
+		document.getElementById('year_tran_2').value = year;
+		document.getElementById('store_id_tran_2').value = store_id;
+		document.getElementById('community_id_tran_2').value = community_id;
+	}
 </script>
 
 <script>
 	function closeModal() {
 		jQuery('#store-manager-transaction-success').modal('hide'); // Close the modal
+	}
+
+	function closeModal_2() {
+		jQuery('#store-manager-community-transaction-success').modal('hide'); // Close the modal
 	}
 </script>
 
@@ -1107,6 +1113,34 @@
 				</div>
 			</div>
 
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="store-manager-community-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+		<div class="modal-content p-4" style="direction: rtl">
+			<h3>האם העסקה שולמה בהצלחה?</h3>
+			<form action="" method="POST">
+				<input type="hidden" id="month_tran" name="month_tran" value="">
+				<input type="hidden" id="year_tran" name="year_tran" value="">
+				<input type="hidden" id="store_id_tran" name="store_id_tran" value="">
+				<input type="hidden" id="community_id_tran" name="community_id_tran" value="">
+				<input type="hidden" name="csvp_request" value="request_trasanction">
+				<button class="btn btn-secondary" style="background: #BC9B63;">שלח בקשת תשלום</button>
+			</form>
+			<div class="add-new-benefit-buttons mt-4">
+				<form action="" method="POST" class="d-inline">
+					<input type="hidden" id="month_tran_2" name="month_tran" value="">
+					<input type="hidden" id="year_tran_2" name="year_tran" value="">
+					<input type="hidden" id="store_id_tran_2" name="store_id_tran" value="">
+					<input type="hidden" id="community_id_tran_2" name="community_id_tran" value="">
+					<input type="hidden" name="csvp_request" value="aprrove_trasanction">
+					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+				</form>
+				<button type="button" class="btn btn-danger w-25" onclick="closeModal_2()">ביטול</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -1149,34 +1183,60 @@
 						</span>
 					</div>
 					<div class="col">
-						<input type="text" id="store-search" class="px-2" placeholder="חיפוש ת”ת">
+						<form action="" method="post">
+							<div class="" style="direction: rtl;">
+								<input type="text" id="store-search" class="form-control" placeholder="חיפוש ת”ת"
+									name="community_name"
+									value="<?php echo isset ($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
+								<input type="hidden" name="csvp_filter" value="filter_communities_by_name">
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
+	<?php
+	// echo json_encode($_POST);
+	?>
+
 	<div class="col-sm-5 col-lg-4 m-0">
-		<div class="card card-sm">
-			<div class="card-body-rounded p-1 m-1">
-				<div class="row align-items-center">
-					<div class="col">
-						<div class="font-weight-medium ts-text">תת”ים שלא בהסדר</div>
+		<form action="" method="POST">
+			<button class="card card-sm w-100 d-flex align-items-center" >
+				<div>
+					<div class="card-body-rounded p-1 m-1">
+						<div class="row align-items-center">
+							<div class="col">
+								<input type="hidden" name="non_agreed_store_filter" id="">
+								<div class="font-weight-medium text-center ts-text">תת”ים שלא בהסדר</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</button>
+		</form>
 	</div>
+
+
 	<div class="col-sm-5 col-lg-4 m-0">
-		<div class="card card-sm">
-			<div class="card-body-rounded p-1 m-1">
-				<div class="row align-items-center">
-					<div class="col">
-						<div class="font-weight-medium ts-text">תת”ים בהסדר</div>
+		<form action="" method="POST">
+			<button class="card card-sm w-100 d-flex align-items-center" >
+				<div>
+					<div class="card-body-rounded p-1 m-1">
+						<div class="row align-items-center">
+							<div class="col">
+								<input type="hidden" name="agreed_store_filter" id="">
+								<div class="font-weight-medium text-center ts-text">תת”ים בהסדר</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+			</button>
+		</form>
 	</div>
+	
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
@@ -1184,6 +1244,7 @@
 
 	if (isset($pageData["joined_communities"])) {
 		foreach ($pageData["joined_communities"] as $community) {
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
 
 	?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
@@ -1209,15 +1270,18 @@
 							</div>
 						</div>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo home_url() . '/wp-content/uploads'. $community['community_data']->community_logo;  ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
 	<?php }
 	} ?>
 	<?php
-	if (isset($pageData["requested_communities"])) {
-		foreach ($pageData["requested_communities"] as $community) { ?>
+	if (isset ($pageData["requested_communities"])) {
+		foreach ($pageData["requested_communities"] as $community) {
+			
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
@@ -1241,15 +1305,19 @@
 						</div>
 						<label class="text-secondary "><b>בקשה בהמתנה</b></label>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
 	<?php }
 	} ?>
 	<?php
-	if (isset($pageData["not_requested_communities"])) {
-		foreach ($pageData["not_requested_communities"] as $community) { ?>
+	if (isset ($pageData["not_requested_communities"])) {
+		foreach ($pageData["not_requested_communities"] as $community) { 
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+
+			?>
+		
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
@@ -1278,7 +1346,7 @@
 						</form>
 
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(media/inviting-logo.png); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
@@ -1380,6 +1448,9 @@
 	}
 
 	var parentOrderHistory = document.getElementById("parentOrderHistory");
+	var parentUnpaidTransactionHistory = document.getElementById("parentUnpaidTransactionHistory");
+	var parentRequestedTransactionHistory = document.getElementById("parentRequestedTransactionHistory");
+	var parentPaidTransactionHistory = document.getElementById("parentPaidTransactionHistory");
 
 	function addOrderHistory(item) {
 		var section = ``;
@@ -1401,12 +1472,12 @@
 				<div class="d-flex gap-3">
 					<div>
 					<button class="buttonss" 
-        style="background-color: #9D0000;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#order_details" 
-        onclick="populateOrderDetailModalFunction(this)"
-        data-order-details='${JSON.stringify(item)}'>
-    לפרטי ההזמנה
+		style="background-color: #9D0000;" 
+		data-bs-toggle="modal" 
+		data-bs-target="#order_details" 
+		onclick="populateOrderDetailModalFunction(this)"
+		data-order-details='${JSON.stringify(item)}'>
+	לפרטי ההזמנה
 </button>					</div>
 					<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 					<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
@@ -1430,12 +1501,12 @@
 			<div class="d-flex gap-3">
 				<div>
 				<button class="buttonss" 
-        style="background-color: #9D0000;" 
-        data-bs-toggle="modal" 
-        data-bs-target="#order_details" 
-        onclick="populateOrderDetailModalFunction(this)"
-        data-order-details='${JSON.stringify(item)}'>
-    לפרטי ההזמנה
+		style="background-color: #9D0000;" 
+		data-bs-toggle="modal" 
+		data-bs-target="#order_details" 
+		onclick="populateOrderDetailModalFunction(this)"
+		data-order-details='${JSON.stringify(item)}'>
+	לפרטי ההזמנה
 </button>				</div>
 				<h3 class="titl">תאריך הזמנה: ${newDate}</h3>
 				<h3 class="titl">סכום: ${item.order_total} ₪ </h3>
@@ -1484,6 +1555,9 @@
 		// Extract data from data attributes of the button
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
+		var community_id = button.data('id');
+
+		var store_id = <?php echo $store_id; ?>;
 		jQuery('#benifit_community_id').val(id);
 		jQuery('#credit_limit_community_id').val(id);
 		jQuery('#order_request_community_id').val(id);
@@ -1503,7 +1577,7 @@
 				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
 				document.getElementById('community_manager_no').innerHTML = response[0]["community_manager_phone"];
-				document.getElementById('community_manager_address').innerHTML = response[0]["community_mail_address"];
+				document.getElementById('community_manager_address').innerHTML = response[0]["community_address"];
 				document.getElementById('community_logo').src = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + response[0]["community_logo"];
 			},
 			error: function(xhr, status, error) {
@@ -1526,7 +1600,6 @@
 			},
 			success: function(response) {
 
-				console.log(response)
 				// Handle success response
 				if (response.length > 0) {
 					var parentElement = document.getElementById("voucherElementId");
@@ -1564,7 +1637,6 @@
 				if (response) {
 					parentOrderHistory.innerHTML = "";
 					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
-					console.log(response);
 					response.forEach(function(item) {
 						addOrderHistory(item);
 					});
@@ -1580,6 +1652,286 @@
 				console.error("Unexpected response format:", xhr.responseText);
 			}
 		});
+
+		jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Transaction', // Action hook
+				csvp_handler: 'get_unpaid_transactions_monthly_data_by_community_id', // Action hook
+				data: {
+					store_id: store_id,
+                    community_id: community_id
+				}
+			},
+			success: function(response) {
+				// Handle success response
+				if (response) {
+					parentUnpaidTransactionHistory.innerHTML = "";
+					var community_id = response.community_id;
+					var store_id = response.store_id;
+					var current_month = response.current_month;
+					var previous_month_1 = response.previous_month_1;
+					var previous_month_2 = response.previous_month_2;
+					var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+					var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+					var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+					if (total_amount_current != 0) {
+						var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+						let modifiedDate_current = current_month.split('-').join('/');
+						let parts_current = current_month.split('-');
+						let month_current = parts_current[0];
+						let year_current = parts_current[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">לא שולם</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+						parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_1 != 0) {
+						var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+						let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+						let parts_previous_month_1 = previous_month_1.split('-');
+						let month_previous_month_1 = parts_previous_month_1[0];
+						let year_previous_month_1 = parts_previous_month_1[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+						parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_2 != 0) {
+						var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+						let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+						let parts_previous_month_2 = previous_month_2.split('-');
+						let month_previous_month_2 = parts_previous_month_2[0];
+						let year_previous_month_2 = parts_previous_month_2[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  rgba(1, 5, 29, 0.24);" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">לא שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+						parentUnpaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					// response.forEach(function (item) {
+					// 	addOrderHistory(item);
+					// });
+				} else {
+					parentUnpaidTransactionHistory.innerHTML = "";
+					parentUnpaidTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Unpaid Transactions Data Found</label>";
+				}
+
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+				console.error("Unexpected response format:", xhr.responseText);
+
+			}
+		});
+
+		jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Transaction', // Action hook
+				csvp_handler: 'get_requested_transactions_monthly_data_by_community_id', // Action hook
+				data: {
+					store_id: store_id,
+                    community_id: community_id
+				}
+			},
+			success: function(response) {
+				// Handle success response
+				if (response) {
+					parentRequestedTransactionHistory.innerHTML = "";
+					var community_id = response.community_id;
+					var store_id = response.store_id;
+					var current_month = response.current_month;
+					var previous_month_1 = response.previous_month_1;
+					var previous_month_2 = response.previous_month_2;
+					var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+					var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+					var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+					if (total_amount_current != 0) {
+						var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+						let modifiedDate_current = current_month.split('-').join('/');
+						let parts_current = current_month.split('-');
+						let month_current = parts_current[0];
+						let year_current = parts_current[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_current}', '${year_current}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+						parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_1 != 0) {
+						var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+						let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+						let parts_previous_month_1 = previous_month_1.split('-');
+						let month_previous_month_1 = parts_previous_month_1[0];
+						let year_previous_month_1 = parts_previous_month_1[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color: #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_1}', '${year_previous_month_1}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+						parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_2 != 0) {
+						var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+						let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+						let parts_previous_month_2 = previous_month_2.split('-');
+						let month_previous_month_2 = parts_previous_month_2[0];
+						let year_previous_month_2 = parts_previous_month_2[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  #BC9B63;" data-bs-toggle="modal" data-bs-target="#store-manager-community-transaction-success" onclick="populatenewModal('${month_previous_month_2}', '${year_previous_month_2}' , '${community_id}' , '${store_id}')">שליחת דרישת תשלום+</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+						parentRequestedTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					// response.forEach(function (item) {
+					// 	addOrderHistory(item);
+					// });
+				} else {
+					parentRequestedTransactionHistory.innerHTML = "";
+					parentRequestedTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Requested Transactions Data Found</label>";
+				}
+
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+				console.error("Unexpected response format:", xhr.responseText);
+
+			}
+		});
+
+		jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Transaction', // Action hook
+				csvp_handler: 'get_paid_transactions_monthly_data_by_community_id', // Action hook
+				data: {
+					store_id: store_id,
+                    community_id: community_id
+				}
+			},
+			success: function(response) {
+				// Handle success response
+				if (response) {
+					parentPaidTransactionHistory.innerHTML = "";
+					var community_id = response.community_id;
+					var store_id = response.store_id;
+					var current_month = response.current_month;
+					var previous_month_1 = response.previous_month_1;
+					var previous_month_2 = response.previous_month_2;
+					var total_amount_current = parseFloat(response.transaction.current_month.total_amount || 0) + parseFloat(response.voucher_transaction.current_month.total_amount || 0);
+					var total_amount_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_1.total_amount || 0);
+					var total_amount_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_amount || 0) + parseFloat(response.voucher_transaction.previous_month_2.total_amount || 0);
+					if (total_amount_current != 0) {
+						var total_transactions_current = parseFloat(response.transaction.current_month.total_transactions) + parseFloat(response.voucher_transaction.current_month.total_transactions);
+						let modifiedDate_current = current_month.split('-').join('/');
+						let parts_current = current_month.split('-');
+						let month_current = parts_current[0];
+						let year_current = parts_current[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div>
+								<button class="buttons" style="background-color:  #01051D;">שולם</button>
+							</div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_current + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_current + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_current + `</h3>
+							</div>
+						</div>`;
+						parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_1 != 0) {
+						var total_transactions_previous_month_1 = parseFloat(response.transaction.previous_month_1.total_transactions) + parseFloat(response.voucher_transaction.previous_month_1.total_transactions);
+						let modifiedDate_previous_month_1 = previous_month_1.split('-').join('/');
+						let parts_previous_month_1 = previous_month_1.split('-');
+						let month_previous_month_1 = parts_previous_month_1[0];
+						let year_previous_month_1 = parts_previous_month_1[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color:  #01051D;" >שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_1 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_1 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_1 + `</h3>
+							</div>
+						</div>`;
+						parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					if (total_amount_previous_month_2 != 0) {
+						var total_transactions_previous_month_2 = parseFloat(response.transaction.previous_month_2.total_transactions) + parseFloat(response.voucher_transaction.previous_month_2.total_transactions);
+						let modifiedDate_previous_month_2 = previous_month_2.split('-').join('/');
+						let parts_previous_month_2 = previous_month_2.split('-');
+						let month_previous_month_2 = parts_previous_month_2[0];
+						let year_previous_month_2 = parts_previous_month_2[1];
+
+						var section = `<div class="d-flex justify-content-between tran">
+							<div><button class="buttons" style="background-color: #01051D;">שולם</button></div>
+							<div class="d-flex gap-3">
+								<h3 class="titl">סה”כ: ₪ ` + total_amount_previous_month_2 + `</h3>
+								<h3 class="titl">כמות עסקאות: ` + total_transactions_previous_month_2 + ` </h3>
+								<h3 class="titl">חודש: ` + modifiedDate_previous_month_2 + `</h3>
+							</div>
+						</div>`;
+						parentPaidTransactionHistory.insertAdjacentHTML('beforeend', section);
+					}
+					// response.forEach(function (item) {
+					// 	addOrderHistory(item);
+					// });
+				} else {
+					parentPaidTransactionHistory.innerHTML = "";
+					parentPaidTransactionHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3> <label>No Paid Transactions Data Found</label>";
+				}
+
+			},
+			error: function(xhr, status, error) {
+				console.error(xhr.responseText);
+				console.error("Unexpected response format:", xhr.responseText);
+
+			}
+		});
+
 	});
 
 	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function(event) {
@@ -1587,20 +1939,4 @@
 		var id = button.data('id');
 		jQuery('#voucher_id').val(id);
 	});
-
-
-	// jQuery(document).ready(function () {
-	// 	jQuery('#total-item, #cost-per-item').change(function () {
-	// 		var totalItemValue = parseFloat(jQuery('#total-item').val());
-	// 		var costPerItemValue = parseFloat(jQuery('#cost-per-item').val());
-	// 		var totalCost = totalItemValue * costPerItemValue;
-
-	// 		// Check if the result is a valid number
-	// 		if (!isNaN(totalCost)) {
-	// 			jQuery('#total-cost').val(totalCost.toFixed(2)); // Displaying result with 2 decimal places
-	// 		} else {
-	// 			jQuery('#total-cost').val(''); // Clearing the input if calculation is not possible
-	// 		}
-	// 	});
-	// });
 </script>
