@@ -360,6 +360,33 @@ class CSVP_Order{
         return !empty($results) ? $results : null;
     }
 
+
+    public function get_all_orders_by_community_id($data) {
+        global $wpdb;
+
+        $community_id = $data['community_id'];
+        $suffix = $data['suffix'];
+        // Prepare SQL query to select orders by community ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE community_id = %d",
+            $community_id
+        );
+
+        // Execute the query and fetch the results
+        $results = $wpdb->get_results($query, ARRAY_A);
+
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"]. $suffix));
+            $results[$key]["order_data"] = $order_data;
+
+            $store_data = $this->get_store_data_by_id(($order["store_id"]));
+            $results[$key]["store_data"] = $store_data;
+        }
+
+        // Return the results if any, otherwise return null
+        return !empty($results) ? $results : null;
+    }
+
     /**
      * Function to retrieve orders by store ID from the database.
      *
