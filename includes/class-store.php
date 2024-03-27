@@ -1174,4 +1174,12 @@ class CSVP_Store
             return $store_data->id;
         }
     }
+
+    public function get_store_user_data_by_id($data)
+    {
+        $id = $data['id'];
+        $user_data = get_userdata($id);
+        return $user_data;
+
+    }
 }

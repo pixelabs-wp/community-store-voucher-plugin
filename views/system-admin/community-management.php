@@ -317,60 +317,63 @@
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">טלפון יצירת קשר </label>
-                                        <input type="text" class="form-control" name="community_manager_phone">
+                                        <input type="text" class="form-control" id="community_manager_phone_id" name="community_manager_phone">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם ראש הת”ת</label>
-                                        <input type="text" class="form-control" name="community_manager_name" required>
+                                        <input type="text" class="form-control" id="community_manager_name_id" name="community_manager_name" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">כתובת הישיבה</label>
-                                        <input type="text" class="form-control" name="community_address">
+                                        <input type="text" class="form-control" id="community_address_id" name="community_address">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם הישיבה</label>
-                                        <input type="text" class="form-control" name="community_name">
+                                        <input type="text" class="form-control"  id="community_name_id" name="community_name">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">כתובת מייל</label>
-                                        <input type="email" class="form-control" name="community_mail_address">
+                                        <input type="email" class="form-control" id="community_mail_address_id" name="community_mail_address">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">Mosad</label>
-                                        <input type="text" class="form-control" name="payment_link">
+                                        <input type="text" class="form-control" id="payment_link_id" name="payment_link">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">ApiValid</label>
-                                        <input type="text" class="form-control" name="api_valid">
+                                        <input type="text" class="form-control" id="api_valid_id" name="api_valid">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">Commission Percentage</label>
-                                        <input type="number" class="form-control" name="commision_percentage">
+                                        <input type="number" class="form-control" id="commision_percentage_id" name="commision_percentage">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">סיסמת כניסה</label>
-                                        <input type="password" class="form-control" name="password">
+                                        <input type="password" class="form-control"  id="password_id" name="password">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם משתמש</label>
-                                        <input type="text" class="form-control" name="username">
+                                        <input type="text" class="form-control" id="username_id" readonly name="username">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-12">
                                         <label class="form-label">Community Logo</label>
-                                        <input type="file" class="form-control" name="community_logo">
+                                        <input type="file" class="form-control" id="community_logo_id" name="community_logo">
                                     </div>
                                 </div>
-                                <input type="hidden" name="csvp_request" value="add_community">
+                                <input type="hidden" id="community_id_" name="community_id" value="">
+                                <input type="hidden" id="user_id_" name="user_id" value="">
+                                <input type="hidden" id="oldpath_id" name="oldpath" value="">
+                                <input type="hidden" name="csvp_request" value="update_community">
                                 <input type="submit" class="btn btn-dark " value="← להוספת הישיבה למערכת ">
 
                             </div>
@@ -400,7 +403,7 @@
 
                             <div class="w-35"
                                 style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $imageUrl ? $imageUrl : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
-                                <svg data-bs-toggle="modal" data-bs-target="#edit-community"
+                                <svg data-bs-toggle="modal" data-bs-target="#edit-community" data-id="<?php echo $community['id']; ?>"
                                     style="position: absolute; top: 8px; right: 8px;" width="40" height="40" viewBox="0 0 40 40"
                                     fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_542_250)">
@@ -504,6 +507,49 @@
 
 
 <script>
+    jQuery('#edit-community').on('show.bs.modal', function(event) {
+		// Extract data from data attributes of the button
+		var button = jQuery(event.relatedTarget);
+		var id = button.data('id');
+		var community_id = button.data('id');
+        var community_user_id = 0;
+        jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Community', // Action hook
+				csvp_handler: 'get_community_data_by_id', // Action hook
+				data: {
+					id: community_id
+				}
+			},
+			success: function(response) {
+                console.log(response);
+                document.getElementById("community_manager_phone_id").value = response.community_manager_phone;
+                document.getElementById("community_manager_name_id").value = response.community_manager_name;
+                document.getElementById("community_address_id").value = response.community_address;
+                document.getElementById("community_name_id").value = response.community_name;
+                document.getElementById("community_mail_address_id").value = response.community_mail_address;
+                document.getElementById("payment_link_id").value = response.payment_link;
+                document.getElementById("api_valid_id").value = response.api_valid;
+                document.getElementById("commision_percentage_id").value = response.commision_percentage;
+                document.getElementById("community_id_").value = response.id;
+                document.getElementById("oldpath_id").value = response.community_logo;
+                community_user_id = response.wp_user_id;
+                userdata(community_user_id);
+                // document.getElementById("password_id").value = ;
+                // document.getElementById("username_id").value = ;
+			},
+			error: function(xhr, status, error) {
+				// Handle error response
+				console.error(xhr.responseText);
+			}
+		});
+       
+    });
+
+
     // Wait for the document to be ready
     jQuery(document).ready(function () {
         // Attach click event to the SVG element
@@ -528,6 +574,32 @@
             // Toggle slide-down or slide-up animation
         });
     });
+
+    function userdata(community_user_id)
+    {
+        jQuery.ajax({
+			url: "<?php echo admin_url('admin-ajax.php'); ?>",
+			type: 'POST',
+			data: {
+				action: 'csvp_ajax', // Action hook
+				csvp_request: 'CSVP_Community', // Action hook
+				csvp_handler: 'get_community_user_data_by_id', // Action hook
+				data: {
+					id: community_user_id
+				}
+			},
+			success: function(response) {
+                console.log(response);
+                // document.getElementById("password_id").value = response;
+                document.getElementById("username_id").value = response.data.user_login;
+                document.getElementById("user_id_").value = response.data.ID;
+			},
+			error: function(xhr, status, error) {
+				// Handle error response
+				console.error(xhr.responseText);
+			}
+		});
+    }
 </script>
 
 

@@ -677,6 +677,14 @@ class CSVP_Community
         }
     }
 
+    public function get_community_user_data_by_id($data)
+    {
+        $id = $data['id'];
+        $user_data = get_userdata($id);
+        return $user_data;
+
+    }
+
 
     public function get_all_requested_communities_for_store()
     {
