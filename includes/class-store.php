@@ -572,10 +572,13 @@ class CSVP_Store
         }
 
         $joined_communities = $community->get_all_joined_communities_for_store();
+
         $community_members = array();
         if (!is_wp_error($joined_communities)) {
             foreach ($joined_communities as $request) {
-                $members = $community_member->get_community_members_by_community_id(array("community_id" => $request->community_id));
+
+                $members = $community_member->get_community_members_by_community_id(array("community_id" => $request['community_id']));
+
                 array_push($community_members, $members);
             }
         }

@@ -21,7 +21,7 @@
   }
 
   .ts-price {
-    width: 10%;
+    width: 15%;
   }
 
   .ts-date {
@@ -29,11 +29,11 @@
   }
 
   .ts-product {
-    width: 25%;
+    width: 20%;
   }
 
   .ts-store-name {
-    width: 20%;
+    width: 25%;
   }
 
   .ts-guy-name {
