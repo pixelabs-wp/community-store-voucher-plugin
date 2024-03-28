@@ -352,13 +352,77 @@ class CSVP_Community
 
     public static function render_order_management()
     {
-        global $order, $community;
+        global $order, $filter, $community;
         $pageData = [];
         $data = [];
         $community_id = $community->get_current_community_id();
         $data['community_id'] = $community_id;
         $data['suffix'] = '_store';
         $pageData['all_order_data'] = $order->get_all_orders_by_community_id($data);
+
+
+        $modified_order_data = array();
+
+        foreach ($pageData['all_order_data'] as $request) {
+            $request["created_at"] = date("Y-m-d", strtotime($request["created_at"]));
+            array_push($modified_order_data, $request);
+        }
+        $pageData["all_order_data"] = $modified_order_data;
+
+
+        if (isset ($_POST["order_range_filter"])) {
+
+
+            $first_date = $_POST["first_date"];
+            $second_date = $_POST["second_date"];
+
+            // Initialize an empty array to store the dates
+            $date_range = array();
+
+            // Convert the string dates to DateTime objects
+            $start_date = new DateTime($first_date);
+            $end_date = new DateTime($second_date);
+
+            // Iterate through the dates
+            while ($start_date <= $end_date) {
+                // Store the current date in the array
+                $date_range[] = $start_date->format('Y-m-d');
+
+                // Move to the next day
+                $start_date->modify('+1 day');
+            }
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+            $date_data = array();
+
+            foreach ($date_range as $date) {
+                $filtered_data = $filter->filterData($pageData["all_order_data"], array('created_at' => $date));
+                if (!empty ($filtered_data)) {
+                    array_push($date_data, $filtered_data);
+                }
+            }
+
+
+            $pageData["all_order_data"] = array_merge(...$date_data);
+
+        } 
+        
+        else if (isset ($_POST["filter_by_order"])) {
+            foreach ($_POST["order_array"] as $order_array) {
+                $pageData["all_order_data"] = $filter->filterData($pageData["all_order_data"], array('id' => $order_array));
+            }
+        }
+        else if (isset ($_POST["filter_by_stores"])) {
+            foreach ($_POST["stores_array"] as $stores_array) {
+                $pageData["all_order_data"] = $filter->filterData($pageData["all_order_data"], array('store_id' => $stores_array));
+            }
+        }
+
+
         CSVP_View_Manager::load_view('order-management',$pageData);
     }
 
