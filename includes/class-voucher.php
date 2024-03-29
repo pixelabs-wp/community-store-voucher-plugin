@@ -120,8 +120,32 @@ class CSVP_Voucher{
             $voucher_id // Voucher ID for the WHERE clause
         );
 
+        if ($wpdb->query($query)) {
+            // Return the ID of the newly inserted voucher
+            // return $wpdb->insert_id; 
+            return array("status"=>true, "response"=>"Voucher Updated successfully for Product: ".$data["product_name"]);
+        } else {
+            // Failed to move uploaded file
+            return array("status" => false, "response" => "Something Went Wrong");
+            }
+
+    }
+
+    public function update_status($data) {
+        global $wpdb;
+    
+        $voucher_id = $data['id'];
+        
+        // Prepare SQL query to update the is_active column status to 0
+        $query = $wpdb->prepare("UPDATE $this->table_name SET is_active = 0 WHERE id = %d", $voucher_id);
+    
         // Execute the query and return true on success, false on failure
-        return $wpdb->query($query) !== false;
+        if ($wpdb->query($query)) {
+            return array("status" => true, "response" => "Voucher set As inActive successfully");
+        } else {
+            // Failed to update voucher status
+            return array("status" => false, "response" => "Failed to change voucher status");
+        }
     }
 
 
@@ -195,7 +219,7 @@ class CSVP_Voucher{
        
         
         // Prepare SQL query to select all vouchers by store ID
-        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE store_id = %d  AND community_id = %d", $store_id, $community_id);
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE store_id = %d  AND community_id = %d AND is_active = 1", $store_id, $community_id);
 
         // Execute the query and fetch the results
         $vouchers = $wpdb->get_results($query, ARRAY_A);

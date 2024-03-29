@@ -798,7 +798,7 @@ $store_id = $store->get_store_id();
 					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר">
 					<div class="add-new-benefit-buttons">
 						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-						<button type="submit" class="btn btn-danger w-25">ביטול</button>
+						<button type="button" onclick="closeModal('store-manager-add-new-benefit')" class="btn btn-danger w-25">ביטול</button>
 						<input type="hidden" id="benifit_community_id" name="community_id" value="">
 						<input type="hidden" name="csvp_request" value="add_new_benifit">
 					</div>
@@ -807,8 +807,45 @@ $store_id = $store->get_store_id();
 		</div>
 	</div>
 </div>
-
 <!--  Add new Benefit modal ends here -->
+
+<!--  Edit Benefit modal starts here -->
+
+<div class="modal fade" id="store-manager-edit-benefit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
+		<div class="modal-content p-4">
+			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+			</button>
+
+			<style>
+				.add-new-benefit-form h3,
+				.add-new-benefit-form input,
+				.add-new-benefit-buttons {
+					direction: rtl;
+				}
+			</style>
+			<div class="add-new-benefit-form">
+				<form action="" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+					<h3>ערוך הטבה קיימת</h3>
+					<input class="form-control" type="text" name="product_name" id="" placeholder="שם המוצר" value="">
+					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע" value="">
+					<input class="form-control" type="number" name="normal_price" id="" placeholder="מחיר רגיל" value="">
+					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר" value="">
+					<div class="add-new-benefit-buttons">
+						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+						<button type="button" onclick="closeModal('store-manager-edit-benefit')" class="btn btn-danger w-25">ביטול</button>
+						<input type="hidden" id="benifit_voucher_id" name="voucher_id" value="">
+						<input type="hidden" name="old_image" value="">
+						<input type="hidden" name="csvp_request" value="edit_benifit">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!--  Edit Benefit modal Ends here -->
+
+
 
 
 
@@ -858,8 +895,8 @@ $store_id = $store->get_store_id();
 					<div class="btngroup">
 						<input type="hidden" id="order_request_community_id" name="community_id" value="">
 						<input type="hidden" name="csvp_request" value="add_order_request">
-						<button class="button button-primary">אישור</button>
-						<button class="button button-secondary">ביטול</button>
+						<button type="submit" class="button button-primary">אישור</button>
+						<button type="button" onclick="closeModal('store-manager-add-new-order')" class="button button-secondary">ביטול</button>
 					</div>
 				</form>
 			</div>
@@ -884,6 +921,12 @@ $store_id = $store->get_store_id();
 			totalInput.value = totalCost;
 		}
 	});
+
+	function closeModal(modalId) {
+    // Use jQuery to select the modal and call the Bootstrap modal method to hide it
+    jQuery('#' + modalId).modal('hide');
+}
+
 
 	function updateTotalItems() {
 		const totalItemInputs = document.querySelectorAll('.amount-input');
@@ -1050,8 +1093,7 @@ $store_id = $store->get_store_id();
 					<input type="hidden" id="credit_limit_community_id" name="community_id" value="">
 					<input type="hidden" name="csvp_request" value="set_credit_limit">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-					<button type="submit" class="btn btn-danger w-25">ביטול</button>
-
+					<button type="button" onclick="closeModal('store-manager-credit-limit-update')" class="btn btn-danger w-25">ביטול</button>
 				</div>
 			</form>
 		</div>
@@ -1081,15 +1123,6 @@ $store_id = $store->get_store_id();
 	}
 </script>
 
-<script>
-	function closeModal() {
-		jQuery('#store-manager-transaction-success').modal('hide'); // Close the modal
-	}
-
-	function closeModal_2() {
-		jQuery('#store-manager-community-transaction-success').modal('hide'); // Close the modal
-	}
-</script>
 
 <div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
@@ -1107,7 +1140,7 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="csvp_request" value="aprrove_payment">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				</form>
-				<button type="submit" class="btn btn-danger w-25" onclick="closeModal()">ביטול</button>
+				<button type="submit" class="btn btn-danger w-25" onclick="closeModal('store-manager-transaction-success')">ביטול</button>
 				<div>
 
 				</div>
@@ -1139,7 +1172,7 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="csvp_request" value="aprrove_trasanction">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				</form>
-				<button type="button" class="btn btn-danger w-25" onclick="closeModal_2()">ביטול</button>
+				<button type="button" class="btn btn-danger w-25" onclick="closeModal('store-manager-community-transaction-success')">ביטול</button>
 			</div>
 		</div>
 	</div>
@@ -1159,7 +1192,7 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="id" id="voucher_id">
 					<input type="hidden" name="csvp_request" value="delete_voucher">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-					<button type="submit" class="btn btn-danger w-25">ביטול</button>
+					<button type="button" onclick="closeModal('store-manager-voucher-delete')" class="btn btn-danger w-25">ביטול</button>
 				</form>
 			</div>
 
@@ -1394,8 +1427,8 @@ $store_id = $store->get_store_id();
 				<div class="card-footer text-center bg-transparent ">
 					${title}
 					<div class="text-center bg-transparent ">${discountPrice}₪  במקום  <del>${price}</del>₪</div>
-					<a href="" class="btn" style="color: white; background-color: #01051D;">עריכת
-						השובר</a>
+					<button type="button" class="btn" style="color: white; background-color: #01051D;" data-bs-toggle="modal" data-bs-target="#store-manager-edit-benefit" onclick="openEditModal('${title}', ${price}, ${discountPrice}, '${imageSrc}', ${id})">עריכת השובר</button>
+
 				</div>
 			</div>
 		</div>
@@ -1405,6 +1438,15 @@ $store_id = $store->get_store_id();
 		voucherElementId.innerHTML += section; // Use innerHTML to append HTML content
 	}
 
+	function openEditModal(title, price, discountPrice, imageSrc, id) {
+    // Populate input elements in the modal with the provided data
+    document.querySelector('#store-manager-edit-benefit input[name="product_name"]').value = title;
+    document.querySelector('#store-manager-edit-benefit input[name="voucher_price"]').value = discountPrice;
+    document.querySelector('#store-manager-edit-benefit input[name="normal_price"]').value = price;
+    document.querySelector('#store-manager-edit-benefit input[name="voucher_id"]').value = id;
+	document.querySelector('#store-manager-edit-benefit input[name="old_image"]').value = imageSrc;
+
+}
 
 	function populateOrderDetailModalFunction(button) {
 		var orderDetails = JSON.parse(button.getAttribute('data-order-details'));

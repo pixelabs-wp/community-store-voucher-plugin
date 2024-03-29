@@ -42,6 +42,42 @@ class CSVP_Store
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
             }
+        } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "edit_benifit") {
+            $payload = $_POST;
+            $payload_1['product_name'] = $payload['product_name'];
+            $payload_1['voucher_price'] = $payload['voucher_price'];
+            $payload_1['normal_price'] = $payload['normal_price'];
+            $payload_1['voucher_id'] = $payload['voucher_id'];
+
+            $store_id = $this->get_store_id();
+
+            $upload_dir = wp_upload_dir(); 
+            $oldpath = $upload_dir['basedir'] . '/' . $payload['old_image'];
+
+            if (isset ($_FILES['product_image']) && $_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
+                $file_name = basename($_FILES['product_image']['name']);
+                $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+                $unique_identifier = uniqid();
+                $file_name = 'store_voucher_' . $store_id . '_' . $unique_identifier . '.' . $file_extension;
+                $moved = move_uploaded_file($_FILES['product_image']['tmp_name'], $upload_dir['path'] . '/' . $file_name);
+                if ($moved) {
+                    if (isset($oldpath) && file_exists($oldpath)) {
+                        unlink($oldpath);
+                    }
+                    $file_path = $upload_dir['subdir'] . '/' . $file_name;
+                    $payload_1['product_image'] = $file_path;
+                    $response = $this->voucher->update_voucher($payload_1);
+                }
+            }
+            else{
+                $response = $this->voucher->update_voucher($payload_1);
+            }
+
+            if ($response["status"] !== false) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
         } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "set_credit_limit") {
             $payload = $_POST;
             $payload["is_active"] = true;
@@ -71,9 +107,8 @@ class CSVP_Store
             }
         } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_voucher") {
             $payload = $_POST;
-            $payload["is_active"] = true;
             $payload["store_id"] = $this->get_store_id();
-            $response = $this->voucher->delete_voucher($payload);
+            $response = $this->voucher->update_status($payload);
             if ($response["status"] !== false) {
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
             } else {
@@ -702,7 +737,22 @@ class CSVP_Store
     public function get_order_data_by_id($store_id)
     {
         global $wpdb;
-        $query = $wpdb->prepare("SELECT store_id, COUNT(id) AS order_count, SUM(order_total) AS total_order_amount FROM {$wpdb->prefix}csvp_order WHERE store_id = %d GROUP BY store_id", $store_id);
+        // Prepare SQL query to select aggregated order data
+        $query = $wpdb->prepare("
+            SELECT 
+                store_id, 
+                COUNT(id) AS order_count, 
+                SUM(order_total) AS total_order_amount 
+            FROM 
+                {$wpdb->prefix}csvp_order 
+            WHERE 
+                store_id = %d 
+                AND order_status != %s 
+                AND order_status != %s 
+                AND order_status != %s 
+            GROUP BY 
+                store_id
+        ", $store_id, ORDER_STATUS_RETURNED, ORDER_STATUS_RETURNED_PAID, ORDER_STATUS_CANCELLED);
         // Execute the query
         $order_data = $wpdb->get_row($query);
 

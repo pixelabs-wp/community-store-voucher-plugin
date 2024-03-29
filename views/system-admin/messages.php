@@ -235,6 +235,25 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="community-message-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+      <div class="modal-content p-4" style="direction: rtl">
+        <h3>האם עלי למחוק את ההודעה?</h3>
+
+        <div class="add-new-benefit-buttons mt-4">
+          <form method="POST" action="">
+            <input type="hidden" name="message_id" id="message_id">
+            <input type="hidden" name="csvp_request" value="delete_message">
+            <input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+            <button type="button" onclick="closeModal('community-message-delete')" class="btn btn-danger w-25">ביטול</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
     <div class="accordion" id="accordion-example">
         <div class="card-x">
             <?php
@@ -263,7 +282,7 @@
                                 <div class="content">שם החנות:
                                     <?php echo $message['full_name']; ?>
                                 </div>
-                                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
                                     <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -305,7 +324,7 @@
                                     <div class="content">שם החנות:
                                     <?php echo $message['full_name']; ?>
                                     </div>
-                                    <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                    <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
                                         <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
                                             <path
@@ -341,7 +360,7 @@
                                         <div class="content">שם החנות:
                                     <?php echo $message['full_name']; ?>
                                         </div>
-                                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true">
+                                        <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
                                             <svg width="17" height="19" viewBox="0 0 17 19" fill="none"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path
@@ -367,6 +386,19 @@
     </div>
 
     <script>
+
+function closeModal(modalId) {
+    // Use jQuery to select the modal and call the Bootstrap modal method to hide it
+    jQuery('#' + modalId).modal('hide');
+}
+
+jQuery('#community-message-delete').on('show.bs.modal', function(event) {
+		var button = jQuery(event.relatedTarget);
+		var id = button.data('id');
+		jQuery('#message_id').val(id);
+	});
+
+    
         function statusChange(id, status, block, blockId) {
             jQuery.ajax({
                 url: "<?php echo admin_url('admin-ajax.php'); ?>",
