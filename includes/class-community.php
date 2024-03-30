@@ -119,8 +119,6 @@ class CSVP_Community
         }
 
 
-
-
         CSVP_View_Manager::load_view('manage-guys', $pageData);
     }
 

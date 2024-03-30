@@ -187,6 +187,18 @@
                                             fill="black" />
                                     </svg>
                                 </span>
+
+                                <?php
+                                if (isset($_POST["message_filter_date"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php 
+                                        echo $_POST["message_filter_date"];
+                                        ?>
+                                    </span>
+                                    <?php
+                                } ?>
                             </div>
                             <div class="col">
                                 <div class="font-weight-medium ts-text">סינון תאריכים</div>
@@ -224,6 +236,19 @@
                                             fill="black" />
                                     </svg>
                                 </span>
+
+                                <?php
+                                if (isset($_POST["full_name"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php 
+                                        echo $_POST["full_name"];
+                                        ?>
+                                    </span>
+                                    <?php
+                                } ?>
+
                             </div>
                             <div class="col" style="z-index:1">
                                 <div class="font-weight-medium ts-text">סינון חנויות </div>

@@ -927,7 +927,8 @@ $community_id = $community->get_current_community_id();
                         <div>
                             <h2 class="address-title"> משה מנהל חנות:<span id="store_manager_no">054-6268012</span>
                                 <span id="store_manager_address">
-                                    רבי עקיבא 84 בני ברק</span> :כתובת</h2>
+                                    רבי עקיבא 84 בני ברק</span> :כתובת
+                            </h2>
                             <h3 class="address-title"></h3>
                         </div>
 
@@ -1035,11 +1036,25 @@ $community_id = $community->get_current_community_id();
                             </svg>
 
                         </span>
+
+                        <?php
+                        if (isset($_POST["store_name"])) {
+                            ?>
+                            <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                            <span class="current_filter">
+                                <?php
+                                echo $_POST["store_name"];
+                                ?>
+                            </span>
+                            <?php
+                        } ?>
+
+
                     </div>
                     <div class="col">
                         <form action="" method="post">
                             <input type="text" id="store-search" name="store_name" list="stores"
-                                value="<?php echo isset ($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>"
+                                value="<?php echo isset($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>"
                                 placeholder="חיפוש חנות ">
                             <input type="hidden" name="csvp_filter" value="filter_by_name">
                             <datalist id="stores">
@@ -1077,8 +1092,8 @@ $community_id = $community->get_current_community_id();
                     <div class="col" style=" display: flex; justify-content: center; align-items: center; ">
                         <form action="" method="post" class="m-0">
                             <input type="hidden" name="csvp_filter" value="filter_by_joined">
-                            <button type="submit" class="font-weight-medium ts-text btn border-0 text-right w-20">יצא
-                                לאקסל</button>
+                            <button type="submit" class="font-weight-medium ts-text btn border-0 text-right w-20">תת”ים
+                                בהסדר</button>
                         </form>
                     </div>
                 </div>
@@ -1091,17 +1106,17 @@ $community_id = $community->get_current_community_id();
 
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
-    <?php if (isset ($pageData["joined_store"])) {
+    <?php if (isset($pageData["joined_store"])) {
         foreach ($pageData["joined_store"] as $store) {
 
             $store_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $store['store_data']->store_logo;
 
             $order_count = 0;
             $total_order_amount = 0;
-            if (isset ($store['order_data']->order_count)) {
+            if (isset($store['order_data']->order_count)) {
                 $order_count = $store['order_data']->order_count;
             }
-            if (isset ($store['order_data']->total_order_amount)) {
+            if (isset($store['order_data']->total_order_amount)) {
                 $total_order_amount = $store['order_data']->total_order_amount;
             } ?>
             <div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
@@ -1135,16 +1150,16 @@ $community_id = $community->get_current_community_id();
             </div>
         <?php }
     } ?>
-    <?php if (isset ($pageData["requested_stores"])) {
+    <?php if (isset($pageData["requested_stores"])) {
         foreach ($pageData["requested_stores"] as $store) {
             $store_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $store['store_data']->store_logo;
 
             $order_count = 0;
             $total_order_amount = 0;
-            if (isset ($store['order_data']->order_count)) {
+            if (isset($store['order_data']->order_count)) {
                 $order_count = $store['order_data']->order_count;
             }
-            if (isset ($store['order_data']->total_order_amount)) {
+            if (isset($store['order_data']->total_order_amount)) {
                 $total_order_amount = $store['order_data']->total_order_amount;
             } ?>
             <div class="store-management-card card col-xl-4 rounded-3 p-0">
@@ -1176,15 +1191,15 @@ $community_id = $community->get_current_community_id();
             </div>
         <?php }
     } ?>
-    <?php if (isset ($pageData["not_requested_stores"])) {
+    <?php if (isset($pageData["not_requested_stores"])) {
         foreach ($pageData["not_requested_stores"] as $store) {
             $store_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $store['store_data']->store_logo;
             $order_count = 0;
             $total_order_amount = 0;
-            if (isset ($store['order_data']->order_count)) {
+            if (isset($store['order_data']->order_count)) {
                 $order_count = $store['order_data']->order_count;
             }
-            if (isset ($store['order_data']->total_order_amount)) {
+            if (isset($store['order_data']->total_order_amount)) {
                 $total_order_amount = $store['order_data']->total_order_amount;
             } ?>
             <div class="store-management-card card col-xl-4 rounded-3 p-0">

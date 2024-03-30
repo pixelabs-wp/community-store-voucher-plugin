@@ -244,6 +244,22 @@
 										fill="black" />
 								</svg>
 							</span>
+
+							
+							<?php
+                                if (isset($_POST["first_date"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php 
+                                        echo $_POST["first_date"] . '<br>';
+										echo $_POST["second_date"];
+
+                                        ?>
+                                    </span>
+                                    <?php
+                                } ?>
+								
 						</div>
 						<div class="col">
 							<div class="font-weight-medium ts-text">טווח תאריכים</div>
@@ -269,14 +285,14 @@
 
 								<?php
 								foreach ($pageData["all_order_data"] as $data) {
-									if ($data['order_status'] == 'Completed') {
+									
 										$order_id = $data['id'];
 										?>
 										<option value="<?php echo $order_id; ?>">
 											<?php echo $order_id; ?>
 										</option>
 										<?php
-									}
+									
 								}
 								?>
 
@@ -301,6 +317,23 @@
 										fill="black" />
 								</svg>
 							</span>
+
+
+							<?php
+							if (isset($_POST["order_array"])) {
+								?>
+								<span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+								<span class="current_filter">
+									<?php
+									foreach ($_POST["order_array"] as $order_array) {
+										echo $order_array . '<br>';
+									}
+
+									?>
+								</span>
+								<?php
+							} ?>
+
 						</div>
 						<div class="col">
 							<div class="font-weight-medium ts-text">סינון הזמנות</div>
@@ -323,22 +356,22 @@
 								id="stores-select-tags" value="" multiple>
 								<option value="">asdasd</option>
 								<?php
-								
+
 								foreach ($pageData["all_order_data"] as $data) {
-									
+
 									$store_id = $data['store_id'];
 
-									
+
 									$store_name = $data['store_data']->store_name;
 
-									if ($data['order_status'] == 'Completed') {
+									
 										$order_id = $data['id'];
 										?>
 										<option value="<?php echo $store_id; ?>">
 											<?php echo $store_name; ?>
 										</option>
 										<?php
-									}
+								
 								}
 								?>
 
@@ -362,6 +395,22 @@
 										fill="black" />
 								</svg>
 							</span>
+
+							<?php
+							if (isset($_POST["stores_array"])) {
+								?>
+								<span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+								<span class="current_filter">
+									<?php
+									foreach ($_POST["stores_array"] as $stores_array) {
+										echo $stores_array . '<br>';
+									}
+
+									?>
+								</span>
+								<?php
+							} ?>
+
 						</div>
 						<div class="col" style="z-index:1">
 							<div class="font-weight-medium ts-text">סינון חנויות</div>

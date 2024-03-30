@@ -195,7 +195,7 @@
 
 		<!-- CSV Download Filter  -->
 		<div class="col-sm-5 col-lg-3 m-0"
-			onclick='outToExcel( <?php echo isset ($pageData["store_order_requests"]) ? json_encode($pageData["store_order_requests"]) : "[]"; ?>)'
+			onclick='outToExcel( <?php echo isset($pageData["store_order_requests"]) ? json_encode($pageData["store_order_requests"]) : "[]"; ?>)'
 			style="cursor: pointer;">
 			<div class="card card-sm p-relative">
 				<div class="card-body-rounded p-1 m-1 filter-card">
@@ -291,6 +291,24 @@
 										fill="black" />
 								</svg>
 							</span>
+
+
+
+							<?php
+							if (isset($_POST["first_date"])) {
+								?>
+								<span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+								<span class="current_filter">
+									<?php
+									echo $_POST["first_date"] . '<br>';
+									echo $_POST["second_date"];
+
+									?>
+								</span>
+								<?php
+							} ?>
+
+
 						</div>
 						<div class="col">
 							<div class="font-weight-medium ts-text">טווח תאריכים</div>
@@ -346,6 +364,23 @@
 										fill="black" />
 								</svg>
 							</span>
+
+
+							<?php
+							if (isset($_POST["order_array"])) {
+								?>
+								<span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+								<span class="current_filter">
+									<?php
+									foreach ($_POST["order_array"] as $order_array) {
+										echo $order_array . '<br>';
+									}
+
+									?>
+								</span>
+								<?php
+							} ?>
+
 						</div>
 						<div class="col">
 							<div class="font-weight-medium ts-text">סינון הזמנות</div>
@@ -398,6 +433,24 @@
 										fill="black" />
 								</svg>
 							</span>
+
+							
+							<?php
+							if (isset($_POST["community_array"])) {
+								?>
+								<span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+								<span class="current_filter">
+									<?php
+									foreach ($_POST["community_array"] as $community_array) {
+										echo $community_array . '<br>';
+									}
+
+									?>
+								</span>
+								<?php
+							} ?>
+
+
 						</div>
 						<div class="col" style="z-index:1">
 							<div class="font-weight-medium ts-text">סינון תת”ים</div>
@@ -410,7 +463,7 @@
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: fit-content; overflow-y: auto;">
 		<?php
-		if (isset ($pageData["store_order_requests"])) {
+		if (isset($pageData["store_order_requests"])) {
 			$total_credit = 0;
 			$total_item = 0;
 			foreach ($pageData["store_order_requests"] as $order) {
@@ -565,7 +618,7 @@
 								<div class="page-item-subtitle text-white mx-4"
 									style="font-size: 20px; direction: rtl;">
 									סה”כ הזמנות:
-									<?php if (isset ($total_credit)) {
+									<?php if (isset($total_credit)) {
 										echo $total_credit;
 									} ?> ₪
 								</div>
@@ -573,10 +626,10 @@
 						</span>
 
 						<span class="w-75">
-							<a  style="text-align: right;" disabled>
+							<a style="text-align: right;" disabled>
 								<div class="page-item-title text-white mx-4" style="font-size: 20px; direction: rtl;">
 									סך הפריטים שנמכרו:
-									<?php if (isset ($total_item)) {
+									<?php if (isset($total_item)) {
 										echo $total_item;
 									} ?>
 								</div>

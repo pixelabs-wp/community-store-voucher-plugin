@@ -490,6 +490,76 @@ class CSVP_Store
             $pageData["transactions"] = $transactions;
         }
 
+
+        $modified_order_requests = array();
+
+        foreach ($pageData["transactions"] as $request) {
+            $request["created_at"] = date("Y-m-d", strtotime($request["created_at"]));
+            array_push($modified_order_requests, $request);
+        }
+        $pageData["transactions"] = $modified_order_requests;
+
+        // if (isset ($_POST["communities_filter"])) {
+
+        //     foreach ($_POST["community_array"] as $community_array) {
+        //         $pageData["accepted_store_orders"] = $filter->filterData($pageData["accepted_store_orders"], array('community_id' => $community_array));
+        //     }
+        // } 
+        
+        if (isset ($_POST["filter_by_community"])) {
+            foreach ($_POST["community_array"] as $community_array) {
+                echo json_encode($_POST["community_array"]);
+
+
+                $community_data = $pageData["transactions"][0]["community_data"];
+                echo json_encode($community_data);
+                $pageData["transactions"] = $filter->filterData($community_data, array('community_name' => $community_array));
+            }
+        } else if (isset ($_POST["order_range_filter"])) {
+
+
+            $first_date = $_POST["first_date"];
+            $second_date = $_POST["second_date"];
+
+            // Initialize an empty array to store the dates
+            $date_range = array();
+
+            // Convert the string dates to DateTime objects
+            $start_date = new DateTime($first_date);
+            $end_date = new DateTime($second_date);
+
+            // Iterate through the dates
+            while ($start_date <= $end_date) {
+                // Store the current date in the array
+                $date_range[] = $start_date->format('Y-m-d');
+
+                // Move to the next day
+                $start_date->modify('+1 day');
+            }
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+
+            // Now $date_range contains all the dates between $first_date and $second_date
+
+            $date_data = array();
+
+            foreach ($date_range as $date) {
+                $filtered_data = $filter->filterData($pageData["transactions"], array('created_at' => $date));
+                if (!empty ($filtered_data)) {
+                    array_push($date_data, $filtered_data);
+                }
+            }
+
+
+            $pageData["transactions"] = array_merge(...$date_data);
+
+        }
+
+        echo json_encode($pageData);
+
+
+
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
@@ -589,6 +659,7 @@ class CSVP_Store
             return $carry; // If $item is not an array, just return $carry unchanged
         }, []);
 
+        
         $pageData["members"] = $community_members;
         CSVP_View_Manager::load_view('creating-transactions', $pageData);
     }

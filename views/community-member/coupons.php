@@ -183,6 +183,22 @@
                                     </svg>
 
                                 </span>
+
+
+                                <?php
+                                if (isset($_POST["product_name"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php
+                                        echo $_POST["product_name"];
+                                        ?>
+                                    </span>
+                                    <?php
+                                } ?>
+
+
+
                             </div>
 
                             <div class="col">
@@ -254,6 +270,26 @@
                                         fill="black" />
                                 </svg>
                             </span>
+
+
+
+                            <?php
+                            if (isset($_POST["stores_array"])) {
+                                ?>
+                                <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                <span class="current_filter">
+                                    <?php
+                                    foreach ($_POST["stores_array"] as $stores_array) {
+                                        echo $stores_array . '<br>';
+                                    }
+
+                                    ?>
+                                </span>
+                                <?php
+                            } ?>
+
+
+
                         </div>
                         <div class="col">
                             <div class="font-weight-medium ts-text">סינון חנויות</div>
@@ -312,6 +348,23 @@
                                         fill="black" />
                                 </svg>
                             </span>
+
+                            <?php
+                            if (isset($_POST["product_array"])) {
+                                ?>
+                                <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                <span class="current_filter">
+                                    <?php
+                                    foreach ($_POST["product_array"] as $product_array) {
+                                        echo $product_array . '<br>';
+                                    }
+
+                                    ?>
+                                </span>
+                                <?php
+                            } ?>
+
+
                         </div>
                         <div class="col">
                             <div class="font-weight-medium ts-text">סינון מוצרים</div>

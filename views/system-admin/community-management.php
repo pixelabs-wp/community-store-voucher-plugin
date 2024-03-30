@@ -203,7 +203,7 @@
                             </div>
                             <div class="col row justify-content-right">
                                 <button class="font-weight-medium ts-text btn border-0 text-right w-20"
-                                    onclick='outToExcel( <?php echo isset ($pageData["communities"]) ? json_encode($pageData["communities"]) : "[]"; ?>)'>יצא
+                                    onclick='outToExcel( <?php echo isset($pageData["communities"]) ? json_encode($pageData["communities"]) : "[]"; ?>)'>יצא
                                     לאקסל</button>
                             </div>
                         </div>
@@ -222,7 +222,7 @@
                             <div class="" style="direction: rtl;">
                                 <label class="form-label">חיפוש לפי שם</label>
                                 <input type="text" class="form-control" placeholder="" name="community_name"
-                                    value="<?php echo isset ($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
+                                    value="<?php echo isset($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
                                 <input type="hidden" name="csvp_filter" value="filter_communities_by_name">
                                 <button type="submit" class="btn btn-primary bg-black mt-3">Filter</button>
                             </div>
@@ -241,10 +241,22 @@
                                             fill="black" />
                                     </svg>
                                 </span>
+
+                                <?php
+                                if (isset($_POST["community_name"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php echo $_POST["community_name"]; ?>
+                                    </span>
+                                    <?php
+                                } ?>
+
                             </div>
                             <div class="col">
-                                <div class="font-weight-medium ts-text">חיפוש לפי שם</div>
+                                <div class="font-weight-medium ts-text"> חיפוש לפי שם</div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -261,12 +273,12 @@
                                 <div class="form-selectgroup form-selectgroup-pills">
                                     <label class="form-selectgroup-item">
                                         <input type="checkbox" name="commision_pending" value="1"
-                                            class="form-selectgroup-input" <?php echo isset ($_POST["commision_pending"]) && $_POST["commision_pending"] == 1 ? 'checked = ""' : ""; ?>>
+                                            class="form-selectgroup-input" <?php echo isset($_POST["commision_pending"]) && $_POST["commision_pending"] == 1 ? 'checked = ""' : ""; ?>>
                                         <span class="form-selectgroup-label">קיים חוב</span>
                                     </label>
                                     <label class="form-selectgroup-item">
                                         <input type="checkbox" name="commision_pending" value="0"
-                                            class="form-selectgroup-input" <?php echo isset ($_POST["commision_pending"]) && $_POST["commision_pending"] == 0 ? 'checked = ""' : ""; ?>>
+                                            class="form-selectgroup-input" <?php echo isset($_POST["commision_pending"]) && $_POST["commision_pending"] == 0 ? 'checked = ""' : ""; ?>>
                                         <span class="form-selectgroup-label">לא קיים חוב</span>
                                     </label>
                                 </div>
@@ -287,6 +299,18 @@
                                             fill="black" />
                                     </svg>
                                 </span>
+
+                                <?php
+                                if (isset($_POST["commision_pending"])) {
+                                    ?>
+                                    <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                                    <span class="current_filter">
+                                        <?php 
+                                        echo $_POST["commision_pending"];
+                                        ?>
+                                    </span>
+                                    <?php
+                                } ?>
                             </div>
                             <div class="col" style="z-index:1">
                                 <div class="font-weight-medium ts-text">קיים חוב/לא קיים חוב</div>
@@ -308,7 +332,8 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                     <div class="bg-dark pt-5 pb-5">
-                        <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">Edit Community Details
+                        <h1 class="text-white text-center" style="font-size: 50px; font-weight: 900;">Edit Community
+                            Details
                         </h1>
                     </div>
                     <div class="container-fluid " style="overflow: auto;">
@@ -317,31 +342,37 @@
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">טלפון יצירת קשר </label>
-                                        <input type="text" class="form-control" id="community_manager_phone_id" name="community_manager_phone">
+                                        <input type="text" class="form-control" id="community_manager_phone_id"
+                                            name="community_manager_phone">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם ראש הת”ת</label>
-                                        <input type="text" class="form-control" id="community_manager_name_id" name="community_manager_name" required>
+                                        <input type="text" class="form-control" id="community_manager_name_id"
+                                            name="community_manager_name" required>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">כתובת הישיבה</label>
-                                        <input type="text" class="form-control" id="community_address_id" name="community_address">
+                                        <input type="text" class="form-control" id="community_address_id"
+                                            name="community_address">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם הישיבה</label>
-                                        <input type="text" class="form-control"  id="community_name_id" name="community_name">
+                                        <input type="text" class="form-control" id="community_name_id"
+                                            name="community_name">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">כתובת מייל</label>
-                                        <input type="email" class="form-control" id="community_mail_address_id" name="community_mail_address">
+                                        <input type="email" class="form-control" id="community_mail_address_id"
+                                            name="community_mail_address">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">Mosad</label>
-                                        <input type="text" class="form-control" id="payment_link_id" name="payment_link">
+                                        <input type="text" class="form-control" id="payment_link_id"
+                                            name="payment_link">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -351,23 +382,26 @@
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">Commission Percentage</label>
-                                        <input type="number" class="form-control" id="commision_percentage_id" name="commision_percentage">
+                                        <input type="number" class="form-control" id="commision_percentage_id"
+                                            name="commision_percentage">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">סיסמת כניסה</label>
-                                        <input type="password" class="form-control"  id="password_id" name="password">
+                                        <input type="password" class="form-control" id="password_id" name="password">
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">שם משתמש</label>
-                                        <input type="text" class="form-control" id="username_id" readonly name="username">
+                                        <input type="text" class="form-control" id="username_id" readonly
+                                            name="username">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="mb-3 col-xl-12">
                                         <label class="form-label">Community Logo</label>
-                                        <input type="file" class="form-control" id="community_logo_id" name="community_logo">
+                                        <input type="file" class="form-control" id="community_logo_id"
+                                            name="community_logo">
                                     </div>
                                 </div>
                                 <input type="hidden" id="community_id_" name="community_id" value="">
@@ -389,7 +423,7 @@
         <div class="container mt-4 d-flex flex-wrap" style="row-gap: 1rem; column-gap: 1rem;">
 
             <?php
-            if (isset ($pageData["communities"])) {
+            if (isset($pageData["communities"])) {
 
                 foreach ($pageData["communities"] as $key => $community) {
                     $noDebt = ($community['commision_pending'] == 0) ? "no-debt" : "";
@@ -403,9 +437,9 @@
 
                             <div class="w-35"
                                 style="border-top-right-radius: 8px; position: relative; border-bottom-right-radius: 8px; height: 150px; background-image: url(<?php echo $imageUrl ? $imageUrl : 'https://placehold.co/600x400'; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
-                                <svg data-bs-toggle="modal" data-bs-target="#edit-community" data-id="<?php echo $community['id']; ?>"
-                                    style="position: absolute; top: 8px; right: 8px;" width="40" height="40" viewBox="0 0 40 40"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg data-bs-toggle="modal" data-bs-target="#edit-community"
+                                    data-id="<?php echo $community['id']; ?>" style="position: absolute; top: 8px; right: 8px;"
+                                    width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g clip-path="url(#clip0_542_250)">
                                         <path
                                             d="M5.83334 40.0006H30.8333C32.3828 39.9962 33.8673 39.3773 34.9609 38.2796C36.0545 37.1819 36.668 35.6951 36.6667 34.1456V21.584C36.6667 21.142 36.4911 20.718 36.1785 20.4055C35.866 20.0929 35.442 19.9173 35 19.9173C34.558 19.9173 34.1341 20.0929 33.8215 20.4055C33.5089 20.718 33.3333 21.142 33.3333 21.584V34.1456C33.3356 34.8114 33.0736 35.4508 32.6049 35.9235C32.1362 36.3963 31.499 36.6638 30.8333 36.6673H5.83334C5.16762 36.6638 4.53051 36.3963 4.06181 35.9235C3.59311 35.4508 3.33112 34.8114 3.33334 34.1456V9.18898C3.33112 8.52327 3.59311 7.88387 4.06181 7.4111C4.53051 6.93834 5.16762 6.67085 5.83334 6.66732H18.3333C18.7754 6.66732 19.1993 6.49172 19.5118 6.17916C19.8244 5.8666 20 5.44268 20 5.00065C20 4.55862 19.8244 4.1347 19.5118 3.82214C19.1993 3.50958 18.7754 3.33398 18.3333 3.33398H5.83334C4.28384 3.3384 2.79939 3.95737 1.70576 5.05506C0.612136 6.15275 -0.00132849 7.63948 2.16018e-06 9.18898V34.1456C-0.00132849 35.6951 0.612136 37.1819 1.70576 38.2796C2.79939 39.3773 4.28384 39.9962 5.83334 40.0006Z"
@@ -487,11 +521,11 @@
                             </li> -->
 
                             <li class="page-item page-next">
-                                    <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                        סה”כ ישיבות:
-                                        <?php echo $pageData["total_communities"]; ?>
-                                    </div>
-                            
+                                <div class="page-item-title text-white mx-4" style="font-size: 20px">
+                                    סה”כ ישיבות:
+                                    <?php echo $pageData["total_communities"]; ?>
+                                </div>
+
                             </li>
                         </ul>
                     </div>
@@ -506,24 +540,24 @@
 
 
 <script>
-    jQuery('#edit-community').on('show.bs.modal', function(event) {
-		// Extract data from data attributes of the button
-		var button = jQuery(event.relatedTarget);
-		var id = button.data('id');
-		var community_id = button.data('id');
+    jQuery('#edit-community').on('show.bs.modal', function (event) {
+        // Extract data from data attributes of the button
+        var button = jQuery(event.relatedTarget);
+        var id = button.data('id');
+        var community_id = button.data('id');
         var community_user_id = 0;
         jQuery.ajax({
-			url: "<?php echo admin_url('admin-ajax.php'); ?>",
-			type: 'POST',
-			data: {
-				action: 'csvp_ajax', // Action hook
-				csvp_request: 'CSVP_Community', // Action hook
-				csvp_handler: 'get_community_data_by_id', // Action hook
-				data: {
-					id: community_id
-				}
-			},
-			success: function(response) {
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Community', // Action hook
+                csvp_handler: 'get_community_data_by_id', // Action hook
+                data: {
+                    id: community_id
+                }
+            },
+            success: function (response) {
                 console.log(response);
                 document.getElementById("community_manager_phone_id").value = response.community_manager_phone;
                 document.getElementById("community_manager_name_id").value = response.community_manager_name;
@@ -539,13 +573,13 @@
                 userdata(community_user_id);
                 // document.getElementById("password_id").value = ;
                 // document.getElementById("username_id").value = ;
-			},
-			error: function(xhr, status, error) {
-				// Handle error response
-				console.error(xhr.responseText);
-			}
-		});
-       
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
+
     });
 
 
@@ -574,37 +608,31 @@
         });
     });
 
-    function userdata(community_user_id)
-    {
+    function userdata(community_user_id) {
         jQuery.ajax({
-			url: "<?php echo admin_url('admin-ajax.php'); ?>",
-			type: 'POST',
-			data: {
-				action: 'csvp_ajax', // Action hook
-				csvp_request: 'CSVP_Community', // Action hook
-				csvp_handler: 'get_community_user_data_by_id', // Action hook
-				data: {
-					id: community_user_id
-				}
-			},
-			success: function(response) {
+            url: "<?php echo admin_url('admin-ajax.php'); ?>",
+            type: 'POST',
+            data: {
+                action: 'csvp_ajax', // Action hook
+                csvp_request: 'CSVP_Community', // Action hook
+                csvp_handler: 'get_community_user_data_by_id', // Action hook
+                data: {
+                    id: community_user_id
+                }
+            },
+            success: function (response) {
                 console.log(response);
                 // document.getElementById("password_id").value = response;
                 document.getElementById("username_id").value = response.data.user_login;
                 document.getElementById("user_id_").value = response.data.ID;
-			},
-			error: function(xhr, status, error) {
-				// Handle error response
-				console.error(xhr.responseText);
-			}
-		});
+            },
+            error: function (xhr, status, error) {
+                // Handle error response
+                console.error(xhr.responseText);
+            }
+        });
     }
 </script>
-
-
-
-
-
 
 <script>
     // @formatter:off
@@ -659,3 +687,4 @@
     });
     // @formatter:on
 </script>
+

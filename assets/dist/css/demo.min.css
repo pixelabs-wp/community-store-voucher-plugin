@@ -18,3 +18,14 @@
     padding: 30px;
     margin-top: 56px;
 }
+
+.filter-card .col-auto{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.reset{
+    font-size: 14px;
+    cursor: pointer;
+    direction: rtl;
+}

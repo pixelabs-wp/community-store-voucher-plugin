@@ -113,6 +113,12 @@ class CSVP_Admin
             unset($_POST["csvp_filter"]);
             $pageData["communities"] = $filter->filterData($pageData["communities"], $_POST);
 
+
+            if ($_POST["commision_pending"] == 1){
+                $_POST["commision_pending"] = "קיים חוב";
+            } else if ($_POST["commision_pending"] == 0){
+                $_POST["commision_pending"] =  "לא קיים חוב";
+            }
         }
        
 
@@ -214,6 +220,12 @@ class CSVP_Admin
         } else if (isset($_POST["csvp_filter"]) && $_POST["csvp_filter"] == "filter_stores_by_debt") {
             unset($_POST["csvp_filter"]);
             $pageData["stores"] = $filter->filterData($pageData["stores"], $_POST);
+
+            if ($_POST["commision_pending"] == 1){
+                $_POST["commision_pending"] = "קיים חוב";
+            } else if ($_POST["commision_pending"] == 0){
+                $_POST["commision_pending"] =  "לא קיים חוב";
+            }
         }
         
 

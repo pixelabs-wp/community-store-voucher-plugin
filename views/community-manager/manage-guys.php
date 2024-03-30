@@ -607,7 +607,7 @@
 
       <!-- CSV Download Filter  -->
       <div class="col-sm-5 col-lg-3 m-0" style="cursor: pointer;"
-        onclick='outToExcel( <?php echo isset ($pageData["members"]) ? json_encode($pageData["members"]) : "[]"; ?>)'>
+        onclick='outToExcel( <?php echo isset($pageData["members"]) ? json_encode($pageData["members"]) : "[]"; ?>)'>
         <div class="card card-sm p-relative">
           <div class="card-body-rounded p-1 m-1 filter-card">
             <div class="row align-items-center">
@@ -660,6 +660,18 @@
                       fill="black" />
                   </svg>
                 </span>
+
+                <?php
+                if (isset($_POST["magnetic_card_number_association"])) {
+                  ?>
+                  <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                  <span class="current_filter">
+                    <?php
+                    echo $_POST["magnetic_card_number_association"];
+                    ?>
+                  </span>
+                  <?php
+                } ?>
               </div>
               <div class="col">
                 <div class="font-weight-medium ts-text">סינון לפי מספר כרטיס</div>
@@ -717,6 +729,23 @@
                       fill="black" />
                   </svg>
                 </span>
+
+                <?php
+                if (isset($_POST["lesson_array"])) {
+                  ?>
+                  <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                  <span class="current_filter">
+                    <?php
+                    foreach ($_POST["lesson_array"] as $lesson_array) {
+                      echo $lesson_array . '<br>';
+                    }
+
+
+                    ?>
+                  </span>
+                  <?php
+                } ?>
+
               </div>
               <div class="col">
                 <div class="font-weight-medium ts-text">סינון שיעורים</div>
@@ -734,8 +763,8 @@
             <div class="" style="direction: rtl;">
               <form action="" method="POST">
                 <label class="form-label">סינון בחורים</label>
-                <select name="guyname_array[]" type="text" class="form-select" placeholder="Select tags" id="guys-select-tags" value=""
-                  multiple>
+                <select name="guyname_array[]" type="text" class="form-select" placeholder="Select tags"
+                  id="guys-select-tags" value="" multiple>
 
                   <?php
                   foreach ($pageData["members"] as $data) {
@@ -771,6 +800,23 @@
                       fill="black" />
                   </svg>
                 </span>
+
+                <?php
+                if (isset($_POST["guyname_array"])) {
+                  ?>
+                  <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
+                  <span class="current_filter">
+                    <?php
+                    foreach ($_POST["guyname_array"] as $guyname_array) {
+                      echo $guyname_array . '<br>';
+                    }
+
+                    ?>
+                  </span>
+                  <?php
+                } ?>
+
+
               </div>
               <div class="col" style="z-index:1">
                 <div class="font-weight-medium ts-text">סינון בחורים</div>
@@ -789,7 +835,7 @@
 
             <?php
 
-            if (!empty ($pageData["members"])) {
+            if (!empty($pageData["members"])) {
 
               foreach ($pageData["members"] as $key => $member) {
 
@@ -870,15 +916,15 @@
           <div class="card-body my-3 bg-black rounded-3 p-2">
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
-                  <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                    סה”כ שוברים: 87
-                  </div>
+                <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
+                  סה”כ שוברים: 87
+                </div>
               </li>
 
               <li class="page-item page-next">
-                  <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                    סה”כ בחורים: 450
-                  </div>
+                <div class="page-item-title text-white mx-4" style="font-size: 20px">
+                  סה”כ בחורים: 450
+                </div>
               </li>
             </ul>
           </div>
