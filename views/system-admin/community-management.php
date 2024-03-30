@@ -408,7 +408,7 @@
                                 <input type="hidden" id="user_id_" name="user_id" value="">
                                 <input type="hidden" id="oldpath_id" name="oldpath" value="">
                                 <input type="hidden" name="csvp_request" value="update_community">
-                                <input type="submit" class="btn btn-dark " value="← להוספת הישיבה למערכת ">
+                                <input type="submit" class="btn btn-dark " value="← לעדכון הישיבה במערכת">
 
                             </div>
                     </div>
@@ -583,30 +583,7 @@
     });
 
 
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-guys-popup-svg").click(function () {
-            jQuery("#filter-guys-popup").css("z-index", function (index, value) {
-                return value == 3 ? -1 : 3;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
-
-
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-stores-popup-svg").click(function () {
-            jQuery("#filter-stores-popup").css("z-index", function (index, value) {
-                return value == 3 ? -1 : 3;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
+  
 
     function userdata(community_user_id) {
         jQuery.ajax({

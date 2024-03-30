@@ -38,7 +38,13 @@
             background-color: white;
             text-align: right;
         }
+        .active-sidebar{
+            background-color: rgba(1, 5, 29, 1) !important;
+        }
 
+        .active-sidebar .nav-link-title{
+            color: white !important;
+        }
         .side-navbar-nav {
             padding: 25px;
             display: flex;
@@ -279,7 +285,7 @@
 
                 <div class="offcanvas offcanvas-start" id="sidebar-menu">
                     <ul class="side-navbar-nav navbar-nav pt-lg-3">
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item"   id="dashboard">
                             <a class="side-nav-link nav-link" href="/community/dashboard">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -293,7 +299,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item"   id="manage-guys">
                             <a class="side-nav-link nav-link" href="/community/manage-guys">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -314,7 +320,7 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="transaction-history">
                             <a class="side-nav-link nav-link" href="/community/transaction-history">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -330,7 +336,7 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="manage-stores">
                             <a class="side-nav-link nav-link" href="/community/manage-stores">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -346,7 +352,7 @@
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="manage-orders">
                             <a class="side-nav-link nav-link" href="/community/manage-orders">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -378,7 +384,7 @@
                             </a>
                         </li> -->
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="messages">
                             <a class="side-nav-link nav-link" href="/community/messages">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -419,7 +425,19 @@
                         </div>
                     </div>
                 </div>
-            </header>
+            </header> <script>
+                // Get the current URL
+                var currentURL = window.location.href;
+
+                // Get the pathname from the URL
+                var pathname = new URL(currentURL).pathname;
+
+                // Extract the page slug from the pathname
+                var currentSlug = pathname.split('/').filter(Boolean).pop();
+
+
+                document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+            </script>
             <!-- Page body -->
             <div class="page-body">
                 <?php require_once CSVP_PLUGIN_PATH . 'views/notifications.php'; ?>

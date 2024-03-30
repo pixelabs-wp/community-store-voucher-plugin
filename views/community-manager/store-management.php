@@ -831,14 +831,14 @@ $community_id = $community->get_current_community_id();
                         </div>
                     </div>
                     <div class="styled-element">
-                        <span>סה”כ שווי החזרה: ₪ <span class="total-cost"></span></span>
+                        <span>סה"כ שווי הזמנה: ₪ <span class="total-cost"></span></span>
                         <span>סה”כ פריטים: <span class="total-added-items"></span> פריטים</span>
                     </div>
                     <div class="btngroup">
                         <input type="hidden" id="order_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_order_request">
                         <button class="button button-primary">אישור</button>
-                        <button class="button button-secondary">ביטול</button>
+                        <button  type="button"  data-bs-dismiss="modal" aria-label="Close"  class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>
@@ -897,7 +897,7 @@ $community_id = $community->get_current_community_id();
                         <input type="hidden" id="order__return_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_return_request">
                         <button class="button button-primary">אישור</button>
-                        <button class="button button-secondary">ביטול</button>
+                        <button  type="button"  data-bs-dismiss="modal" aria-label="Close" class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>

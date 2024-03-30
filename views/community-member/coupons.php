@@ -483,19 +483,6 @@
         modal.querySelector('#community_member_id').value = member_id;
     }
 
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-categories-popup-svg").click(function () {
-            jQuery("#filter-categories-popup").css("z-index", function (index, value) {
-                return value == 3 ? -1 : 3;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
-
-
 
     document.addEventListener("DOMContentLoaded", function () {
         var el;
@@ -522,23 +509,6 @@
     // @formatter:on
 
 
-
-
-
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-stores-popup-svg").click(function () {
-            jQuery("#filter-stores-popup").css("z-index", function (index, value) {
-                return value == 3 ? -1 : 3;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
-
-
-
     document.addEventListener("DOMContentLoaded", function () {
         var el;
         window.TomSelect && (new TomSelect(el = document.getElementById('stores-select-tags'), {
@@ -562,23 +532,6 @@
         }));
     });
     // @formatter:on
-
-
-
-
-
-
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-products-popup-svg").click(function () {
-            jQuery("#filter-products-popup").css("z-index", function (index, value) {
-                return value == 3 ? -1 : 3;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
 
 
 

@@ -66,7 +66,7 @@
         position: relative;
         border-radius: 1.75rem;
         background-color: #e4e4e4;
-        z-index: 100;
+        z-index: 2;
     }
 
     .accordion-collapse {
@@ -494,33 +494,6 @@ jQuery('#community-message-delete').on('show.bs.modal', function(event) {
 
 
 <script>
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#filter-guys-popup-svg").click(function () {
-            jQuery("#filter-guys-popup").css("z-index", function (index, value) {
-                return value == 1000 ? -1 : 1000;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
-
-
-
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-        // Attach click event to the SVG element
-        jQuery("#date-range-popup-svg").click(function () {
-            jQuery("#date-range-popup").css("z-index", function (index, value) {
-                return value == 1000 ? -1 : 1000;
-            });
-
-            // Toggle slide-down or slide-up animation
-        });
-    });
-
-
 
     // @formatter:off
     document.addEventListener("DOMContentLoaded", function () {

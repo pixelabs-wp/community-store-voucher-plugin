@@ -168,18 +168,6 @@
   </div>
 
   <script>
-    // Wait for the document to be ready
-    jQuery(document).ready(function () {
-      // Attach click event to the SVG element
-      jQuery("#filter-load-popup-svg").click(function () {
-        jQuery("#filter-load-popup").css("z-index", function (index, value) {
-          return value == 3 ? -1 : 3;
-        });
-
-        // Toggle slide-down or slide-up animation
-      });
-    });
-
 
 
     document.addEventListener("DOMContentLoaded", function () {

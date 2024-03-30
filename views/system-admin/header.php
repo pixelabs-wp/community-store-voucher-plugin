@@ -55,6 +55,13 @@
             margin: 0px;
         }
 
+        .active-sidebar{
+            background-color: rgba(1, 5, 29, 1) !important;
+        }
+
+        .active-sidebar .nav-link-title{
+            color: white !important;
+        }
         .side-navbar {}
 
         .side-nav-link {
@@ -249,8 +256,7 @@
 
 <body>
 
-
-
+    
     <!-- add Community modal -->
 
     <div class="modal fade" id="add-a-seat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -603,7 +609,21 @@
                             </div>
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
-                                    <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p>
+                                    <?php
+                                    $current_user = wp_get_current_user();
+                                    $username = $current_user->user_login;
+
+                                    ?>
+
+
+                                    <div class="d-flex flex-column">
+                                        <p style=" direction: rtl; " class="user-welcome">ברוך הבא
+                                            <?php echo $username; ?>,
+                                        </p>
+                                        <p style=" direction: rtl; " class="user-welcome"> לאיזור האישי שלך
+                                            !</p>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -611,32 +631,33 @@
                 </div>
 
             </header>
-<style>
+            <style>
+                .aside-mobile {
+                    display: none;
+                }
 
-  
-.aside-mobile{
-        display: none;
-    }  
-@media (max-width: 991px) {
+                @media (max-width: 991px) {
 
-    .aside-desktop{
-        display: none;
-    }
-    .aside-mobile{
-    display: flex;
-    }
+                    .aside-desktop {
+                        display: none;
+                    }
 
-    .navbar-expand-lg.navbar-vertical.navbar-right~.navbar, .navbar-expand-lg.navbar-vertical.navbar-right~.page-wrapper {
-    margin-right: 0% !important;
-    margin-top: 60px;
-}
+                    .aside-mobile {
+                        display: flex;
+                    }
 
-    .desktop-header {
-        display: none;
-    }
-}
-</style>
-            <aside 
+                    .navbar-expand-lg.navbar-vertical.navbar-right~.navbar,
+                    .navbar-expand-lg.navbar-vertical.navbar-right~.page-wrapper {
+                        margin-right: 0% !important;
+                        margin-top: 60px;
+                    }
+
+                    .desktop-header {
+                        display: none;
+                    }
+                }
+            </style>
+            <aside
                 class="navbar side-navbar aside-desktop navbar-vertical navbar-right navbar-expand-lg border border-lg-dark overflow-hidden mq-t">
                 <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -645,7 +666,7 @@
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                   
+
                     <!-- <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-inline-flex">
                     שם הת”ת: תורת אליהו
 
@@ -653,7 +674,7 @@
 
                     <div class="offcanvas offcanvas-start mt-5" id="sidebar-menu">
                         <ul class="side-navbar-nav navbar-nav pt-lg-3">
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="manage-communities">
                                 <a class="side-nav-link nav-link" href="/admin/manage-communities">
 
                                     <span class="nav-link-title side-nav-link-title">
@@ -686,7 +707,7 @@
                                 </a>
                             </li>
 
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="manage-stores">
                                 <a class="side-nav-link nav-link" href="/admin/manage-stores">
 
                                     <span class="nav-link-title side-nav-link-title">
@@ -709,7 +730,7 @@
                                 </a>
                             </li>
 
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="community-commisions">
                                 <a class="side-nav-link nav-link" href="/admin/community-commisions">
 
                                     <span class="nav-link-title side-nav-link-title">
@@ -730,7 +751,7 @@
                                 </a>
                             </li>
 
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="store-commisions">
                                 <a class="side-nav-link nav-link" href="/admin/store-commisions">
                                     <span class="nav-link-title side-nav-link-title">
                                         חובות חנויות</span>
@@ -750,7 +771,7 @@
                             </li>
 
 
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="messages">
                                 <a class="side-nav-link nav-link" href="/admin/messages">
                                     <span class="nav-link-title side-nav-link-title">
                                         הודעות</span>
@@ -766,7 +787,7 @@
                                 </a>
                             </li>
 
-                            <li class="side-nav-item nav-item">
+                            <li class="side-nav-item nav-item" id="joining-requests">
                                 <a class="side-nav-link nav-link" href="/admin/joining-requests">
                                     <span class="nav-link-title side-nav-link-title">
                                         Requests</span>
@@ -797,55 +818,61 @@
                     </button>
 
                     <div class="d-flex flex-row w-100 justify-content-between align-items-center px-4"
-                            style="z-index: 12;">
-                            <div class="d-flex flex-row gap-3">
-                                <button data-bs-toggle="modal" data-bs-target="#notifications-modal"
-                                    style="z-index: 10;" class="bg-white ms-4 border-0 rounded py-2 px-4">
-                                    <svg width="34" height="39" viewBox="0 0 34 39" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
+                        style="z-index: 12;">
+                        <div class="d-flex flex-row gap-3">
+                            <button data-bs-toggle="modal" data-bs-target="#notifications-modal" style="z-index: 10;"
+                                class="bg-white ms-4 border-0 rounded py-2 px-4">
+                                <svg width="34" height="39" viewBox="0 0 34 39" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M17.0938 6.79416C17.7578 6.79416 19.3354 7.21406 19.3354 7.21406C23.6094 8.19347 26.6177 12.1302 26.6177 16.575V28.5386L27.4916 29.4165L28.2217 30.1499H5.77831L6.50844 29.4165L7.38228 28.5386V16.575C7.38228 12.1303 10.3906 8.19347 14.6646 7.21406C14.6646 7.21406 16.3561 6.79416 16.9062 6.79416M17 0C15.3498 0 14.0882 1.26731 14.0882 2.925V4.28991C8.55556 5.55769 4.38228 10.6275 4.38228 16.575V27.3L0.5 31.2V33.15H33.5V31.2L29.6177 27.3V16.575C29.6177 10.6275 25.4443 5.55769 19.9118 4.28991V2.925C19.9118 1.26731 18.6502 0 17 0ZM20.8823 35.1H13.1176C13.1176 37.2451 14.8645 39 17 39C19.1355 39 20.8823 37.2451 20.8823 35.1Z"
+                                        fill="black" />
+                                </svg>
+
+                            </button>
+
+                            <button data-bs-toggle="modal" data-bs-target="#add-a-seat"
+                                class="bg-black text-white community-management-popup px-5 py-3 rounded-3 border-0"
+                                style="font-size: 20px; font-weight: 400; direction: rtl;">הוספת ישיבה חדשה
+                                +</button>
+
+                            <button data-bs-toggle="modal" data-bs-target="#add-a-store"
+                                class="bg-black store-management-popup  text-white px-5 py-3 rounded-3 border-0"
+                                style="font-size: 20px; font-weight: 400; direction: rtl;">הוספת חנות חדשה
+                                +</button>
+
+
+                            <button class="bg-black text-white px-5 py-3 rounded-3 border-0"
+                                style="font-size: 20px; font-weight: 400; direction: rtl;">
+                                ייבוא מאקסאל
+                                <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_0_2738)">
                                         <path
-                                            d="M17.0938 6.79416C17.7578 6.79416 19.3354 7.21406 19.3354 7.21406C23.6094 8.19347 26.6177 12.1302 26.6177 16.575V28.5386L27.4916 29.4165L28.2217 30.1499H5.77831L6.50844 29.4165L7.38228 28.5386V16.575C7.38228 12.1303 10.3906 8.19347 14.6646 7.21406C14.6646 7.21406 16.3561 6.79416 16.9062 6.79416M17 0C15.3498 0 14.0882 1.26731 14.0882 2.925V4.28991C8.55556 5.55769 4.38228 10.6275 4.38228 16.575V27.3L0.5 31.2V33.15H33.5V31.2L29.6177 27.3V16.575C29.6177 10.6275 25.4443 5.55769 19.9118 4.28991V2.925C19.9118 1.26731 18.6502 0 17 0ZM20.8823 35.1H13.1176C13.1176 37.2451 14.8645 39 17 39C19.1355 39 20.8823 37.2451 20.8823 35.1Z"
-                                            fill="black" />
-                                    </svg>
-
-                                </button>
-
-                                <button data-bs-toggle="modal" data-bs-target="#add-a-seat"
-                                    class="bg-black text-white community-management-popup px-5 py-3 rounded-3 border-0"
-                                    style="font-size: 20px; font-weight: 400; direction: rtl;">הוספת ישיבה חדשה
-                                    +</button>
-
-                                <button data-bs-toggle="modal" data-bs-target="#add-a-store"
-                                    class="bg-black store-management-popup  text-white px-5 py-3 rounded-3 border-0"
-                                    style="font-size: 20px; font-weight: 400; direction: rtl;">הוספת חנות חדשה
-                                    +</button>
-
-
-                                <button class="bg-black text-white px-5 py-3 rounded-3 border-0"
-                                    style="font-size: 20px; font-weight: 400; direction: rtl;">
-                                    ייבוא מאקסאל
-                                    <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44"
-                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <g clip-path="url(#clip0_0_2738)">
-                                            <path
-                                                d="M43.0833 4.58312H25.6667V1.83312C25.6666 1.69534 25.6354 1.55934 25.5756 1.43525C25.5157 1.31116 25.4286 1.20217 25.3208 1.11638C25.213 1.03059 25.0872 0.9702 24.9528 0.939713C24.8185 0.909227 24.6789 0.909422 24.5447 0.940286L0.711333 6.44029C0.509269 6.48673 0.328917 6.6003 0.199723 6.76246C0.0705279 6.92462 0.000122157 7.12579 0 7.33312L0 38.4998C8.32958e-05 38.7187 0.0785044 38.9303 0.221079 39.0965C0.363654 39.2626 0.560968 39.3722 0.777333 39.4055L24.6107 43.0721C24.7413 43.0925 24.8748 43.0844 25.002 43.0482C25.1292 43.0121 25.247 42.9487 25.3474 42.8627C25.4478 42.7766 25.5283 42.6698 25.5834 42.5496C25.6385 42.4294 25.6669 42.2987 25.6667 42.1665V39.4165H43.0833C43.3265 39.4165 43.5596 39.3199 43.7315 39.148C43.9034 38.9761 44 38.7429 44 38.4998V5.49979C44 5.25667 43.9034 5.02351 43.7315 4.8516C43.5596 4.6797 43.3265 4.58312 43.0833 4.58312ZM25.6667 17.4165H31.1667V21.0831H25.6667V17.4165ZM7.47267 28.8473L11.4492 22.4856C11.5408 22.3402 11.5895 22.1717 11.5895 21.9998C11.5895 21.8278 11.5408 21.6594 11.4492 21.514L7.4745 15.1523C7.40471 15.0503 7.35625 14.9353 7.33204 14.8142C7.30782 14.693 7.30834 14.5682 7.33358 14.4473C7.35882 14.3263 7.40824 14.2117 7.47889 14.1104C7.54953 14.009 7.63994 13.923 7.74468 13.8574C7.84941 13.7919 7.96632 13.7482 8.08837 13.729C8.21042 13.7098 8.33509 13.7154 8.4549 13.7456C8.5747 13.7758 8.68717 13.8299 8.78554 13.9047C8.88391 13.9794 8.96616 14.0733 9.02733 14.1806L12.056 19.0261C12.3915 19.5615 13.2752 19.5615 13.6107 19.0261L16.6393 14.1806C16.7028 14.0782 16.7859 13.9893 16.8838 13.9191C16.9818 13.8489 17.0926 13.7987 17.21 13.7715C17.3273 13.7442 17.4489 13.7404 17.5678 13.7603C17.6866 13.7802 17.8004 13.8233 17.9025 13.8873C18.0047 13.9509 18.0934 14.0341 18.1635 14.1321C18.2336 14.23 18.2837 14.3408 18.3109 14.4581C18.3381 14.5754 18.342 14.6969 18.3223 14.8157C18.3025 14.9345 18.2596 15.0483 18.1958 15.1505L14.2193 21.5121C14.1277 21.6576 14.079 21.826 14.079 21.998C14.079 22.1699 14.1277 22.3383 14.2193 22.4838L18.194 28.8455C18.2578 28.9475 18.3009 29.0612 18.3208 29.1799C18.3406 29.2986 18.3369 29.4201 18.3099 29.5374C18.2828 29.6547 18.2329 29.7655 18.163 29.8635C18.0931 29.9615 18.0046 30.0448 17.9025 30.1086C17.6945 30.2312 17.4474 30.2691 17.2123 30.2145C16.9771 30.1599 16.772 30.0169 16.6393 29.8153L13.6107 24.9698C13.5275 24.8389 13.4125 24.7311 13.2766 24.6565C13.1406 24.5819 12.9879 24.5429 12.8328 24.5431C12.6777 24.5433 12.5252 24.5826 12.3894 24.6576C12.2536 24.7325 12.1389 24.8405 12.056 24.9716L9.02733 29.8171C8.89435 30.0184 8.68923 30.161 8.45423 30.2156C8.21923 30.2702 7.97225 30.2325 7.76417 30.1105C7.66209 30.0467 7.57357 29.9634 7.50368 29.8654C7.43378 29.7674 7.38387 29.6565 7.35681 29.5392C7.32974 29.4219 7.32604 29.3005 7.34592 29.1817C7.3658 29.063 7.40887 28.9494 7.47267 28.8473ZM25.6667 22.9165H31.1667V26.5831H25.6667V22.9165ZM33 22.9165H42.1667V26.5831H33V22.9165ZM33 21.0831V17.4165H42.1667V21.0831H33ZM33 15.5831V11.9165H42.1667V15.5831H33ZM31.1667 15.5831H25.6667V11.9165H31.1667V15.5831ZM25.6667 28.4165H31.1667V32.0831H25.6667V28.4165ZM33 28.4165H42.1667V32.0831H33V28.4165ZM42.1667 10.0831H33V6.41645H42.1667V10.0831ZM31.1667 6.41645V10.0831H25.6667V6.41645H31.1667ZM25.6667 33.9165H31.1667V37.5831H25.6667V33.9165ZM33 37.5831V33.9165H42.1667V37.5831H33Z"
-                                                fill="white" />
-                                        </g>
-                                        <defs>
-                                            <clipPath id="clip0_0_2738">
-                                                <rect width="44" height="44" fill="white" />
-                                            </clipPath>
-                                        </defs>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
-                                <div>
-                                    <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p>
+                                            d="M43.0833 4.58312H25.6667V1.83312C25.6666 1.69534 25.6354 1.55934 25.5756 1.43525C25.5157 1.31116 25.4286 1.20217 25.3208 1.11638C25.213 1.03059 25.0872 0.9702 24.9528 0.939713C24.8185 0.909227 24.6789 0.909422 24.5447 0.940286L0.711333 6.44029C0.509269 6.48673 0.328917 6.6003 0.199723 6.76246C0.0705279 6.92462 0.000122157 7.12579 0 7.33312L0 38.4998C8.32958e-05 38.7187 0.0785044 38.9303 0.221079 39.0965C0.363654 39.2626 0.560968 39.3722 0.777333 39.4055L24.6107 43.0721C24.7413 43.0925 24.8748 43.0844 25.002 43.0482C25.1292 43.0121 25.247 42.9487 25.3474 42.8627C25.4478 42.7766 25.5283 42.6698 25.5834 42.5496C25.6385 42.4294 25.6669 42.2987 25.6667 42.1665V39.4165H43.0833C43.3265 39.4165 43.5596 39.3199 43.7315 39.148C43.9034 38.9761 44 38.7429 44 38.4998V5.49979C44 5.25667 43.9034 5.02351 43.7315 4.8516C43.5596 4.6797 43.3265 4.58312 43.0833 4.58312ZM25.6667 17.4165H31.1667V21.0831H25.6667V17.4165ZM7.47267 28.8473L11.4492 22.4856C11.5408 22.3402 11.5895 22.1717 11.5895 21.9998C11.5895 21.8278 11.5408 21.6594 11.4492 21.514L7.4745 15.1523C7.40471 15.0503 7.35625 14.9353 7.33204 14.8142C7.30782 14.693 7.30834 14.5682 7.33358 14.4473C7.35882 14.3263 7.40824 14.2117 7.47889 14.1104C7.54953 14.009 7.63994 13.923 7.74468 13.8574C7.84941 13.7919 7.96632 13.7482 8.08837 13.729C8.21042 13.7098 8.33509 13.7154 8.4549 13.7456C8.5747 13.7758 8.68717 13.8299 8.78554 13.9047C8.88391 13.9794 8.96616 14.0733 9.02733 14.1806L12.056 19.0261C12.3915 19.5615 13.2752 19.5615 13.6107 19.0261L16.6393 14.1806C16.7028 14.0782 16.7859 13.9893 16.8838 13.9191C16.9818 13.8489 17.0926 13.7987 17.21 13.7715C17.3273 13.7442 17.4489 13.7404 17.5678 13.7603C17.6866 13.7802 17.8004 13.8233 17.9025 13.8873C18.0047 13.9509 18.0934 14.0341 18.1635 14.1321C18.2336 14.23 18.2837 14.3408 18.3109 14.4581C18.3381 14.5754 18.342 14.6969 18.3223 14.8157C18.3025 14.9345 18.2596 15.0483 18.1958 15.1505L14.2193 21.5121C14.1277 21.6576 14.079 21.826 14.079 21.998C14.079 22.1699 14.1277 22.3383 14.2193 22.4838L18.194 28.8455C18.2578 28.9475 18.3009 29.0612 18.3208 29.1799C18.3406 29.2986 18.3369 29.4201 18.3099 29.5374C18.2828 29.6547 18.2329 29.7655 18.163 29.8635C18.0931 29.9615 18.0046 30.0448 17.9025 30.1086C17.6945 30.2312 17.4474 30.2691 17.2123 30.2145C16.9771 30.1599 16.772 30.0169 16.6393 29.8153L13.6107 24.9698C13.5275 24.8389 13.4125 24.7311 13.2766 24.6565C13.1406 24.5819 12.9879 24.5429 12.8328 24.5431C12.6777 24.5433 12.5252 24.5826 12.3894 24.6576C12.2536 24.7325 12.1389 24.8405 12.056 24.9716L9.02733 29.8171C8.89435 30.0184 8.68923 30.161 8.45423 30.2156C8.21923 30.2702 7.97225 30.2325 7.76417 30.1105C7.66209 30.0467 7.57357 29.9634 7.50368 29.8654C7.43378 29.7674 7.38387 29.6565 7.35681 29.5392C7.32974 29.4219 7.32604 29.3005 7.34592 29.1817C7.3658 29.063 7.40887 28.9494 7.47267 28.8473ZM25.6667 22.9165H31.1667V26.5831H25.6667V22.9165ZM33 22.9165H42.1667V26.5831H33V22.9165ZM33 21.0831V17.4165H42.1667V21.0831H33ZM33 15.5831V11.9165H42.1667V15.5831H33ZM31.1667 15.5831H25.6667V11.9165H31.1667V15.5831ZM25.6667 28.4165H31.1667V32.0831H25.6667V28.4165ZM33 28.4165H42.1667V32.0831H33V28.4165ZM42.1667 10.0831H33V6.41645H42.1667V10.0831ZM31.1667 6.41645V10.0831H25.6667V6.41645H31.1667ZM25.6667 33.9165H31.1667V37.5831H25.6667V33.9165ZM33 37.5831V33.9165H42.1667V37.5831H33Z"
+                                            fill="white" />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_0_2738">
+                                            <rect width="44" height="44" fill="white" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+                            <div>
+                                <div class="d-flex flex-column">
+                                    <p style=" direction: rtl; " class="user-welcome">ברוך הבא
+                                        <?php echo $username; ?>,
+                                    </p>
+                                    <p style=" direction: rtl; " class="user-welcome"> לאיזור האישי שלך
+                                        !</p>
                                 </div>
                             </div>
                         </div>
-                   
+                    </div>
+
                     <!-- <h1 class="navbar-brand navbar-brand-autodark d-none d-lg-inline-flex">
                     שם הת”ת: תורת אליהו
 
@@ -986,6 +1013,20 @@
                     </div>
                 </div>
             </aside>
+
+            <script>
+                // Get the current URL
+                var currentURL = window.location.href;
+
+                // Get the pathname from the URL
+                var pathname = new URL(currentURL).pathname;
+
+                // Extract the page slug from the pathname
+                var currentSlug = pathname.split('/').filter(Boolean).pop();
+
+
+                document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+            </script>
             <!-- Page body -->
             <div class="page-body ">
                 <?php require_once CSVP_PLUGIN_PATH . 'views/notifications.php'; ?>

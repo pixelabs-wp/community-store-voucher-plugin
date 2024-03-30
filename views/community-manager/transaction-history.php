@@ -502,58 +502,6 @@
 
 <script>
 
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#filter-guys-popup-svg").click(function () {
-      jQuery("#filter-guys-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#filter-stores-popup-svg").click(function () {
-      jQuery("#filter-stores-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#date-range-popup-svg").click(function () {
-      jQuery("#date-range-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-  // Wait for the document to be ready
-  jQuery(document).ready(function () {
-    // Attach click event to the SVG element
-    jQuery("#csv-upload-popup-svg").click(function () {
-      jQuery("#csv-upload-popup").css("z-index", function (index, value) {
-        return value == 3 ? -1 : 3;
-      });
-
-      // Toggle slide-down or slide-up animation
-    });
-  });
-
-
-
   // @formatter:off
   document.addEventListener("DOMContentLoaded", function () {
     window.Litepicker && (new Litepicker({

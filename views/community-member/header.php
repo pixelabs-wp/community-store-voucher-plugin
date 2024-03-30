@@ -51,7 +51,13 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
             background-color: white;
             text-align: right;
         }
+        .active-sidebar{
+            background-color: rgba(1, 5, 29, 1) !important;
+        }
 
+        .active-sidebar .nav-link-title{
+            color: white !important;
+        }
         .side-navbar-nav {
             padding: 25px;
             display: flex;
@@ -422,8 +428,6 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                         </div><?php
                             } ?>
 
-
-
                 </div>
             </div>
         </div>
@@ -589,7 +593,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
 
                 <div class="offcanvas offcanvas-start" id="sidebar-menu">
                     <ul class="side-navbar-nav navbar-nav pt-lg-3">
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="transaction-history">
                             <a class="side-nav-link nav-link" href="/member/transaction-history">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -604,7 +608,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                                 </span>
                             </a>
                         </li>
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="shops" >
                             <a class="side-nav-link nav-link" href="/member/shops">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -625,7 +629,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item" id="coupons">
                             <a class="side-nav-link nav-link" href="/member/coupons">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -640,7 +644,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item"  id="load-card">
                             <a class="side-nav-link nav-link" href="/member/load-card">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -655,7 +659,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item">
+                        <li class="side-nav-item nav-item"  id="loading-history">
                             <a class="side-nav-link nav-link" href="/member/loading-history">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -730,6 +734,20 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                     </div>
                 </div>
             </header>
+
+            <script>
+                // Get the current URL
+                var currentURL = window.location.href;
+
+                // Get the pathname from the URL
+                var pathname = new URL(currentURL).pathname;
+
+                // Extract the page slug from the pathname
+                var currentSlug = pathname.split('/').filter(Boolean).pop();
+
+
+                document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+            </script>
             <!-- Page body -->
             <div class="page-body ">
                 <?php require_once CSVP_PLUGIN_PATH . 'views/notifications.php'; ?>
