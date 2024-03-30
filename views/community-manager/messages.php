@@ -260,6 +260,26 @@
 
     </div>
   </div>
+
+  <div class="modal fade" id="community-message-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+      <div class="modal-content p-4" style="direction: rtl">
+        <h3>האם עלי למחוק את ההודעה?</h3>
+
+        <div class="add-new-benefit-buttons mt-4">
+          <form method="POST" action="">
+            <input type="hidden" name="message_id" id="message_id">
+            <input type="hidden" name="csvp_request" value="delete_message">
+            <input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
+            <button type="button" onclick="closeModal('community-message-delete')" class="btn btn-danger w-25">ביטול</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
   <div class="accordion" id="accordion-example">
     <div class="card-x">
 
@@ -270,7 +290,11 @@
       foreach ($message_data as $message) {
         if ($message['message_status'] == MESSAGE_STATUS_UNSEEN) {
           $seen_status = MESSAGE_STATUS_SEEN;
+<<<<<<< HEAD
           ?>
+=======
+        ?>
+>>>>>>> c28323d92f7458cc05986ee72f38d065488b9356
           <div class="accordion-item">
             <h2 class="accordion-header" id="heading-1">
               <div class="container-xl button-op-cl p-0 m-0">
@@ -284,6 +308,7 @@
                 <div class="content">
                   <?php echo date('Y/m/d', strtotime($message["created_at"])); ?><strong>:תאריך</strong>
                 </div>
+<<<<<<< HEAD
                 <div class="content">טל:
                   <?php echo $message["phone_no"]; ?>
                 </div>
@@ -295,6 +320,13 @@
                     <path
                       d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z"
                       fill="white" />
+=======
+                <div class="content">טל: <?php echo $message["phone_no"]; ?></div>
+                <div class="content">שם השולח: <?php echo $message["full_name"]; ?></div>
+                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
+                  <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                    <path d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z" fill="white" />
+>>>>>>> c28323d92f7458cc05986ee72f38d065488b9356
                   </svg>
                 </button>
               </div>
@@ -339,10 +371,27 @@
                     </svg>
                   </button>
                 </div>
+<<<<<<< HEAD
               </h2>
               <div id="collapse-<?php echo $message['id']; ?>" class="accordion-collapse collapse show"
                 data-bs-parent="#accordion-example">
                 <div class="accordion-body pt-0">
+=======
+                <div class="content">
+                  <?php echo date('Y/m/d', strtotime($message["created_at"])); ?><strong>:תאריך</strong>
+                </div>
+                <div class="content">טל: <?php echo $message["phone_no"]; ?></div>
+                <div class="content">שם השולח: <?php echo $message["full_name"]; ?></div>
+                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
+                  <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                    <path d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z" fill="white" />
+                  </svg>
+                </button>
+              </div>
+            </h2>
+            <div id="collapse-<?php echo $message['id']; ?>" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+              <div class="accordion-body pt-0">
+>>>>>>> c28323d92f7458cc05986ee72f38d065488b9356
                 <?php echo $message['content']; ?>
                 </div>
               </div>
@@ -360,6 +409,7 @@
                     </div>
                     <div class="content">
                   <?php echo date('Y/m/d', strtotime($message["created_at"])); ?><strong>:תאריך</strong>
+<<<<<<< HEAD
                     </div>
                     <div class="content">טל:
                   <?php echo $message["phone_no"]; ?>
@@ -379,6 +429,20 @@
                 <div id="readonly-<?php echo $message['id']; ?>" class="accordion-collapse collapse"
                   data-bs-parent="#accordion-example">
                   <div class="accordion-body pt-0">
+=======
+                </div>
+                <div class="content">טל: <?php echo $message["phone_no"]; ?></div>
+                <div class="content">שם השולח: <?php echo $message["full_name"]; ?></div>
+                <button class="button-close mb-3 mx-2" type="button" aria-expanded="true" data-bs-toggle="modal" data-bs-target="#community-message-delete" data-id="<?php echo $message['id']; ?>">
+                  <svg width="17" height="19" viewBox="0 0 17 19" fill="none" xmlns="http://www.w3.org/2000/svg" >
+                    <path d="M4.28471 0.818181L8.28862 7.47656H8.43066L12.4523 0.818181H16.2077L10.6057 9.90909L16.2964 19H12.479L8.43066 12.386H8.28862L4.24032 19H0.440607L6.18457 9.90909L0.51163 0.818181H4.28471Z" fill="white" />
+                  </svg>
+                </button>
+              </div>
+            </h2>
+            <div id="readonly-<?php echo $message['id']; ?>" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+              <div class="accordion-body pt-0">
+>>>>>>> c28323d92f7458cc05986ee72f38d065488b9356
                 <?php echo $message['content']; ?>
                   </div>
                 </div>
@@ -390,7 +454,22 @@
     </div>
   </div>
 
+  
+
   <script>
+
+function closeModal(modalId) {
+    // Use jQuery to select the modal and call the Bootstrap modal method to hide it
+    jQuery('#' + modalId).modal('hide');
+}
+
+jQuery('#community-message-delete').on('show.bs.modal', function(event) {
+		var button = jQuery(event.relatedTarget);
+		var id = button.data('id');
+		jQuery('#message_id').val(id);
+	});
+
+
     function statusChange(id, status, block, blockId) {
       jQuery.ajax({
         url: "<?php echo admin_url('admin-ajax.php'); ?>",

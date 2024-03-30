@@ -274,8 +274,20 @@ class CSVP_Admin
 
     public function render_messages()
     {
-        global $filter;
+        global $filter, $messages;
         $pageData = array();
+
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_message") {
+            $payload = $_POST;
+            $response = $messages->delete_community_message($payload);
+            if (!is_wp_error($response)) {
+
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message has been Deleted successfully");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+
+            }
+        }
 
         $messages = $this->message->get_all_community_messages_of_admin();
 

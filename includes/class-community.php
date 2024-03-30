@@ -125,6 +125,20 @@ class CSVP_Community
     public static function render_messages()
     {
         global $community, $messages, $filter;
+
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_message") {
+            $payload = $_POST;
+            $response = $messages->delete_community_message($payload);
+            if (!is_wp_error($response)) {
+
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Message has been Deleted successfully");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+
+            }
+        }
+
+
         $messagesData = $messages->get_community_messages_by_to_id(array("to_id" => $community->get_current_community_id()));
 
 
