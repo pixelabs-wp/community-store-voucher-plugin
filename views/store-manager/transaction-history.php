@@ -527,11 +527,7 @@
 </script>
 
 
-
-
 <script>
- 
-
 
   // @formatter:off
   document.addEventListener("DOMContentLoaded", function () {

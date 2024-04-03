@@ -364,7 +364,7 @@ class CSVP_Community
 
     public static function render_order_management()
     {
-        global $order, $filter, $community;
+        global $order, $filter, $community, $store;
         $pageData = [];
         $data = [];
         $community_id = $community->get_current_community_id();
@@ -431,6 +431,18 @@ class CSVP_Community
         else if (isset ($_POST["filter_by_stores"])) {
             foreach ($_POST["stores_array"] as $stores_array) {
                 $pageData["all_order_data"] = $filter->filterData($pageData["all_order_data"], array('store_id' => $stores_array));
+
+                $stores_data = $store->get_store_by_id($stores_array);
+                        
+                // var_dump($community_data['community_name']);
+                // echo json_encode($stores_data);
+                array_push($_POST["stores_array"], $stores_data->store_name);
+
+                $index = array_search($stores_array, $_POST["stores_array"]);
+
+                if ($index !== false) {
+                    unset($_POST["stores_array"][$index]);
+                }
             }
         }
 

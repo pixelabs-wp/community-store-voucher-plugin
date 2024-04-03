@@ -472,7 +472,7 @@
             וענונו
           </h2>
           <button class="btn bg-white rounded "
-            style="font-family: Noto Sans Hebrew; font-size: 24px; font-weight: 800;">חזרה לתפריט
+            style="font-family: Noto Sans Hebrew; font-size: 24px; font-weight: 800;" data-bs-dismiss="modal" aria-label="Close">חזרה לתפריט
             הראשי</button>
         </div>
         <div class="guys-full-details-body d-flex flex-row justify-content-center row" style="direction: rtl;">

@@ -838,7 +838,8 @@ $community_id = $community->get_current_community_id();
                         <input type="hidden" id="order_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_order_request">
                         <button class="button button-primary">אישור</button>
-                        <button  type="button"  data-bs-dismiss="modal" aria-label="Close"  class="button button-secondary">ביטול</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                            class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>
@@ -897,7 +898,8 @@ $community_id = $community->get_current_community_id();
                         <input type="hidden" id="order__return_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_return_request">
                         <button class="button button-primary">אישור</button>
-                        <button  type="button"  data-bs-dismiss="modal" aria-label="Close" class="button button-secondary">ביטול</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
+                            class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>
@@ -1119,8 +1121,7 @@ $community_id = $community->get_current_community_id();
             if (isset($store['order_data']->total_order_amount)) {
                 $total_order_amount = $store['order_data']->total_order_amount;
             } ?>
-            <div class="store-management-card card col-xl-4 rounded-3 p-0" data-bs-toggle="modal"
-                data-bs-target="#store-details" data-id="<?php echo $store['store_id']; ?>">
+            <div class="store-management-card card col-xl-4 rounded-3 p-0">
                 <!-- Photo -->
                 <div class="card-body d-flex p-0">
 
@@ -1137,6 +1138,9 @@ $community_id = $community->get_current_community_id();
                                         </td>
                                         <td><strong>סך הזמנות: </strong>
                                             <?php echo $total_order_amount; ?> ₪
+                                        </td>
+                                        <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#store-details"
+                                                data-id="<?php echo $store['store_id']; ?>">Open Popup</button>
                                         </td>
                                     </tr>
                                 </table>
@@ -1224,7 +1228,7 @@ $community_id = $community->get_current_community_id();
                                 </table>
                             </div>
                         </div>
-                        <form method="POST" action="">
+                        <form method="POST" action="" style="direction: rtl;">
                             <input type="hidden" id="benifit_store_id" name="store_id"
                                 value="<?php echo $store['store_data']->id; ?>">
                             <input type="hidden" name="csvp_request" value="joining_request">

@@ -717,13 +717,17 @@ $store_id = $store->get_store_id();
 					<div class="address d-flex flex-column align-items-end gap-3">
 						<h1 id="name_of_community">-</h1>
 						<div>
-							<h2 class="address-title">אליהו מנהל ת”ת: <span id="community_manager_no">000-0000000 </span> <span id="community_manager_address"> - </span> :כתובת</h2>
+							<h2 class="address-title">אליהו מנהל ת”ת: <span id="community_manager_no">000-0000000
+								</span> <span id="community_manager_address"> - </span> :כתובת</h2>
 							<h3 class="address-title"></h3>
 						</div>
 						<div class="d-flex sw-buttons">
-							<button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
-							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit" class="btn btn-custom">+ הוספת הטבה חדשה </button>
-							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
+							<button type="button" class="btn btn-custom" data-bs-toggle="modal"
+								data-bs-target="#store-manager-add-new-order">+ הוספת הזמנה חדשה </button>
+							<button type="button" data-bs-toggle="modal" data-bs-target="#store-manager-add-new-benefit"
+								class="btn btn-custom">+ הוספת הטבה חדשה </button>
+							<button type="button" data-bs-toggle="modal"
+								data-bs-target="#store-manager-credit-limit-update" class="btn btn-custom">עדכון תקרת
 								אשראי</button>
 						</div>
 					</div>
@@ -747,7 +751,7 @@ $store_id = $store->get_store_id();
 					<div id="parentPaidTransactionHistory" class="d-flex flex-column align-items-end ">
 
 					</div>
-				
+
 				</div>
 				<!-- 2st one -->
 				<div class="d-flex flex-column align-items-end cont" id="parentOrderHistory">
@@ -776,7 +780,8 @@ $store_id = $store->get_store_id();
 <!-- Add New Benefit modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-benefit" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
@@ -790,7 +795,8 @@ $store_id = $store->get_store_id();
 				}
 			</style>
 			<div class="add-new-benefit-form">
-				<form action="" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+				<form action="" method="POST" enctype="multipart/form-data"
+					style="display: flex; flex-direction: column; gap: 10px;">
 					<h3>הוספת הטבה חדשה </h3>
 					<input class="form-control" type="text" name="product_name" id="" placeholder="שם המוצר">
 					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע">
@@ -798,7 +804,8 @@ $store_id = $store->get_store_id();
 					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר">
 					<div class="add-new-benefit-buttons">
 						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-						<button type="button" onclick="closeModal('store-manager-add-new-benefit')" class="btn btn-danger w-25">ביטול</button>
+						<button type="button" onclick="closeModal('store-manager-add-new-benefit')"
+							class="btn btn-danger w-25">ביטול</button>
 						<input type="hidden" id="benifit_community_id" name="community_id" value="">
 						<input type="hidden" name="csvp_request" value="add_new_benifit">
 					</div>
@@ -811,7 +818,8 @@ $store_id = $store->get_store_id();
 
 <!--  Edit Benefit modal starts here -->
 
-<div class="modal fade" id="store-manager-edit-benefit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-edit-benefit" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
@@ -825,15 +833,20 @@ $store_id = $store->get_store_id();
 				}
 			</style>
 			<div class="add-new-benefit-form">
-				<form action="" method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 10px;">
+				<form action="" method="POST" enctype="multipart/form-data"
+					style="display: flex; flex-direction: column; gap: 10px;">
 					<h3>ערוך הטבה קיימת</h3>
 					<input class="form-control" type="text" name="product_name" id="" placeholder="שם המוצר" value="">
-					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע" value="">
-					<input class="form-control" type="number" name="normal_price" id="" placeholder="מחיר רגיל" value="">
-					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר" value="">
+					<input class="form-control" type="number" name="voucher_price" id="" placeholder="מחיר מבצע"
+						value="">
+					<input class="form-control" type="number" name="normal_price" id="" placeholder="מחיר רגיל"
+						value="">
+					<input class="form-control" type="file" name="product_image" id="" placeholder="העלאת תמונת מוצר"
+						value="">
 					<div class="add-new-benefit-buttons">
 						<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-						<button type="button" onclick="closeModal('store-manager-edit-benefit')" class="btn btn-danger w-25">ביטול</button>
+						<button type="button" onclick="closeModal('store-manager-edit-benefit')"
+							class="btn btn-danger w-25">ביטול</button>
 						<input type="hidden" id="benifit_voucher_id" name="voucher_id" value="">
 						<input type="hidden" name="old_image" value="">
 						<input type="hidden" name="csvp_request" value="edit_benifit">
@@ -852,7 +865,8 @@ $store_id = $store->get_store_id();
 <!-- Add New Order modal Starts here -->
 
 
-<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4">
 			<div class="background-box">
@@ -882,9 +896,12 @@ $store_id = $store->get_store_id();
 						</div>
 						<div class="mb-3">
 							<label class="labell">הוספת שורה</label>
-							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
 								<rect width="42" height="42" rx="10" fill="#01051D" />
-								<path d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z" fill="white" />
+								<path
+									d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
+									fill="white" />
 							</svg>
 						</div>
 					</div>
@@ -896,7 +913,8 @@ $store_id = $store->get_store_id();
 						<input type="hidden" id="order_request_community_id" name="community_id" value="">
 						<input type="hidden" name="csvp_request" value="add_order_request">
 						<button type="submit" class="button button-primary">אישור</button>
-						<button type="button" onclick="closeModal('store-manager-add-new-order')" class="button button-secondary">ביטול</button>
+						<button type="button" onclick="closeModal('store-manager-add-new-order')"
+							class="button button-secondary">ביטול</button>
 					</div>
 				</form>
 			</div>
@@ -923,9 +941,9 @@ $store_id = $store->get_store_id();
 	});
 
 	function closeModal(modalId) {
-    // Use jQuery to select the modal and call the Bootstrap modal method to hide it
-    jQuery('#' + modalId).modal('hide');
-}
+		// Use jQuery to select the modal and call the Bootstrap modal method to hide it
+		jQuery('#' + modalId).modal('hide');
+	}
 
 
 	function updateTotalItems() {
@@ -963,50 +981,50 @@ $store_id = $store->get_store_id();
 	updateCost();
 
 
-		// 	document.addEventListener('DOMContentLoaded', function () {
-		//     const table = document.querySelector('table');
+	// 	document.addEventListener('DOMContentLoaded', function () {
+	//     const table = document.querySelector('table');
 
-		//     function updateTotalItems() {
-		//         const totalItemInputs = document.querySelectorAll('.amount-input');
-		//         let total = 0;
-		//         for (const input of totalItemInputs) {
-		//             const value = parseFloat(input.value) || 0;
-		//             total += value;
-		//         }
-		//         const totalSpan = document.querySelector('.total-added-items');
-		//         totalSpan.textContent = total;
-		//     }
+	//     function updateTotalItems() {
+	//         const totalItemInputs = document.querySelectorAll('.amount-input');
+	//         let total = 0;
+	//         for (const input of totalItemInputs) {
+	//             const value = parseFloat(input.value) || 0;
+	//             total += value;
+	//         }
+	//         const totalSpan = document.querySelector('.total-added-items');
+	//         totalSpan.textContent = total;
+	//     }
 
-		//     function updateCost() {
-		//         const totalItemInputs = document.querySelectorAll('.total-input');
-		//         let total = 0;
-		//         for (const input of totalItemInputs) {
-		//             const value = parseFloat(input.value) || 0;
-		//             total += value;
-		//         }
-		//         const totalSpan = document.querySelector('.total-cost');
-		//         totalSpan.textContent = total;
-		//     }
+	//     function updateCost() {
+	//         const totalItemInputs = document.querySelectorAll('.total-input');
+	//         let total = 0;
+	//         for (const input of totalItemInputs) {
+	//             const value = parseFloat(input.value) || 0;
+	//             total += value;
+	//         }
+	//         const totalSpan = document.querySelector('.total-cost');
+	//         totalSpan.textContent = total;
+	//     }
 
-		//     function calculateTotal() {
-		//         table.addEventListener('input', (event) => {
-		//             const target = event.target;
+	//     function calculateTotal() {
+	//         table.addEventListener('input', (event) => {
+	//             const target = event.target;
 
-		//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
-		//                 const currentRow = target.closest('tr');
-		//                 const amountInput = currentRow.querySelector('.amount-input');
-		//                 const costInput = currentRow.querySelector('.cost-input');
-		//                 const totalInput = currentRow.querySelector('.total-input');
-		//                 const amount = parseFloat(amountInput.value) || 0;
-		//                 const cost = parseFloat(costInput.value) || 0;
-		//                 const totalCost = amount * cost;
-		//                 totalInput.value = totalCost;
+	//             if (target.classList.contains('amount-input') || target.classList.contains('cost-input')) {
+	//                 const currentRow = target.closest('tr');
+	//                 const amountInput = currentRow.querySelector('.amount-input');
+	//                 const costInput = currentRow.querySelector('.cost-input');
+	//                 const totalInput = currentRow.querySelector('.total-input');
+	//                 const amount = parseFloat(amountInput.value) || 0;
+	//                 const cost = parseFloat(costInput.value) || 0;
+	//                 const totalCost = amount * cost;
+	//                 totalInput.value = totalCost;
 
-		//                 updateTotalItems();
-		//                 updateCost();
-		//             }
-		//         });
-		//     }
+	//                 updateTotalItems();
+	//                 updateCost();
+	//             }
+	//         });
+	//     }
 
 	//     calculateTotal();
 	// });
@@ -1051,7 +1069,8 @@ $store_id = $store->get_store_id();
 
 <!-- Credit limit update modal Starts here -->
 
-<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-credit-limit-update" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>עדכון תקרת אשראי</h3>
@@ -1086,14 +1105,16 @@ $store_id = $store->get_store_id();
 			<form action="" method="POST">
 
 				<div class="credit-limit-input-wrapper bg-black p-5 rounded">
-					<input type="number" class="form-control" id="decibel" name="credit_limit" placeholder="אנא הזן את הסכום" />
+					<input type="number" class="form-control" id="decibel" name="credit_limit"
+						placeholder="אנא הזן את הסכום" />
 				</div>
 
 				<div class="add-new-benefit-buttons mt-4">
 					<input type="hidden" id="credit_limit_community_id" name="community_id" value="">
 					<input type="hidden" name="csvp_request" value="set_credit_limit">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-					<button type="button" onclick="closeModal('store-manager-credit-limit-update')" class="btn btn-danger w-25">ביטול</button>
+					<button type="button" onclick="closeModal('store-manager-credit-limit-update')"
+						class="btn btn-danger w-25">ביטול</button>
 				</div>
 			</form>
 		</div>
@@ -1124,7 +1145,8 @@ $store_id = $store->get_store_id();
 </script>
 
 
-<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
@@ -1140,7 +1162,8 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="csvp_request" value="aprrove_payment">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				</form>
-				<button type="submit" class="btn btn-danger w-25" onclick="closeModal('store-manager-transaction-success')">ביטול</button>
+				<button type="submit" class="btn btn-danger w-25"
+					onclick="closeModal('store-manager-transaction-success')">ביטול</button>
 				<div>
 
 				</div>
@@ -1151,7 +1174,8 @@ $store_id = $store->get_store_id();
 </div>
 
 
-<div class="modal fade" id="store-manager-community-transaction-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-community-transaction-success" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם העסקה שולמה בהצלחה?</h3>
@@ -1172,7 +1196,8 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="csvp_request" value="aprrove_trasanction">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
 				</form>
-				<button type="button" class="btn btn-danger w-25" onclick="closeModal('store-manager-community-transaction-success')">ביטול</button>
+				<button type="button" class="btn btn-danger w-25"
+					onclick="closeModal('store-manager-community-transaction-success')">ביטול</button>
 			</div>
 		</div>
 	</div>
@@ -1182,7 +1207,8 @@ $store_id = $store->get_store_id();
 
 <!-- Voucher Delete Notification modal Starts here -->
 
-<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="store-manager-voucher-delete" tabindex="-1" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
 		<div class="modal-content p-4" style="direction: rtl">
 			<h3>האם למחוק את השובר?</h3>
@@ -1192,7 +1218,8 @@ $store_id = $store->get_store_id();
 					<input type="hidden" name="id" id="voucher_id">
 					<input type="hidden" name="csvp_request" value="delete_voucher">
 					<input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-					<button type="button" onclick="closeModal('store-manager-voucher-delete')" class="btn btn-danger w-25">ביטול</button>
+					<button type="button" onclick="closeModal('store-manager-voucher-delete')"
+						class="btn btn-danger w-25">ביטול</button>
 				</form>
 			</div>
 
@@ -1202,15 +1229,19 @@ $store_id = $store->get_store_id();
 
 <!--   Voucher Delete Notification modal ends here -->
 
-<div class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+<div
+	class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 	<div class="col-sm-5 col-lg-4 m-0">
 		<div class="card card-sm">
 			<div class="card-body-rounded p-2">
 				<div class="row align-items-center">
 					<div class="col-auto">
 						<span><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-							<svg width="26" height="25" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<path d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z" fill="#01051D" />
+							<svg width="26" height="25" viewBox="0 0 44 44" fill="none"
+								xmlns="http://www.w3.org/2000/svg">
+								<path
+									d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z"
+									fill="#01051D" />
 							</svg>
 
 						</span>
@@ -1220,7 +1251,7 @@ $store_id = $store->get_store_id();
 							<div class="" style="direction: rtl;">
 								<input type="text" id="store-search" class="form-control" placeholder="חיפוש ת”ת"
 									name="community_name"
-									value="<?php echo isset ($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
+									value="<?php echo isset($_POST["community_name"]) ? $_POST["community_name"] : ""; ?>">
 								<input type="hidden" name="csvp_filter" value="filter_communities_by_name">
 							</div>
 						</form>
@@ -1237,7 +1268,7 @@ $store_id = $store->get_store_id();
 
 	<div class="col-sm-5 col-lg-4 m-0">
 		<form action="" method="POST">
-			<button class="card card-sm w-100 d-flex align-items-center" >
+			<button class="card card-sm w-100 d-flex align-items-center">
 				<div>
 					<div class="card-body-rounded p-1 m-1">
 						<div class="row align-items-center">
@@ -1255,7 +1286,7 @@ $store_id = $store->get_store_id();
 
 	<div class="col-sm-5 col-lg-4 m-0">
 		<form action="" method="POST">
-			<button class="card card-sm w-100 d-flex align-items-center" >
+			<button class="card card-sm w-100 d-flex align-items-center">
 				<div>
 					<div class="card-body-rounded p-1 m-1">
 						<div class="row align-items-center">
@@ -1269,7 +1300,7 @@ $store_id = $store->get_store_id();
 			</button>
 		</form>
 	</div>
-	
+
 </div>
 
 <div class="container mt-4 d-flex flex-wrap" style="row-gap: 2rem; column-gap: 5rem;">
@@ -1277,10 +1308,11 @@ $store_id = $store->get_store_id();
 
 	if (isset($pageData["joined_communities"])) {
 		foreach ($pageData["joined_communities"] as $community) {
-			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $community['community_data']->community_logo;
 
-	?>
-			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal" data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
+			?>
+			<div class="store-management-card card col-xl-4 rounded-3 p-0 " data-bs-toggle="modal"
+				data-bs-target="#community-details" data-id="<?php echo $community['community_data']->id; ?>">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
 					<div class="d-flex flex-column px-5 py-4" style="width: 65%;">
@@ -1295,7 +1327,13 @@ $store_id = $store->get_store_id();
 											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות:</strong>
-											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
+										</td>
+
+										<td><button class="btn btn-dark" data-bs-toggle="modal"
+												data-bs-target="#community-details"
+												data-id="<?php echo $community['community_data']->id; ?>">Open Popup</button>
 										</td>
 
 									</tr>
@@ -1303,17 +1341,18 @@ $store_id = $store->get_store_id();
 							</div>
 						</div>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 	<?php
-	if (isset ($pageData["requested_communities"])) {
+	if (isset($pageData["requested_communities"])) {
 		foreach ($pageData["requested_communities"] as $community) {
-			
-			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $community['community_data']->community_logo;
 			?>
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
@@ -1330,7 +1369,8 @@ $store_id = $store->get_store_id();
 											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
 										</td>
 									</tr>
 								</table>
@@ -1338,19 +1378,20 @@ $store_id = $store->get_store_id();
 						</div>
 						<label class="text-secondary "><b>בקשה בהמתנה</b></label>
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 	<?php
-	if (isset ($pageData["not_requested_communities"])) {
-		foreach ($pageData["not_requested_communities"] as $community) { 
-			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/').$community['community_data']->community_logo;
+	if (isset($pageData["not_requested_communities"])) {
+		foreach ($pageData["not_requested_communities"] as $community) {
+			$community_logo = esc_url(get_site_url() . '/wp-content/uploads/') . $community['community_data']->community_logo;
 
 			?>
-		
+
 			<div class="store-management-card card col-xl-4 rounded-3 p-0 ">
 				<!-- Photo -->
 				<div class="card-body d-flex p-0">
@@ -1366,24 +1407,27 @@ $store_id = $store->get_store_id();
 											<?php echo isset($community['community_member_data']->member_count) ? $community['community_member_data']->member_count : 0; ?>
 										</td>
 										<td><strong>סך הזמנות: </strong>
-											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?> ₪
+											<?php echo isset($community['order_data']->total_order_amount) ? $community['order_data']->total_order_amount : 0; ?>
+											₪
 										</td>
 									</tr>
 								</table>
 							</div>
 						</div>
-						<form method="POST" action="">
-							<input type="hidden" id="benifit_community_id" name="community_id" value="<?php echo $community['community_data']->id; ?>">
+						<form method="POST" action="" style="direction: rtl;">
+							<input type="hidden" id="benifit_community_id" name="community_id"
+								value="<?php echo $community['community_data']->id; ?>">
 							<input type="hidden" name="csvp_request" value="joining_request">
 							<button class="btn btn-dark">לצירוף הת”ת ←</button>
 						</form>
 
 					</div>
-					<div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+					<div class="w-35"
+						style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $community_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
 					</div>
 				</div>
 			</div>
-	<?php }
+		<?php }
 	} ?>
 </div>
 
@@ -1439,14 +1483,14 @@ $store_id = $store->get_store_id();
 	}
 
 	function openEditModal(title, price, discountPrice, imageSrc, id) {
-    // Populate input elements in the modal with the provided data
-    document.querySelector('#store-manager-edit-benefit input[name="product_name"]').value = title;
-    document.querySelector('#store-manager-edit-benefit input[name="voucher_price"]').value = discountPrice;
-    document.querySelector('#store-manager-edit-benefit input[name="normal_price"]').value = price;
-    document.querySelector('#store-manager-edit-benefit input[name="voucher_id"]').value = id;
-	document.querySelector('#store-manager-edit-benefit input[name="old_image"]').value = imageSrc;
+		// Populate input elements in the modal with the provided data
+		document.querySelector('#store-manager-edit-benefit input[name="product_name"]').value = title;
+		document.querySelector('#store-manager-edit-benefit input[name="voucher_price"]').value = discountPrice;
+		document.querySelector('#store-manager-edit-benefit input[name="normal_price"]').value = price;
+		document.querySelector('#store-manager-edit-benefit input[name="voucher_id"]').value = id;
+		document.querySelector('#store-manager-edit-benefit input[name="old_image"]').value = imageSrc;
 
-}
+	}
 
 	function populateOrderDetailModalFunction(button) {
 		var orderDetails = JSON.parse(button.getAttribute('data-order-details'));
@@ -1467,7 +1511,7 @@ $store_id = $store->get_store_id();
 		var section = `
 		`;
 		var total_items = 0;
-		orderData.forEach(function(item) {
+		orderData.forEach(function (item) {
 			section = section + `
 		<tr>
 		<td>${item.total_cost}</td>
@@ -1593,7 +1637,7 @@ $store_id = $store->get_store_id();
 
 
 	// When modal is about to be shown
-	jQuery('#community-details').on('show.bs.modal', function(event) {
+	jQuery('#community-details').on('show.bs.modal', function (event) {
 		// Extract data from data attributes of the button
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
@@ -1614,7 +1658,7 @@ $store_id = $store->get_store_id();
 					community_id: id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
 				document.getElementById('name_of_community').innerHTML = response[0]["community_name"];
@@ -1622,7 +1666,7 @@ $store_id = $store->get_store_id();
 				document.getElementById('community_manager_address').innerHTML = response[0]["community_address"];
 				document.getElementById('community_logo').src = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + response[0]["community_logo"];
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 			}
@@ -1640,13 +1684,13 @@ $store_id = $store->get_store_id();
 					type: "store"
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 
 				// Handle success response
 				if (response.length > 0) {
 					var parentElement = document.getElementById("voucherElementId");
 					parentElement.innerHTML = "";
-					response.forEach(function(item) {
+					response.forEach(function (item) {
 						addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
 					});
 				} else {
@@ -1655,7 +1699,7 @@ $store_id = $store->get_store_id();
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
@@ -1674,12 +1718,12 @@ $store_id = $store->get_store_id();
 					type: 'store'
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					parentOrderHistory.innerHTML = "";
 					parentOrderHistory.innerHTML = "<h3 class='title'>הסטוריית הזמנות </h3>";
-					response.forEach(function(item) {
+					response.forEach(function (item) {
 						addOrderHistory(item);
 					});
 				} else {
@@ -1688,7 +1732,7 @@ $store_id = $store->get_store_id();
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				// Handle error response
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
@@ -1704,10 +1748,10 @@ $store_id = $store->get_store_id();
 				csvp_handler: 'get_unpaid_transactions_monthly_data_by_community_id', // Action hook
 				data: {
 					store_id: store_id,
-                    community_id: community_id
+					community_id: community_id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					parentUnpaidTransactionHistory.innerHTML = "";
@@ -1781,7 +1825,7 @@ $store_id = $store->get_store_id();
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
 
@@ -1797,10 +1841,10 @@ $store_id = $store->get_store_id();
 				csvp_handler: 'get_requested_transactions_monthly_data_by_community_id', // Action hook
 				data: {
 					store_id: store_id,
-                    community_id: community_id
+					community_id: community_id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					parentRequestedTransactionHistory.innerHTML = "";
@@ -1874,7 +1918,7 @@ $store_id = $store->get_store_id();
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
 
@@ -1890,10 +1934,10 @@ $store_id = $store->get_store_id();
 				csvp_handler: 'get_paid_transactions_monthly_data_by_community_id', // Action hook
 				data: {
 					store_id: store_id,
-                    community_id: community_id
+					community_id: community_id
 				}
 			},
-			success: function(response) {
+			success: function (response) {
 				// Handle success response
 				if (response) {
 					parentPaidTransactionHistory.innerHTML = "";
@@ -1967,7 +2011,7 @@ $store_id = $store->get_store_id();
 				}
 
 			},
-			error: function(xhr, status, error) {
+			error: function (xhr, status, error) {
 				console.error(xhr.responseText);
 				console.error("Unexpected response format:", xhr.responseText);
 
@@ -1976,7 +2020,7 @@ $store_id = $store->get_store_id();
 
 	});
 
-	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function(event) {
+	jQuery('#store-manager-voucher-delete').on('show.bs.modal', function (event) {
 		var button = jQuery(event.relatedTarget);
 		var id = button.data('id');
 		jQuery('#voucher_id').val(id);

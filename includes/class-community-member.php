@@ -111,6 +111,19 @@ class CSVP_CommunityMember
         else if (isset ($_POST["filter_by_stores"])) {
             foreach ($_POST["stores_array"] as $stores_array) {
                 $pageData["vouchers"] = $filter->filterData($pageData["vouchers"], array('store_id' => $stores_array));
+
+                $stores_data = $store->get_store_by_id($stores_array);
+                        
+                // var_dump($community_data['community_name']);
+                // echo json_encode($stores_data);
+                array_push($_POST["stores_array"], $stores_data->store_name);
+
+                $index = array_search($stores_array, $_POST["stores_array"]);
+
+                if ($index !== false) {
+                    unset($_POST["stores_array"][$index]);
+                }
+                
             }
         }
 

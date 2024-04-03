@@ -180,7 +180,7 @@
 
 
         <!-- Filter Bar -->
-        <div
+        <div 
             class="row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
 
 
