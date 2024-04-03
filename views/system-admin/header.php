@@ -55,13 +55,14 @@
             margin: 0px;
         }
 
-        .active-sidebar{
+        .active-sidebar {
             background-color: rgba(1, 5, 29, 1) !important;
         }
 
-        .active-sidebar .nav-link-title{
+        .active-sidebar .nav-link-title {
             color: white !important;
         }
+
         .side-navbar {}
 
         .side-nav-link {
@@ -256,7 +257,7 @@
 
 <body>
 
-    
+
     <!-- add Community modal -->
 
     <div class="modal fade" id="add-a-seat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -431,6 +432,33 @@
 
 
 
+    <!-- Import From Excel Modal -->
+
+    <div class="modal fade" id="excel-import-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
+            <div class="modal-content p-4" style="direction: rtl;">
+
+                <div class="col-12">
+                    <div class="form-label">Import From Excel</div>
+                    <input type="file" class="form-control">
+
+                    <div class="row gap-3 mt-3">
+                        <button class="col-4 btn btn-dark">
+                            Import
+                        </button>
+
+                        <button class="col-4 btn btn-dark">
+                            Download Sample
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Import From Excel Modal End -->
 
 
 
@@ -589,7 +617,7 @@
                                     +</button>
 
 
-                                <button class="bg-black text-white px-5 py-3 rounded-3 border-0"
+                                <button data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
                                     style="font-size: 20px; font-weight: 400; direction: rtl;">
                                     ייבוא מאקסאל
                                     <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44"
@@ -842,7 +870,7 @@
                                 +</button>
 
 
-                            <button class="bg-black text-white px-5 py-3 rounded-3 border-0"
+                            <button  data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
                                 style="font-size: 20px; font-weight: 400; direction: rtl;">
                                 ייבוא מאקסאל
                                 <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44" fill="none"
