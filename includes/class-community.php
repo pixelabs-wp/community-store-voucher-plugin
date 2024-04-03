@@ -250,18 +250,9 @@ class CSVP_Community
 
             $pageData["voucher_transaction"] = array_merge(...$date_data_voucher);
             $pageData["amount_transaction"] = array_merge(...$date_data_amount);
-
         }
-
         $member_data[] = $pageData['amount_transaction'][0]['member_data'];
-
-        echo json_encode($pageData['amount_transaction']);
-
         $pageData['members'] = $member_data;
-
-
-        // echo json_encode ($pageData["amount_transaction"]["member_data"]);
-
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 
