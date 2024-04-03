@@ -42,6 +42,26 @@ define('TRANSACTION_TYPE_DEBIT', 'debit');
 define('TRANSACTION_TYPE_CREDIT', 'credit');
 
 
+const ACTION_LOAD_CARD = 'Load Card';
+const ACTION_PURCHASE_VOUCHER = 'Purchase Voucher';
+const ACTION_SEND_MESSAGE = 'Send Message';
+const ACTION_CLAIM_VOUCHER = 'Claim Voucher';
+const ACTION_JOIN_REQUEST = 'Join Request';
+const ACTION_CREATE_ORDER = 'Create Order';
+const ACTION_CREATE_RETURN = 'Create Return';
+const ACTION_MESSAGE_STATUS = 'Message Status';
+const ACTION_ADD_VOUCHER = 'Add Voucher';
+const ACTION_DELETE_VOUCHER = 'Delete Voucher';
+const ACTION_CREDIT_LIMIT_UPDATE = 'Credit Limit Update';
+const ACTION_UPDATE_TRANSACTION_STATUS = 'Update Transaction Status';
+const ACTION_UPDATE_ORDER_STATUS = 'Update Order Status';
+const ACTION_UPDATE_RETURN_STATUS = 'Update Return Status';
+const ACTION_CREATE_TRANSACTION = 'Create Transaction';
+const ACTION_JOIN_REQUEST_STATUS_UPDATE = 'Join Request Status Update';
+const ACTION_COMMISSION_STATUS_UPDATE = 'Commission Status Update';
+const ACTION_MESSAGE_STATUS_UPDATE = 'Message Status Update';
+
+
 add_action('wp_login', 'redirect_after_login', 10, 2);
 
 function redirect_after_login($user_login, $user)
@@ -89,4 +109,27 @@ function nestedLowercase($value)
     return array_map('nestedLowercase', $value);
   }
   return strtolower($value);
+}
+
+// Function to calculate days ago
+function calculateDaysAgo($date)
+{
+  // Create DateTime object for the given date
+  $date_obj = new DateTime($date);
+
+  // Get current date
+  $current_date = new DateTime();
+
+  // Calculate the difference
+  $interval = $current_date->diff($date_obj);
+
+  // Get the number of days
+  $days = $interval->format('%a');
+
+
+  if ($days < 1) {
+    return "Today";
+  } else {
+    return $days . ' ago';
+  }
 }

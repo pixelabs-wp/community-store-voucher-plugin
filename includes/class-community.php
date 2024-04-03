@@ -255,7 +255,7 @@ class CSVP_Community
 
         $member_data[] = $pageData['amount_transaction'][0]['member_data'];
 
-        echo json_encode($pageData['amount_transaction']);
+        //echo json_encode($pageData['amount_transaction']);
 
         $pageData['members'] = $member_data;
 

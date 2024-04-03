@@ -569,11 +569,11 @@ class CSVP_Store
 
         if (isset($_POST["filter_by_community"])) {
             foreach ($_POST["community_array"] as $community_array) {
-                echo json_encode($_POST["community_array"]);
+                //echo json_encode($_POST["community_array"]);
 
 
                 $community_data = $pageData["transactions"][0]["community_data"];
-                echo json_encode($community_data);
+                //echo json_encode($community_data);
                 $pageData["transactions"] = $filter->filterData($community_data, array('community_name' => $community_array));
             }
         } else if (isset($_POST["order_range_filter"])) {
@@ -617,7 +617,7 @@ class CSVP_Store
 
         }
 
-        echo json_encode($pageData);
+        // e//cho json_encode($pageData);
 
 
 

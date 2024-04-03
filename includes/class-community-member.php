@@ -467,7 +467,7 @@ class CSVP_CommunityMember
      */
     public function add_balance($data)
     {
-        global $wpdb, $transaction;
+        global $wpdb, $transaction, $notification;
         $member_id = $data['member_id'];
         $store_id = isset($data['store_id']) ? $data['store_id'] : 0;
         $transaction_type = isset($data['transaction_type']) ? $data['transaction_type'] : TRANSACTION_TYPE_CREDIT;
@@ -497,6 +497,16 @@ class CSVP_CommunityMember
         );
 
         $transaction->create_transaction($transaction_data);
+
+        // $args = array(
+        //     "wp_user" => get_current_user_id(),
+        //     "action_type" => ACTION_LOAD_CARD,
+        //     "recipients" => json_encode(array(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER => $member_id, CSVP_User_Roles::ROLE_COMMUNITY_MANAGER => $member->community_id))
+        // );
+
+        // echo json_encode($args);
+
+        // $notification->create_notification($args);
 
         return $result !== false;
     }
