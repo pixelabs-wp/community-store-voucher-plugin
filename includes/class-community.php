@@ -33,7 +33,7 @@ class CSVP_Community
 
     public function render_manage_guys()
     {
-        global $voucher, $store, $community, $voucher_transaction, $filter;
+        global $voucher, $store, $community, $voucher_transaction, $filter, $community_member;
         //Sample Post Request
         if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
 
@@ -73,7 +73,14 @@ class CSVP_Community
             }
         }
 
-
+        if (isset($_FILES['community_members_excel_sheet'])) {
+            $response = $community_member->import_community_members_from_excel_sheet();
+            if($response["status"]){
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+            }
+        } 
         $voucherData = $voucher->get_all_vouchers_by_community_id(array('community_id' => $this->get_current_community_id()));
         $modified_storeData = array();
         foreach ($voucherData as $voucher) {
