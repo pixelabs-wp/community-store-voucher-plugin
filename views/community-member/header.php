@@ -495,9 +495,9 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                     //שימו לב!! שיטת הפוסטמסג' לא עובדת בשרת מקומי (localhost). חובה להעלות את הקוד שלכם לדומיין שלכם.
 
 
-                    window.onerror = function(msg, url, line, col, error) {
-                        alert("שגיאת תוכנה. פנה לתמיכה טכנית. שגיאה: " + msg)
-                    }
+                    // window.onerror = function(msg, url, line, col, error) {
+                    //     alert("שגיאת תוכנה. פנה לתמיכה טכנית. שגיאה: " + msg)
+                    // }
 
                     //זהירות! את השורת קוד הזו יש להפעיל רק פעם אחת בעת פתיחת הדף
 
@@ -809,8 +809,12 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                 var currentSlug = pathname.split('/').filter(Boolean).pop();
 
 
-                document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
-            </script>
+                if( document.getElementById(currentSlug)){
+
+    document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+}    
+
+</script>
             <!-- Page body -->
             <div class="page-body ">
                 <?php require_once CSVP_PLUGIN_PATH . 'views/notifications.php'; ?>

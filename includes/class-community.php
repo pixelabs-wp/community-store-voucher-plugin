@@ -28,6 +28,60 @@ class CSVP_Community
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
         $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count" => true));
 
+
+        $payload["community_id"] = $this->get_current_community_id();
+        $id = $this->get_current_community_id();
+        $voucher_transaction = $this->voucher->get_all_voucher_transactions_by_community_id($payload);
+        $check_1["voucher_transaction"] = $voucher_transaction;
+        if (!is_wp_error($check_1["voucher_transaction"])) {
+            $pageData["voucher_transaction"] = $voucher_transaction;
+        }
+
+        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
+        $check_2["amount_transaction"] = $amount_transaction;
+        if (!is_wp_error($check_2["amount_transaction"])) {
+            $pageData["amount_transaction"] = $amount_transaction;
+        }
+
+
+        $modified_voucher_transaction = array();
+
+        foreach ($voucher_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_voucher_transaction, $voucher);
+        }
+
+        $pageData["voucher_transaction"] = $modified_voucher_transaction;
+
+
+        $modified_amount_transaction = array();
+
+        foreach ($amount_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_amount_transaction, $voucher);
+        }
+
+        $pageData["amount_transaction"] = $modified_amount_transaction;
+
+
+        $total_order = 0;
+        $total_order_value = 0;
+        if (isset($pageData["voucher_transaction"])) {
+            foreach ($pageData["voucher_transaction"] as $transaction) {
+                $total_order = $total_order + 1;
+                $total_order_value = $total_order_value + $transaction['transaction_amount'];
+            }
+        }
+
+        if (isset($pageData["amount_transaction"])) {
+            foreach ($pageData["amount_transaction"] as $transaction) {
+                $total_order = $total_order + 1;
+                $total_order_value = $total_order_value + $transaction['transaction_amount'];
+            }
+        }
+
+        $pageData["total_transactions"] = $total_order_value;
+
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
@@ -250,18 +304,9 @@ class CSVP_Community
 
             $pageData["voucher_transaction"] = array_merge(...$date_data_voucher);
             $pageData["amount_transaction"] = array_merge(...$date_data_amount);
-
         }
-
         $member_data[] = $pageData['amount_transaction'][0]['member_data'];
-
-        //echo json_encode($pageData['amount_transaction']);
-
         $pageData['members'] = $member_data;
-
-
-        // echo json_encode ($pageData["amount_transaction"]["member_data"]);
-
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 

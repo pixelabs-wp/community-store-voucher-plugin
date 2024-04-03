@@ -616,11 +616,6 @@ class CSVP_Store
             $pageData["transactions"] = array_merge(...$date_data);
 
         }
-
-        // e//cho json_encode($pageData);
-
-
-
         CSVP_View_Manager::load_view('transaction-history', $pageData);
     }
 

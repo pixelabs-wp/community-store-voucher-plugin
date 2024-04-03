@@ -863,18 +863,14 @@
     <div class="card-x mt-3">
       <div class="resposive-table managing-guys-table" style="overflow-x: auto">
         <table class="table table-vcenter card-table">
-
           <tbody class="d-flex flex-column ts-text">
-
             <?php
-
             if (!empty($pageData["members"])) {
-
+              $totalvouchers = 0;
+              $totalGuys = count($pageData["members"]);
               foreach ($pageData["members"] as $key => $member) {
-
-
                 $transactions_count = $voucher_transaction->get_voucher_transactions_by_member_id(array("member_id" => $member["id"], "status" => VOUCHER_STATUS_PENDING, "count" => true));
-
+                $totalvouchers =  $totalvouchers+ $transactions_count;
                 ?>
                 <tr>
                   <td class="ts-date">
@@ -886,7 +882,6 @@
                       <div class="card-body p-1 m-1">
                         <div class="row align-items-center">
                           <div class="col-auto">
-
                           </div>
                           <div class="col">
                             <div class="font-weight-medium ts-text ts-text-color" style="direction: rtl;">
@@ -926,19 +921,13 @@
                         </clipPath>
                       </defs>
                     </svg> </td>
-                </tr>
-
-
-
+              </tr>
                 <?php
               } ?>
             <?php } else {
               echo "No Data Found";
             }
             ?>
-
-
-
           </tbody>
         </table>
       </div>
@@ -950,13 +939,13 @@
             <ul class="pagination p-1">
               <li class="page-item page-prev disabled">
                 <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                  סה”כ שוברים: 87
+                  סה”כ שוברים: <?php echo $totalvouchers;?>
                 </div>
               </li>
 
               <li class="page-item page-next">
                 <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                  סה”כ בחורים: 450
+                  סה”כ בחורים: <?php echo $totalGuys;?>
                 </div>
               </li>
             </ul>

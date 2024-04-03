@@ -422,9 +422,12 @@
 	</div>
 
 	<div class="d-flex flex-row gap-3 mt-3 flex-wrap" style="height: fit-content; overflow-y: auto;">
-		<?php foreach ($pageData['all_order_data'] as $order_data) {
-			$total_payment = 0;
+		<?php 
+		
+		$total_payment = 0;
 			$total_item = 0;
+		foreach ($pageData['all_order_data'] as $order_data) {
+			
 			if ($order_data['order_status'] == ORDER_STATUS_PAID) {
 				$status = '<span class="btn btn-brown">שולם</span> ';
 

@@ -620,8 +620,9 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_message_adm
                 // Extract the page slug from the pathname
                 var currentSlug = pathname.split('/').filter(Boolean).pop();
 
-
-                document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+if( document.getElementById(currentSlug)){
+    document.getElementById(currentSlug).classList = "side-nav-item nav-item active-sidebar";
+}              
             </script>
             <!-- Page body -->
             <div class="page-body ">

@@ -285,8 +285,11 @@
                 <table class="table table-vcenter card-table">
                     <tbody class="d-flex flex-column ts-text">
                         <?php
-
+                            $totalCommisionsAmount = 0;
+                            $totalCommisions = count($pageData["commision"]);
                         foreach ($pageData["commision"] as $commision) {
+
+                            $totalCommisionsAmount += $commision["total_commision"];
                         ?>
 
                             <tr>
@@ -321,13 +324,13 @@
                         <ul class="pagination p-1">
                             <li class="page-item page-prev disabled">
                                     <div class="page-item-subtitle text-white mx-4" style="font-size: 20px">
-                                        סה”כ עסקאות במערכת: 87
+                                        סה”כ עסקאות במערכת: <?php echo $totalCommisionsAmount; ?>
                                     </div>
                             </li>
 
                             <li class="page-item page-next">
                                     <div class="page-item-title text-white mx-4" style="font-size: 20px">
-                                        סה”כ חנויות: 450
+                                        סה”כ חנויות: <?php echo $totalCommisions; ?>
                                     </div>
                             </li>
                         </ul>
