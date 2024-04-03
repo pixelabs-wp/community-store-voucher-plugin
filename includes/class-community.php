@@ -33,7 +33,7 @@ class CSVP_Community
 
     public function render_manage_guys()
     {
-        global $voucher, $store, $community, $voucher_transaction, $filter;
+        global $voucher, $store, $community, $voucher_transaction, $filter, $commision;
         //Sample Post Request
         if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_guy") {
 
@@ -63,11 +63,22 @@ class CSVP_Community
             $payload["transaction_date"] = date("Y-m-d H:i:s");
             $payload["status"] = VOUCHER_STATUS_PENDING;
             $response = $voucher_transaction->create_voucher_transaction($payload);
-
             if (!is_wp_error($response)) {
 
+
+            $communtiy = $this->get_community_data_by_id($this->get_current_community_id()); // line 118
+            $commision_Data = array(
+                "entity_id" => $this->get_current_community_id(),
+                "entity_type" => CSVP_User_Roles::ROLE_COMMUNITY_MANAGER,
+                "commission_type" => COMMISSION_TYPE_VOUCHER,
+                "commission_value" => $communtiy->commision_percentage,
+                "commission_status" => COMMISSION_STATUS_PENDING
+            );
+            $commision->create_commission($commision_Data);
+            
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
-            } else {
+            }
+            else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response);
 
             }

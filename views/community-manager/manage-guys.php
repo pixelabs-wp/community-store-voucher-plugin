@@ -968,7 +968,7 @@
         let modal = document.querySelector('#store-manager-voucher-purchase');
         let member_id = document.querySelector('#member_id').value;
         modal.querySelector('#voucher_name').innerHTML = voucher.product_name;
-        modal.querySelector('#transaction_amount').value = 0;
+        modal.querySelector('#transaction_amount').value = voucher.voucher_price;
         modal.querySelector('#voucher_id').value = voucher.id;
         modal.querySelector('#community_member_id').value = member_id;
       }
