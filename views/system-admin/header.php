@@ -617,7 +617,7 @@
                                     +</button>
 
 
-                                <button data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
+                                <!-- <button data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
                                     style="font-size: 20px; font-weight: 400; direction: rtl;">
                                     ייבוא מאקסאל
                                     <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44"
@@ -633,7 +633,7 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                </button>
+                                </button> -->
                             </div>
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
@@ -870,7 +870,7 @@
                                 +</button>
 
 
-                            <button  data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
+                            <!-- <button  data-bs-toggle="modal" data-bs-target="#excel-import-modal" class="bg-black text-white px-5 py-3 rounded-3 border-0"
                                 style="font-size: 20px; font-weight: 400; direction: rtl;">
                                 ייבוא מאקסאל
                                 <svg style="margin-right: 10px;" width="28" height="28" viewBox="0 0 44 44" fill="none"
@@ -886,7 +886,7 @@
                                         </clipPath>
                                     </defs>
                                 </svg>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                             <div>

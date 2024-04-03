@@ -203,7 +203,7 @@
                 </table>
             </div>
         </div>
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div class="container p-0">
                 <div class="card-x">
                     <div class="card-body my-3 bg-black rounded-3 p-2">
@@ -223,7 +223,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 </body>

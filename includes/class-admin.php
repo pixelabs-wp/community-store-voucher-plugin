@@ -228,7 +228,6 @@ class CSVP_Admin
             }
         }
         
-
         CSVP_View_Manager::load_view('store-management', $pageData);
     }
 

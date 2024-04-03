@@ -458,6 +458,28 @@
                                                     <?php echo $store["store_name"] ?>
                                                 </td>
 
+                                                <td><strong>מספר ישיבות בהסדר:</strong>
+                                                    <?php 
+                                                    global $wpdb;
+
+                                                    // Assuming $store["id"] is the store ID
+                                                    $store_id = $store["id"];
+                                                    
+                                                    // Run the SQL query
+                                                    $query = $wpdb->prepare("
+                                                        SELECT COUNT(*) AS row_count
+                                                        FROM {$wpdb->prefix}csvp_joining_request
+                                                        WHERE store_id = %d AND request_status = 'approved'
+                                                    ", $store_id);
+                                                    
+                                                    // Fetch the count result
+                                                    $row_count = $wpdb->get_var($query);
+                                                    
+                                                    // Now $row_count variable holds the number of rows received
+                                                    
+                                                    echo $row_count; ?>
+                                                </td>
+
                                             </tr>
 
                                         </table>
