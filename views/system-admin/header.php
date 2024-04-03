@@ -308,7 +308,7 @@
                                     <input type="text" class="form-control" name="api_valid">
                                 </div>
                                 <div class="mb-3 col-xl-6">
-                                    <label class="form-label">Commission Percentage</label>
+                                    <label class="form-label">₪ עמלה פר עסקה</label>
                                     <input type="number" class="form-control" name="commision_percentage">
                                 </div>
                             </div>
