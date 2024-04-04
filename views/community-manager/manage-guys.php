@@ -331,33 +331,31 @@
             <div class="container mt-5 d-flex flex-column gap-5">
 
               <div class="row">
-
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">כתובת מייל </label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="text" class="form-control" name="email_address" id="email_address_edit" readonly disabled required>
                 </div>
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">מספר טלפון</label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="number" class="form-control" name="phone_number" id="phone_number_edit">
                 </div>
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">שם פרטי ומשפחה</label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="text" class="form-control" name="full_name" id="full_name_edit" required>
                 </div>
               </div>
-
               <div class="row">
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">כתובת </label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="text" class="form-control" name="address" id="address_edit">
                 </div>
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">מספר תעודת זהות </label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="text" class="form-control" name="id_number" id="id_number_edit">
                 </div>
                 <div class="mb-3 col-xl-4">
                   <label class="form-label">שיעור</label>
-                  <input type="text" class="form-control" name="example-text-input">
+                  <input type="text" class="form-control" name="lesson" id="lesson_edit">
                 </div>
               </div>
               <div class="row">
@@ -368,23 +366,31 @@
                     <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
                   </div>
                   <div class="col">
-                    <input type="text" class="form-control" style="border: none;" name="example-text-input">
+                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association" id="magnetic_card_number_association_edit">
                   </div>
                 </div>
               </div>
 
               <div class="row d-flex align-items-center">
+                
                 <div class="mb-3 col-xl-6">
-                  <a href="#" class=" w-100 btn btn-dark">← מחיקת הבחור מהמערכת </a>
-
+                  <input type="hidden" name="user_id" id="user_id_edit" value="">
+                  <input type="hidden" name="community_member_id" id="community_member_id_edit" value="">
+                  <input type="hidden" name="csvp_request" value="edit_guy">
+                  <input type="submit" class="btn btn-dark " value="← לעדכון פרטי הבחור לחץ כאןן">
                 </div>
+                </form>
                 <div class="mb-3 col-xl-6">
-                  <a href="#" class=" w-100 btn btn-danger">← לעדכון פרטי הבחור לחץ כאן</a>
+                  <form action="" method="post">
+                  <input type="hidden" name="community_member_id" id="community_member_id_delete" value="">
+                  <input type="hidden" name="csvp_request" value="delete_guy">
+                  <input type="submit" class="btn btn-danger " value="← מחיקת הבחור מהמערכת">
+                  </form>
                 </div>
               </div>
             </div>
           </div>
-        </form>
+        
       </div>
     </div>
   </div>
@@ -905,7 +911,7 @@
                   <td class="ts-guy-name">שם הבחור: </span>
                     <?php echo $member["full_name"]; ?><span>
                   </td>
-                  <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40"
+                  <td> <svg data-bs-toggle="modal" data-bs-target="#edit-guy-form" width="40" height="40" onclick="populateOrderDetailModalFunction2(this)" data-member-details='<?php echo json_encode($member); ?>'
                       viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <g clip-path="url(#clip0_0_2848)">
                         <path
@@ -1190,5 +1196,39 @@
 
 
 
+      }
+
+
+      function populateOrderDetailModalFunction2(button) {
+
+          var orderDetails = button.getAttribute('data-member-details');
+          var parsedDetails = JSON.parse(orderDetails);
+
+          var id = parsedDetails.id;
+          var is_active = parsedDetails.is_active;
+          var created_at = parsedDetails.created_at;
+          var updated_at = parsedDetails.updated_at;
+          var wp_user = parsedDetails.wp_user;
+          var community_id = parsedDetails.community_id;
+          var full_name = parsedDetails.full_name;
+          var phone_number = parsedDetails.phone_number;
+          var email_address = parsedDetails.email_address;
+          var lesson = parsedDetails.lesson;
+          var id_number = parsedDetails.id_number;
+          var wp_user_id = parsedDetails.wp_user_id;
+          var address = parsedDetails.address;
+          var magnetic_card_number_association = parsedDetails.magnetic_card_number_association;
+          var card_balance = parsedDetails.card_balance;
+
+          document.getElementById("email_address_edit").value = email_address;
+          document.getElementById("phone_number_edit").value = phone_number;
+          document.getElementById("full_name_edit").value = full_name;
+          document.getElementById("address_edit").value = address;
+          document.getElementById("id_number_edit").value = id_number;
+          document.getElementById("lesson_edit").value = lesson;
+          document.getElementById("magnetic_card_number_association_edit").value = magnetic_card_number_association;
+          document.getElementById("community_member_id_edit").value = id;
+          document.getElementById("community_member_id_delete").value = id;
+          document.getElementById("user_id_edit").value = wp_user_id;
       }
     </script>

@@ -35,7 +35,6 @@ class CSVP_Admin
             $payload_1['community_manager_name'] = $payload['community_manager_name'];
             $payload_1['community_address'] = $payload['community_address'];
             $payload_1['community_name'] = $payload['community_name'];
-            $payload_1['community_mail_address'] = $payload['community_mail_address'];
             $payload_1['payment_link'] = $payload['payment_link'];
             $payload_1['api_valid'] = $payload['api_valid'];
             $payload_1['commision_percentage'] = $payload['commision_percentage'];
@@ -68,18 +67,6 @@ class CSVP_Admin
             } else{
                 
                 $message = 'Community Updated Successfully';
-                $userdata = array(
-                    'ID' => $payload['user_id'],
-                    'user_email' => $payload['community_mail_address'],
-                    'user_pass' => $payload['password']
-                );
-                
-                $user = wp_update_user($userdata);
-                if (is_wp_error($user)) {
-                    // An error occurred while updating the user
-                    $error_message = $user->get_error_message();
-                    $message = "Community User update failed: " . $error_message;
-                }
                 
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $message);
             }

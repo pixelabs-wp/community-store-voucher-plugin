@@ -52,6 +52,38 @@ class CSVP_Community
                 CSVP_Notification::add(CSVP_Notification::ERROR, 'Guy with this email already exists');
             }
         }
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_guy") {
+            $payload = $_POST;
+            $payload_1['community_member_id'] = $payload['community_member_id'];
+            $payload_1['is_active'] = 0;
+        
+            $response = $this->community_member->inactive_community_member($payload_1);
+            if (!is_wp_error($response)) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Guy Deleted");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+            }
+        }
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "edit_guy") {
+
+                $payload = $_POST;
+                $payload_1['phone_number'] = $payload['phone_number'];
+                $payload_1['full_name'] = $payload['full_name'];
+                $payload_1['address'] = $payload['address'];
+                $payload_1['id_number'] = $payload['id_number'];
+                $payload_1['lesson'] = $payload['lesson'];
+                $payload_1['magnetic_card_number_association'] = $payload['magnetic_card_number_association'];
+                $payload_1['community_member_id'] = $payload['community_member_id'];
+    
+                $response = $this->community_member->update_community_member($payload_1);
+                if (!is_wp_error($response)) {
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Guy Updated");
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+    
+                }
+        }
 
 
         if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "load_voucher") {

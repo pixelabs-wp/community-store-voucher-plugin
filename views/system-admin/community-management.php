@@ -367,7 +367,7 @@
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">כתובת מייל</label>
                                         <input type="email" class="form-control" id="community_mail_address_id"
-                                            name="community_mail_address">
+                                            name="community_mail_address" readonly disabled>
                                     </div>
                                     <div class="mb-3 col-xl-6">
                                         <label class="form-label">Mosad</label>
