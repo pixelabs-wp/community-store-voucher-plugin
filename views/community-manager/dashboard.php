@@ -35,8 +35,8 @@
 						</span>
 						<h1 class="m-0" style="font-weight: 900;">
 							<?php
-							if (isset($pageData["redeemed_voucher"])) {
-								//  $pageData["redeemed_voucher"];
+							if (isset($pageData["total_transactions"])) {
+								echo $pageData["total_transactions"];
 							}  ?></h1>
 						<p class="m-0">Total transactions</p>
 					</div>

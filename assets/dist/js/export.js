@@ -8,7 +8,7 @@ class ExportToCSV {
         const csv = this.convertToCSV(this.data);
 
         // Create a Blob object from the CSV data
-        const blob = new Blob([csv], { type: 'text/csv' });
+        const blob = new Blob([csv], { type: 'text/csv; charset=utf-8' });
 
         // Create a temporary anchor element to trigger the download
         const link = document.createElement('a');

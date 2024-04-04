@@ -4,12 +4,12 @@ require_once ABSPATH . '/wp-admin/includes/upgrade.php';
 
 class CSVP_Initialize_Database {
     public static function create_tables() {
-        global $wpdb;
-        $charset_collate = $wpdb->get_charset_collate();
+            global $wpdb;
+            $charset_collate = $wpdb->get_charset_collate();
 
-        // Community table
-        $community_table = $wpdb->prefix . 'csvp_community';
-        $sql_community = "CREATE TABLE $community_table (
+            // Community table
+            $community_table = $wpdb->prefix . 'csvp_community';
+            $sql_community = "CREATE TABLE $community_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -27,11 +27,11 @@ class CSVP_Initialize_Database {
             api_valid varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_community );
+            dbDelta($sql_community);
 
-        // Store table
-        $store_table = $wpdb->prefix . 'csvp_store';
-        $sql_store = "CREATE TABLE $store_table (
+            // Store table
+            $store_table = $wpdb->prefix . 'csvp_store';
+            $sql_store = "CREATE TABLE $store_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -47,11 +47,11 @@ class CSVP_Initialize_Database {
             fee_amount_per_transaction decimal(10,2) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_store );
+            dbDelta($sql_store);
 
-        // Commission table
-        $commission_table = $wpdb->prefix . 'csvp_commission';
-        $sql_commission = "CREATE TABLE $commission_table (
+            // Commission table
+            $commission_table = $wpdb->prefix . 'csvp_commission';
+            $sql_commission = "CREATE TABLE $commission_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -64,11 +64,11 @@ class CSVP_Initialize_Database {
             commission_status varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_commission );
+            dbDelta($sql_commission);
 
-        // Joining request table
-        $joining_request_table = $wpdb->prefix . 'csvp_joining_request';
-        $sql_joining_request = "CREATE TABLE $joining_request_table (
+            // Joining request table
+            $joining_request_table = $wpdb->prefix . 'csvp_joining_request';
+            $sql_joining_request = "CREATE TABLE $joining_request_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -81,11 +81,11 @@ class CSVP_Initialize_Database {
             credit_limit varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_joining_request );
+            dbDelta($sql_joining_request);
 
-        // Transaction table
-        $transaction_table = $wpdb->prefix . 'csvp_transaction';
-        $sql_transaction = "CREATE TABLE $transaction_table (
+            // Transaction table
+            $transaction_table = $wpdb->prefix . 'csvp_transaction';
+            $sql_transaction = "CREATE TABLE $transaction_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -99,11 +99,11 @@ class CSVP_Initialize_Database {
             transaction_date datetime NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_transaction );
+            dbDelta($sql_transaction);
 
-        // Order table
-        $order_table = $wpdb->prefix . 'csvp_order';
-        $sql_order = "CREATE TABLE $order_table (
+            // Order table
+            $order_table = $wpdb->prefix . 'csvp_order';
+            $sql_order = "CREATE TABLE $order_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -117,10 +117,10 @@ class CSVP_Initialize_Database {
             order_info_file varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_order );
+            dbDelta($sql_order);
 
-        $order_data = $wpdb->prefix . 'csvp_order_data';
-        $order_data_sql = "CREATE TABLE $order_data (
+            $order_data = $wpdb->prefix . 'csvp_order_data';
+            $order_data_sql = "CREATE TABLE $order_data (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -133,11 +133,11 @@ class CSVP_Initialize_Database {
             total_cost varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta($order_data_sql);
+            dbDelta($order_data_sql);
 
-        // Voucher table
-        $voucher_table = $wpdb->prefix . 'csvp_voucher';
-        $sql_voucher = "CREATE TABLE $voucher_table (
+            // Voucher table
+            $voucher_table = $wpdb->prefix . 'csvp_voucher';
+            $sql_voucher = "CREATE TABLE $voucher_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -151,13 +151,13 @@ class CSVP_Initialize_Database {
             product_image varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_voucher );
+            dbDelta($sql_voucher);
 
- 
 
-        // Voucher transaction table
-        $voucher_transaction_table = $wpdb->prefix . 'csvp_voucher_transaction';
-        $sql_voucher_transaction = "CREATE TABLE $voucher_transaction_table (
+
+            // Voucher transaction table
+            $voucher_transaction_table = $wpdb->prefix . 'csvp_voucher_transaction';
+            $sql_voucher_transaction = "CREATE TABLE $voucher_transaction_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -171,11 +171,11 @@ class CSVP_Initialize_Database {
             status varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_voucher_transaction );
+            dbDelta($sql_voucher_transaction);
 
-        // Walk order table
-        $walk_order_table = $wpdb->prefix . 'csvp_walk_order';
-        $sql_walk_order = "CREATE TABLE $walk_order_table (
+            // Walk order table
+            $walk_order_table = $wpdb->prefix . 'csvp_walk_order';
+            $sql_walk_order = "CREATE TABLE $walk_order_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -188,11 +188,11 @@ class CSVP_Initialize_Database {
             payment_link varchar(255) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_walk_order );
+            dbDelta($sql_walk_order);
 
-        // Community member table
-        $community_member_table = $wpdb->prefix . 'csvp_community_member';
-        $sql_community_member = "CREATE TABLE $community_member_table (
+            // Community member table
+            $community_member_table = $wpdb->prefix . 'csvp_community_member';
+            $sql_community_member = "CREATE TABLE $community_member_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -210,11 +210,11 @@ class CSVP_Initialize_Database {
             card_balance decimal(10,2) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_community_member );
+            dbDelta($sql_community_member);
 
-        // Balance table
-        $balance_table = $wpdb->prefix . 'csvp_balance';
-        $sql_balance = "CREATE TABLE $balance_table (
+            // Balance table
+            $balance_table = $wpdb->prefix . 'csvp_balance';
+            $sql_balance = "CREATE TABLE $balance_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -224,11 +224,11 @@ class CSVP_Initialize_Database {
             balance_amount decimal(10,2) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta( $sql_balance );
-        
-        $val = MESSAGE_STATUS_UNSEEN;
-        $message_table = $wpdb->prefix . 'csvp_community_message';
-        $message_table_sql = "CREATE TABLE $message_table (
+            dbDelta($sql_balance);
+
+            $val = MESSAGE_STATUS_UNSEEN;
+            $message_table = $wpdb->prefix . 'csvp_community_message';
+            $message_table_sql = "CREATE TABLE $message_table (
             id bigint(20) NOT NULL AUTO_INCREMENT,
             is_active tinyint(1) NOT NULL DEFAULT 1,
             created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -243,6 +243,24 @@ class CSVP_Initialize_Database {
             message_status varchar(255) NOT NULL DEFAULT '$val',
             PRIMARY KEY (id)
         ) $charset_collate;";
-        dbDelta($message_table_sql);
+            dbDelta($message_table_sql);
+
+
+            $notification_table = $wpdb->prefix . 'csvp_notification';
+            $notification_table_sql = "CREATE TABLE $notification_table (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+            is_active tinyint(1) NOT NULL DEFAULT 1,
+            created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            wp_user varchar(255) NOT NULL DEFAULT 1,
+            action_type varchar(255) NOT NULL,
+            recipients TEXT NOT NULL,
+            PRIMARY KEY (id)
+            
+            ) $charset_collate;";
+
+            dbDelta($notification_table_sql);
+
+      
     }
 }

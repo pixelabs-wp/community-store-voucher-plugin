@@ -472,22 +472,22 @@
         aria-hidden="true">
         <div class="modal-dialog modal modal-dialog-centered modal-dialog-scrollable ">
             <div class="modal-content p-4" style="direction: rtl;">
+                <form method="POST" action="" enctype="multipart/form-data">
+                  <div class="col-12">
+                      <div class="form-label">Import From Excel</div>
+                      <input type="file" name="community_members_excel_sheet" class="form-control">
 
-                <div class="col-12">
-                    <div class="form-label">Import From Excel</div>
-                    <input type="file" class="form-control">
+                      <div class="row gap-3 mt-3">
+                          <input type="submit" class="col-4 btn btn-dark">
+                              Import
+                          </button>
 
-                    <div class="row gap-3 mt-3">
-                        <button class="col-4 btn btn-dark">
-                            Import
-                        </button>
-
-                        <button class="col-4 btn btn-dark">
-                            Download Sample
-                        </button>
-                    </div>
-                </div>
-
+                          <a href="<?php echo get_stylesheet_directory_uri(); ?>/assets/import_templates/community_members_template.xlsx" class="col-4 btn btn-dark" download>
+                              Download Sample
+                          </a>
+                      </div>
+                  </div>
+                </form>
             </div>
         </div>
     </div>
