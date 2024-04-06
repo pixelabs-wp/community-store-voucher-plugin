@@ -479,7 +479,7 @@
                 <form method="POST" action="" enctype="multipart/form-data">
                   <div class="col-12">
                       <div class="form-label">Import From Excel</div>
-                      <input type="file" name="community_members_csv" class="form-control">
+                      <input type="file" name="community_members_csv" accept=".csv" class="form-control">
 
                       <div class="row gap-3 mt-3">
                           <input type="submit" class="col-4 btn btn-dark">
