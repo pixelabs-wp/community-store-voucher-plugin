@@ -1,5 +1,5 @@
 <?php
-
+require_once CSVP_PLUGIN_PATH . '/libs/PhpSpreadsheet/src/IOFactory.php';
 class CSVP_CommunityMember
 {
     // Properties
@@ -8,6 +8,7 @@ class CSVP_CommunityMember
     public $community_member_user;
     public $community_id;
     public $balance_table;
+    // use IOFactory;
     // Constructor
     public function __construct()
     {
@@ -228,30 +229,98 @@ class CSVP_CommunityMember
         }
     }
 
-    public function import_community_members_from_excel_sheet() {
-        // Ensure an Excel file is uploaded
-        if (!isset($_FILES['community_members_excel_sheet']) || !is_uploaded_file($_FILES['community_members_excel_sheet']['tmp_name'])) {
+    // public function import_community_members_from_excel_sheet() {
+    //     // Ensure an Excel file is uploaded
+    //     if (!isset($_FILES['community_members_excel_sheet']) || !is_uploaded_file($_FILES['community_members_excel_sheet']['tmp_name'])) {
+    //         return array("status" => false, "response" => "No file uploaded.");
+    //     }
+    
+    //     $file_tmp_name = $_FILES['community_members_excel_sheet']['tmp_name'];
+    //     $file_name = $_FILES['community_members_excel_sheet']['name'];
+    
+    //     // Check if the file is an Excel file
+    //     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    //     if ($file_ext != "xlsx" && $file_ext != "xls") {
+    //         return array("status" => false, "response" => "Only Excel files are allowed.");
+    //     }
+    
+    //     // Load the Excel file using PHPSpreadsheet
+        
+    //     $spreadsheet = IOFactory::load($file_tmp_name);
+    //     $worksheet = $spreadsheet->getActiveSheet();
+    
+    //     // Initialize an array to store all data
+    //     $data_to_insert = array();
+    
+    //     // Iterate through each row
+    //     foreach ($worksheet->getRowIterator() as $row) {
+    //         // Skip the first row assuming it contains headers
+    //         if ($row->getRowIndex() == 1) {
+    //             continue;
+    //         }
+    
+    //         // Get cell values
+    //         $data = [];
+    //         foreach ($row->getCellIterator() as $cell) {
+    //             $data[] = $cell->getValue();
+    //         }
+    
+    //         // Create WordPress user
+    //         $email_address = $data[5];
+    //         $user_id = wp_create_user($email_address, wp_generate_password(), $email_address);
+    //         $user_id_role = new WP_User($user_id);
+    //         $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER);
+    
+    //         if (!is_wp_error($user_id)) {
+    //             // Add the row data to the array to be inserted into the database
+    //             $data_to_insert[] = array(
+    //                 'is_active' => $data[0],
+    //                 'wp_user' => $data[1],
+    //                 'community_id' => $data[2],
+    //                 'full_name' => $data[3],
+    //                 'phone_number' => $data[4],
+    //                 'email_address' => $email_address,
+    //                 'lesson' => $data[6],
+    //                 'id_number' => $data[7],
+    //                 'wp_user_id' => $user_id,
+    //                 'address' => $data[8],
+    //                 'magnetic_card_number_association' => $data[9],
+    //                 'card_balance' => $data[10]
+    //             );
+    //         } else {
+    //             // Error occurred during user creation
+    //             $error_message = $user_id->get_error_message();
+    //             return array("status" => false, "response" => $error_message);
+    //         }
+    //     }
+    
+    //     // Insert all the data into the database table in one go
+    //     global $wpdb;
+    //     $wpdb->insert($this->table_name, $data_to_insert);
+    
+    //     // Output success message
+    //     return array("status" => true, "response" => 'Community members imported successfully!');
+    // }
+
+    public function import_community_members_from_csv() {
+        global $wpdb, $community;
+        // Ensure a CSV file is uploaded
+        if (!isset($_FILES['community_members_csv']) || !is_uploaded_file($_FILES['community_members_csv']['tmp_name'])) {
             return array("status" => false, "response" => "No file uploaded.");
         }
     
-        $file_tmp_name = $_FILES['community_members_excel_sheet']['tmp_name'];
-        $file_name = $_FILES['community_members_excel_sheet']['name'];
+        $file_tmp_name = $_FILES['community_members_csv']['tmp_name'];
+        $file_name = $_FILES['community_members_csv']['name'];
     
-        // Check if the file is an Excel file
+        // Check if the file is a CSV file
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        if ($file_ext != "xlsx" && $file_ext != "xls") {
-            return array("status" => false, "response" => "Only Excel files are allowed.");
+        if ($file_ext != "csv") {
+            return array("status" => false, "response" => "Only CSV files are allowed.");
         }
-        // Read the Excel file as CSV
-        $csv_data = [];
-        if (($handle = fopen($file_tmp_name, "r")) !== false) {
-            while (($data = fgetcsv($handle, 1000, ",")) !== false) {
-                $csv_data[] = $data;
-            }
-            fclose($handle);
-        } else {
-            return array("status" => false, "response" => "Failed to open file.");
-        }
+    
+        // Read the CSV file
+        $csv_data = array_map('str_getcsv', file($file_tmp_name));
+        
     
         // Initialize an array to store all data
         $data_to_insert = array();
@@ -261,7 +330,6 @@ class CSVP_CommunityMember
     
         // Iterate through each row
         foreach ($csv_data as $data) {
-
             // Create WordPress user
             $email_address = $data[5];
             $user_id = wp_create_user($email_address, wp_generate_password(), $email_address);
@@ -270,35 +338,105 @@ class CSVP_CommunityMember
     
             if (!is_wp_error($user_id)) {
                 // Add the row data to the array to be inserted into the database
-                $data_to_insert[] = array
-                (
+                $data_to_insert = array(
                     'is_active' => $data[0],
                     'wp_user' => $data[1],
-                    'community_id' => $data[2],
-                    'full_name' => $data[3],
-                    'phone_number' => $data[4],
+                    'community_id' => $community->get_current_community_id(),
+                    'full_name' => $data[2],
+                    'phone_number' => $data[3],
                     'email_address' => $email_address,
-                    'lesson' => $data[6],
-                    'id_number' => $data[7],
+                    'lesson' => $data[5],
+                    'id_number' => $data[6],
                     'wp_user_id' => $user_id,
-                    'address' => $data[8],
-                    'magnetic_card_number_association' => $data[9],
-                    'card_balance' => $data[10]
+                    'address' => $data[7],
+                    'magnetic_card_number_association' => $data[8],
+                    'card_balance' => $data[9]
                 );
+                $wpdb->insert($this->table_name, $data_to_insert);
             } else {
                 // Error occurred during user creation
                 $error_message = $user_id->get_error_message();
                 return array("status" => false, "response" => $error_message);
             }
         }
-    
-        // Insert all the data into the database table in one go
-        global $wpdb;
-        $wpdb->insert($this->table_name, $data_to_insert);
+        
     
         // Output success message
         return array("status" => true, "response" => 'Community members imported successfully!');
     }
+    
+
+    // public function import_community_members_from_excel_sheet() {
+    //     // Ensure an Excel file is uploaded
+    //     if (!isset($_FILES['community_members_excel_sheet']) || !is_uploaded_file($_FILES['community_members_excel_sheet']['tmp_name'])) {
+    //         return array("status" => false, "response" => "No file uploaded.");
+    //     }
+    
+    //     $file_tmp_name = $_FILES['community_members_excel_sheet']['tmp_name'];
+    //     $file_name = $_FILES['community_members_excel_sheet']['name'];
+    
+    //     // Check if the file is an Excel file
+    //     $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    //     if ($file_ext != "xlsx" && $file_ext != "xls") {
+    //         return array("status" => false, "response" => "Only Excel files are allowed.");
+    //     }
+    //     // Read the Excel file as CSV
+    //     $csv_data = [];
+    //     if (($handle = fopen($file_tmp_name, "r")) !== false) {
+    //         while (($data = fgetcsv($handle, 1000, ",")) !== false) {
+    //             $csv_data[] = $data;
+    //         }
+    //         fclose($handle);
+    //     } else {
+    //         return array("status" => false, "response" => "Failed to open file.");
+    //     }
+    //     echo json_encode($csv_data);
+    //     // Initialize an array to store all data
+    //     $data_to_insert = array();
+    
+    //     // Skip the first row assuming it contains headers
+    //     array_shift($csv_data);
+    
+    //     // Iterate through each row
+    //     foreach ($csv_data as $data) {
+
+    //         // Create WordPress user
+    //         $email_address = $data[5];
+    //         $user_id = wp_create_user($email_address, wp_generate_password(), $email_address);
+    //         $user_id_role = new WP_User($user_id);
+    //         $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER);
+    
+    //         if (!is_wp_error($user_id)) {
+    //             // Add the row data to the array to be inserted into the database
+    //             $data_to_insert[] = array
+    //             (
+    //                 'is_active' => $data[0],
+    //                 'wp_user' => $data[1],
+    //                 'community_id' => $data[2],
+    //                 'full_name' => $data[3],
+    //                 'phone_number' => $data[4],
+    //                 'email_address' => $email_address,
+    //                 'lesson' => $data[6],
+    //                 'id_number' => $data[7],
+    //                 'wp_user_id' => $user_id,
+    //                 'address' => $data[8],
+    //                 'magnetic_card_number_association' => $data[9],
+    //                 'card_balance' => $data[10]
+    //             );
+    //         } else {
+    //             // Error occurred during user creation
+    //             $error_message = $user_id->get_error_message();
+    //             return array("status" => false, "response" => $error_message);
+    //         }
+    //     }
+    
+    //     // Insert all the data into the database table in one go
+    //     global $wpdb;
+    //     $wpdb->insert($this->table_name, $data_to_insert);
+    
+    //     // Output success message
+    //     return array("status" => true, "response" => 'Community members imported successfully!');
+    // }
     
     
 

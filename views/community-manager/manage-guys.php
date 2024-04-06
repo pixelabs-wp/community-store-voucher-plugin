@@ -469,14 +469,14 @@
                 <form method="POST" action="" enctype="multipart/form-data">
                   <div class="col-12">
                       <div class="form-label">Import From Excel</div>
-                      <input type="file" name="community_members_excel_sheet" class="form-control">
+                      <input type="file" name="community_members_csv" class="form-control">
 
                       <div class="row gap-3 mt-3">
                           <input type="submit" class="col-4 btn btn-dark">
                               Import
                           </button>
 
-                          <a href="<?php echo get_stylesheet_directory_uri(); ?>/assets/import_templates/community_members_template.xlsx" class="col-4 btn btn-dark" download>
+                          <a href="<?php echo plugins_url("/assets/import_templates/community_members_template.xlsx"); ?>" class="col-4 btn btn-dark" download>
                               Download Sample
                           </a>
                       </div>

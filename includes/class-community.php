@@ -84,8 +84,8 @@ class CSVP_Community
             }
         }
 
-        if (isset($_FILES['community_members_excel_sheet'])) {
-            $response = $community_member->import_community_members_from_excel_sheet();
+        if (isset($_FILES['community_members_csv'])) {
+            $response = $community_member->import_community_members_from_csv();
             if($response["status"]){
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
             } else {
