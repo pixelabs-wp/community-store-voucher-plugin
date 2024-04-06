@@ -38,13 +38,15 @@
             background-color: white;
             text-align: right;
         }
-        .active-sidebar{
+
+        .active-sidebar {
             background-color: rgba(1, 5, 29, 1) !important;
         }
 
-        .active-sidebar .nav-link-title{
+        .active-sidebar .nav-link-title {
             color: white !important;
         }
+
         .side-navbar-nav {
             padding: 25px;
             display: flex;
@@ -171,53 +173,38 @@
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="row g-3 align-items-center">
-                                        <a href="#" class="col-auto">
-                                            <span class="avatar" style="background-image: url(./static/avatars/000m.jpg)">
-                                                <span class="badge bg-red"></span></span>
-                                        </a>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-reset d-block text-truncate">Paweł Kuna</a>
-                                            <div class="text-secondary text-truncate mt-n1">2 days ago</div>
+                                <?php
+                                $data = CSVP_Notification::get_notifications_by_user(get_current_user_id());
+
+
+
+                                foreach ($data as $key => $notification) {
+
+                                    // Get the current timestamp
+                                    $current_timestamp = strtotime($notification["created_at"]);
+
+                                    $date = date("H:i a", $current_timestamp);
+                                    $days_ago = calculateDaysAgo($notification["created_at"]);
+
+                                ?>
+                                    <div class="col-12">
+                                        <div class="row g-3 align-items-center">
+                                            <a href="#" class="col-auto">
+                                                <span class="avatar">
+                                                    <span class="badge bg-x"></span>X</span>
+                                            </a>
+                                            <div class="col text-truncate">
+                                                <a href="#" class="text-reset d-block text-truncate"><?php echo $notification['action_type']; ?></a>
+                                                <div class="text-secondary text-truncate mt-n1"><?php echo $days_ago . ' at ' . $date; ?></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-3 align-items-center">
-                                        <a href="#" class="col-auto">
-                                            <span class="avatar">
-                                                <span class="badge bg-x"></span>JL</span>
-                                        </a>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-reset d-block text-truncate">Jeffie Lewzey</a>
-                                            <div class="text-secondary text-truncate mt-n1">3 days ago</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-3 align-items-center">
-                                        <a href="#" class="col-auto">
-                                            <span class="avatar" style="background-image: url(./static/avatars/002m.jpg)"></span>
-                                        </a>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-reset d-block text-truncate">Mallory Hulme</a>
-                                            <div class="text-secondary text-truncate mt-n1">today</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row g-3 align-items-center">
-                                        <a href="#" class="col-auto">
-                                            <span class="avatar" style="background-image: url(./static/avatars/003m.jpg)">
-                                                <span class="badge bg-green"></span></span>
-                                        </a>
-                                        <div class="col text-truncate">
-                                            <a href="#" class="text-reset d-block text-truncate">Dunn Slane</a>
-                                            <div class="text-secondary text-truncate mt-n1">6 days ago</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php
+                                }
+                                ?>
+
+
+
 
                             </div>
                         </div>
@@ -242,8 +229,8 @@
                             </svg>
 
 
-                            <?php 
-                            
+                            <?php
+
                             $logout_url = get_option('admin_link_id') ? "/community/community-logout" : wp_logout_url(get_permalink());
 
 
@@ -285,7 +272,7 @@
 
                 <div class="offcanvas offcanvas-start" id="sidebar-menu">
                     <ul class="side-navbar-nav navbar-nav pt-lg-3">
-                        <li class="side-nav-item nav-item"   id="dashboard">
+                        <li class="side-nav-item nav-item" id="dashboard">
                             <a class="side-nav-link nav-link" href="/community/dashboard">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -299,7 +286,7 @@
                                 </span>
                             </a>
                         </li>
-                        <li class="side-nav-item nav-item"   id="manage-guys">
+                        <li class="side-nav-item nav-item" id="manage-guys">
                             <a class="side-nav-link nav-link" href="/community/manage-guys">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -419,13 +406,15 @@
                             </button>
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
-                                    <p style=" direction: rtl; " class="user-welcome">ברוך הבא משה,לאיזור האישי שלך!</p>
+                                    <?php $community_data = $community->get_community_by_id($community->get_current_community_id()); ?>
+                                    <p style="direction: rtl;" class="user-welcome">ברוך הבא <?php echo $community_data->community_name; ?>, לאיזור האישי שלך!</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </header> <script>
+            </header>
+            <script>
                 // Get the current URL
                 var currentURL = window.location.href;
 

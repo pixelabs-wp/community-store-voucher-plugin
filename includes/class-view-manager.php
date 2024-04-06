@@ -40,7 +40,7 @@ class CSVP_View_Manager{
 
     // Load view file
     private static function load_view_file($view_file, $pageData) {
-        global $community_member, $voucher_transaction, $store, $messages, $community;
+        global $community_member, $voucher_transaction, $store, $messages, $community, $notification;
         $view_path = CSVP_PLUGIN_PATH . "views/$view_file.php";
         if (file_exists($view_path)) {
             wp_head();

@@ -391,7 +391,7 @@
                     <input type="hidden" name="community_member_id" id="community_member_id">
                     <input type="hidden" name="transaction_amount" id="transaction_amount">
                     <input type="submit" class="btn btn-primary bg-black w-25" value="אישור">
-                    <button type="submit" class="btn btn-danger w-25">ביטול</button>
+                    <button type="button" onclick="closeModal('store-manager-voucher-delete')" class="btn btn-danger w-25">ביטול</button>
                 </form>
             </div>
 
@@ -471,6 +471,12 @@
 </body>
 
 <script>
+
+function closeModal(modalId) {
+    // Use jQuery to select the modal and call the Bootstrap modal method to hide it
+    jQuery('#' + modalId).modal('hide');
+}
+
     function buyVoucher(voucher, member_id) {
         voucher = JSON.parse(voucher)
         jQuery('#store-manager-voucher-delete').modal('show');

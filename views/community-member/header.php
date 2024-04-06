@@ -51,13 +51,15 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
             background-color: white;
             text-align: right;
         }
-        .active-sidebar{
+
+        .active-sidebar {
             background-color: rgba(1, 5, 29, 1) !important;
         }
 
-        .active-sidebar .nav-link-title{
+        .active-sidebar .nav-link-title {
             color: white !important;
         }
+
         .side-navbar-nav {
             padding: 25px;
             display: flex;
@@ -547,7 +549,59 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
 
     <div class="page">
         <!------------------ topbar--------------------------- -->
+        <!-- Notification Modal -->
 
+        <div class="modal fade" id="notifications-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog  modal modal-dialog-centered modal-dialog-scrollable ">
+                <div class="modal-content p-4">
+
+                    <div class="col-12">
+                        <div class="card" style=" direction: rtl;">
+                            <div class="card-header">
+                                <h3 class="card-title">Recent Notification</h3>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <?php
+                                    $data = CSVP_Notification::get_notifications_by_user(get_current_user_id());
+
+
+
+                                    foreach ($data as $key => $notification) {
+
+                                        // Get the current timestamp
+                                        $current_timestamp = strtotime($notification["created_at"]);
+
+                                        $date = date("H:i a", $current_timestamp);
+                                        $days_ago = calculateDaysAgo($notification["created_at"]);
+
+                                    ?>
+                                        <div class="col-12">
+                                            <div class="row g-3 align-items-center">
+                                                <a href="#" class="col-auto">
+                                                    <span class="avatar">
+                                                        <span class="badge bg-x"></span>X</span>
+                                                </a>
+                                                <div class="col text-truncate">
+                                                    <a href="#" class="text-reset d-block text-truncate"><?php echo $notification['action_type']; ?></a>
+                                                    <div class="text-secondary text-truncate mt-n1"><?php echo $days_ago . ' at ' . $date; ?></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php
+                                    }
+                                    ?>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <header class="navbar-expand-md  w-100 border border-dark bg-dark sticky-top p-0">
             <div class=" bg-dark p-0">
                 <div class=" bg-dark p-0">
@@ -608,7 +662,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                                 </span>
                             </a>
                         </li>
-                        <li class="side-nav-item nav-item" id="shops" >
+                        <li class="side-nav-item nav-item" id="shops">
                             <a class="side-nav-link nav-link" href="/member/shops">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -644,7 +698,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item"  id="load-card">
+                        <li class="side-nav-item nav-item" id="load-card">
                             <a class="side-nav-link nav-link" href="/member/load-card">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -659,7 +713,7 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                             </a>
                         </li>
 
-                        <li class="side-nav-item nav-item"  id="loading-history">
+                        <li class="side-nav-item nav-item" id="loading-history">
                             <a class="side-nav-link nav-link" href="/member/loading-history">
 
                                 <span class="nav-link-title side-nav-link-title">
@@ -717,6 +771,14 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
                                     שליחת הודעה לראש ת”ת
 
                                 </button>
+
+                                <button data-bs-toggle="modal" data-bs-target="#notifications-modal" style="z-index: 10;" class="bg-white ms-4 border-0 rounded py-2 px-4">
+                                    <svg width="34" height="39" viewBox="0 0 34 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.0938 6.79416C17.7578 6.79416 19.3354 7.21406 19.3354 7.21406C23.6094 8.19347 26.6177 12.1302 26.6177 16.575V28.5386L27.4916 29.4165L28.2217 30.1499H5.77831L6.50844 29.4165L7.38228 28.5386V16.575C7.38228 12.1303 10.3906 8.19347 14.6646 7.21406C14.6646 7.21406 16.3561 6.79416 16.9062 6.79416M17 0C15.3498 0 14.0882 1.26731 14.0882 2.925V4.28991C8.55556 5.55769 4.38228 10.6275 4.38228 16.575V27.3L0.5 31.2V33.15H33.5V31.2L29.6177 27.3V16.575C29.6177 10.6275 25.4443 5.55769 19.9118 4.28991V2.925C19.9118 1.26731 18.6502 0 17 0ZM20.8823 35.1H13.1176C13.1176 37.2451 14.8645 39 17 39C19.1355 39 20.8823 37.2451 20.8823 35.1Z" fill="black" />
+                                    </svg>
+
+
+                                </button>
                                 <p class="m-0" style="font-size: 20px;
                                                     font-weight: 300;
                                                     line-height: 27px;
@@ -727,13 +789,14 @@ if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "send_guy_message
 
                             <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
                                 <div>
-                                    <p class="user-welcome">! ברוך הבא אליהו,לאיזור האישי שלך</p>
+                                    <p style="direction: rtl;" class="user-welcome">ברוך הבא <?php echo $member->full_name ?>, לאיזור האישי שלך!</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </header>
+
 
             <script>
                 // Get the current URL

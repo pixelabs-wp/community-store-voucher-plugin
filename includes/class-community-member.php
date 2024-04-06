@@ -62,7 +62,7 @@ class CSVP_CommunityMember
 
     public function render_coupons()
     {
-        global $voucher_transaction, $voucher, $store, $community, $filter;
+        global $voucher_transaction, $voucher, $store, $community, $filter, $commision;
 
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "purchase_voucher") {
             $payload = $_POST;
@@ -81,6 +81,18 @@ class CSVP_CommunityMember
 
                     $updated_balance = $member_balance - $payload["transaction_amount"];
                     $this->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+                   
+                    $member_data = $this->get__member_data_by_id( $payload["community_member_id"]);
+                    $community_id = $member_data->community_id;
+                    $communtiy = $community->get_community_data_by_id( $community_id); // line 118
+                        $commision_Data = array(
+                            "entity_id" =>  $community_id,
+                            "entity_type" => CSVP_User_Roles::ROLE_COMMUNITY_MANAGER,
+                            "commission_type" => COMMISSION_TYPE_VOUCHER,
+                            "commission_value" => $communtiy->commision_percentage,
+                            "commission_status" => COMMISSION_STATUS_PENDING
+                        );
+                        $commision->create_commission($commision_Data);
 
                     CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been purchased successfully");
                 } else {
@@ -140,7 +152,7 @@ class CSVP_CommunityMember
 
     public function render_shops()
     {
-        global $voucher_transaction;
+        global $voucher_transaction, $commision, $community;
 
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "purchase_voucher") {
             $payload = $_POST;
@@ -156,6 +168,22 @@ class CSVP_CommunityMember
                 $response = $voucher_transaction->create_voucher_transaction($payload);
 
                 if (!is_wp_error($response)) {
+
+                    $updated_balance = $member_balance - $payload["transaction_amount"];
+                    $this->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+                   
+                    $member_data = $this->get__member_data_by_id( $payload["community_member_id"]);
+                    $community_id = $member_data->community_id;
+                    $communtiy = $community->get_community_data_by_id( $community_id); // line 118
+                        $commision_Data = array(
+                            "entity_id" =>  $community_id,
+                            "entity_type" => CSVP_User_Roles::ROLE_COMMUNITY_MANAGER,
+                            "commission_type" => COMMISSION_TYPE_VOUCHER,
+                            "commission_value" => $communtiy->commision_percentage,
+                            "commission_status" => COMMISSION_STATUS_PENDING
+                        );
+                        $commision->create_commission($commision_Data);
+
 
                     $updated_balance = $member_balance - $payload["transaction_amount"];
                     $this->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
@@ -185,7 +213,7 @@ class CSVP_CommunityMember
         global $wpdb;
 
         // Create WordPress user
-        $user_id = wp_create_user($data['email_address'], wp_generate_password(), $data['email_address']);
+        $user_id = wp_create_user($data['email_address'], $data['password'], $data['email_address']);
         $user_id_role = new WP_User($user_id);
         $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER);
         if (!is_wp_error($user_id)) {
@@ -201,7 +229,7 @@ class CSVP_CommunityMember
                     'lesson' => $data['lesson'],
                     'id_number' => $data['id_number'],
                     'address' => $data['address'],
-                    'magnetic_card_number_association' => $data['magnetic_card_number_association'],
+                    'magnetic_card_number_association' => $data['magnetic_card_number_association_add'],
                     'card_balance' => $data['card_balance'],
                     'wp_user_id' => $user_id // Pass WordPress user ID
                 )
@@ -595,6 +623,20 @@ class CSVP_CommunityMember
         return $wpdb->query($query) !== false;
     }
 
+    public function inactive_community_member($data)
+    {
+        global $wpdb;
+
+        $community_member_id = $data['community_member_id'];
+        $is_active = $data['is_active'];
+
+        // Prepare SQL query to delete community member by ID
+        $query = $wpdb->prepare("UPDATE $this->table_name SET is_active = %d WHERE id = %d", $is_active, $community_member_id);
+
+        // Execute the query and return true on success, false on failure
+        return $wpdb->query($query) !== false;
+    }
+
     // Method to get all community members
     public function get_all_community_members()
     {
@@ -630,6 +672,9 @@ class CSVP_CommunityMember
             return !empty($community_members) ? $community_members : null;
         }
     }
+
+
+
     /**
      * Get balance by member ID.
      *
@@ -679,7 +724,7 @@ class CSVP_CommunityMember
      */
     public function add_balance($data)
     {
-        global $wpdb, $transaction;
+        global $wpdb, $transaction, $community, $commision, $notification;
         $member_id = $data['member_id'];
         $store_id = isset($data['store_id']) ? $data['store_id'] : 0;
         $transaction_type = isset($data['transaction_type']) ? $data['transaction_type'] : TRANSACTION_TYPE_CREDIT;
@@ -709,6 +754,31 @@ class CSVP_CommunityMember
         );
 
         $transaction->create_transaction($transaction_data);
+
+
+        
+        if (!is_wp_error($result)) {
+            $member_data = $this->get__member_data_by_id( $member_id);
+            $community_id = $member_data->community_id;
+            $communtiy = $community->get_community_data_by_id( $community_id); // line 118
+                $commision_Data = array(
+                    "entity_id" =>  $community_id,
+                    "entity_type" => CSVP_User_Roles::ROLE_COMMUNITY_MANAGER,
+                    "commission_type" => COMMISSION_TYPE_VOUCHER,
+                    "commission_value" => $communtiy->commision_percentage,
+                    "commission_status" => COMMISSION_STATUS_PENDING
+                );
+                $commision->create_commission($commision_Data);
+        }
+        // $args = array(
+        //     "wp_user" => get_current_user_id(),
+        //     "action_type" => ACTION_LOAD_CARD,
+        //     "recipients" => json_encode(array(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER => $member_id, CSVP_User_Roles::ROLE_COMMUNITY_MANAGER => $member->community_id))
+        // );
+
+        // echo json_encode($args);
+
+        // $notification->create_notification($args);
 
         return $result !== false;
     }
@@ -755,6 +825,25 @@ class CSVP_CommunityMember
             return $member;
         } else {
             // Send error response
+            return false;
+        }
+    }
+
+
+
+    public function get__member_data_by_id($user_id)
+    {
+        global $wpdb;
+        $query = $wpdb->prepare("SELECT * FROM $this->table_name WHERE id = %d", $user_id);
+        // Execute the query
+        $member_data = $wpdb->get_row($query);
+
+        // Check if a voucher was found
+        if ($member_data) {
+            // Return voucher data as an object
+            return $member_data;
+        } else {
+            // Return false if voucher not found
             return false;
         }
     }

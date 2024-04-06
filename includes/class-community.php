@@ -28,6 +28,60 @@ class CSVP_Community
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
         $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count" => true));
 
+
+        $payload["community_id"] = $this->get_current_community_id();
+        $id = $this->get_current_community_id();
+        $voucher_transaction = $this->voucher->get_all_voucher_transactions_by_community_id($payload);
+        $check_1["voucher_transaction"] = $voucher_transaction;
+        if (!is_wp_error($check_1["voucher_transaction"])) {
+            $pageData["voucher_transaction"] = $voucher_transaction;
+        }
+
+        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
+        $check_2["amount_transaction"] = $amount_transaction;
+        if (!is_wp_error($check_2["amount_transaction"])) {
+            $pageData["amount_transaction"] = $amount_transaction;
+        }
+
+
+        $modified_voucher_transaction = array();
+
+        foreach ($voucher_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_voucher_transaction, $voucher);
+        }
+
+        $pageData["voucher_transaction"] = $modified_voucher_transaction;
+
+
+        $modified_amount_transaction = array();
+
+        foreach ($amount_transaction as $voucher) {
+            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+            array_push($modified_amount_transaction, $voucher);
+        }
+
+        $pageData["amount_transaction"] = $modified_amount_transaction;
+
+
+        $total_order = 0;
+        $total_order_value = 0;
+        if (isset($pageData["voucher_transaction"])) {
+            foreach ($pageData["voucher_transaction"] as $transaction) {
+                $total_order = $total_order + 1;
+                $total_order_value = $total_order_value + $transaction['transaction_amount'];
+            }
+        }
+
+        if (isset($pageData["amount_transaction"])) {
+            foreach ($pageData["amount_transaction"] as $transaction) {
+                $total_order = $total_order + 1;
+                $total_order_value = $total_order_value + $transaction['transaction_amount'];
+            }
+        }
+
+        $pageData["total_transactions"] = $total_order_value;
+
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
@@ -51,6 +105,38 @@ class CSVP_Community
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, 'Guy with this email already exists');
             }
+        }
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "delete_guy") {
+            $payload = $_POST;
+            $payload_1['community_member_id'] = $payload['community_member_id'];
+            $payload_1['is_active'] = 0;
+        
+            $response = $this->community_member->inactive_community_member($payload_1);
+            if (!is_wp_error($response)) {
+                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Guy Deleted");
+            } else {
+                CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+            }
+        }
+        if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "edit_guy") {
+
+                $payload = $_POST;
+                $payload_1['phone_number'] = $payload['phone_number'];
+                $payload_1['full_name'] = $payload['full_name'];
+                $payload_1['address'] = $payload['address'];
+                $payload_1['id_number'] = $payload['id_number'];
+                $payload_1['lesson'] = $payload['lesson'];
+                $payload_1['magnetic_card_number_association'] = $payload['magnetic_card_number_association'];
+                $payload_1['community_member_id'] = $payload['community_member_id'];
+    
+                $response = $this->community_member->update_community_member($payload_1);
+                if (!is_wp_error($response)) {
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Guy Updated");
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response);
+    
+                }
         }
 
 
