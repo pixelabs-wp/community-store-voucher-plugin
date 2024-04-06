@@ -440,6 +440,13 @@
               </div>
             </div>
             <div class="row">
+            <div class="mb-3 col-xl-12">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password">
+              </div>
+            </div>
+
+            <div class="row">
               <label class="form-label">שיוך מספר כרטיס מגנטי</label>
 
               <div class="wrapped-input mb-3 row align-items-center">
@@ -447,7 +454,7 @@
                   <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association">
+                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association_add">
                 </div>
               </div>
             </div>
@@ -463,9 +470,6 @@
 </div>
 
 
-
-
-
     <!-- Import From Excel Modal -->
 
     <div class="modal fade" id="excel-import-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -475,14 +479,14 @@
                 <form method="POST" action="" enctype="multipart/form-data">
                   <div class="col-12">
                       <div class="form-label">Import From Excel</div>
-                      <input type="file" name="community_members_excel_sheet" class="form-control">
+                      <input type="file" name="community_members_csv" accept=".csv" class="form-control">
 
                       <div class="row gap-3 mt-3">
                           <input type="submit" class="col-4 btn btn-dark">
                               Import
                           </button>
 
-                          <a href="<?php echo get_stylesheet_directory_uri(); ?>/assets/import_templates/community_members_template.xlsx" class="col-4 btn btn-dark" download>
+                          <a href="<?php echo plugins_url("/assets/import_templates/community_members_template.xlsx"); ?>" class="col-4 btn btn-dark" download>
                               Download Sample
                           </a>
                       </div>
