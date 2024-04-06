@@ -1088,7 +1088,7 @@ class CSVP_Community
 
     public function get_community_data_for_store_popup($data)
     {
-        global $wpdb, $store;
+        global $wpdb, $store, $community;
 
         $community_id = $data['community_id'];
         $store_id = $store->get_store_id();
@@ -1103,8 +1103,12 @@ class CSVP_Community
             $store_id
         );
 
+        
         // Execute the query
         $community_data = $wpdb->get_results($query);
+
+        $community_data[0]->creditbalance = $community->getCreditLimit(array("store_id" => $store_id, "community_id" => $community_id));
+
 
         // Check if communities were found
         if ($community_data) {
