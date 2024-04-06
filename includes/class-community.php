@@ -25,63 +25,16 @@ class CSVP_Community
 
     public function render_dashboard()
     {
+        global $order;
         $pageData["count_members"] = $this->community_member->get_community_members_by_community_id(array("community_id" => $this->get_current_community_id(), "count" => true));
         $pageData["redeemed_voucher"] = $this->voucher->get_all_voucher_transactions_by_community_id(array("community_id" => $this->get_current_community_id(), "status" => VOUCHER_STATUS_USED, "count" => true));
 
 
-        $payload["community_id"] = $this->get_current_community_id();
-        $id = $this->get_current_community_id();
-        $voucher_transaction = $this->voucher->get_all_voucher_transactions_by_community_id($payload);
-        $check_1["voucher_transaction"] = $voucher_transaction;
-        if (!is_wp_error($check_1["voucher_transaction"])) {
-            $pageData["voucher_transaction"] = $voucher_transaction;
-        }
 
-        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
-        $check_2["amount_transaction"] = $amount_transaction;
-        if (!is_wp_error($check_2["amount_transaction"])) {
-            $pageData["amount_transaction"] = $amount_transaction;
-        }
+        $pageData["creditBalance"] = $this->getCreditLimit();
+        
 
-
-        $modified_voucher_transaction = array();
-
-        foreach ($voucher_transaction as $voucher) {
-            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
-            array_push($modified_voucher_transaction, $voucher);
-        }
-
-        $pageData["voucher_transaction"] = $modified_voucher_transaction;
-
-
-        $modified_amount_transaction = array();
-
-        foreach ($amount_transaction as $voucher) {
-            $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
-            array_push($modified_amount_transaction, $voucher);
-        }
-
-        $pageData["amount_transaction"] = $modified_amount_transaction;
-
-
-        $total_order = 0;
-        $total_order_value = 0;
-        if (isset($pageData["voucher_transaction"])) {
-            foreach ($pageData["voucher_transaction"] as $transaction) {
-                $total_order = $total_order + 1;
-                $total_order_value = $total_order_value + $transaction['transaction_amount'];
-            }
-        }
-
-        if (isset($pageData["amount_transaction"])) {
-            foreach ($pageData["amount_transaction"] as $transaction) {
-                $total_order = $total_order + 1;
-                $total_order_value = $total_order_value + $transaction['transaction_amount'];
-            }
-        }
-
-        $pageData["total_transactions"] = $total_order_value;
-
+        $pageData["total_transactions"] = $this->getSaleByMonth();
         CSVP_View_Manager::load_view('dashboard', $pageData);
     }
 
@@ -362,7 +315,7 @@ class CSVP_Community
 
     public function render_store_management()
     {
-        global $store, $filter;
+        global $store, $filter, $joining_request;
 
 
         if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "joining_request") {
@@ -395,12 +348,25 @@ class CSVP_Community
                 $totalcost = $totalcost + $value;
             }
             $payload["order_total"] = $totalcost;
-            $response = $this->order->create_order($payload);
-            if ($response["status"] !== false) {
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]);
+
+
+            $credit_limit = $joining_request->get_credit_limit($payload["store_id"],$this->get_current_community_id());
+            $credit_balance = $this->getCreditLimit(array("store_id"=> $payload["store_id"]));
+
+
+            if(($credit_balance + $totalcost) >= $credit_limit){
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Order exceeds credit limit");
+
             } else {
-                CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+                $response = $this->order->create_order($payload);
+                if ($response["status"] !== false) {
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, $response["response"]. " ". ($credit_balance + $totalcost) . " ". json_encode($credit_limit));
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response["response"]);
+                }
             }
+
+           
         } else if (isset ($_POST["csvp_request"]) && $_POST["csvp_request"] == "add_return_request") {
             $payload = $_POST;
             $payload["is_active"] = true;
@@ -677,6 +643,172 @@ class CSVP_Community
             return new WP_Error('not_found', __('Community not found.', 'csvp'), array('status' => 404));
         }
     }
+
+    function getDashboardSales($month = null)
+    {
+        // If $month is not provided, assume current month
+        if ($month === null) {
+            $month = date('m');
+        }
+
+        // Initialize an array to store sales data for each month
+        $salesData = array();
+
+        // Loop through the past 10 months including the current month
+        for ($i = 0; $i < 12; $i++) {
+            // Calculate the target month using strtotime
+            $targetMonth = date('Y-m', strtotime("-$i months"));
+            $targetMonthData = date('F', strtotime("-$i months"));
+
+            // Fetch sales data for the target month
+            $sales = $this->getSaleByMonth($targetMonth)["total_order_value"];
+
+            // Store the sales data for the current month
+            $salesData["$targetMonthData"] = $sales;
+        }
+
+        return $salesData;
+    }
+
+
+    function getSaleByMonth($month = null)
+    {
+        // Set the default month to the current month if not provided
+        if ($month === null) {
+            $month = date('Y-m');
+        }
+
+        $payload["community_id"] = $this->get_current_community_id();
+        $id = $this->get_current_community_id();
+        $voucher_transaction = $this->voucher->get_all_voucher_transactions_by_community_id($payload);
+        $check_1["voucher_transaction"] = $voucher_transaction;
+        if (!is_wp_error($check_1["voucher_transaction"])) {
+            $pageData["voucher_transaction"] = $voucher_transaction;
+        }
+
+        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
+        $check_2["amount_transaction"] = $amount_transaction;
+        if (!is_wp_error($check_2["amount_transaction"])) {
+            $pageData["amount_transaction"] = $amount_transaction;
+        }
+
+        $modified_voucher_transaction = array();
+        $modified_amount_transaction = array();
+
+        foreach ($voucher_transaction as $voucher) {
+            if (date('Y-m', strtotime($voucher["created_at"])) == $month) {
+                $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+                array_push($modified_voucher_transaction, $voucher);
+            }
+        }
+
+        foreach ($amount_transaction as $voucher) {
+            if (date('Y-m', strtotime($voucher["created_at"])) == $month) {
+                $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+                array_push($modified_amount_transaction, $voucher);
+            }
+        }
+
+
+        $pageData["voucher_transaction"] = $modified_voucher_transaction;
+        $pageData["amount_transaction"] = $modified_amount_transaction;
+
+        $total_order = 0;
+        $total_order_value = 0;
+
+        foreach ($pageData["voucher_transaction"] as $transaction) {
+            $total_order = $total_order + 1;
+            $total_order_value = $total_order_value + $transaction['transaction_amount'];
+        }
+
+        foreach ($pageData["amount_transaction"] as $transaction) {
+            $total_order = $total_order + 1;
+            $total_order_value = $total_order_value + $transaction['transaction_amount'];
+        }
+
+        return array(
+            'total_orders' => $total_order,
+            'total_order_value' => $total_order_value,
+            'amount_transactions' => $pageData["amount_transaction"],
+            'voucher_transaction' => $pageData["voucher_transaction"],
+        );
+    }
+
+    function getCreditLimit($data = array())
+    {
+        global $order;
+
+        // Set the default status to 3 if not provided
+        $id = isset($data["community_id"]) ? $data["community_id"] : $this->get_current_community_id();
+        $amount_transaction = $this->transaction->get_transactions_by_community_id($id);
+
+
+        $modified_amount_transaction = array();
+
+        foreach ($amount_transaction as $voucher) {
+
+            if ($voucher["is_active"] != '3') {
+                $voucher["created_at"] = date("Y-m-d", strtotime($voucher["created_at"]));
+                array_push($modified_amount_transaction, $voucher);
+            }
+
+        }
+
+
+        $total_order = 0;
+        $total_order_value = 0;
+        $debtBalance = 0;
+
+        foreach ($modified_amount_transaction as $transaction) {
+
+
+            if($transaction["transaction_type"] == "debit"){
+
+                if(isset($data["store_id"]) ){
+
+                    if($transaction["store_id"] == $data["store_id"]){
+                        $total_order = $total_order + 1;
+                        $total_order_value = $total_order_value + $transaction['transaction_amount'];
+                        $debtBalance += $transaction['transaction_amount'];
+                    }
+                } else {
+                    $total_order = $total_order + 1;
+                    $total_order_value = $total_order_value + $transaction['transaction_amount'];
+                    $debtBalance += $transaction['transaction_amount'];
+                }
+                
+            }
+
+           
+        }
+
+        if (isset($data["community_id"])) {
+            $orders = $order->get_orders_data_community(array('suffix' => "_store", "community_id" => $data["community_id"]));
+        } else {
+            $orders = $order->get_orders_data_community(array('suffix' => "_store"));
+        }
+
+        foreach ($orders as $key => $order) {
+
+
+            if ($order["order_status"] !== ORDER_STATUS_PAID && $order["order_status"] !== ORDER_STATUS_CANCELLED && $order["order_status"] !== ORDER_STATUS_RETURNED && $order["order_status"] !== ORDER_STATUS_RETURNED_PAID ) {
+                if (isset($data["store_id"])) {
+                    if ($order["store_id"] == $data["store_id"]) {
+                        $total_order = $total_order + 1;
+                        $debtBalance += $order["order_total"];
+                    }
+                } else {
+                    $debtBalance += $order["order_total"];
+                }
+            }
+
+        }
+
+
+        return $debtBalance;
+    }
+
+
 
     /**
      * Function to retrieve a community by its ID from the database.

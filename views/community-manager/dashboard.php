@@ -14,7 +14,7 @@
 								<path d="M39.0909 28.4686H0.909091C0.407049 28.4686 0 28.8406 0 29.2994C0 29.7581 0.407049 30.1301 0.909091 30.1301H39.0909C39.5929 30.1301 40 29.7581 40 29.2994C40 28.8406 39.5929 28.4686 39.0909 28.4686ZM39.0909 35.1144H0.909091C0.407049 35.1144 0 35.4864 0 35.9451C0 36.4039 0.407049 36.7758 0.909091 36.7758H39.0909C39.5929 36.7758 40 36.4039 40 35.9451C40 35.4864 39.5929 35.1144 39.0909 35.1144ZM20 7.70061C17.4896 7.70061 15.4545 9.5602 15.4545 11.8542C15.4545 14.1482 17.4896 16.0078 20 16.0078C22.5094 16.0057 24.5431 14.1473 24.5455 11.8542C24.5455 9.5602 22.5104 7.70061 20 7.70061ZM20 14.3464C18.4938 14.3464 17.2727 13.2306 17.2727 11.8542C17.2727 10.4778 18.4938 9.36205 20 9.36205C21.5056 9.36357 22.7256 10.4784 22.7273 11.8542C22.7273 13.2306 21.5062 14.3464 20 14.3464ZM9.09091 9.36205C7.58467 9.36205 6.36364 10.4778 6.36364 11.8542C6.36364 13.2306 7.58467 14.3464 9.09091 14.3464C10.5965 14.3449 11.8165 13.23 11.8182 11.8542C11.8182 10.4778 10.5971 9.36205 9.09091 9.36205ZM9.09091 12.6849C8.58887 12.6849 8.18182 12.313 8.18182 11.8542C8.18182 11.3955 8.58887 11.0235 9.09091 11.0235C9.59262 11.0244 9.999 11.3958 10 11.8542C10 12.313 9.59295 12.6849 9.09091 12.6849ZM34.5455 0.224121H5.45455C2.4434 0.227163 0.00332927 2.45689 0 5.20845V18.5C0.00332927 21.2515 2.4434 23.4813 5.45455 23.4843H34.5455C37.5566 23.4813 39.9967 21.2515 40 18.5V5.20845C39.9967 2.45689 37.5566 0.227163 34.5455 0.224121ZM38.1818 18.5C38.1793 20.3342 36.5527 21.8205 34.5455 21.8229H5.45455C3.44727 21.8205 1.82073 20.3342 1.81818 18.5V5.20845C1.82073 3.37421 3.44727 1.8879 5.45455 1.88556H34.5455C36.5527 1.8879 38.1793 3.37421 38.1818 5.20845V18.5ZM30.9091 9.36205C29.4029 9.36205 28.1818 10.4778 28.1818 11.8542C28.1818 13.2306 29.4029 14.3464 30.9091 14.3464C32.4147 14.3449 33.6347 13.23 33.6364 11.8542C33.6364 10.4778 32.4153 9.36205 30.9091 9.36205ZM30.9091 12.6849C30.407 12.6849 30 12.313 30 11.8542C30 11.3955 30.407 11.0235 30.9091 11.0235C31.4108 11.0244 31.8172 11.3958 31.8182 11.8542C31.8182 12.313 31.4111 12.6849 30.9091 12.6849Z" fill="#F9F8C7" />
 							</svg>
 						</span>
-						<h1 class="m-0" style="font-weight: 900;">45,000 NIS</h1>
+						<h1 class="m-0" style="font-weight: 900;"><?php echo $pageData["creditBalance"]; ?> NIS</h1>
 						<p class="m-0">Current debt balance</p>
 					</div>
 				</div>
@@ -36,7 +36,7 @@
 						<h1 class="m-0" style="font-weight: 900;">
 							<?php
 							if (isset($pageData["total_transactions"])) {
-								echo $pageData["total_transactions"];
+								echo $pageData["total_transactions"]["total_order_value"];
 							}  ?></h1>
 						<p class="m-0">Total transactions</p>
 					</div>
@@ -96,6 +96,7 @@
 
 
 	</div>
+
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
@@ -115,38 +116,38 @@
 			$message_data = $messages->get_community_messages_by_to_id(array("to_id" => $community->get_current_community_id()));
 
 
-			if(!empty($message_data)){
+			if (!empty($message_data)) {
 
-			foreach ($message_data as $key => $message) {
+				foreach ($message_data as $key => $message) {
 
 			?>
 
-				<div class="card p-0 br bg border-0 ">
-					<div class="card-body p-2">
-						<div class="d-flex justify-content-between align-items-center ">
-							<span>
-								<form action="/community/messages" method="post">
-									<input type="hidden" name="csvp_filter" value="get_by_name">
-									<input type="hidden" name="full_name" value="<?php echo $message["full_name"]; ?>">
-									<button type="submit" class="border-0"> <svg width="44" height="36" viewBox="0 0 44 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-											<path d="M31.0732 0C38.0786 0.0195713 43.7523 5.2424 43.7736 11.6911V14.6139L43.7594 14.8073C43.6569 15.5032 43.0089 16.0396 42.2248 16.0396L42.2054 16.004L41.9617 15.9862C41.6412 15.9392 41.3426 15.8003 41.1102 15.5864C40.8198 15.319 40.6566 14.9563 40.6566 14.5782V11.6911C40.6041 6.83909 36.3441 2.91759 31.0732 2.86931H12.7003C7.42949 2.91759 3.16945 6.83909 3.117 11.6911V24.3089C3.16945 29.1609 7.42949 33.0824 12.7003 33.1307H31.0732C36.3441 33.0824 40.6041 29.1609 40.6566 24.3089C40.7452 23.5782 41.4163 23.0255 42.2151 23.0255C43.0138 23.0255 43.685 23.5782 43.7736 24.3089C43.7523 30.7576 38.0786 35.9804 31.0732 36H12.7003C5.69056 35.9902 0.0106613 30.7617 0 24.3089V11.6911C0 5.23428 5.68614 0 12.7003 0H31.0732ZM9.39914 10.7739C9.80682 10.7336 10.215 10.8458 10.532 11.0851L19.6313 17.7149C20.768 18.5358 22.3667 18.5358 23.5034 17.7149L32.5059 11.0851H32.5253L32.7151 10.9658C33.3691 10.6162 34.2189 10.7452 34.713 11.299C34.9719 11.596 35.091 11.976 35.0437 12.3543C34.9964 12.7326 34.7867 13.0778 34.4613 13.3129L25.4588 19.9604C23.1697 21.6561 19.9069 21.6561 17.6179 19.9604L8.59596 13.3129L8.42938 13.1671C7.92064 12.6519 7.87921 11.86 8.36364 11.299C8.61838 11.0033 8.99146 10.8141 9.39914 10.7739Z" fill="#01051D" />
-										</svg></button>
-								</form>
+					<div class="card p-0 br bg border-0 ">
+						<div class="card-body p-2">
+							<div class="d-flex justify-content-between align-items-center ">
+								<span>
+									<form action="/community/messages" method="post">
+										<input type="hidden" name="csvp_filter" value="get_by_name">
+										<input type="hidden" name="full_name" value="<?php echo $message["full_name"]; ?>">
+										<button type="submit" class="border-0"> <svg width="44" height="36" viewBox="0 0 44 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+												<path d="M31.0732 0C38.0786 0.0195713 43.7523 5.2424 43.7736 11.6911V14.6139L43.7594 14.8073C43.6569 15.5032 43.0089 16.0396 42.2248 16.0396L42.2054 16.004L41.9617 15.9862C41.6412 15.9392 41.3426 15.8003 41.1102 15.5864C40.8198 15.319 40.6566 14.9563 40.6566 14.5782V11.6911C40.6041 6.83909 36.3441 2.91759 31.0732 2.86931H12.7003C7.42949 2.91759 3.16945 6.83909 3.117 11.6911V24.3089C3.16945 29.1609 7.42949 33.0824 12.7003 33.1307H31.0732C36.3441 33.0824 40.6041 29.1609 40.6566 24.3089C40.7452 23.5782 41.4163 23.0255 42.2151 23.0255C43.0138 23.0255 43.685 23.5782 43.7736 24.3089C43.7523 30.7576 38.0786 35.9804 31.0732 36H12.7003C5.69056 35.9902 0.0106613 30.7617 0 24.3089V11.6911C0 5.23428 5.68614 0 12.7003 0H31.0732ZM9.39914 10.7739C9.80682 10.7336 10.215 10.8458 10.532 11.0851L19.6313 17.7149C20.768 18.5358 22.3667 18.5358 23.5034 17.7149L32.5059 11.0851H32.5253L32.7151 10.9658C33.3691 10.6162 34.2189 10.7452 34.713 11.299C34.9719 11.596 35.091 11.976 35.0437 12.3543C34.9964 12.7326 34.7867 13.0778 34.4613 13.3129L25.4588 19.9604C23.1697 21.6561 19.9069 21.6561 17.6179 19.9604L8.59596 13.3129L8.42938 13.1671C7.92064 12.6519 7.87921 11.86 8.36364 11.299C8.61838 11.0033 8.99146 10.8141 9.39914 10.7739Z" fill="#01051D" />
+											</svg></button>
+									</form>
 
 
-							</span>
-							<p class="m-0 text-center text-md-start"><span class="bld">Subject:</span>
-								<?php echo $message['content']; ?></p>
-							<p class="m-0 text-center text-md-start"><span class="bld">Sender's name:</span>
-								<?php echo $message["full_name"]; ?> </p>
+								</span>
+								<p class="m-0 text-center text-md-start"><span class="bld">Subject:</span>
+									<?php echo $message['content']; ?></p>
+								<p class="m-0 text-center text-md-start"><span class="bld">Sender's name:</span>
+									<?php echo $message["full_name"]; ?> </p>
+							</div>
 						</div>
 					</div>
-				</div>
 
 
 
 			<?php
-			}
+				}
 			} else {
 				echo "No recent messages";
 			}
@@ -294,6 +295,9 @@
 <script>
 	// @formatter:off
 	document.addEventListener("DOMContentLoaded", function() {
+
+		var data = JSON.parse('<?php echo json_encode($community->getDashboardSales()); ?>');
+
 		window.ApexCharts && (new ApexCharts(document.getElementById('chart-tasks-overview'), {
 			chart: {
 				type: "bar",
@@ -321,7 +325,7 @@
 			},
 			series: [{
 				name: "A",
-				data: [44, 32, 48, 72, 60, 16, 44, 32, 78, 50, 68, 34]
+				data: Object.values(data)
 			}],
 			tooltip: {
 				theme: 'dark'
@@ -345,15 +349,12 @@
 				axisBorder: {
 					show: false,
 				},
-				categories: [
-					'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-					'September', 'October', 'November', 'December'
-				],
+				categories: Object.keys(data),
 			},
 			yaxis: {
 				labels: {
 					formatter: function(value) {
-						return value * 100 + " " + "NIS";
+						return value +" " + "NIS";
 					}
 				},
 			},

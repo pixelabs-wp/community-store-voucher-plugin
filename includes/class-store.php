@@ -389,6 +389,8 @@ class CSVP_Store
 
         // Execute the query
         $community_data = $wpdb->get_results($query);
+        $community_data[0]->creditbalance = $community->getCreditLimit(array("store_id" => $store_id, "community_id" => $community_id));
+        // echo json_encode($community_data);
 
         // Check if communities were found
         if ($community_data) {
@@ -623,7 +625,7 @@ class CSVP_Store
 
     public function render_creating_transactions()
     {
-        global $community_member, $community, $voucher_transaction, $transaction, $commision;
+        global $community_member, $community, $voucher_transaction, $transaction, $commision, $joining_request;
 
         if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_voucher") {
             $payload = $_POST;
@@ -631,6 +633,17 @@ class CSVP_Store
             $payload["transaction_date"] = date("Y-m-d H:i:s");
             $payload["status"] = VOUCHER_STATUS_USED;
             unset($payload['csvp_request']);
+
+            $member = $community_member->get_community_member_by_id(array('community_member_id' => $payload["community_member_id"]));
+
+            $credit_limit = $joining_request->get_credit_limit($this->get_store_id(), $member->community_id);
+            $credit_balance = $community->getCreditLimit(array("community_id" => $member->community_id, "store_id" => $this->get_store_id()));
+
+
+            if (($credit_balance + $payload["transaction_amount"]) >= $credit_limit) {
+
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Vocher Charge exceeds credit limit");
+            } else {
 
             $response = $voucher_transaction->update_voucher_transaction($payload);
 
@@ -654,47 +667,62 @@ class CSVP_Store
                 CSVP_Notification::add(CSVP_Notification::SUCCESS, "Voucher has been charged successfully");
             } else {
                 CSVP_Notification::add(CSVP_Notification::ERROR, $response);
-            }
-
+            } 
+        }
         } else if (isset($_POST["csvp_request"]) && $_POST["csvp_request"] == "charge_card") {
             $payload = $_POST;
 
             $member = $community_member->get_community_member_by_id(array('community_member_id' => $payload["community_member_id"]));
-            $updated_balance = $member->card_balance - $payload["transaction_amount"];
-            $response = $community_member->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
-
-            $transaction_data = array(
-                'community_id' => $member->community_id,
-                'store_id' => $this->get_store_id(),
-                'transaction_amount' => $payload["transaction_amount"],
-                'transaction_type' => TRANSACTION_TYPE_DEBIT,
-                'community_member_id' => $payload["community_member_id"]
-            );
-
-            $transaction->create_transaction($transaction_data);
-
-            unset($payload['csvp_request']);
+            
 
 
-            if (!is_wp_error($response)) {
+            $credit_limit = $joining_request->get_credit_limit($this->get_store_id(), $member->community_id);
+            $credit_balance = $community->getCreditLimit(array("community_id"=> $member->community_id,"store_id" => $this->get_store_id()));
 
-                $store = $this->get_store_data_by_id($this->get_store_id()); // line 118
 
+            if (($credit_balance + $payload["transaction_amount"]) >= $credit_limit) {
 
-                $commision_Data = array(
-                    "entity_id" => $this->get_store_id(),
-                    "entity_type" => CSVP_User_Roles::ROLE_STORE_MANAGER,
-                    "commission_type" => COMMISSION_TYPE_ACCUMULATED,
-                    "commission_value" => $store->fee_amount_per_transaction,
-                    "commission_status" => COMMISSION_STATUS_PENDING
-                );
-
-                $commision->create_commission($commision_Data);
-
-                CSVP_Notification::add(CSVP_Notification::SUCCESS, "Card has been charged successfully");
+                CSVP_Notification::add(CSVP_Notification::ERROR, "Debit exceeds credit limit");
+                
             } else {
-                CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+
+                $updated_balance = $member->card_balance - $payload["transaction_amount"];
+                $response = $community_member->update_community_member(array("community_member_id" => $payload["community_member_id"], "card_balance" => $updated_balance));
+
+                $transaction_data = array(
+                    'community_id' => $member->community_id,
+                    'store_id' => $this->get_store_id(),
+                    'transaction_amount' => $payload["transaction_amount"],
+                    'transaction_type' => TRANSACTION_TYPE_DEBIT,
+                    'community_member_id' => $payload["community_member_id"]
+                );
+                $transaction->create_transaction($transaction_data);
+
+                unset($payload['csvp_request']);
+
+
+                if (!is_wp_error($response)) {
+
+                    $store = $this->get_store_data_by_id($this->get_store_id()); // line 118
+
+
+                    $commision_Data = array(
+                        "entity_id" => $this->get_store_id(),
+                        "entity_type" => CSVP_User_Roles::ROLE_STORE_MANAGER,
+                        "commission_type" => COMMISSION_TYPE_ACCUMULATED,
+                        "commission_value" => $store->fee_amount_per_transaction,
+                        "commission_status" => COMMISSION_STATUS_PENDING
+                    );
+
+                    $commision->create_commission($commision_Data);
+
+                    CSVP_Notification::add(CSVP_Notification::SUCCESS, "Card has been charged successfully");
+                } else {
+                    CSVP_Notification::add(CSVP_Notification::ERROR, $response->get_error_message());
+                }
             }
+
+          
         }
 
         $joined_communities = $community->get_all_joined_communities_for_store();

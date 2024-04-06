@@ -789,8 +789,7 @@ $community_id = $community->get_current_community_id();
     /* Add new order modal style ends here */
 </style>
 
-<div class="modal fade" id="community-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="community-manager-add-new-order" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
         <div class="modal-content p-4">
             <div class="background-box">
@@ -816,17 +815,13 @@ $community_id = $community->get_current_community_id();
                     </div>
                     <div class="flex">
                         <div class="mb-3">
-                            <input class="custom-file-input" type="file" name="order_info_file" id="formFileMultiple"
-                                multiple>
+                            <input class="custom-file-input" type="file" name="order_info_file" id="formFileMultiple" multiple>
                         </div>
                         <div class="mb-3">
                             <label class="labell">הוספת שורה</label>
-                            <svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                            <svg onclick="addRow()" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="42" height="42" rx="10" fill="#01051D" />
-                                <path
-                                    d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
-                                    fill="white" />
+                                <path d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z" fill="white" />
                             </svg>
                         </div>
                     </div>
@@ -838,8 +833,7 @@ $community_id = $community->get_current_community_id();
                         <input type="hidden" id="order_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_order_request">
                         <button class="button button-primary">אישור</button>
-                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                            class="button button-secondary">ביטול</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>
@@ -851,8 +845,7 @@ $community_id = $community->get_current_community_id();
 
 <!-- Return Request modal Starts here -->
 
-<div class="modal fade" id="community-manager-return-request" tabindex="-1" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="community-manager-return-request" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-xl modal-dialog-centered modal-dialog-scrollable ">
         <div class="modal-content p-4">
             <div class="background-box">
@@ -881,12 +874,9 @@ $community_id = $community->get_current_community_id();
                         </div>
                         <div class="mb-3">
                             <label class="labell">הוספת שורה</label>
-                            <svg onclick="addReturnRow()" width="42" height="42" viewBox="0 0 42 42" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
+                            <svg onclick="addReturnRow()" width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <rect width="42" height="42" rx="10" fill="#01051D" />
-                                <path
-                                    d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z"
-                                    fill="white" />
+                                <path d="M18.605 25.8711H10.541V21.0591H18.605V12.9512H23.417V21.0591H31.459V25.8711H23.417V33.8691H18.605V25.8711Z" fill="white" />
                             </svg>
                         </div>
                     </div>
@@ -898,8 +888,7 @@ $community_id = $community->get_current_community_id();
                         <input type="hidden" id="order__return_request_store_id" name="store_id" value="">
                         <input type="hidden" name="csvp_request" value="add_return_request">
                         <button class="button button-primary">אישור</button>
-                        <button type="button" data-bs-dismiss="modal" aria-label="Close"
-                            class="button button-secondary">ביטול</button>
+                        <button type="button" data-bs-dismiss="modal" aria-label="Close" class="button button-secondary">ביטול</button>
                     </div>
                 </form>
             </div>
@@ -920,7 +909,7 @@ $community_id = $community->get_current_community_id();
                         <h4>תקרת אשראי</h4>
                         <span> ₪ <span id="credit_limit"></span> </span>
                         <h4>יתרת אשראי</h4>
-                        <span> ₪ 2,500 </span>
+                        <span> ₪ <span id="credit_balance"></span> </span>
                     </div>
                 </div>
                 <div class="d-flex store-management-modal-header align-items-center gap-3 header-data-wrapper">
@@ -935,11 +924,9 @@ $community_id = $community->get_current_community_id();
                         </div>
 
                         <div class="d-flex sw-buttons" style="direction: rtl;">
-                            <button type="button" data-bs-toggle="modal"
-                                data-bs-target="#community-manager-add-new-order" class="btn  btn-customs">בקשת הזמנה
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#community-manager-add-new-order" class="btn btn-customs" id="community-manager-add-new-order_btn">בקשת הזמנה
                                 חדשה +</button>
-                            <button type="button" data-bs-toggle="modal"
-                                data-bs-target="#community-manager-return-request" class="btn btn-custom">הוספת החזרה
+                            <button type=" button" data-bs-toggle="modal" data-bs-target="#community-manager-return-request" class="btn btn-custom">הוספת החזרה
                                 חדשה +</button>
                         </div>
                     </div>
@@ -1022,48 +1009,41 @@ $community_id = $community->get_current_community_id();
     </div>
 </div>
 
-<div
-    class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
+<div class="container m-auto row row-cards justify-content-sm-around gap-sm-3 gap-3 gap-lg-0 justify-content-lg-center bg-black px-2 py-3 m-0 rounded-3">
     <div class="col-sm-5 col-lg-4 m-0">
         <div class="card card-sm">
             <div class="card-body-rounded p-1 m-1">
                 <div class="row align-items-center">
                     <div class="col-auto">
                         <span><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z"
-                                    fill="#01051D" />
+                            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M41.7966 39.2038L31.392 28.7992C33.733 25.8775 35.0059 22.2439 35 18.5C35 9.38742 27.613 2 18.5 2C9.38742 2 2 9.38742 2 18.5C2 27.6126 9.38742 35 18.5 35C22.3958 35 25.9763 33.6498 28.7992 31.3915L39.2038 41.7962C39.3739 41.9667 39.5759 42.1019 39.7983 42.1941C40.0208 42.2863 40.2592 42.3336 40.5 42.3333C40.8626 42.3334 41.217 42.2258 41.5185 42.0244C41.82 41.823 42.055 41.5367 42.1938 41.2017C42.3326 40.8668 42.3689 40.4982 42.2982 40.1426C42.2275 39.7869 42.053 39.4603 41.7966 39.2038ZM18.5 31.3333C11.4123 31.3333 5.66667 25.5877 5.66667 18.5C5.66667 11.4123 11.4123 5.66667 18.5 5.66667C25.5881 5.66667 31.3333 11.4123 31.3333 18.5C31.3333 25.5877 25.5881 31.3333 18.5 31.3333Z" fill="#01051D" />
                             </svg>
 
                         </span>
 
                         <?php
                         if (isset($_POST["store_name"])) {
-                            ?>
+                        ?>
                             <span id="reloadButton" class="reset badge bg-red text-red-fg">reset</span>
                             <span class="current_filter">
                                 <?php
                                 echo $_POST["store_name"];
                                 ?>
                             </span>
-                            <?php
+                        <?php
                         } ?>
 
 
                     </div>
                     <div class="col">
                         <form action="" method="post">
-                            <input type="text" id="store-search" name="store_name" list="stores"
-                                value="<?php echo isset($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>"
-                                placeholder="חיפוש חנות ">
+                            <input type="text" id="store-search" name="store_name" list="stores" value="<?php echo isset($_POST["store_name"]) ? $_POST["store_name"] : ""; ?>" placeholder="חיפוש חנות ">
                             <input type="hidden" name="csvp_filter" value="filter_by_name">
                             <datalist id="stores">
                                 <?php foreach ($store->get_all_stores() as $key => $storeData) {
                                     echo '<option value="' . $storeData['store_name'] . '">' . $storeData['store_name'] . '</option>';
-                                }
-                                ; ?>
+                                }; ?>
 
                             </datalist>
                         </form>
@@ -1139,20 +1119,18 @@ $community_id = $community->get_current_community_id();
                                         <td><strong>סך הזמנות: </strong>
                                             <?php echo $total_order_amount; ?> ₪
                                         </td>
-                                        <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#store-details"
-                                                data-id="<?php echo $store['store_id']; ?>">Open Popup</button>
+                                        <td><button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#store-details" data-id="<?php echo $store['store_id']; ?>">Open Popup</button>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <div class="w-35"
-                        style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
-        <?php }
+    <?php }
     } ?>
     <?php if (isset($pageData["requested_stores"])) {
         foreach ($pageData["requested_stores"] as $store) {
@@ -1188,12 +1166,11 @@ $community_id = $community->get_current_community_id();
                         </div>
                         <label class="text-secondary "><b>בקשה בהמתנה</b></label>
                     </div>
-                    <div class="w-35"
-                        style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35" style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
-        <?php }
+    <?php }
     } ?>
     <?php if (isset($pageData["not_requested_stores"])) {
         foreach ($pageData["not_requested_stores"] as $store) {
@@ -1229,18 +1206,16 @@ $community_id = $community->get_current_community_id();
                             </div>
                         </div>
                         <form method="POST" action="" style="direction: rtl;">
-                            <input type="hidden" id="benifit_store_id" name="store_id"
-                                value="<?php echo $store['store_data']->id; ?>">
+                            <input type="hidden" id="benifit_store_id" name="store_id" value="<?php echo $store['store_data']->id; ?>">
                             <input type="hidden" name="csvp_request" value="joining_request">
                             <button class="btn btn-dark">לצירוף הת”ת ←</button>
                         </form>
                     </div>
-                    <div class="w-35 "
-                        style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
+                    <div class="w-35 " style="border-top-right-radius: 8px; border-bottom-right-radius: 8px; width: 35%; background-image: url(<?php echo $store_logo; ?>); background-position: center; background-size: cover; background-repeat: no-repeat;">
                     </div>
                 </div>
             </div>
-        <?php }
+    <?php }
     } ?>
 </div>
 
@@ -1296,7 +1271,7 @@ $community_id = $community->get_current_community_id();
         var section = `
         `;
         var total_items = 0;
-        orderData.forEach(function (item) {
+        orderData.forEach(function(item) {
             section = section + `
         <tr>
         <td>${item.total_cost}</td>
@@ -1319,7 +1294,7 @@ $community_id = $community->get_current_community_id();
     }
 
     function addOrderHistory(item) {
-        console.log(item);
+        console.log("order item", item);
         var section = ``;
         var approvalSection = ``;
         var returnSection = ``;
@@ -1434,7 +1409,7 @@ $community_id = $community->get_current_community_id();
 
 
 
-    jQuery('#store-details').on('show.bs.modal', function (event) {
+    jQuery('#store-details').on('show.bs.modal', function(event) {
         var button = jQuery(event.relatedTarget);
         var id = button.data('id');
         var store_id = button.data('id');
@@ -1455,17 +1430,23 @@ $community_id = $community->get_current_community_id();
                     store_id: id
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 console.log(response);
                 // Handle success response
                 document.getElementById('credit_limit').innerHTML = response[0]["credit_limit"];
+                document.getElementById('credit_balance').innerHTML = response[0]["creditbalance"];
+
+                if (response[0]["creditbalance"] >= response[0]["credit_limit"]) {
+                    document.querySelector("#community-manager-add-new-order_btn").disabled = true;
+                }
+
                 document.getElementById('name_of_store').innerHTML = response[0]["store_name"];
                 document.getElementById('store_manager_no').innerHTML = response[0]["store_cashier_phone"];
                 document.getElementById('store_manager_address').innerHTML = response[0]["store_address"];
                 document.getElementById('store_logo').src = "<?php echo esc_url(get_site_url() . '/wp-content/uploads/'); ?>" + response[0]["store_logo"];
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 // Handle error response
                 console.error(xhr.responseText);
             }
@@ -1483,12 +1464,12 @@ $community_id = $community->get_current_community_id();
                     type: "community"
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 // Handle success response
                 if (response.length > 0) {
                     var voucherElementId = document.getElementById("voucherElementId");
                     voucherElementId.innerHTML = "";
-                    response.forEach(function (item) {
+                    response.forEach(function(item) {
                         addSection(item.id, item.product_image, item.product_name, item.normal_price, item.voucher_price);
                     });
                 } else {
@@ -1497,7 +1478,7 @@ $community_id = $community->get_current_community_id();
                 }
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 // Handle error response
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
@@ -1518,7 +1499,7 @@ $community_id = $community->get_current_community_id();
                     type: 'community'
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 // Handle success response
                 if (response) {
                     parentOrderHistory.innerHTML = "";
@@ -1527,13 +1508,13 @@ $community_id = $community->get_current_community_id();
                     parentOrderPending.innerHTML = '<h3 class="title">בקשות הזמנה ממתינות לאישור </h3>"';
                     parentOrderReturn.innerHTML = "";
                     parentOrderReturn.innerHTML = '<h3 class="buttons">הסטוריית החזרות </h3>';
-                    response.forEach(function (item) {
+                    response.forEach(function(item) {
                         addOrderHistory(item);
                     });
                 }
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 // Handle error response
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
@@ -1552,7 +1533,7 @@ $community_id = $community->get_current_community_id();
                     community_id: community_id
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 // Handle success response
                 if (response) {
                     parentUnpaidTransactionHistory.innerHTML = "";
@@ -1626,7 +1607,7 @@ $community_id = $community->get_current_community_id();
                 }
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
 
@@ -1645,7 +1626,7 @@ $community_id = $community->get_current_community_id();
                     community_id: community_id
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 // Handle success response
                 if (response) {
                     parentRequestedTransactionHistory.innerHTML = "";
@@ -1719,7 +1700,7 @@ $community_id = $community->get_current_community_id();
                 }
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
 
@@ -1738,7 +1719,7 @@ $community_id = $community->get_current_community_id();
                     community_id: community_id
                 }
             },
-            success: function (response) {
+            success: function(response) {
                 // Handle success response
                 if (response) {
                     parentPaidTransactionHistory.innerHTML = "";
@@ -1812,7 +1793,7 @@ $community_id = $community->get_current_community_id();
                 }
 
             },
-            error: function (xhr, status, error) {
+            error: function(xhr, status, error) {
                 console.error(xhr.responseText);
                 console.error("Unexpected response format:", xhr.responseText);
 
@@ -1845,7 +1826,7 @@ $community_id = $community->get_current_community_id();
 </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const modal1 = document.getElementById('community-manager-add-new-order');
         const modal2 = document.getElementById('community-manager-return-request');
         const modal1Table = modal1.querySelector('table');
@@ -1906,11 +1887,11 @@ $community_id = $community->get_current_community_id();
             updateCost(modal.querySelector('table'));
         }
 
-        modal1.addEventListener('hidden.bs.modal', function () {
+        modal1.addEventListener('hidden.bs.modal', function() {
             resetValues(modal1);
         });
 
-        modal2.addEventListener('hidden.bs.modal', function () {
+        modal2.addEventListener('hidden.bs.modal', function() {
             resetValues(modal2);
         });
 

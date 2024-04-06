@@ -446,6 +446,32 @@ class CSVP_Order{
     }
 
 
+    public function get_orders_data_community($data = array())
+    {
+        global $wpdb, $community;
+
+        $community_id = isset($data['community_id']) ? $data['community_id'] : $community->get_current_community_id();
+
+        $suffix = isset($data['suffix']) ? $data['suffix'] : "_store";
+        // Prepare SQL query to select orders by store ID
+        $query = $wpdb->prepare(
+            "SELECT * FROM $this->table_name WHERE community_id = %d",
+            $community_id
+        );
+
+        $results = $wpdb->get_results($query, ARRAY_A);
+        foreach ($results as $key => $order) {
+            $order_data = $this->get_order_data_by_id(($order["id"] . $suffix));
+            $results[$key]["order_data"] = $order_data;
+        }
+
+        // Execute the query and fetch the results
+        // Return the results if any, otherwise return null
+        return !empty($results) ? $results : null;
+    }
+
+
+
     // Function to retrieve order data by ID
     function get_order_data_by_id($order_id)
     {

@@ -240,6 +240,33 @@ class CSVP_JoiningRequest{
     
     }
 
+    public function get_credit_limit($store_id, $community_id)
+    {
+        global $wpdb;
+
+        $query = $wpdb->prepare(
+            "SELECT credit_limit 
+        FROM {$wpdb->prefix}csvp_joining_request 
+        WHERE store_id = %d 
+        AND community_id = %d",
+            $store_id,
+            $community_id
+        );
+
+        // Execute the query
+        $credit_limit = $wpdb->get_var($query);
+
+        // Check if a credit limit was found
+        if ($credit_limit !== null) {
+            // Credit limit found, return it
+            return $credit_limit;
+        } else {
+            // No credit limit found, likely because no matching records were found
+            return array("status" => false, "response" => "No matching records found for the provided store ID and community ID.");
+        }
+    }
+
+
 
 }
 ?>
