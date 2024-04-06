@@ -212,7 +212,7 @@ class CSVP_CommunityMember
         global $wpdb;
 
         // Create WordPress user
-        $user_id = wp_create_user($data['email_address'], wp_generate_password(), $data['email_address']);
+        $user_id = wp_create_user($data['email_address'], $data['password'], $data['email_address']);
         $user_id_role = new WP_User($user_id);
         $user_id_role->set_role(CSVP_User_Roles::ROLE_COMMUNITY_MEMBER);
         if (!is_wp_error($user_id)) {
@@ -228,7 +228,7 @@ class CSVP_CommunityMember
                     'lesson' => $data['lesson'],
                     'id_number' => $data['id_number'],
                     'address' => $data['address'],
-                    'magnetic_card_number_association' => $data['magnetic_card_number_association'],
+                    'magnetic_card_number_association' => $data['magnetic_card_number_association_add'],
                     'card_balance' => $data['card_balance'],
                     'wp_user_id' => $user_id // Pass WordPress user ID
                 )

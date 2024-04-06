@@ -440,6 +440,13 @@
               </div>
             </div>
             <div class="row">
+            <div class="mb-3 col-xl-12">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-control" name="password">
+              </div>
+            </div>
+
+            <div class="row">
               <label class="form-label">שיוך מספר כרטיס מגנטי</label>
 
               <div class="wrapped-input mb-3 row align-items-center">
@@ -447,7 +454,7 @@
                   <kbd>לחץ להעברת כרטיס מגנטי לשיוך</kbd>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association">
+                  <input type="text" class="form-control" style="border: none;" name="magnetic_card_number_association_add">
                 </div>
               </div>
             </div>
