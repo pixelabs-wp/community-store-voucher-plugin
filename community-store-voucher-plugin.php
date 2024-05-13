@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Community Store Voucher Plugin
-Plugin URI: https://yourwebsite.com/community-store-voucher-plugin
+Plugin URI: https://github.com/pixelabs-solutions/csvp
 Description: A plugin for managing community-store voucher system.
-Version: 1.0.0
+Version: 1.0.0-beta
 Author: Pixelabs
-Author URI: https://yourwebsite.com
+Author URI: https://github.com/pixelabs-solutions
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 Text Domain: community-store-voucher-plugin
